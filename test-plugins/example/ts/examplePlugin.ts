@@ -38,5 +38,5 @@ module DevExample {
   }]);
 
 
-  hawtioPluginLoader.addModule(DevExample.pluginName);
+  //hawtioPluginLoader.addModule(DevExample.pluginName);
 }

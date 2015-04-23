@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     path = require('path'),
     size = require('gulp-size'),
     uri = require('URIjs'),
+    urljoin = require('url-join'),
     s = require('underscore.string'),
     hawtio = require('hawtio-node-backend'),
     tslint = require('gulp-tslint'),
@@ -203,52 +204,120 @@ gulp.task('watch', ['build', 'build-example'], function() {
   });
   plugins.watch(config.less, function(){
     gulp.start('less', 'reload');
-  })
+  });
 });
 
-
 gulp.task('connect', ['watch'], function() {
-  /*
-   * Example of fetching a URL from the environment, in this case for kubernetes
-  var kube = uri(process.env.KUBERNETES_MASTER || 'http://localhost:8080');
-  console.log("Connecting to Kubernetes on: " + kube);
-  */
+  // lets disable unauthorised TLS issues with kube REST API
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-  hawtio.setConfig({
-    port: 2772,
-    staticProxies: [
-    /*
-    // proxy to a service, in this case kubernetes
-    {
-      proto: kube.protocol(),
-      port: kube.port(),
-      hostname: kube.hostname(),
-      path: '/services/kubernetes',
-      targetPath: kube.path()
-    },
-    // proxy to a jolokia instance
-    {
-      proto: kube.protocol(),
-      hostname: kube.hostname(),
-      port: kube.port(),
-      path: '/jolokia',
-      targetPath: '/hawtio/jolokia'
-    }
-    */
-    ],
-    staticAssets: [{
+  var kubeBase = process.env.KUBERNETES_MASTER || 'https://localhost:8443';
+  var kube = uri(urljoin(kubeBase, 'api'));
+  var osapi = uri(urljoin(kubeBase, 'osapi'));
+  console.log("Connecting to Kubernetes on: " + kube);
+
+  var staticAssets = [{
       path: '/',
       dir: '.'
+  }];
 
-    }],
+  var dirs = fs.readdirSync('./libs');
+  dirs.forEach(function(dir) {
+    var dir = './libs/' + dir;
+    console.log("dir: ", dir);
+    if (fs.statSync(dir).isDirectory()) {
+      console.log("Adding directory to search path: ", dir);
+      staticAssets.push({
+        path: '/',
+        dir: dir
+      });
+    }
+  });
+
+  var localProxies = [];
+  if (process.env.LOCAL_APP_LIBRARY === "true") {
+    localProxies.push({
+        proto: "http",
+        port: "8588",
+        hostname: "localhost",
+        path: '/kubernetes/api/v1beta2/proxy/services/app-library',
+        targetPath: "/"
+      });
+    console.log("because of $LOCAL_APP_LIBRARY being true we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/app-library" );
+  }
+  if (process.env.LOCAL_FABRIC8_FORGE === "true") {
+    localProxies.push({
+        proto: "http",
+        port: "8080",
+        hostname: "localhost",
+        path: '/kubernetes/api/v1beta2/proxy/services/fabric8-forge',
+        targetPath: "/"
+      });
+    console.log("because of LOCAL_FABRIC8_FORGE being true we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/fabric8-forge" );
+  }
+  if (process.env.LOCAL_GOGS_HOST) {
+    var gogsPort = process.env.LOCAL_GOGS_PORT || "3000";
+    //var gogsHostName = process.env.LOCAL_GOGS_HOST + ":" + gogsPort;
+    var gogsHostName = process.env.LOCAL_GOGS_HOST;
+    console.log("Using gogs host: " + gogsHostName);
+    localProxies.push({
+        proto: "http",
+        port: gogsPort,
+        hostname: gogsHostName,
+        path: '/kubernetes/api/v1beta2/proxy/services/gogs-http-service',
+        targetPath: "/"
+      });
+    console.log("because of LOCAL_GOGS_HOST being set we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/gogs-http-service to point to http://"
+    + process.env.LOCAL_GOGS_HOST + ":" + gogsPort);
+  }
+  var defaultProxies = [{
+    proto: kube.protocol(),
+    port: kube.port(),
+    hostname: kube.hostname(),
+    path: '/kubernetes/api',
+    targetPath: kube.path()
+  }, {
+    proto: osapi.protocol(),
+    port: osapi.port(),
+    hostname: osapi.hostname(),
+    path: '/kubernetes/osapi',
+    targetPath: osapi.path()
+  }, {
+    proto: kube.protocol(),
+    hostname: kube.hostname(),
+    port: kube.port(),
+    path: '/jolokia',
+    targetPath: '/hawtio/jolokia'
+  }, {
+    proto: kube.protocol(),
+    hostname: kube.hostname(),
+    port: kube.port(),
+    path: '/git',
+    targetPath: '/hawtio/git'
+  }];
+
+  var staticProxies = localProxies.concat(defaultProxies);
+
+  hawtio.setConfig({
+    port: 9000,
+    staticProxies: staticProxies,
+    staticAssets: staticAssets,
     fallback: 'index.html',
     liveReload: {
       enabled: true
     }
   });
-  /*
-   * Example middleware that returns a 404 for templates
-   * as they're already embedded in the js
+  var debugLoggingOfProxy = process.env.DEBUG_PROXY === "true";
+  hawtio.use('/osconsole/config.js', function(req, res, next) {
+    var configJs = 'window.OPENSHIFT_CONFIG = {' +
+      ' auth: {' +
+      '   oauth_authorize_uri: "' + urljoin(kubeBase, '/oauth/authorize')  + '",' +
+      '   oauth_client_id: "fabric8-console",' +
+      ' }' +
+      '};';
+    res.set('Content-Type', 'application/javascript');
+    res.send(configJs);
+  });
   hawtio.use('/', function(req, res, next) {
           var path = req.originalUrl;
           // avoid returning these files, they should get pulled from js
@@ -257,11 +326,12 @@ gulp.task('connect', ['watch'], function() {
             res.statusCode = 404;
             res.end();
           } else {
-            console.log("allowing: ", path);
+            if (debugLoggingOfProxy) {
+              console.log("allowing: ", path);
+            }
             next();
           }
         });
-        */
   hawtio.listen(function(server) {
     var host = server.address().address;
     var port = server.address().port;
@@ -272,6 +342,24 @@ gulp.task('connect', ['watch'], function() {
 gulp.task('reload', function() {
   gulp.src('.')
     .pipe(hawtio.reload());
+});
+
+gulp.task('site', ['clean', 'build'], function() {
+  gulp.src(['index.html', 'osconsole/config.js.tmpl', 'css/**', 'images/**', 'img/**', 'libs/**', 'dist/**'], {base: '.'}).pipe(gulp.dest('site'));
+
+  var dirs = fs.readdirSync('./libs');
+  dirs.forEach(function(dir) {
+    var path = './libs/' + dir + "/img";
+    try {
+      if (fs.statSync(path).isDirectory()) {
+        console.log("found image dir: " + path);
+        var pattern = 'libs/' + dir + "/img/**";
+        gulp.src([pattern]).pipe(gulp.dest('site/img'));
+      }
+    } catch (e) {
+      // ignore, file does not exist
+    }
+  });
 });
 
 gulp.task('build', ['bower', 'path-adjust', 'tslint', 'tsc', 'less', 'template', 'concat', 'clean']);
