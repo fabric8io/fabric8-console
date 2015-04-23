@@ -1,0 +1,28 @@
+{
+  "name": "fabric8-console",
+  "version": "1.0.0",
+  "keywords": [
+    "hawtio"
+  ],
+  "main": [
+    "dist/fabric8-console.js",
+    "dist/fabric8-console.css"
+  ],
+  "ignore": [
+    "dist/fabric8-console-test.js",
+    "**/.*",
+    "node_modules",
+    "libs",
+    "plugins"
+  ],
+  "dependencies": {
+    "hawtio-core": "~2.0.0",
+    "hawtio-core-navigation": "~2.0.0",
+    "hawtio-utilities": "~2.0.0"
+  },
+  "devDependencies": {
+    "bootstrap": "~3.3.1",
+    "patternfly": "~1.1.2",
+    "hawtio-core-dts": "~2.0.0"
+  }
+}
