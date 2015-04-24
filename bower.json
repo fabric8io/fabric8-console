@@ -26,7 +26,8 @@
     "hawtio-template-cache": "~2.0.3",
     "hawtio-oauth": "~2.0.6",
     "hawtio-forge": "~2.0.15",
-    "hawtio-extension-service": "~2.0.2"
+    "hawtio-extension-service": "~2.0.2",
+    "hawtio-integration": "~2.0.0"
   },
   "devDependencies": {
     "bootstrap": "~3.3.1",
