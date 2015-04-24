@@ -1,2 +1,3 @@
 # fabric8-console
-Console aggregate project for fabric8
+
+This project collects a number of hawtio plugins together to create a console for fabric8.
