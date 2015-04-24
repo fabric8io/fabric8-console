@@ -6,7 +6,7 @@
     <base href='/'></base>
     <meta charset="UTF8">
 
-
+    <!-- build:css style.css -->
     <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="libs/patternfly/dist/css/patternfly.css" />
     <link rel="stylesheet" href="dist/fabric8-console.css" />
@@ -26,11 +26,10 @@
     <link rel="stylesheet" href="libs/hawtio-integration/dist/metrics-watcher-style.css" />
     <link rel="stylesheet" href="libs/hawtio-kubernetes/dist/hawtio-kubernetes.css" />
     <!-- endbower -->
+    <!-- endbuild -->
 
+    <!-- build:js libs.js -->
     <!-- ES6/ES6 shim -->
-    <!--[if IE 8]>
-    <script src="libs/es5-dom-shim/__COMIPLE/a.ie8.js"></script>
-    <![endif]-->
     <script src="libs/es5-dom-shim/__COMPILE/a.js"></script>
 
     <!-- bower:js -->
@@ -102,6 +101,7 @@
 
     <script src="libs/bootstrap/dist/js/bootstrap.js"></script>
     <script src="libs/patternfly/dist/js/patternfly.js"></script>
+    <!-- endbuild -->
 
     <style>
       body {
@@ -249,8 +249,10 @@
     </div>
 
     <!-- add any scripts under dist/ here -->
+    <!-- build:js1 app.js -->
     <script src="dist/fabric8-console.js"></script>
     <script src="dist/fabric8-console-test.js"></script>
+    <!-- endbuild -->
 
   </body>
 </html>
