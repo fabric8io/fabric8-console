@@ -9,7 +9,7 @@ dependencies:
     - npm install -g bower gulp
     - npm install
     - bower update
-    - bower prune
+    - rm -Rf site.*
   override:
     - gulp site
 
