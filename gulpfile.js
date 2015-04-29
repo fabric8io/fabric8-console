@@ -318,8 +318,9 @@ gulp.task('connect', ['watch'], function() {
     res.set('Content-Type', 'application/javascript');
     res.send(configJs);
   });
+  //TODO check up with jdyson to figure out how this works on prod
   hawtio.use('/apiman/config.js', function(req, res, next) {
-    var configJs = 'window.OPENSHIFT_CONFIG = {' +
+    var configJs = 'window.APIMAN_CONFIG = {' +
       ' auth: {' +
       '   oauth_authorize_uri: "' + urljoin(kubeBase, '/oauth/authorize')  + '",' +
       '   oauth_client_id: "fabric8-console",' +
