@@ -121,20 +121,5 @@ module Main {
     log.debug("loaded");
   }]);
 
-  hawtioPluginLoader.registerPreBootstrapTask((next) => {
-    $.getScript('osconsole/config.js')
-      .done((script, textStatus) => {
-        var config = window['OPENSHIFT_CONFIG'];
-        log.debug("Fetched openshift config: ", config);
-        OSOAuthConfig = config['auth'];
-      })
-      .fail((response) => {
-        log.debug("Error fetching OAUTH config: ", response);
-      })
-      .always(() => {
-        next();
-      });
-  }, true);
-
   hawtioPluginLoader.addModule(pluginName);
 }
