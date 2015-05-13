@@ -30,10 +30,6 @@ deployment:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker build -t fabric8/fabric8-console .
       - docker push fabric8/fabric8-console
-  build:
-    branch: master
-    owner: fabric8io
-    commands:
       - bash maybeDeploy.sh
 
 
