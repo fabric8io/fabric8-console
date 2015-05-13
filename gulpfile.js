@@ -517,6 +517,16 @@ gulp.task('serve-site', function() {
   });
 });
 
+gulp.task('deploy', function() {
+  return gulp.src(['site/**', 'site/**/*.*', 'site/*.*'], { base: 'site' })
+    .pipe(plugins.debug({title: 'deploy'}))
+    .pipe(plugins.ghPages({
+      branch: 'builds',
+      push: false,
+      message: "[ci skip] Update site"                     
+    }));
+});
+
 gulp.task('build', ['bower', 'path-adjust', 'tslint', 'tsc', 'less', 'template', 'concat', 'clean']);
 
 gulp.task('build-example', ['example-tsc', 'example-template', 'example-concat', 'example-clean']);
