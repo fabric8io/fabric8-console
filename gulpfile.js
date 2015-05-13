@@ -312,7 +312,7 @@ gulp.task('connect', ['watch'], function() {
     var configJs = 'window.OPENSHIFT_CONFIG = {' +
       ' auth: {' +
       '   oauth_authorize_uri: "' + urljoin(kubeBase, '/oauth/authorize')  + '",' +
-      '   oauth_client_id: "fabric8-console",' +
+      '   oauth_client_id: "fabric8",' +
       ' }' +
       '};';
     res.set('Content-Type', 'application/javascript');
@@ -354,13 +354,13 @@ gulp.task('site-fonts', function() {
 gulp.task('tweak-open-sans', ['site-fonts'], function() {
   return gulp.src('site/fonts/OpenSans*')
     .pipe(plugins.flatten())
-    .pipe(gulp.dest('site/fonts/Open-Sans'));
+    .pipe(gulp.dest('site/fonts'));
 });
 
 gulp.task('tweak-droid-sans-mono', ['site-fonts'], function() {
   return gulp.src('site/fonts/DroidSansMono*')
     .pipe(plugins.flatten())
-    .pipe(gulp.dest('site/fonts/Droid-Sans-Mono'));
+    .pipe(gulp.dest('site/fonts'));
 });
 
 gulp.task('site-files', ['tweak-open-sans', 'tweak-droid-sans-mono'], function() {
@@ -504,7 +504,7 @@ gulp.task('serve-site', function() {
     var configJs = 'window.OPENSHIFT_CONFIG = {' +
       ' auth: {' +
       '   oauth_authorize_uri: "' + urljoin(kubeBase, '/oauth/authorize')  + '",' +
-      '   oauth_client_id: "fabric8-console",' +
+      '   oauth_client_id: "fabric8",' +
       ' }' +
       '};';
     res.set('Content-Type', 'application/javascript');
