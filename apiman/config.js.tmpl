@@ -11,7 +11,7 @@ var APIMAN_CONFIG_DATA = {
         "header" : false
     },
     "api" : {
-        "endpoint" : "{{ .Env.APIMAN_MANAGER_API_ENDPOINT : APIMANMANAGERAPI:8998 }}",
+        "endpoint" : "{{ .Env.APIMAN_ENDPOINT : APIMAN:8998 }}",
         "auth" : {
             "type" : "basic",
             "basic" : {

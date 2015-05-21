@@ -245,6 +245,16 @@ gulp.task('connect', ['watch'], function() {
       });
     console.log("because of $LOCAL_APP_LIBRARY being true we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/app-library" );
   }
+  if (process.env.LOCAL_APIMAN === "true") {
+    localProxies.push({
+        proto: "http",
+        port: "8998",
+        hostname: "localhost",
+        path: '/kubernetes/api/v1beta2/proxy/services/apiman',
+        targetPath: "/"
+      });
+    console.log("because of $LOCAL_APIMAN being true we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/apiman" );
+  }
   if (process.env.LOCAL_FABRIC8_FORGE === "true") {
     localProxies.push({
         proto: "http",
@@ -313,17 +323,6 @@ gulp.task('connect', ['watch'], function() {
       ' auth: {' +
       '   oauth_authorize_uri: "' + urljoin(kubeBase, '/oauth/authorize')  + '",' +
       '   oauth_client_id: "fabric8",' +
-      ' }' +
-      '};';
-    res.set('Content-Type', 'application/javascript');
-    res.send(configJs);
-  });
-  //TODO check up with jdyson to figure out how this works on prod
-  hawtio.use('/apiman/config.js', function(req, res, next) {
-    var configJs = 'window.APIMAN_CONFIG = {' +
-      ' auth: {' +
-      '   oauth_authorize_uri: "' + urljoin(kubeBase, '/oauth/authorize')  + '",' +
-      '   oauth_client_id: "fabric8-console",' +
       ' }' +
       '};';
     res.set('Content-Type', 'application/javascript');
@@ -448,6 +447,16 @@ gulp.task('serve-site', function() {
         targetPath: "/"
       });
     console.log("because of $LOCAL_APP_LIBRARY being true we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/app-library" );
+  }
+  if (process.env.LOCAL_APIMAN === "true") {
+    localProxies.push({
+        proto: "http",
+        port: "8998",
+        hostname: "localhost",
+        path: '/kubernetes/api/v1beta2/proxy/services/apiman',
+        targetPath: "/"
+      });
+    console.log("because of $LOCAL_APIMAN being true we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/apiman" );
   }
   if (process.env.LOCAL_FABRIC8_FORGE === "true") {
     localProxies.push({
