@@ -3,7 +3,6 @@ MAINTAINER Jimmi Dyson <jimmidyson@gmail.com>
 ENTRYPOINT ["/kuisp"]
 CMD [ "-p", "9090", \
       "-c", "/site/osconsole/config.js.tmpl=/site/osconsole/config.js", \
-      "-c", "/site/apiman/config.js.tmpl=/site/apiman/config.js", \
       "--default-page=/index.html", \
       "--max-age=24h", \
       "--compress" ]
