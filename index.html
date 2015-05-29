@@ -4,13 +4,17 @@
   <head>
     <title>fabric8-console</title>
     <base href='/'></base>
-    <meta charset="UTF8">
+    <meta charset="UTF8" />
 
     <link rel="stylesheet" href="style.css"/>
 
-    <script src="libs-5b776cd1.js"></script>
+    <script src="libs-b7237b9a.js"></script>
 
     <style>
+      .navbar-default {
+        background: #030303;
+        border-bottom: inherit;
+      }
       body {
         padding-top: 110px;
       }
@@ -130,7 +134,7 @@
 
   <body>
     <nav class="navbar navbar-default navbar-fixed-top navbar-pf" role="navigation">
-      <div class="navbar-header">
+      <div class="navbar-header" hawtio-extension name="hawtio-header">
         <a class="navbar-brand"><img src="img/hawtio_logo.svg"></a>
       </div>
       <ul class="nav navbar-nav navbar-utility">
@@ -140,9 +144,11 @@
             User <b class="caret"></b>
           </a>
           <ul class="dropdown-menu" hawtio-extension name="hawtio-user">
+            <!--
             <li>
               <a href="#">Link</a>
             </li>
+            -->
           </ul>
         </li>
 
