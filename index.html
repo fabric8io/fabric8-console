@@ -13,8 +13,8 @@
 
     <!-- bower:css -->
     <link rel="stylesheet" href="libs/codemirror/lib/codemirror.css" />
-    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="libs/toastr/toastr.css" />
+    <link rel="stylesheet" href="libs/hawtio-ui/dist/font-awesome.css" />
     <link rel="stylesheet" href="libs/hawtio-ui/dist/OpenSans.css" />
     <link rel="stylesheet" href="libs/hawtio-ui/dist/DroidSansMono.css" />
     <link rel="stylesheet" href="libs/hawtio-ui/dist/site-base.css" />
@@ -116,6 +116,10 @@
     <!-- endbuild -->
 
     <style>
+      .navbar-default {
+        background: #030303;
+        border-bottom: inherit;
+      }
       body {
         padding-top: 110px;
       }
@@ -235,7 +239,7 @@
 
   <body>
     <nav class="navbar navbar-default navbar-fixed-top navbar-pf" role="navigation">
-      <div class="navbar-header">
+      <div class="navbar-header" hawtio-extension name="hawtio-header">
         <a class="navbar-brand"><img src="img/hawtio_logo.svg"></a>
       </div>
       <ul class="nav navbar-nav navbar-utility">
