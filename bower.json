@@ -20,14 +20,14 @@
     "hawtio-core-navigation": "~2.0.0",
     "hawtio-utilities": "~2.0.0",
     "hawtio-jmx": "~2.0.50",
-    "hawtio-wiki": "~2.0.31",
+    "hawtio-wiki": "~2.0.33",
     "hawtio-kubernetes": "~2.0.18",
     "hawtio-preferences": "~2.0.3",
     "hawtio-template-cache": "~2.0.3",
-    "hawtio-oauth": "~2.0.6",
+    "hawtio-oauth": "~2.0.7",
     "hawtio-forge": "~2.0.15",
     "hawtio-extension-service": "~2.0.2",
-    "hawtio-integration": "~2.0.0"
+    "hawtio-integration": "~2.0.1"
   },
   "devDependencies": {
     "bootstrap": "~3.3.1",
