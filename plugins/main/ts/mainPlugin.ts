@@ -54,16 +54,18 @@ module Main {
       id: 'library',
       title: () => 'Library',
       tooltip: () => 'View the library of applications',
-      isValid: () => ServiceRegistry.hasService("app-library") && ServiceRegistry.hasService("app-library-jolokia") && !Core.isRemoteConnection(),
+      isValid: () => ServiceRegistry.hasService(appLibraryServiceName) && ServiceRegistry.hasService("app-library-jolokia") && !Core.isRemoteConnection(),
       href: () => "/wiki/view",
       isActive: () => false
     });
+
+    var kibanaServiceName = Kubernetes.kibanaServiceName;
 
     nav.add({
       id: 'kibana',
       title: () =>  'Logs',
       tooltip: () => 'View and search all logs across all containers using Kibana and ElasticSearch',
-      isValid: () => ServiceRegistry.hasService("kibana-service") && !Core.isRemoteConnection(),
+      isValid: () => ServiceRegistry.hasService(kibanaServiceName) && !Core.isRemoteConnection(),
       href: () => Kubernetes.kibanaLogsLink(ServiceRegistry),
       isActive: () => false
     });
@@ -72,20 +74,18 @@ module Main {
       id: 'grafana',
       title: () =>  'Metrics',
       tooltip: () => 'Views metrics across all containers using Grafana and InfluxDB',
-      isValid: () => ServiceRegistry.hasService("grafana-service") && !Core.isRemoteConnection(),
-      href: () => ServiceRegistry.serviceLink("grafana-service"),
+      isValid: () => ServiceRegistry.hasService(grafanaServiceName) && !Core.isRemoteConnection(),
+      href: () => ServiceRegistry.serviceLink(grafanaServiceName),
       isActive: () => false
     });
 
-    //var chatService = "kiwiirc";
-    var chatService = "letschat";
     nav.add({
       id: "chat",
       title: () =>  'Chat',
       tooltip: () => 'Chat room for discussing this namespace',
-      isValid: () => ServiceRegistry.hasService(chatService) && !Core.isRemoteConnection(),
+      isValid: () => ServiceRegistry.hasService(chatServiceName) && !Core.isRemoteConnection(),
       href: () => {
-        var answer = ServiceRegistry.serviceLink(chatService);
+        var answer = ServiceRegistry.serviceLink(chatServiceName);
         if (answer) {
 /*
           TODO add a custom link to the correct room for the current namespace?

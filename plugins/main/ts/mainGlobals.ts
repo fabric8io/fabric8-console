@@ -21,4 +21,10 @@ module Main {
   export var log: Logging.Logger = Logger.get(pluginName);
 
   export var templatePath = "plugins/main/html";
+
+  // kubernetes service names
+  export var chatServiceName = "letschat";
+  export var grafanaServiceName = "grafana";
+  export var appLibraryServiceName = "app-library";
+
 }
