@@ -1,3 +1,4 @@
+var apimanUrl = UrlHelpers.join(Kubernetes.kubernetesApiPrefix(), Kubernetes.kubernetesNamespacePath(), "/services/apiman")
 var APIMAN_CONFIG_DATA = {
     "apiman" : {
         "version" : "{{ .Env.APIMAN_VERSION : 1.1.1 }}",
@@ -11,13 +12,9 @@ var APIMAN_CONFIG_DATA = {
         "header" : false
     },
     "api" : {
-        "endpoint" : "{{ .Env.APIMAN_ENDPOINT : APIMAN:8998 }}",
+        "endpoint" : apimanUrl,
         "auth" : {
-            "type" : "basic",
-            "basic" : {
-                "username" : "admin",
-                "password" : "admin"
-            }
+            "type" : "none"
         }
     }
 }
