@@ -248,10 +248,10 @@ gulp.task('connect', ['watch'], function() {
   if (process.env.LOCAL_APIMAN === "true") {
     localProxies.push({
         proto: "http",
-        port: "8998",
+        port: "7070",
         hostname: "localhost",
-        path: '/kubernetes/api/v1beta2/proxy/services/apiman',
-        targetPath: "/"
+        path: '/api/v1beta3/namespaces/default/services/apiman',
+        targetPath: "/apiman"
       });
     console.log("because of $LOCAL_APIMAN being true we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/apiman" );
   }
