@@ -21,11 +21,11 @@
     "hawtio-utilities": "~2.0.0",
     "hawtio-jmx": "~2.0.50",
     "hawtio-wiki": "~2.0.33",
-    "hawtio-kubernetes": "~2.0.31",
+    "hawtio-kubernetes": "~2.0.32",
     "hawtio-preferences": "~2.0.3",
     "hawtio-template-cache": "~2.0.3",
     "hawtio-oauth": "~2.0.10",
-    "hawtio-forge": "~2.0.21",
+    "hawtio-forge": "~2.0.22",
     "hawtio-extension-service": "~2.0.2",
     "hawtio-integration": "~2.0.1",
     "apiman-manager-ui": "~1.1.3"
