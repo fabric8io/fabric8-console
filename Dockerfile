@@ -16,8 +16,7 @@ RUN yum install -y tar && \
       tar xzv
 
 COPY site /site/
-RUN chown nobody:nobody /site/osconsole/
-RUN chown nobody:nobody /site/apiman/
+RUN chmod 777 /site/osconsole/ /site/apiman/
 
 WORKDIR /site/
 USER nobody
