@@ -34,7 +34,13 @@ then
   echo $CURRENT > LATEST && \
   git add LATEST && \
   git commit -m "Updating latest tag" && \
-  git push && git push --tags
+  git push && git push --tags && \
+  echo "Pushing fabric8/fabric8-console:${CURRENT} to Docker Hub" && \
+  git checkout ${CURRENT} && \
+  rm -Rf site/* && \
+  gulp site && \
+  docker build -t fabric8/fabric8-console:${CURRENT} . && \
+  docker push fabric8/fabric8-console:${CURRENT}
 else
   echo "Not deploying new build"
 fi
