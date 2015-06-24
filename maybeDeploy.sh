@@ -21,7 +21,7 @@ echo "Latest in repo: $CURRENT"
 
 if [ "$CURRENT" != "$LATEST" ]
 then
-  echo "Deploying new build"
+  echo "Deploying new build for $CURRENT"
   git config --global user.email "circleci@mail.com" && \
   git config --global user.name "circleci" && \
   rm -Rf site/* && \
@@ -42,6 +42,8 @@ then
   docker build -t fabric8/fabric8-console:${CURRENT} . && \
   docker push fabric8/fabric8-console:${CURRENT}
 else
-  echo "Not deploying new build"
+  echo "Re-tagging new build for ${CURRENT}"
+  docker tag fabric8/fabric8-console fabric8/fabric8-console:${CURRENT}
+  docker push fabric8/fabric8-console:${CURRENT}
 fi
 
