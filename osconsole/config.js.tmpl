@@ -2,6 +2,7 @@ window.OPENSHIFT_CONFIG = {
   auth: {
     oauth_authorize_uri: "{{ .Env.OAUTH_AUTHORIZE_URI }}",
     oauth_client_id: "{{ .Env.OAUTH_CLIENT_ID }}",
+    master_uri: "{{ .Env.KUBERNETES_MASTER }}",
     logout_uri: "",
     clientId: "{{ .Env.GOOGLE_OAUTH_CLIENT_ID }}",
     clientSecret: "{{ .Env.GOOGLE_OAUTH_CLIENT_SECRET }}",
