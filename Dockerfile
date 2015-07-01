@@ -1,8 +1,11 @@
 FROM centos:centos7
 MAINTAINER Jimmi Dyson <jimmidyson@gmail.com>
 ENTRYPOINT ["/kuisp"]
+
+ENV OAUTH_PROVIDER openshift
+
 CMD [ "-p", "9090", \
-      "-c", "/site/osconsole/config.js.tmpl=/site/osconsole/config.js", \
+      "-c", "/site/osconsole/config.${OAUTH_PROVIDER}.js.tmpl=/site/osconsole/config.js", \
       "--default-page=/index.html", \
       "--max-age=24h", \
       "--compress" ]
