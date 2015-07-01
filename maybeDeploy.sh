@@ -41,7 +41,7 @@ then
   gulp site && \
   docker build -t fabric8/fabric8-console:${CURRENT} . && \
   docker push fabric8/fabric8-console:${CURRENT}
-else
+# else
 #  echo "Re-tagging new build for ${CURRENT}"
 #  docker tag fabric8/fabric8-console fabric8/fabric8-console:${CURRENT}
 #  docker push fabric8/fabric8-console:${CURRENT}
