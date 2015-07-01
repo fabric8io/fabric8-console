@@ -4,8 +4,8 @@ window.OPENSHIFT_CONFIG = {
   google: {
     clientId: "{{ .Env.GOOGLE_OAUTH_CLIENT_ID }}",
     clientSecret: "{{ .Env.GOOGLE_OAUTH_CLIENT_SECRET }}",
-    authenticationURI: "{{ .Env.GOOGLE_AUTHENTICATION_URI }}",
-    authorizationURI: "{{ .Env.GOOGLE_AUTHORIZATION_URI }}",
+    authenticationURI: "{{ .Env.GOOGLE_OAUTH_AUTHENTICATION_URI }}",
+    tokenURI: "{{ .Env.GOOGLE_OAUTH_TOKEN_URL }}",
     scope: "{{ .Env.GOOGLE_OAUTH_SCOPE }}",
     redirectURI: "{{ .Env.GOOGLE_OAUTH_REDIRECT_URI }}"
   }
