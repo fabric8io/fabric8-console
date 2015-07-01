@@ -320,7 +320,7 @@ gulp.task('connect', ['watch'], function() {
   var debugLoggingOfProxy = process.env.DEBUG_PROXY === "true";
   hawtio.use('/osconsole/config.js', function(req, res, next) {
     var configJs = 'window.OPENSHIFT_CONFIG = {' +
-      ' auth: {' +
+      ' openshift: {' +
       '   oauth_authorize_uri: "' + urljoin(kubeBase, '/oauth/authorize')  + '",' +
       '   oauth_client_id: "fabric8",' +
       ' }' +

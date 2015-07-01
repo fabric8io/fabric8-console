@@ -1,6 +1,7 @@
 window.OPENSHIFT_CONFIG = {
-  auth: {
-    master_uri: "https://{{ .Env.KUBERNETES_SERVICE_HOST }}:{{ .Env.KUBERNETES_SERVICE_PORT }}",
+  master_uri: "https://{{ .Env.KUBERNETES_SERVICE_HOST }}:{{ .Env.KUBERNETES_SERVICE_PORT }}",
+
+  google: {
     clientId: "{{ .Env.GOOGLE_OAUTH_CLIENT_ID }}",
     clientSecret: "{{ .Env.GOOGLE_OAUTH_CLIENT_SECRET }}",
     authenticationURI: "{{ .Env.GOOGLE_AUTHENTICATION_URI }}",
