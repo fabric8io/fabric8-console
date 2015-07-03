@@ -1,6 +1,4 @@
 window.OPENSHIFT_CONFIG = {
-  master_uri: "{{ .Env.KUBERNETES_MASTER_URI }}",
-
   openshift: {
     oauth_authorize_uri: "{{ .Env.OAUTH_AUTHORIZE_URI }}",
     oauth_client_id: "{{ .Env.OAUTH_CLIENT_ID }}",
