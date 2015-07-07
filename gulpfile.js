@@ -409,7 +409,7 @@ gulp.task('tweak-droid-sans-mono', ['site-fonts'], function() {
 });
 
 gulp.task('site-files', ['tweak-open-sans', 'tweak-droid-sans-mono'], function() {
-  return gulp.src(['images/**', 'img/**', 'libs/**/*.swf'], {base: '.'})
+  return gulp.src(['favicon.ico', 'images/**', 'img/**', 'libs/**/*.swf'], {base: '.'})
     .pipe(plugins.debug({title: 'site files'}))
     .pipe(gulp.dest('site'));
 
