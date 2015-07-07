@@ -11,6 +11,7 @@ var gulp = require('gulp'),
     s = require('underscore.string'),
     hawtio = require('hawtio-node-backend'),
     tslint = require('gulp-tslint'),
+    stringifyObject = require('stringify-object'),
     tslintRules = require('./tslint.json');
 
 var plugins = gulpLoadPlugins({});
@@ -213,7 +214,7 @@ gulp.task('connect', ['watch'], function() {
 
   var kubeBase = process.env.KUBERNETES_MASTER || 'https://localhost:8443';
   var kube = uri(urljoin(kubeBase, 'api'));
-  var osapi = uri(urljoin(kubeBase, 'osapi'));
+  var oapi = uri(urljoin(kubeBase, 'oapi'));
   console.log("Connecting to Kubernetes on: " + kube);
 
   var staticAssets = [{
@@ -287,11 +288,11 @@ gulp.task('connect', ['watch'], function() {
     path: '/kubernetes/api',
     targetPath: kube.path()
   }, {
-    proto: osapi.protocol(),
-    port: osapi.port(),
-    hostname: osapi.hostname(),
-    path: '/kubernetes/osapi',
-    targetPath: osapi.path()
+    proto: oapi.protocol(),
+    port: oapi.port(),
+    hostname: oapi.hostname(),
+    path: '/kubernetes/oapi',
+    targetPath: oapi.path()
   }, {
     proto: kube.protocol(),
     hostname: kube.hostname(),
@@ -308,6 +309,13 @@ gulp.task('connect', ['watch'], function() {
 
   var staticProxies = localProxies.concat(defaultProxies);
 
+  var debugLoggingOfProxy = process.env.DEBUG_PROXY === "true";
+  var useAuthentication = process.env.DISABLE_OAUTH !== "true";
+
+  var googleClientId = process.env.GOOGLE_OAUTH_CLIENT_ID;
+  var googleClientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
+
+
   hawtio.setConfig({
     port: 9000,
     staticProxies: staticProxies,
@@ -319,14 +327,41 @@ gulp.task('connect', ['watch'], function() {
   });
   var debugLoggingOfProxy = process.env.DEBUG_PROXY === "true";
   hawtio.use('/osconsole/config.js', function(req, res, next) {
-    var configJs = 'window.OPENSHIFT_CONFIG = {' +
-      ' openshift: {' +
-      '   oauth_authorize_uri: "' + urljoin(kubeBase, '/oauth/authorize')  + '",' +
-      '   oauth_client_id: "fabric8",' +
-      ' }' +
-      '};';
+    var config = {
+      api: {
+        openshift: {
+          proto: oapi.protocol(),
+          hostPort: oapi.host(),
+          prefix: oapi.path()
+        },
+        k8s: {
+          proto: kube.protocol(),
+          hostPort: kube.host(),
+          prefix: kube.path()
+        }
+      }
+    };
+    if (googleClientId && googleClientSecret) {
+      config.master_uri = kubeBase;
+      config.google = {
+         clientId: googleClientId,
+         clientSecret: googleClientSecret,
+         authenticationURI: "https://accounts.google.com/o/oauth2/auth",
+         authorizationURI: "https://accounts.google.com/o/oauth2/auth",
+         scope: "profile",
+         redirectURI: "http://localhost:9000"
+      };
+
+    } else if (useAuthentication) {
+      config.master_uri = kubeBase;
+      config.openshift = {
+        oauth_authorize_uri: urljoin(kubeBase, '/oauth/authorize'),
+        oauth_client_id: 'fabric8'
+      };
+    }
+    var answer = "window.OPENSHIFT_CONFIG = " + stringifyObject(config);
     res.set('Content-Type', 'application/javascript');
-    res.send(configJs);
+    res.send(answer);
   });
   hawtio.use('/', function(req, res, next) {
           var path = req.originalUrl;
@@ -419,7 +454,7 @@ gulp.task('serve-site', function() {
 
   var kubeBase = process.env.KUBERNETES_MASTER || 'https://localhost:8443';
   var kube = uri(urljoin(kubeBase, 'api'));
-  var osapi = uri(urljoin(kubeBase, 'osapi'));
+  var oapi = uri(urljoin(kubeBase, 'oapi'));
   console.log("Connecting to Kubernetes on: " + kube);
   var staticAssets = [{
       path: '/',
@@ -490,11 +525,11 @@ gulp.task('serve-site', function() {
     path: '/kubernetes/api',
     targetPath: kube.path()
   }, {
-    proto: osapi.protocol(),
-    port: osapi.port(),
-    hostname: osapi.hostname(),
-    path: '/kubernetes/osapi',
-    targetPath: osapi.path()
+    proto: oapi.protocol(),
+    port: oapi.port(),
+    hostname: oapi.hostname(),
+    path: '/kubernetes/oapi',
+    targetPath: oapi.path()
   }, {
     proto: kube.protocol(),
     hostname: kube.hostname(),

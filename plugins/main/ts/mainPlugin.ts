@@ -17,9 +17,11 @@
 /// <reference path="mainGlobals.ts"/>
 
 // TODO not sure if these are required? They are defined in hawtio-kubernetes too...
+/*
 declare var OSOAuthConfig: Kubernetes.OpenShiftOAuthConfig;
 declare var GoogleOAuthConfig: Kubernetes.GoogleOAuthConfig;
 declare var KeycloakConfig: Kubernetes.KeyCloakAuthConfig;
+*/
 
 module Main {
 
