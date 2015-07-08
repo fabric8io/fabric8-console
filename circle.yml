@@ -27,8 +27,11 @@ deployment:
     branch: master
     owner: fabric8io
     commands:
-      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker build -t fabric8/fabric8-console .
+      - docker login -e $BINTRAY_EMAIL -u $BINTRAY_USER -p $BINTRAY_PASS fabric8-docker-fabric8.bintray.io
+      - docker tag fabric8/fabric8-console fabric8-docker-fabric8.bintray.io/fabric8/fabric8-console
+      - docker push fabric8-docker-fabric8.bintray.io/fabric8/fabric8-console
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push fabric8/fabric8-console
       - bash maybeDeploy.sh
 
