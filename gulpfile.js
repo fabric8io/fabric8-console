@@ -249,8 +249,8 @@ gulp.task('connect', ['watch'], function() {
   if (process.env.LOCAL_APIMAN === "true") {
     localProxies.push({
         proto: "http",
-        port: "7070",
-        hostname: "localhost",
+        port: "8998",
+        hostname: "172.30.97.49",
         path: '/api/v1beta3/namespaces/default/services/apiman',
         targetPath: "/apiman"
       });
@@ -429,7 +429,7 @@ gulp.task('site', ['usemin'], function() {
   gulp.src('site/index.html')
     .pipe(plugins.rename('404.html'))
     .pipe(gulp.dest('site'));
-  gulp.src(['img/**', 'osconsole/config.*.js.tmpl', 'apiman/config.js'], { base: '.' })
+  gulp.src(['img/**', 'osconsole/config.*.js.tmpl', 'apiman/config.js.tmpl'], { base: '.' })
     .pipe(gulp.dest('site'));
   var dirs = fs.readdirSync('./libs');
   var patterns = [];
