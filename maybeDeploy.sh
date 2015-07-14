@@ -39,6 +39,7 @@ then
   echo "Pushing fabric8/fabric8-console:${CURRENT} to Docker Hub" && \
   git checkout ${CURRENT} && \
   rm -Rf site/* && \
+  bower update && \
   gulp site && \
   docker build -t fabric8/fabric8-console:${CURRENT} . && \
   docker push fabric8/fabric8-console:${CURRENT}
