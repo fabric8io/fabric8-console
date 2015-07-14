@@ -1,8 +1,8 @@
-var apimanUrl = UrlHelpers.join(Kubernetes.kubernetesApiPrefix(), Kubernetes.kubernetesNamespacePath(), "/services/apiman")
+var apimanUrl = UrlHelpers.join("http://{{ .Env.APIMAN_SERVICE_HOST }}:{{ .Env.APIMAN_SERVICE_PORT }}/apiman")
 var APIMAN_CONFIG_DATA = {
     "apiman" : {
-        "version" : "{{ .Env.APIMAN_VERSION : 1.1.1 }}",
-        "builtOn" : "{{ .Env.APIMAN_BUILT_ON : fabric8 }}",
+        "version" : "{{ .Env.APIMAN_VERSION }}",
+        "builtOn" : "{{ .Env.APIMAN_BUILT_ON }}",
         "logoutUrl" : "/notavailable"
     },
     "user" : {
