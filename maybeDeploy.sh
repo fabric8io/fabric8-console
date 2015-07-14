@@ -25,6 +25,7 @@ then
   git config --global user.email "circleci@mail.com" && \
   git config --global user.name "circleci" && \
   rm -Rf site/* && \
+  bower update && \
   gulp site && \
   gulp deploy && \
   pushd .publish && \
