@@ -7,7 +7,9 @@ ENV OAUTH_PROVIDER openshift
 ENV KUISP_VERSION 0.10
 
 # a default value when running on vanilla kubernetes
-ENV KUBERNETES_MASTER_URI /
+ENV KUBENRETES_SERVICE_HOST localhost
+ENV KUBENRETES_SERVICE_PORT 8080
+ENV KUBERNETES_MASTER_URI http://${KUBENRETES_SERVICE_HOST}:${KUBENRETES_SERVICE_PORT}/
 
 RUN yum install -y tar && \
     yum clean all && \
