@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+    through = require('through'),
     wiredep = require('wiredep').stream,
     eventStream = require('event-stream'),
     gulpLoadPlugins = require('gulp-load-plugins'),
@@ -409,7 +410,7 @@ gulp.task('tweak-droid-sans-mono', ['site-fonts'], function() {
 });
 
 gulp.task('site-files', ['tweak-open-sans', 'tweak-droid-sans-mono'], function() {
-  return gulp.src(['favicon.ico', 'images/**', 'img/**', 'libs/**/*.swf'], {base: '.'})
+  return gulp.src(['resources/**', 'favicon.ico', 'resources/**', 'images/**', 'img/**', 'libs/**/*.swf'], {base: '.'})
     .pipe(plugins.debug({title: 'site files'}))
     .pipe(gulp.dest('site'));
 
@@ -425,27 +426,24 @@ gulp.task('usemin', ['site-files'], function() {
     .pipe(gulp.dest('site'));
 });
 
-gulp.task('site', ['usemin'], function() {
+gulp.task('site-resources', [], function() {
+  return gulp.src(['libs/*/img/**', 'libs/*/images/**', 'libs/*/resources/**'])
+             .pipe(through(function(file) {
+               var parts = file.relative.split('/');
+               var plugin = parts.shift();
+               file.base = urljoin(file.base, plugin);
+               this.emit('data', file);
+             }))
+             .pipe(plugins.debug({ title: 'site-resources'}))
+             .pipe(gulp.dest('site'));
+});
+
+gulp.task('site', ['site-resources', 'usemin'], function() {
   gulp.src('site/index.html')
     .pipe(plugins.rename('404.html'))
     .pipe(gulp.dest('site'));
-  gulp.src(['img/**', 'osconsole/config.*.js.tmpl', 'apiman/config.js.tmpl'], { base: '.' })
+  return gulp.src(['img/**', 'osconsole/config.*.js.tmpl', 'apiman/config.js.tmpl'], { base: '.' })
     .pipe(gulp.dest('site'));
-  var dirs = fs.readdirSync('./libs');
-  var patterns = [];
-  dirs.forEach(function(dir) {
-    var path = './libs/' + dir + "/img";
-    try {
-      if (fs.statSync(path).isDirectory()) {
-        console.log("found image dir: " + path);
-        var pattern = 'libs/' + dir + "/img/**";
-        patterns.push(pattern);
-      }
-    } catch (e) {
-      // ignore, file does not exist
-    }
-  });
-  return gulp.src(patterns).pipe(plugins.debug({ title: 'img-copy' })).pipe(gulp.dest('site/img'));
 });
 
 gulp.task('serve-site', function() {

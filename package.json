@@ -28,6 +28,7 @@
     "gulp-watch": "^3.0.0",
     "hawtio-node-backend": "^2.0.5",
     "stringify-object": "^2.2.0",
+    "through": "^2.3.8",
     "through2": "^0.6.3",
     "underscore.string": "^2.4.0",
     "url-join": "0.0.1",
