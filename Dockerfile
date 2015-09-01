@@ -15,7 +15,7 @@ RUN yum install -y tar && \
       tar xzv
 
 COPY site /site/
-RUN chmod -R 777 /site/osconsole/ /site/apiman/
+RUN chmod -R 777 /site/osconsole/
 
 WORKDIR /site/
 USER nobody
@@ -24,7 +24,6 @@ EXPOSE 9090
 
 CMD [ "-p", "9090", \
       "-c", "/site/osconsole/config.${OAUTH_PROVIDER}.js.tmpl=/site/osconsole/config.js", \
-      "-c", "/site/apiman/config.js.tmpl=/site/apiman/config.js", \
       "--default-page=/index.html", \
       "--max-age=24h", \
       "--compress" ]

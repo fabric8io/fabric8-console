@@ -1,5 +1,4 @@
 var gulp = require('gulp'),
-    through = require('through'),
     wiredep = require('wiredep').stream,
     eventStream = require('event-stream'),
     gulpLoadPlugins = require('gulp-load-plugins'),
