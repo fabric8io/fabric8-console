@@ -19,7 +19,7 @@
     "hawtio-core": "~2.0.18",
     "hawtio-core-navigation": "~2.0.51",
     "hawtio-utilities": "~2.0.0",
-    "hawtio-jmx": "~2.0.50",
+    "hawtio-jmx": "~2.0.53",
     "hawtio-wiki": "~2.0.33",
     "hawtio-kubernetes": "~2.1.33",
     "hawtio-preferences": "~2.0.3",
