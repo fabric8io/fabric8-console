@@ -65,17 +65,22 @@ module Main {
                Logger.debug("apiman proxyUrl: " + service.proxyUrl);
                Logger.debug("apiman serviceUrl: " + service.$serviceUrl);
                if (apiEndpointConfig === "dynamicServiceUrl") {
-                    dynamicEndpoint = service.$serviceUrl;
+                    dynamicEndpoint = service.$serviceUrl + "apiman";
                } else if (apiEndpointConfig === "dynamicProxyUrl") {
-                    dynamicEndpoint = service.proxyUrl;
+                    dynamicEndpoint = service.proxyUrl + "apiman";
                } else {
-                    dynamicEndpoint =  service.$connectUrl + "apiman";
+                    dynamicEndpoint = service.$connectUrl + "apiman";
                }
-               Configuration.api.endpoint = dynamicEndpoint;
+               if (Configuration.api.endpoint !== dynamicEndpoint) {
+                    Configuration.api.endpoint = dynamicEndpoint;
+                    Logger.debug("apiman route: {0}", service.$connectUrl);
+                    Logger.debug("apiman proxyUrl: {0} ", service.proxyUrl);
+                    Logger.debug("apiman serviceUrl: {0}", service.$serviceUrl);
                     Logger.info("Apiman Dynamic Endpoint: {0}", dynamicEndpoint);
+               }
             } else {
                Configuration.api.endpoint = "no-apiman-running-in-" + namespace + "-namespace";
-               Logger.debug("No apiman running in {0} namespace", namespace);
+               // Logger.debug("No apiman running in {0} namespace", namespace);
             }
          }
        });
