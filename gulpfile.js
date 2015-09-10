@@ -442,7 +442,7 @@ gulp.task('site', ['site-resources', 'usemin'], function() {
   gulp.src('site/index.html')
     .pipe(plugins.rename('404.html'))
     .pipe(gulp.dest('site'));
-  return gulp.src(['img/**', 'osconsole/config.*.js.tmpl', 'apiman/config.js.tmpl'], { base: '.' })
+  return gulp.src(['img/**', 'osconsole/config.*.js.tmpl', 'apiman/config.js'], { base: '.' })
     .pipe(gulp.dest('site'));
 });
 
