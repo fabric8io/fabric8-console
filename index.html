@@ -7,11 +7,14 @@
     <meta charset="UTF8" />
 
     <!-- build:css style.css -->
-    <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="libs/patternfly/dist/css/patternfly.css" />
-    <link rel="stylesheet" href="dist/fabric8-console.css" />
-
     <!-- bower:css -->
+    <link rel="stylesheet" href="libs/bootstrap-select/bootstrap-select.css" />
+    <link rel="stylesheet" href="libs/patternfly/dist/css/patternfly.css" />
+    <link rel="stylesheet" href="libs/ng-sortable/dist/ng-sortable.css" />
+    <link rel="stylesheet" href="libs/c3/c3.css" />
+    <link rel="stylesheet" href="libs/angular-xeditable/dist/css/xeditable.css" />
+    <link rel="stylesheet" href="libs/apiman-manager-ui/dist/apiman.css" />
+    <link rel="stylesheet" href="libs/apiman-manager-ui/dist/apiman-responsive.css" />
     <link rel="stylesheet" href="libs/codemirror/lib/codemirror.css" />
     <link rel="stylesheet" href="libs/toastr/toastr.css" />
     <link rel="stylesheet" href="libs/hawtio-ui/dist/font-awesome.css" />
@@ -25,16 +28,11 @@
     <link rel="stylesheet" href="libs/hawtio-jmx/dist/ui.dynatree.css" />
     <link rel="stylesheet" href="libs/hawtio-jmx/dist/dynatree-icons.css" />
     <link rel="stylesheet" href="libs/hawtio-forge/dist/hawtio-forge.css" />
-    <link rel="stylesheet" href="libs/hawtio-kubernetes/dist/hawtio-kubernetes.css" />
     <link rel="stylesheet" href="libs/hawtio-integration/dist/metrics-watcher-style.css" />
-    <link rel="stylesheet" href="libs/bootstrap-select/bootstrap-select.css" />
-    <link rel="stylesheet" href="libs/ng-sortable/dist/ng-sortable.css" />
-    <link rel="stylesheet" href="libs/c3/c3.css" />
-    <link rel="stylesheet" href="libs/angular-xeditable/dist/css/xeditable.css" />
-    <link rel="stylesheet" href="libs/apiman-manager-ui/dist/apiman.css" />
-    <link rel="stylesheet" href="libs/apiman-manager-ui/dist/apiman-responsive.css" />
+    <link rel="stylesheet" href="libs/hawtio-kubernetes/dist/hawtio-kubernetes.css" />
     <link rel="stylesheet" href="libs/hawtio-kube3d/dist/hawtio-kube3d.css" />
     <!-- endbower -->
+    <link rel="stylesheet" href="dist/fabric8-console.css" />
     <!-- endbuild -->
 
     <!-- build:js libs.js -->
@@ -63,7 +61,17 @@
     <script src="libs/hawtio-utilities/dist/sugar.js"></script>
     <script src="libs/hawtio-utilities/dist/angular-file-upload.js"></script>
     <script src="libs/hawtio-utilities/dist/hawtio-utilities.js"></script>
-    <script src="libs/hawtio-template-cache/dist/hawtio-template-cache.js"></script>
+    <script src="libs/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="libs/bootstrap-select/bootstrap-select.js"></script>
+    <script src="libs/json-editor/dist/jsoneditor.js"></script>
+    <script src="libs/patternfly/dist/js/patternfly.js"></script>
+    <script src="libs/angular-resource/angular-resource.js"></script>
+    <script src="libs/ng-sortable/dist/ng-sortable.js"></script>
+    <script src="libs/d3/d3.js"></script>
+    <script src="libs/c3/c3.js"></script>
+    <script src="libs/angular-xeditable/dist/js/xeditable.js"></script>
+    <script src="libs/apiman-manager-ui/dist/apiman-manager.js"></script>
+    <script src="libs/hawtio-extension-service/dist/hawtio-extension-service.js"></script>
     <script src="libs/codemirror/lib/codemirror.js"></script>
     <script src="libs/graphlib/dist/graphlib.core.js"></script>
     <script src="libs/dagre/dist/dagre.core.js"></script>
@@ -83,6 +91,7 @@
     <script src="libs/hawtio-ui/dist/hawtio-ui.js"></script>
     <script src="libs/hawtio-forms/dist/hawtio-forms.js"></script>
     <script src="libs/hawtio-forms/dist/bootstrap-combobox.js"></script>
+    <script src="libs/hawtio-template-cache/dist/hawtio-template-cache.js"></script>
     <script src="libs/hawtio-jmx/dist/dangle.js"></script>
     <script src="libs/hawtio-jmx/dist/jquery.dynatree.js"></script>
     <script src="libs/hawtio-jmx/dist/dagre.js"></script>
@@ -91,28 +100,19 @@
     <script src="libs/hawtio-jmx/dist/jolokia-simple.js"></script>
     <script src="libs/hawtio-jmx/dist/jolokia-cubism.js"></script>
     <script src="libs/hawtio-jmx/dist/hawtio-jmx.js"></script>
-    <script src="libs/angular-resource/angular-resource.js"></script>
     <script src="libs/hawtio-wiki/dist/hawtio-wiki.js"></script>
+    <script src="libs/hawtio-forge/dist/hawtio-forge.js"></script>
+    <script src="libs/hawtio-integration/dist/metrics-watcher.js"></script>
+    <script src="libs/hawtio-integration/dist/camelModel.js"></script>
+    <script src="libs/hawtio-integration/dist/hawtio-integration.js"></script>
     <script src="libs/angular-inflector/dist/angular-inflector.min.js"></script>
     <script src="libs/angular-restmod/dist/angular-restmod-bundle.min.js"></script>
-    <script src="libs/hawtio-forge/dist/hawtio-forge.js"></script>
     <script src="libs/keycloak/dist/keycloak.js"></script>
     <script src="libs/ng-idle/angular-idle.js"></script>
     <script src="libs/hawtio-oauth/dist/hawtio-oauth.js"></script>
     <script src="libs/angular-ui-codemirror/ui-codemirror.js"></script>
     <script src="libs/hawtio-kubernetes/dist/hawtio-kubernetes.js"></script>
-    <script src="libs/hawtio-extension-service/dist/hawtio-extension-service.js"></script>
     <script src="libs/hawtio-preferences/dist/hawtio-preferences.js"></script>
-    <script src="libs/hawtio-integration/dist/metrics-watcher.js"></script>
-    <script src="libs/hawtio-integration/dist/camelModel.js"></script>
-    <script src="libs/hawtio-integration/dist/hawtio-integration.js"></script>
-    <script src="libs/bootstrap-select/bootstrap-select.js"></script>
-    <script src="libs/json-editor/dist/jsoneditor.js"></script>
-    <script src="libs/ng-sortable/dist/ng-sortable.js"></script>
-    <script src="libs/d3/d3.js"></script>
-    <script src="libs/c3/c3.js"></script>
-    <script src="libs/angular-xeditable/dist/js/xeditable.js"></script>
-    <script src="libs/apiman-manager-ui/dist/apiman-manager.js"></script>
     <script src="libs/hawtio-kube3d/dist/hawtio-kube3d.js"></script>
     <!-- endbower -->
 
@@ -133,8 +133,6 @@
     <script type="text/javascript" src="libs/codemirror/mode/yaml/yaml.js"></script>
 
     <script src="apiman/config.js"></script>
-    <script src="libs/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="libs/patternfly/dist/js/patternfly.js"></script>
     <!-- endbuild -->
 
     <style>

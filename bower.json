@@ -16,20 +16,22 @@
     "plugins"
   ],
   "dependencies": {
+    "apiman-manager-ui": "v1.2.0.Alpha1",
+    "bootstrap": "~3.3.5",
     "hawtio-core": "~2.0.18",
     "hawtio-core-navigation": "~2.0.51",
-    "hawtio-utilities": "~2.0.0",
+    "hawtio-extension-service": "~2.0.2",
+    "hawtio-forge": "~2.0.24",
+    "hawtio-integration": "~2.0.4",
     "hawtio-jmx": "~2.0.53",
-    "hawtio-wiki": "~2.0.33",
-    "hawtio-kubernetes": "~2.1.35",
+    "hawtio-kube3d": "~2.0.8",
+    "hawtio-kubernetes": "~2.1.36",
+    "hawtio-oauth": "~2.0.26",
     "hawtio-preferences": "~2.0.3",
     "hawtio-template-cache": "~2.0.3",
-    "hawtio-oauth": "~2.0.26",
-    "hawtio-forge": "~2.0.24",
-    "hawtio-extension-service": "~2.0.2",
-    "hawtio-integration": "~2.0.4",
-    "apiman-manager-ui": "v1.2.0.Alpha1",
-    "hawtio-kube3d": "~2.0.8"
+    "hawtio-utilities": "~2.0.0",
+    "hawtio-wiki": "~2.0.33",
+    "patternfly": "~2.2.0"
   },
   "devDependencies": {
     "bootstrap": "~3.3.1",
@@ -39,6 +41,7 @@
   "resolutions": {
     "lodash": "~3.2.0",
     "codemirror": "^5.0",
-    "jquery": "^2.1.8-M1"
+    "jquery": "^2.1.8-M1",
+    "patternfly": "~1.1.2"
   }
 }
