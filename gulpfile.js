@@ -11,9 +11,7 @@ var gulp = require('gulp'),
     urljoin = require('url-join'),
     s = require('underscore.string'),
     hawtio = require('hawtio-node-backend'),
-    tslint = require('gulp-tslint'),
-    stringifyObject = require('stringify-object'),
-    tslintRules = require('./tslint.json');
+    stringifyObject = require('stringify-object');
 
 var plugins = gulpLoadPlugins({});
 var pkg = require('./package.json');
@@ -44,9 +42,6 @@ var config = {
     declarationFiles: false,
     noExternalResolve: false
   }),
-  tsLintOptions: {
-    rulesDirectory: './tslint-rules/'
-  }
 };
 
 var normalSizeOptions = {
@@ -143,20 +138,6 @@ gulp.task('tsc', ['clean-defs'], function() {
         }));
 });
 
-gulp.task('tslint', function(){
-  gulp.src(config.ts)
-    .pipe(tslint(config.tsLintOptions))
-    .pipe(tslint.report('verbose'));
-});
-
-gulp.task('tslint-watch', function(){
-  gulp.src(config.ts)
-    .pipe(tslint(config.tsLintOptions))
-    .pipe(tslint.report('prose', {
-      emitError: false
-    }));
-});
-
 gulp.task('less', function () {
   return gulp.src(config.less)
     .pipe(plugins.less({
@@ -180,10 +161,8 @@ gulp.task('template', ['tsc'], function() {
 
 gulp.task('concat', ['template'], function() {
   var gZipSize = size(gZippedSizeOptions);
-  var license = tslintRules.rules['license-header'][1];
   return gulp.src(['compiled.js', 'templates.js'])
     .pipe(plugins.concat(config.js))
-    .pipe(plugins.header(license))
     .pipe(size(normalSizeOptions))
     .pipe(gZipSize)
     .pipe(gulp.dest(config.dist));
@@ -199,7 +178,7 @@ gulp.task('watch', ['build', 'build-example'], function() {
     gulp.start('reload');
   });
   plugins.watch(['libs/**/*.d.ts', config.ts, config.templates], function() {
-    gulp.start(['tslint-watch', 'tsc', 'template', 'concat', 'clean']);
+    gulp.start(['tsc', 'template', 'concat', 'clean']);
   });
   plugins.watch([config.testTs, config.testTemplates], function() {
     gulp.start(['example-tsc', 'example-template', 'example-concat', 'example-clean']);
@@ -580,7 +559,7 @@ gulp.task('deploy', function() {
     }));
 });
 
-gulp.task('build', ['bower', 'path-adjust', 'tslint', 'tsc', 'less', 'template', 'concat', 'clean']);
+gulp.task('build', ['bower', 'path-adjust', 'tsc', 'less', 'template', 'concat', 'clean']);
 
 gulp.task('build-example', ['example-tsc', 'example-template', 'example-concat', 'example-clean']);
 

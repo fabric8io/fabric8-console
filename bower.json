@@ -16,7 +16,6 @@
     "plugins"
   ],
   "dependencies": {
-    "apiman-manager-ui": "v1.2.0.Alpha2",
     "bootstrap": "~3.3.5",
     "hawtio-core": "~2.0.18",
     "hawtio-core-navigation": "~2.0.51",

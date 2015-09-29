@@ -16,75 +16,13 @@
 /// <reference path="../../includes.ts"/>
 /// <reference path="mainGlobals.ts"/>
 
-// TODO not sure if these are required? They are defined in hawtio-kubernetes too...
-/*
-declare var OSOAuthConfig: Kubernetes.OpenShiftOAuthConfig;
-declare var GoogleOAuthConfig: Kubernetes.GoogleOAuthConfig;
-declare var KeycloakConfig: Kubernetes.KeyCloakAuthConfig;
-*/
-
 module Main {
 
   export var _module = angular.module(pluginName, []);
 
   var tab = undefined;
 
-  _module.config(["$locationProvider", "$routeProvider", "HawtioNavBuilderProvider",
-    ($locationProvider, $routeProvider: ng.route.IRouteProvider, builder: HawtioMainNav.BuilderFactory) => {
-/*
-    tab = builder.create()
-      .id(pluginName)
-      .title(() => "Example")
-      .href(() => "/example")
-      .subPath("Page 1", "page1", builder.join(templatePath, "page1.html"))
-      .build();
-    builder.configureRouting($routeProvider, tab);
-    $locationProvider.html5Mode(true);
-*/
-  }]);
-
-  _module.run(["$rootScope", "HawtioNav", "KubernetesModel", "ServiceRegistry", "Logger", "Configuration", ($rootScope, nav: HawtioMainNav.Registry, KubernetesModel, ServiceRegistry, Logger, Configuration) => {
-    
-    if (Configuration.platform === 'fabric8') {
-       var apiEndpointConfig = Configuration.api.endpoint.toLowerCase();
-       var dynamicEndpoint;
-
-       // Gets called back so we can update the endpoint settings when the namespace changes
-       $rootScope.$on('kubernetesModelUpdated', function () {
-         //if the endpoint config starts with 'dynamic' then try to lookup the apiman
-         //backend in the current namespace. By default you'd want to use the dynamicRoute since
-         //that is the only publicly available endpoint, but there maybe usecases where you'd want
-         //to use the ServiceUrl (Kubernetes Service IP address), or the Kubernetes Proxy.
-         //dynamicRoute, dynamicServiceUrl, dynamicProxyUrl
-         if (apiEndpointConfig.indexOf("dynamic") === 0) {
-            var namespace = KubernetesModel.currentNamespace();
-            var hasService = ServiceRegistry.hasService("apiman");
-            if (hasService === true && namespace !== null) {
-               var service = KubernetesModel.getService(namespace, "apiman");
-               Logger.debug("apiman route: " + service.$connectUrl);
-               Logger.debug("apiman proxyUrl: " + service.proxyUrl);
-               Logger.debug("apiman serviceUrl: " + service.$serviceUrl);
-               if (apiEndpointConfig === "dynamicServiceUrl") {
-                    dynamicEndpoint = service.$serviceUrl + "apiman";
-               } else if (apiEndpointConfig === "dynamicProxyUrl") {
-                    dynamicEndpoint = service.proxyUrl + "apiman";
-               } else {
-                    dynamicEndpoint = service.$connectUrl + "apiman";
-               }
-               if (Configuration.api.endpoint !== dynamicEndpoint) {
-                    Configuration.api.endpoint = dynamicEndpoint;
-                    Logger.debug("apiman route: {0}", service.$connectUrl);
-                    Logger.debug("apiman proxyUrl: {0} ", service.proxyUrl);
-                    Logger.debug("apiman serviceUrl: {0}", service.$serviceUrl);
-                    Logger.info("Apiman Dynamic Endpoint: {0}", dynamicEndpoint);
-               }
-            } else {
-               Configuration.api.endpoint = "no-apiman-running-in-" + namespace + "-namespace";
-               // Logger.debug("No apiman running in {0} namespace", namespace);
-            }
-         }
-       });
-    }
+  _module.run(["$rootScope", "HawtioNav", "KubernetesModel", "ServiceRegistry", ($rootScope, nav: HawtioMainNav.Registry, KubernetesModel, ServiceRegistry) => {
 
     nav.on(HawtioMainNav.Actions.CHANGED, pluginName, (items) => {
       items.forEach((item) => {
@@ -122,7 +60,17 @@ module Main {
       title: () => 'API Management',
       tooltip: () => 'Add Policies and Plans to your APIs with Apiman',
       isValid: () => ServiceRegistry.hasService('apiman') && !Core.isRemoteConnection(),
-      href: () => "/api-manager"
+      oldHref: () => { /* nothing to do */ },
+      href: () => {
+        var hash = {
+          backTo: new URI().toString(),
+          token: HawtioOAuth.getOAuthToken()
+        };
+        var uri = new URI(ServiceRegistry.serviceLink('apiman'));
+        // TODO have to overwrite the port here for some reason
+        (<any>uri.port('80').query({}).segment('apimanui/')).hash(URI.encode(angular.toJson(hash)));
+        return uri.toString();
+      }    
     });
 
     nav.add({
