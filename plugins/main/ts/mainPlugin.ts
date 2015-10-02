@@ -68,7 +68,7 @@ module Main {
         };
         var uri = new URI(ServiceRegistry.serviceLink('apiman'));
         // TODO have to overwrite the port here for some reason
-        (<any>uri.port('80').query({}).path('apimanui/')).hash(URI.encode(angular.toJson(hash)));
+        (<any>uri.port('80').query({}).path('apimanui/index.html')).hash(URI.encode(angular.toJson(hash)));
         return uri.toString();
       }    
     });
