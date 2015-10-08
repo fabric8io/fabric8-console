@@ -25,7 +25,7 @@
     "hawtio-integration": "~2.0.4",
     "hawtio-jmx": "~2.0.56",
     "hawtio-kube3d": "~2.0.10",
-    "hawtio-kubernetes": "~2.1.51",
+    "hawtio-kubernetes": "~2.1.52",
     "hawtio-oauth": "~2.0.26",
     "hawtio-preferences": "~2.0.3",
     "hawtio-template-cache": "~2.0.3",
