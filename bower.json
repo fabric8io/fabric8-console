@@ -36,6 +36,11 @@
     "hawtio-core-dts": "~2.0.0"
   },
   "overrides": {
+    "term.js": {
+      "main": [
+        "./src/term.js"
+      ]
+    },
     "bootstrap": {
       "main": [
         "dist/css/bootstrap.css",
