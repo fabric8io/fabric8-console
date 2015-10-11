@@ -1,0 +1,116 @@
+<div class="row" ng-controller="Forge.ReposController">
+  <div class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div class="row">
+    <div hawtio-tabs></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <hawtio-filter ng-model="tableConfig.filterOptions.filterText"
+                     ng-show="projects.length"
+                     css-class="input-xxlarge"
+                     placeholder="Filter repositories..."></hawtio-filter>
+      <!--
+            <span class="pull-right">&nbsp;</span>
+            <button ng-show="fetched"
+                    class="btn btn-danger pull-right"
+                    ng-disabled="tableConfig.selectedItems.length == 0"
+                    ng-click="delete(tableConfig.selectedItems)">
+              <i class="fa fa-remove"></i> Delete
+            </button>
+      -->
+      <span class="pull-right">&nbsp;</span>
+      <a class="btn btn-primary pull-right" href="{{$workspaceLink}}/forge/command/project-new"
+         ng-show="login.loggedIn"
+         title="Create a new project and repository">
+        <i class="fa fa-plus"></i> Create Project</a>
+      </a>
+      <span class="pull-right">&nbsp;</span>
+      <a class="btn btn-default pull-right" ng-click="logout()" ng-show="login.loggedIn"
+         title="Log out from the git repository">
+        <i class="fa fa-sign-out"></i> Log out</a>
+      </a>
+      <span class="pull-right" ng-show="login.loggedIn">&nbsp;</span>
+      <div class="user-icon-name pull-right" ng-show="login.loggedIn">
+        <img src="{{login.avatar_url}}" class="avatar-small-img" ng-show="login.avatar_url">&nbsp;
+        {{login.user}}
+      </div>
+    </div>
+  </div>
+
+
+  <div ng-show="!login.authHeader || login.relogin">
+    <div ng-show="login.failed">
+      <div class="bg-danger">
+        <div class="invalid-login align-center">
+          <h3>Invalid login/password. Please try again!</h3>
+        </div>
+      </div>
+    </div>
+    <h2 ng-hide="login.failed">Please login to the git repository</h2>
+
+    <form>
+      <div class="form-group">
+        <label for="gitUsername">User name</label>
+        <input type="text" class="form-control" id="gitUsername" placeholder="Enter user name" required="true"
+               ng-model="login.user">
+      </div>
+      <div class="form-group">
+        <label for="gitPassword">Password</label>
+        <input type="password" class="form-control" id="gitPassword" placeholder="Password" required="true"
+               ng-model="login.password">
+      </div>
+      <div class="form-group">
+        <label for="gitEmail">Email address</label>
+        <input type="email" class="form-control" id="gitEmail" placeholder="Enter email" required="true"
+               ng-model="login.email">
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" ng-click="doLogin()"
+                ng-disabled="!login.user || !login.password || !login.email">
+          <i class="fa fa-sign-in"></i> Sign In
+        </button>
+      </div>
+
+      <div class="form-group" ng-show="forgotPasswordUrl">
+          <a href="{{forgotPasswordUrl}}">Forgot password?</a>
+      </div>
+
+      <div class="form-group" ng-show="signUpUrl">
+        <a href="{{signUpUrl}}">Need an account? Sign up now.</a>
+      </div>
+    </form>
+  </div>
+
+  <div ng-hide="fetched || !login.authHeader || login.relogin">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="fetched && login.authHeader">
+    <div ng-hide="projects.length" class="align-center">
+      <div class="padded-div">
+        <div class="row">
+          <div class="col-md-12">
+            <p class="alert alert-info">There are no git repositories yet. Please create one!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div ng-show="projects.length">
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-condensed table-striped" hawtio-simple-table="tableConfig"></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,95 @@
+<div ng-controller="Forge.CommandController">
+  <div class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div class="row">
+    <div hawtio-tabs></div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <span class="pull-right">&nbsp;</span>
+
+      <div class="user-icon-name pull-right" ng-show="user">
+        <a href="/forge/repos" title="Browse the repositories for {{user}}">
+          <img src="{{avatar_url}}" class="avatar-small-img" ng-show="avatar_url">
+        </a>
+        &nbsp;
+        <a href="/forge/repos" title="Browse the repositories for {{user}}">
+          {{user}}
+        </a>
+        <span ng-show="repoName">/
+          <a href="/forge/repos/{{repoName}}" title="Browse the {{repoName}}repository">
+            {{repoName}}
+          </a>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <h3>{{schema.info.description}}</h3>
+    </div>
+  </div>
+  <div class="row" ng-show="executing">
+    <div class="col-md-12">
+      <p class="bg-info">executing...
+        <i class="fa fa-spinner fa-spin"></i>
+      </p>
+    </div>
+  </div>
+  <div class="row" ng-show="response">
+    <div class="col-md-12">
+      <p ng-show="response.message" ng-class="responseClass"><span class="response-message">{{response.message}}</span></p>
+      <p ng-show="response.output" ng-class="responseClass"><span class="response-output">{{response.output}}</span></p>
+      <p ng-show="response.err" ng-class="bg-warning"><span class="response-err">{{response.err}}</span></p>
+    </div>
+  </div>
+  <div class="row" ng-show="response.outputProperties.htmlUrl && id == 'project-new'">
+    <div class="col-md-12">
+      <p class="text-primary">
+        Created project in a new
+        <a target="gitrepo" href="{{response.outputProperties.htmlUrl}}" title="view the newly created git repository for the project">
+          repository <b>{{response.outputProperties.fullName}}</b>
+        </a>
+      </p>
+    </div>
+  </div>
+  <div class="row" ng-show="response && !invalid">
+    <div class="col-md-12">
+      <a class="btn btn-primary" href="{{commandsLink}}">Done</a>
+      <a class="btn btn-default" ng-click="response = null" ng-hide="wizardCompleted">Hide</a>
+    </div>
+  </div>
+  <div class="row" ng-show="validationError">
+    <div class="col-md-12">
+      <p class="bg-danger">{{validationError}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div ng-hide="fetched">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+      <div ng-show="fetched && !wizardCompleted">
+        <div hawtio-form-2="schema" entity='entity'></div>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-hide="wizardCompleted">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary"
+              title="Perform this command"
+              ng-show="fetched"
+              ng-disabled="executing"
+              ng-click="execute()">
+        Execute
+      </button>
+    </div>
+  </div>
+</div>

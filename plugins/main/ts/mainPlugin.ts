@@ -14,11 +14,12 @@
 /// limitations under the License.
 
 /// <reference path="../../includes.ts"/>
+/// <reference path="../../forge/ts/forgeHelpers.ts"/>
 /// <reference path="mainGlobals.ts"/>
 
 module Main {
 
-  export var _module = angular.module(pluginName, []);
+  export var _module = angular.module(pluginName, [Forge.pluginName]);
 
   var tab = undefined;
 
