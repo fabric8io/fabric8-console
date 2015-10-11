@@ -35,14 +35,21 @@
     "hawtio-core-dts": "~2.0.0"
   },
   "overrides": {
+    "term.js": {
+      "main": [
+        "./src/term.js"
+      ]
+    },
     "bootstrap": {
       "main": [
-        "dist/css/bootstrap.css"
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
       ]
     },
     "patternfly": {
       "main": [
-        "dist/css/patternfly.css"
+        "dist/css/patternfly.css",
+        "dist/js/patternfly.js"
       ]
     }
   },
