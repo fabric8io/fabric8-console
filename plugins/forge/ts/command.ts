@@ -27,9 +27,8 @@ module Forge {
 
         console.log("command page created");
 
-        redirectToGogsLoginIfRequired($location);
-
         initScope($scope, $location, $routeParams);
+        redirectToGogsLoginIfRequired($scope, $location);
 
         $scope.entity = {
         };

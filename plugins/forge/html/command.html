@@ -7,6 +7,7 @@
     <div hawtio-tabs></div>
   </div>
 
+<!--
   <div class="row">
     <div class="col-md-12">
       <span class="pull-right">&nbsp;</span>
@@ -27,6 +28,7 @@
       </div>
     </div>
   </div>
+-->
   <div class="row">
     <div class="col-md-12">
       <h3>{{schema.info.description}}</h3>
@@ -44,16 +46,6 @@
       <p ng-show="response.message" ng-class="responseClass"><span class="response-message">{{response.message}}</span></p>
       <p ng-show="response.output" ng-class="responseClass"><span class="response-output">{{response.output}}</span></p>
       <p ng-show="response.err" ng-class="bg-warning"><span class="response-err">{{response.err}}</span></p>
-    </div>
-  </div>
-  <div class="row" ng-show="response.outputProperties.htmlUrl && id == 'project-new'">
-    <div class="col-md-12">
-      <p class="text-primary">
-        Created project in a new
-        <a target="gitrepo" href="{{response.outputProperties.htmlUrl}}" title="view the newly created git repository for the project">
-          repository <b>{{response.outputProperties.fullName}}</b>
-        </a>
-      </p>
     </div>
   </div>
   <div class="row" ng-show="response && !invalid">

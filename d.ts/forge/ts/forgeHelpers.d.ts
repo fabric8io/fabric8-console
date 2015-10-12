@@ -1,7 +1,6 @@
 declare module Forge {
     var context: string;
     var hash: string;
-    var defaultRoute: string;
     var pluginName: string;
     var pluginPath: string;
     var templatePath: string;
@@ -29,5 +28,5 @@ declare module Forge {
     function createHttpUrl(url: any, authHeader?: any, email?: any): any;
     function commandMatchesText(command: any, filterText: any): any;
     function isLoggedIntoGogs(): boolean;
-    function redirectToGogsLoginIfRequired($location: any, loginPage?: string): void;
+    function redirectToGogsLoginIfRequired($scope: any, $location: any): void;
 }

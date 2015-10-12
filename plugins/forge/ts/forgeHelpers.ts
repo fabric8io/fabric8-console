@@ -2,8 +2,8 @@
 module Forge {
 
   export var context = '/workspaces/:namespace/forge';
+
   export var hash = '#' + context;
-  export var defaultRoute = hash + '/projects';
   export var pluginName = 'Forge';
   export var pluginPath = 'plugins/forge/';
   export var templatePath = pluginPath + 'html/';
@@ -21,10 +21,10 @@ module Forge {
   }
 
   export function initScope($scope, $location, $routeParams) {
-    $scope.id = $routeParams["id"];
+    $scope.projectId = $routeParams["project"];
     $scope.$workspaceLink = Developer.workspaceLink();
-    $scope.breadcrumbConfig = Developer.createProjectBreadcrumbs($scope.id);
-    $scope.subTabConfig = Developer.createProjectSubNavBars($scope.id);
+    $scope.breadcrumbConfig = Developer.createProjectBreadcrumbs($scope.projectId);
+    $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);
   }
 
   export function commandLink(name, resourcePath) {
@@ -202,8 +202,11 @@ module Forge {
 */
   }
 
-  export function redirectToGogsLoginIfRequired($location, loginPage = "/forge/repos") {
+  export function redirectToGogsLoginIfRequired($scope, $location) {
     if (!isLoggedIntoGogs()) {
+      var devLink = Developer.projectLink($scope.projectId);
+      var loginPage = UrlHelpers.join(devLink, "forge/repos");
+      log.info("Not logged in so redirecting to " + loginPage);
       $location.path(loginPage)
     }
   }

@@ -1,4 +1,5 @@
 /// <reference path="../../includes.ts"/>
+/// <reference path="forgeHelpers.ts"/>
 /// <reference path="forgePlugin.ts"/>
 
 module Forge {
@@ -6,6 +7,7 @@ module Forge {
   export var ReposController = controller("ReposController", ["$scope", "$dialog", "$window", "$templateCache", "$routeParams", "$location", "localStorage", "$http", "$timeout", "ForgeApiURL", "ServiceRegistry",
     ($scope, $dialog, $window, $templateCache, $routeParams, $location:ng.ILocationService, localStorage, $http, $timeout, ForgeApiURL, ServiceRegistry) => {
 
+      log.info("repos controller start!");
       $scope.resourcePath = $routeParams["path"];
       $scope.commandsLink = commandsLink;
 

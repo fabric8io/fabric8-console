@@ -10,9 +10,8 @@ module Forge {
 
         $scope.name = $routeParams["path"];
 
-        redirectToGogsLoginIfRequired($location);
-
         initScope($scope, $location, $routeParams);
+        redirectToGogsLoginIfRequired($scope, $location);
 
         $scope.$on('$routeUpdate', ($event) => {
           updateData();

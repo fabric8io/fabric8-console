@@ -18,8 +18,6 @@ module Forge {
         $scope.projectDescription = "/" + $scope.projectDescription;
       }
 
-      redirectToGogsLoginIfRequired($location);
-
       $scope.avatar_url = localStorage["gogsAvatarUrl"];
       $scope.user = localStorage["gogsUser"];
 
@@ -27,6 +25,8 @@ module Forge {
       $scope.fetched = $scope.commands.length !== 0;
 
       initScope($scope, $location, $routeParams);
+      redirectToGogsLoginIfRequired($scope, $location);
+
 
       $scope.tableConfig = {
         data: 'commands',
