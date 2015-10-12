@@ -131,7 +131,7 @@ module Forge {
             $scope.commands = _.sortBy(data, "name");
             angular.forEach($scope.commands, (command) => {
               var id = command.id || command.name;
-              command.$link = commandLink(id, resourcePath);
+              command.$link = commandLink($scope.projectId, id, resourcePath);
 
               var name = command.name || command.id;
               var folderName = command.category;

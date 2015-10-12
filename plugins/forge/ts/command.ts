@@ -22,13 +22,16 @@ module Forge {
           $scope.repoName = pathSteps[pathSteps.length - 1];
         }
 
-        $scope.commandsLink = ($scope.path || $scope.id  === 'project-new')
-          ? "/forge/repos" : commandsLink($scope.resourcePath);
-
-        console.log("command page created");
 
         initScope($scope, $location, $routeParams);
         redirectToGogsLoginIfRequired($scope, $location);
+
+        $scope.$completeLink = $scope.$projectLink;
+        if ($scope.projectId) {
+
+        }
+        $scope.commandsLink = commandsLink($scope.resourcePath, $scope.projectId);
+        $scope.completedLink = $scope.projectId ? UrlHelpers.join($scope.$projectLink, "environments") : $scope.$projectLink;
 
         $scope.entity = {
         };
@@ -115,7 +118,8 @@ module Forge {
                 if ($scope.response && fullName && $scope.id === 'project-new') {
                   $scope.response = null;
                   // lets forward to the devops edit page
-                  var editPath = UrlHelpers.join(Developer.workspaceLink(), "/forge/command/devops-edit/user", fullName);
+                  var projectId = fullName.replace('/', "-");
+                  var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit/user", fullName);
                   log.info("Moving to the devops edit path: " + editPath);
                   $location.path(editPath);
                 }

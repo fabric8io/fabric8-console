@@ -9,7 +9,7 @@ module Forge {
 
       log.info("repos controller start!");
       $scope.resourcePath = $routeParams["path"];
-      $scope.commandsLink = commandsLink;
+      $scope.commandsLink = (path) => commandsLink(path, $scope.projectId);
 
       var gogsUrl = ServiceRegistry.serviceLink(gogsServiceName);
       if (gogsUrl) {
@@ -76,7 +76,7 @@ module Forge {
         if (_.isArray(selected) && selected.length) {
           resourcePath = selected[0].path;
         }
-        var link = commandsLink(resourcePath);
+        var link = commandsLink(resourcePath, $scope.projectId);
         log.info("moving to commands link: " + link);
         $location.path(link);
       };

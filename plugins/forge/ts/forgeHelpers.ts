@@ -23,26 +23,29 @@ module Forge {
   export function initScope($scope, $location, $routeParams) {
     $scope.projectId = $routeParams["project"];
     $scope.$workspaceLink = Developer.workspaceLink();
+    $scope.$projectLink = Developer.projectLink($scope.projectId);
     $scope.breadcrumbConfig = Developer.createProjectBreadcrumbs($scope.projectId);
     $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);
   }
 
-  export function commandLink(name, resourcePath) {
+  export function commandLink(projectId, name, resourcePath) {
+    var link = Developer.projectLink(projectId);
     if (name) {
       if (resourcePath) {
-        return UrlHelpers.join(Developer.workspaceLink(), "/forge/command", name, resourcePath);
+        return UrlHelpers.join(link, "/forge/command", name, resourcePath);
       } else {
-        return UrlHelpers.join(Developer.workspaceLink(), "/forge/command/", name);
+        return UrlHelpers.join(link, "/forge/command/", name);
       }
     }
     return null;
   }
 
-  export function commandsLink(resourcePath) {
+  export function commandsLink(resourcePath, projectId) {
+    var link = Developer.projectLink(projectId);
     if (resourcePath) {
-      return UrlHelpers.join(Developer.workspaceLink(), "/forge/commands/user", resourcePath);
+      return UrlHelpers.join(link, "/forge/commands/user", resourcePath);
     } else {
-      return UrlHelpers.join(Developer.workspaceLink(), "/forge/commands");
+      return UrlHelpers.join(link, "/forge/commands");
     }
   }
 
@@ -122,6 +125,7 @@ module Forge {
     var owner = repo.owner || {};
     var user = owner.username || repo.user;
     var name = repo.name;
+    var projectId = name;
     var avatar_url = owner.avatar_url;
     if (avatar_url && avatar_url.startsWith("http//")) {
       avatar_url = "http://" + avatar_url.substring(6);
@@ -129,7 +133,7 @@ module Forge {
     }
     if (user && name) {
       var resourcePath = user + "/" + name;
-      repo.$commandsLink = commandsLink(resourcePath);
+      repo.$commandsLink = commandsLink(resourcePath, projectId);
       repo.$buildsLink = "/kubernetes/builds?q=/" + resourcePath + ".git";
       var injector = HawtioCore.injector;
       if (injector) {
