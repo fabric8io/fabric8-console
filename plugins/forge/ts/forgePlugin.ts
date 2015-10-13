@@ -25,19 +25,19 @@ module Forge {
 
   }]);
 
-  _module.factory('ForgeApiURL', ['jolokiaUrl', 'jolokia', '$q', '$rootScope', (jolokiaUrl:string, jolokia:Jolokia.IJolokia, $q:ng.IQService, $rootScope:ng.IRootScopeService) => {
+  _module.factory('ForgeApiURL', ['$q', '$rootScope', ($q:ng.IQService, $rootScope:ng.IRootScopeService) => {
     return Kubernetes.kubernetesApiUrl() + "/proxy" + Kubernetes.kubernetesNamespacePath() + "/services/fabric8-forge/api/forge";
   }]);
 
 
-  _module.factory('ForgeModel', ['jolokiaUrl', 'jolokia', '$q', '$rootScope', (jolokiaUrl:string, jolokia:Jolokia.IJolokia, $q:ng.IQService, $rootScope:ng.IRootScopeService) => {
+  _module.factory('ForgeModel', ['$q', '$rootScope', ($q:ng.IQService, $rootScope:ng.IRootScopeService) => {
     return {
       rootProject: {},
       projects: []
     }
   }]);
 
-  _module.run(['viewRegistry', 'workspace', 'HawtioNav', (viewRegistry, workspace:Core.Workspace, HawtioNav) => {
+  _module.run(['viewRegistry', 'HawtioNav', (viewRegistry, HawtioNav) => {
     viewRegistry['forge'] = templatePath + 'layoutForge.html';
   }]);
 

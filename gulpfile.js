@@ -11,6 +11,8 @@ var gulp = require('gulp'),
     urljoin = require('url-join'),
     s = require('underscore.string'),
     hawtio = require('hawtio-node-backend'),
+    del = require('del'),
+    vinylPaths = require('vinyl-paths'),
     stringifyObject = require('stringify-object');
 
 var plugins = gulpLoadPlugins({});
@@ -417,7 +419,31 @@ gulp.task('site-resources', [], function() {
              .pipe(gulp.dest('site'));
 });
 
-gulp.task('site', ['site-resources', 'usemin'], function() {
+gulp.task('fetch-java-console', function() {
+  return plugins.download(urljoin('https://github.com/hawtio/openshift-jvm/archive', 'v' + pkg.properties['openshift-jvm-version'] + '-build.tar.gz'))
+    .pipe(plugins.gunzip())
+    .pipe(plugins.untar())
+    .pipe(gulp.dest('site'));
+});
+
+gulp.task('rename-java-console', ['fetch-java-console'], function() {
+  return gulp.src('site/openshift-jvm-' + pkg.properties['openshift-jvm-version'] + '-build/*')
+           .pipe(vinylPaths(del))
+           .pipe(gulp.dest('site/java'));
+});
+
+gulp.task('delete-tmp-dir', ['rename-java-console'], function() {
+  return del('site/openshift-jvm-' + pkg.properties['openshift-jvm-version'] + '-build');
+});
+
+gulp.task('update-java-console-href', ['delete-tmp-dir'], function() {
+  gulp.src(['site/java/index.html', 'site/java/404.html'])
+    .pipe(plugins.regexReplace({ regex: '<base href="/"', replace: '<base href="/java/"' }))
+    .pipe(plugins.regexReplace({ regex: 'img/logo-origin-thin.svg', replace: '/img/fabric8_logo.svg' }))
+    .pipe(gulp.dest('site/java'));
+});
+
+gulp.task('site', ['site-resources', 'usemin', 'update-java-console-href'], function() {
   gulp.src('site/index.html')
     .pipe(plugins.rename('404.html'))
     .pipe(gulp.dest('site'));

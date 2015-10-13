@@ -40,7 +40,7 @@ module Main {
       id: 'library',
       title: () => 'Library',
       tooltip: () => 'View the library of applications',
-      isValid: () => ServiceRegistry.hasService(appLibraryServiceName) && ServiceRegistry.hasService("app-library-jolokia") && !Core.isRemoteConnection(),
+      isValid: () => ServiceRegistry.hasService(appLibraryServiceName) && ServiceRegistry.hasService("app-library-jolokia"),
       href: () => "/wiki/view",
       isActive: () => false
     });
@@ -51,7 +51,7 @@ module Main {
       id: 'kibana',
       title: () =>  'Logs',
       tooltip: () => 'View and search all logs across all containers using Kibana and ElasticSearch',
-      isValid: () => ServiceRegistry.hasService(kibanaServiceName) && !Core.isRemoteConnection(),
+      isValid: () => ServiceRegistry.hasService(kibanaServiceName),
       href: () => Kubernetes.kibanaLogsLink(ServiceRegistry),
       isActive: () => false
     });
@@ -60,7 +60,7 @@ module Main {
       id: 'apiman',
       title: () => 'API Management',
       tooltip: () => 'Add Policies and Plans to your APIs with Apiman',
-      isValid: () => ServiceRegistry.hasService('apiman') && !Core.isRemoteConnection(),
+      isValid: () => ServiceRegistry.hasService('apiman'),
       oldHref: () => { /* nothing to do */ },
       href: () => {
         var hash = {
@@ -78,7 +78,7 @@ module Main {
       id: 'grafana',
       title: () =>  'Metrics',
       tooltip: () => 'Views metrics across all containers using Grafana and InfluxDB',
-      isValid: () => ServiceRegistry.hasService(grafanaServiceName) && !Core.isRemoteConnection(),
+      isValid: () => ServiceRegistry.hasService(grafanaServiceName),
       href: () => ServiceRegistry.serviceLink(grafanaServiceName),
       isActive: () => false
     });
@@ -87,7 +87,7 @@ module Main {
       id: "chat",
       title: () =>  'Chat',
       tooltip: () => 'Chat room for discussing this namespace',
-      isValid: () => ServiceRegistry.hasService(chatServiceName) && !Core.isRemoteConnection(),
+      isValid: () => ServiceRegistry.hasService(chatServiceName),
       href: () => {
         var answer = ServiceRegistry.serviceLink(chatServiceName);
         if (answer) {
