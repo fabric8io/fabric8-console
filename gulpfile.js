@@ -403,24 +403,6 @@ gulp.task('site-fonts', function() {
     .pipe(gulp.dest('site/fonts'));
 });
 
-gulp.task('tweak-open-sans', ['site-fonts'], function() {
-  return gulp.src('site/fonts/OpenSans*')
-    .pipe(plugins.flatten())
-    .pipe(plugins.chmod(644))
-    .pipe(plugins.dedupe({ same: false }))
-    .pipe(plugins.debug({title: 'opensans files'}))
-    .pipe(gulp.dest('site/fonts'));
-});
-
-gulp.task('tweak-droid-sans-mono', ['site-fonts'], function() {
-  return gulp.src('site/fonts/DroidSansMono*')
-    .pipe(plugins.flatten())
-    .pipe(plugins.chmod(644))
-    .pipe(plugins.dedupe({ same: false }))
-    .pipe(plugins.debug({title: 'droid sans mono files'}))
-    .pipe(gulp.dest('site/fonts'));
-});
-
 gulp.task('swf', function() {
   return gulp.src(['libs/**/*.swf'], { base: '.' })
     .pipe(plugins.flatten())
@@ -430,7 +412,7 @@ gulp.task('swf', function() {
     .pipe(gulp.dest('site/img/', { overwrite: false }));
 });
 
-gulp.task('site-files', ['swf', 'tweak-open-sans', 'tweak-droid-sans-mono'], function() {
+gulp.task('site-files', ['swf', 'site-fonts'], function() {
   return gulp.src(['resources/**', 'favicon.ico', 'resources/**', 'images/**', 'img/**', 'osconsole/config.*.js.tmpl', 'apiman/config.js'], {base: '.'})
     .pipe(plugins.chmod(644))
     .pipe(plugins.debug({title: 'site files'}))
@@ -552,7 +534,7 @@ gulp.task('deploy', function() {
     }));
 });
 
-gulp.task('site', ['site-fonts', 'tweak-open-sans', 'tweak-droid-sans-mono', 'swf', 'site-files', 'usemin', 'site-resources', 'tweak-urls', '404', 'copy-images']);
+gulp.task('site', ['site-fonts', 'swf', 'site-files', 'usemin', 'site-resources', 'tweak-urls', '404', 'copy-images']);
 
 gulp.task('build', ['bower', 'path-adjust', 'tsc', 'less', 'template', 'concat', 'clean']);
 
