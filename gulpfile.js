@@ -397,6 +397,8 @@ gulp.task('reload', function() {
 gulp.task('site-fonts', function() {
   return gulp.src(['libs/**/*.woff', 'libs/**/*.woff2', 'libs/**/*.ttf'], { base: '.' })
     .pipe(plugins.flatten())
+    .pipe(plugins.chmod(644))
+    .pipe(plugins.dedupe({ same: false }))
     .pipe(plugins.debug({title: 'site font files'}))
     .pipe(gulp.dest('site/fonts'));
 });
@@ -404,20 +406,35 @@ gulp.task('site-fonts', function() {
 gulp.task('tweak-open-sans', ['site-fonts'], function() {
   return gulp.src('site/fonts/OpenSans*')
     .pipe(plugins.flatten())
+    .pipe(plugins.chmod(644))
+    .pipe(plugins.dedupe({ same: false }))
+    .pipe(plugins.debug({title: 'opensans files'}))
     .pipe(gulp.dest('site/fonts'));
 });
 
 gulp.task('tweak-droid-sans-mono', ['site-fonts'], function() {
   return gulp.src('site/fonts/DroidSansMono*')
     .pipe(plugins.flatten())
+    .pipe(plugins.chmod(644))
+    .pipe(plugins.dedupe({ same: false }))
+    .pipe(plugins.debug({title: 'droid sans mono files'}))
     .pipe(gulp.dest('site/fonts'));
 });
 
-gulp.task('site-files', ['tweak-open-sans', 'tweak-droid-sans-mono'], function() {
-  return gulp.src(['resources/**', 'favicon.ico', 'resources/**', 'images/**', 'img/**', 'libs/**/*.swf'], {base: '.'})
+gulp.task('swf', function() {
+  return gulp.src(['libs/**/*.swf'], { base: '.' })
+    .pipe(plugins.flatten())
+    .pipe(plugins.chmod(644))
+    .pipe(plugins.dedupe({ same: false }))
+    .pipe(plugins.debug({title: 'swf files'}))
+    .pipe(gulp.dest('site/img/', { overwrite: false }));
+});
+
+gulp.task('site-files', ['swf', 'tweak-open-sans', 'tweak-droid-sans-mono'], function() {
+  return gulp.src(['resources/**', 'favicon.ico', 'resources/**', 'images/**', 'img/**', 'osconsole/config.*.js.tmpl', 'apiman/config.js'], {base: '.'})
+    .pipe(plugins.chmod(644))
     .pipe(plugins.debug({title: 'site files'}))
     .pipe(gulp.dest('site'));
-
 });
 
 gulp.task('usemin', ['site-files'], function() {
@@ -460,18 +477,46 @@ gulp.task('delete-tmp-dir', ['rename-java-console'], function() {
 });
 
 gulp.task('update-java-console-href', ['delete-tmp-dir'], function() {
-  gulp.src(['site/java/index.html', 'site/java/404.html'])
+  return gulp.src(['site/java/index.html', 'site/java/404.html'])
     .pipe(plugins.regexReplace({ regex: '<base href="/"', replace: '<base href="/java/"' }))
     .pipe(plugins.regexReplace({ regex: 'img/logo-origin-thin.svg', replace: '/img/fabric8_logo.svg' }))
     .pipe(gulp.dest('site/java'));
 });
 
-gulp.task('site', ['site-resources', 'usemin', 'update-java-console-href'], function() {
-  gulp.src('site/index.html')
+gulp.task('404', ['usemin'], function() {
+  return gulp.src('site/index.html')
     .pipe(plugins.rename('404.html'))
     .pipe(gulp.dest('site'));
-  return gulp.src(['img/**', 'osconsole/config.*.js.tmpl', 'apiman/config.js'], { base: '.' })
+});
+
+gulp.task('tweak-urls', ['usemin'], function() {
+  return gulp.src('site/style.css')
+    .pipe(plugins.replace(/url\(\.\.\//g, 'url('))
+    .pipe(plugins.replace(/url\(libs\/bootstrap\/dist\//g, 'url('))
+    .pipe(plugins.replace(/url\(libs\/patternfly\/components\/bootstrap\/dist\//g, 'url('))
+    .pipe(plugins.debug({title: 'tweak-urls'}))
     .pipe(gulp.dest('site'));
+});
+
+gulp.task('copy-images', ['404', 'tweak-urls'], function() {
+  var dirs = fs.readdirSync('./libs');
+  var patterns = [];
+  dirs.forEach(function(dir) {
+    var path = './libs/' + dir + "/img";
+    try {
+      if (fs.statSync(path).isDirectory()) {
+        console.log("found image dir: " + path);
+        var pattern = 'libs/' + dir + "/img/**";
+        patterns.push(pattern);
+      }
+    } catch (e) {
+      // ignore, file does not exist
+    }
+  });
+  return gulp.src(patterns)
+           .pipe(plugins.debug({ title: 'img-copy' }))
+           .pipe(plugins.chmod(644))
+           .pipe(gulp.dest('site/img'));
 });
 
 gulp.task('serve-site', function() {
@@ -506,6 +551,8 @@ gulp.task('deploy', function() {
       message: "[ci skip] Update site"                     
     }));
 });
+
+gulp.task('site', ['site-fonts', 'tweak-open-sans', 'tweak-droid-sans-mono', 'swf', 'site-files', 'usemin', 'site-resources', 'tweak-urls', '404', 'copy-images']);
 
 gulp.task('build', ['bower', 'path-adjust', 'tsc', 'less', 'template', 'concat', 'clean']);
 
