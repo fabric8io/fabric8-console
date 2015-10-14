@@ -450,8 +450,8 @@ gulp.task('fetch-java-console', function() {
 });
 
 gulp.task('rename-java-console', ['fetch-java-console'], function() {
-  return gulp.src('site/openshift-jvm-' + pkg.properties['openshift-jvm-version'] + '-build/*')
-           .pipe(vinylPaths(del))
+  var dir = 'openshift-jvm-' + pkg.properties['openshift-jvm-version'] + '-build';
+  return gulp.src([urljoin('site', dir, '**')])
            .pipe(gulp.dest('site/java'));
 });
 
