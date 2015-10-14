@@ -445,6 +445,7 @@ gulp.task('fetch-java-console', function() {
   return plugins.download(urljoin('https://github.com/hawtio/openshift-jvm/archive', 'v' + pkg.properties['openshift-jvm-version'] + '-build.tar.gz'))
     .pipe(plugins.gunzip())
     .pipe(plugins.untar())
+    .pipe(plugins.debug({ title: 'java console file: '}))
     .pipe(gulp.dest('site'));
 });
 
