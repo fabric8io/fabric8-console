@@ -92,6 +92,9 @@
     <script src="libs/hawtio-kubernetes/dist/hawtio-kubernetes.js"></script>
     <script src="libs/hawtio-preferences/dist/hawtio-preferences.js"></script>
     <script src="libs/hawtio-kube3d/dist/hawtio-kube3d.js"></script>
+
+    <!-- NOTE we need to make sure this is loaded much later than d3.js! -->
+    <script src="libs/nvd3/build/nv.d3.js"></script>
     <!-- endbower -->
 
     <script type="text/javascript" src="libs/codemirror/addon/edit/closetag.js"></script>
@@ -113,9 +116,6 @@
     <script src="apiman/config.js"></script>
     <!-- endbuild -->
 
-
-    <!-- NOTE we need to make sure this is loaded much later than d3.js! -->
-    <script src="libs/nvd3/build/nv.d3.js"></script>
 
     <style>
           .navbar-brand > img {
