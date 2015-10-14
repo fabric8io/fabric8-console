@@ -190,7 +190,7 @@ gulp.task('watch', ['build', 'build-example'], function() {
   });
 });
 
-gulp.task('connect', ['watch'], function() {
+function createConnectConfig() {
   // lets disable unauthorised TLS issues with kube REST API
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -290,24 +290,41 @@ gulp.task('connect', ['watch'], function() {
   }];
 
   var staticProxies = localProxies.concat(defaultProxies);
-
   var debugLoggingOfProxy = process.env.DEBUG_PROXY === "true";
   var useAuthentication = process.env.DISABLE_OAUTH !== "true";
-
   var googleClientId = process.env.GOOGLE_OAUTH_CLIENT_ID;
   var googleClientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
 
-
-  hawtio.setConfig({
+  return {
     port: 9000,
     staticProxies: staticProxies,
     staticAssets: staticAssets,
     fallback: 'index.html',
     liveReload: {
       enabled: true
+    },
+    other: {
+      oapi: oapi,
+      kube: kube,
+      kubeBase: kubeBase,
+      googleClientId: googleClientId,
+      googleClientSecret: googleClientSecret,
+      debugLoggingOfProxy: debugLoggingOfProxy,
+      useAuthentication: useAuthentication
     }
-  });
-  var debugLoggingOfProxy = process.env.DEBUG_PROXY === "true";
+  };
+};
+
+function setupAndListen(hawtio, config) {
+  hawtio.setConfig(config);
+  var debugLoggingOfProxy = config.other.debugLoggingOfProxy;
+  var useAuthentication = config.other.useAuthentication;
+  var googleClientId = config.other.googleClientId;
+  var googleClientSecret = config.other.googleClientSecret;
+  var oapi = config.other.oapi;
+  var kube = config.other.kube;
+  var kubeBase = config.other.kubeBase;
+
   hawtio.use('/osconsole/config.js', function(req, res, next) {
     var config = {
       api: {
@@ -326,14 +343,13 @@ gulp.task('connect', ['watch'], function() {
     if (googleClientId && googleClientSecret) {
       config.master_uri = kubeBase;
       config.google = {
-         clientId: googleClientId,
-         clientSecret: googleClientSecret,
-         authenticationURI: "https://accounts.google.com/o/oauth2/auth",
-         authorizationURI: "https://accounts.google.com/o/oauth2/auth",
-         scope: "profile",
-         redirectURI: "http://localhost:9000"
+        clientId: googleClientId,
+        clientSecret: googleClientSecret,
+        authenticationURI: "https://accounts.google.com/o/oauth2/auth",
+        authorizationURI: "https://accounts.google.com/o/oauth2/auth",
+        scope: "profile",
+        redirectURI: "http://localhost:9000"
       };
-
     } else if (useAuthentication) {
       config.master_uri = kubeBase;
       config.openshift = {
@@ -346,30 +362,37 @@ gulp.task('connect', ['watch'], function() {
     res.send(answer);
   });
   hawtio.use('/', function(req, res, next) {
-          var path = req.originalUrl;
-          // avoid returning these files, they should get pulled from js
-          if (s.startsWith(path, '/plugins/') && s.endsWith(path, 'html')) {
-            console.log("returning 404 for: ", path);
-            res.statusCode = 404;
-            res.end();
-          } else {
-            if (debugLoggingOfProxy) {
-              console.log("allowing: ", path);
-            }
-            next();
-          }
-        });
+    var path = req.originalUrl;
+    // avoid returning these files, they should get pulled from js
+    if (s.startsWith(path, '/plugins/') && s.endsWith(path, 'html')) {
+      console.log("returning 404 for: ", path);
+      res.statusCode = 404;
+      res.end();
+    } else {
+      if (debugLoggingOfProxy) {
+        console.log("allowing: ", path);
+      }
+      next();
+    }
+  });
   hawtio.listen(function(server) {
     var host = server.address().address;
     var port = server.address().port;
     console.log("started from gulp file at ", host, ":", port);
   });
+};
+
+gulp.task('connect', ['watch'], function() {
+  var config = createConnectConfig();
+  setupAndListen(hawtio, config);
 });
 
 gulp.task('reload', function() {
   gulp.src('.')
     .pipe(hawtio.reload());
 });
+
+// site tasks
 
 gulp.task('site-fonts', function() {
   return gulp.src(['libs/**/*.woff', 'libs/**/*.woff2', 'libs/**/*.ttf'], { base: '.' })
@@ -452,13 +475,7 @@ gulp.task('site', ['site-resources', 'usemin', 'update-java-console-href'], func
 });
 
 gulp.task('serve-site', function() {
-  // lets disable unauthorised TLS issues with kube REST API
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
-  var kubeBase = process.env.KUBERNETES_MASTER || 'https://localhost:8443';
-  var kube = uri(urljoin(kubeBase, 'api'));
-  var oapi = uri(urljoin(kubeBase, 'oapi'));
-  console.log("Connecting to Kubernetes on: " + kube);
+  var config = createConnectConfig();
   var staticAssets = [{
       path: '/',
       dir: 'site/'
@@ -475,104 +492,9 @@ gulp.task('serve-site', function() {
       });
     }
   });
-  var localProxies = [];
-  if (process.env.LOCAL_APP_LIBRARY === "true") {
-    localProxies.push({
-        proto: "http",
-        port: "8588",
-        hostname: "localhost",
-        path: '/kubernetes/api/v1beta2/proxy/services/app-library',
-        targetPath: "/"
-      });
-    console.log("because of $LOCAL_APP_LIBRARY being true we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/app-library" );
-  }
-  if (process.env.LOCAL_APIMAN === "true") {
-    localProxies.push({
-        proto: "http",
-        port: "8998",
-        hostname: "localhost",
-        path: '/kubernetes/api/v1beta2/proxy/services/apiman',
-        targetPath: "/"
-      });
-    console.log("because of $LOCAL_APIMAN being true we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/apiman" );
-  }
-  if (process.env.LOCAL_FABRIC8_FORGE === "true") {
-    localProxies.push({
-        proto: "http",
-        port: "8080",
-        hostname: "localhost",
-        path: '/kubernetes/api/v1beta2/proxy/services/fabric8-forge',
-        targetPath: "/"
-      });
-    console.log("because of LOCAL_FABRIC8_FORGE being true we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/fabric8-forge" );
-  }
-  if (process.env.LOCAL_GOGS_HOST) {
-    var gogsPort = process.env.LOCAL_GOGS_PORT || "3000";
-    //var gogsHostName = process.env.LOCAL_GOGS_HOST + ":" + gogsPort;
-    var gogsHostName = process.env.LOCAL_GOGS_HOST;
-    console.log("Using gogs host: " + gogsHostName);
-    localProxies.push({
-        proto: "http",
-        port: gogsPort,
-        hostname: gogsHostName,
-        path: '/kubernetes/api/v1beta2/proxy/services/gogs-http-service',
-        targetPath: "/"
-      });
-    console.log("because of LOCAL_GOGS_HOST being set we are using a local proxy for /kubernetes/api/v1beta2/proxy/services/gogs-http-service to point to http://"
-    + process.env.LOCAL_GOGS_HOST + ":" + gogsPort);
-  }
-  var defaultProxies = [{
-    proto: kube.protocol(),
-    port: kube.port(),
-    hostname: kube.hostname(),
-    path: '/kubernetes/api',
-    targetPath: kube.path()
-  }, {
-    proto: oapi.protocol(),
-    port: oapi.port(),
-    hostname: oapi.hostname(),
-    path: '/kubernetes/oapi',
-    targetPath: oapi.path()
-  }, {
-    proto: kube.protocol(),
-    hostname: kube.hostname(),
-    port: kube.port(),
-    path: '/jolokia',
-    targetPath: '/hawtio/jolokia'
-  }, {
-    proto: kube.protocol(),
-    hostname: kube.hostname(),
-    port: kube.port(),
-    path: '/git',
-    targetPath: '/hawtio/git'
-  }];
-
-  var staticProxies = localProxies.concat(defaultProxies);
-  hawtio.setConfig({
-    port: 2772,
-    staticProxies: staticProxies,
-    staticAssets: staticAssets,
-    fallback: 'site/404.html',
-    liveReload: {
-      enabled: false
-    }
-  });
-  var debugLoggingOfProxy = process.env.DEBUG_PROXY === "true";
-  hawtio.use('/osconsole/config.js', function(req, res, next) {
-    var configJs = 'window.OPENSHIFT_CONFIG = {' +
-      ' auth: {' +
-      '   oauth_authorize_uri: "' + urljoin(kubeBase, '/oauth/authorize')  + '",' +
-      '   oauth_client_id: "fabric8",' +
-      ' }' +
-      '};';
-    res.set('Content-Type', 'application/javascript');
-    res.send(configJs);
-  });
-  hawtio.listen(function(server) {
-    var host = server.address().address;
-    var port = server.address().port;
-    console.log("started from gulp file at ", host, ":", port);
-  });
+  config.staticAssets = staticAssets;
+  config.fallback = 'site/404.html',
+  setupAndListen(hawtio, config);
 });
 
 gulp.task('deploy', function() {
