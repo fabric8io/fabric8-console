@@ -534,7 +534,7 @@ gulp.task('deploy', function() {
     }));
 });
 
-gulp.task('site', ['site-fonts', 'swf', 'site-files', 'usemin', 'site-resources', 'tweak-urls', '404', 'copy-images']);
+gulp.task('site', ['site-fonts', 'swf', 'site-files', 'usemin', 'site-resources', 'tweak-urls', '404', 'copy-images', 'fetch-java-console', 'rename-java-console', 'delete-tmp-dir', 'update-java-console-href']);
 
 gulp.task('build', ['bower', 'path-adjust', 'tsc', 'less', 'template', 'concat', 'clean']);
 
