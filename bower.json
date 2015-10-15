@@ -32,6 +32,11 @@
     "hawtio-core-dts": "~2.0.0"
   },
   "overrides": {
+    "nvd3": {
+      "main": [
+        "build/nv.d3.css"
+      ]
+    },
     "term.js": {
       "main": [
         "./src/term.js"
