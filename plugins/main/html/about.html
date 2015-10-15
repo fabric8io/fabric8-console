@@ -1,0 +1,22 @@
+<div ng-controller="Main.About">
+  <p>Version: {{info.version}}</p>
+  <p>Commit ID: {{info.commitId}}</p>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Version
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="(key, info) in info.packages">
+        <td>{{key}}</td>
+        <td>{{info.version || '--'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

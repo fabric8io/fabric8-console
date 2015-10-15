@@ -23,7 +23,7 @@ module Main {
 
   var tab = undefined;
 
-  _module.run(($rootScope, HawtioNav: HawtioMainNav.Registry, KubernetesModel, ServiceRegistry) => {
+  _module.run(($rootScope, HawtioNav: HawtioMainNav.Registry, KubernetesModel, ServiceRegistry, preferencesRegistry) => {
 
     HawtioNav.on(HawtioMainNav.Actions.CHANGED, pluginName, (items) => {
       items.forEach((item) => {
@@ -121,6 +121,8 @@ module Main {
       href: () => "/project/create"
     });
 */
+
+    preferencesRegistry.addTab('About ' + version.name, UrlHelpers.join(templatePath, 'about.html'));
 
     log.info("started, version: ", version.version);
     log.info("commit ID: ", version.commitId);
