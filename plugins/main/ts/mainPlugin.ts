@@ -130,7 +130,7 @@ module Main {
 
   hawtioPluginLoader.registerPreBootstrapTask((next) => {
     $.ajax({
-      url: 'version.json', 
+      url: 'version.json?rev=' + Date.now(), 
       success: (data) => {
         try {
           version = angular.fromJson(data);
