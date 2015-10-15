@@ -11,11 +11,11 @@ branches:
 dependencies:
   pre:
     - npm install -g bower gulp
-    - npm install
+    - npm update
     - bower update
-    - rm -Rf site.*
+    - rm -Rf site/*
   override:
-    - gulp bower
+    - gulp build
     - gulp site
 
 test:
