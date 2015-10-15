@@ -23,9 +23,9 @@ module Main {
 
   var tab = undefined;
 
-  _module.run(["$rootScope", "HawtioNav", "KubernetesModel", "ServiceRegistry", ($rootScope, nav: HawtioMainNav.Registry, KubernetesModel, ServiceRegistry) => {
+  _module.run(($rootScope, HawtioNav: HawtioMainNav.Registry, KubernetesModel, ServiceRegistry) => {
 
-    nav.on(HawtioMainNav.Actions.CHANGED, pluginName, (items) => {
+    HawtioNav.on(HawtioMainNav.Actions.CHANGED, pluginName, (items) => {
       items.forEach((item) => {
         switch(item.id) {
           case 'forge':
@@ -36,7 +36,7 @@ module Main {
         }
       });
     });
-    nav.add({
+    HawtioNav.add({
       id: 'library',
       title: () => 'Library',
       tooltip: () => 'View the library of applications',
@@ -47,7 +47,7 @@ module Main {
 
     var kibanaServiceName = Kubernetes.kibanaServiceName;
 
-    nav.add({
+    HawtioNav.add({
       id: 'kibana',
       title: () =>  'Logs',
       tooltip: () => 'View and search all logs across all containers using Kibana and ElasticSearch',
@@ -56,7 +56,7 @@ module Main {
       isActive: () => false
     });
 
-    nav.add({
+    HawtioNav.add({
       id: 'apiman',
       title: () => 'API Management',
       tooltip: () => 'Add Policies and Plans to your APIs with Apiman',
@@ -74,7 +74,7 @@ module Main {
       }    
     });
 
-    nav.add({
+    HawtioNav.add({
       id: 'grafana',
       title: () =>  'Metrics',
       tooltip: () => 'Views metrics across all containers using Grafana and InfluxDB',
@@ -83,7 +83,7 @@ module Main {
       isActive: () => false
     });
 
-    nav.add({
+    HawtioNav.add({
       id: "chat",
       title: () =>  'Chat',
       tooltip: () => 'Chat room for discussing this namespace',
@@ -124,7 +124,7 @@ module Main {
 
     log.info("started, version: ", version.version);
     log.info("commit ID: ", version.commitId);
-  }]);
+  });
 
   hawtioPluginLoader.registerPreBootstrapTask((next) => {
     $.ajax({

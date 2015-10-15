@@ -166,8 +166,7 @@ gulp.task('concat', ['template'], function() {
   var gZipSize = size(gZippedSizeOptions);
   return gulp.src(['compiled.js', 'templates.js'])
     .pipe(plugins.concat(config.js))
-    .pipe(size(normalSizeOptions))
-    .pipe(gZipSize)
+    .pipe(plugins.ngAnnotate())
     .pipe(gulp.dest(config.dist));
 });
 
