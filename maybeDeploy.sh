@@ -12,6 +12,8 @@ echo "Latest in repo: $CURRENT"
 if [ "$CURRENT" != "$LATEST" ]
 then
   echo "Deploying new build for $CURRENT"
+  echo "Site files: "
+  find site/
   git config --global user.email "circleci@mail.com" && \
   git config --global user.name "circleci" && \
   echo $CURRENT > LATEST && \
