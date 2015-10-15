@@ -2,7 +2,7 @@
   "name": "fabric8-console",
   "version": "1.0.0",
   "properties": {
-    "openshift-jvm-version": "1.0.33"
+    "openshift-jvm-version": "1.0.34"
   },
   "devDependencies": {
     "URIjs": "^1.14.1",
