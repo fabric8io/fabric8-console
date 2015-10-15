@@ -438,7 +438,22 @@ gulp.task('usemin', ['site-files'], function() {
   return gulp.src('index.html')
     .pipe(plugins.usemin({
       css: [plugins.minifyCss(), 'concat'],
-      js: [plugins.uglify(), plugins.rev()]
+      js: [
+        plugins.sourcemaps.init({
+          loadMaps: true
+        }), 
+        plugins.uglify(), 
+        plugins.rev(),
+        plugins.sourcemaps.write('./')
+      ],
+      js1: [
+        plugins.sourcemaps.init({
+          loadMaps: true
+        }), 
+        plugins.uglify(), 
+        plugins.rev(),
+        plugins.sourcemaps.write('./')
+      ]
     }))
     .pipe(plugins.debug({title: 'usemin'}))
     .pipe(gulp.dest('site'));

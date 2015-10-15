@@ -2,7 +2,7 @@
   "name": "fabric8-console",
   "version": "1.0.0",
   "properties": {
-    "openshift-jvm-version": "1.0.34"
+    "openshift-jvm-version": "1.0.35"
   },
   "devDependencies": {
     "URIjs": "^1.14.1",
@@ -17,6 +17,7 @@
     "gulp-debug": "^2.0.1",
     "gulp-dedupe": "0.0.2",
     "gulp-download": "0.0.1",
+    "gulp-flatten": "^0.2.0",
     "gulp-gh-pages": "^0.5.1",
     "gulp-git": "^1.5.0",
     "gulp-gunzip": "0.0.3",
@@ -49,7 +50,5 @@
     "which": "^1.0.8",
     "wiredep": "^2.2.2"
   },
-  "dependencies": {
-    "gulp-flatten": "0.0.4"
-  }
+  "dependencies": {}
 }
