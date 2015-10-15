@@ -122,8 +122,31 @@ module Main {
     });
 */
 
-    log.debug("loaded");
+    log.info("started, version: ", version.version);
+    log.info("commit ID: ", version.commitId);
   }]);
+
+  hawtioPluginLoader.registerPreBootstrapTask((next) => {
+    $.ajax({
+      url: 'version.json', 
+      success: (data) => {
+        try {
+          version = angular.fromJson(data);
+        } catch (err) {
+          version = {
+            name: 'fabric8-console',
+            version: ''
+          };
+        }
+        next();
+      },
+      error: (jqXHR, text, status) => {
+        log.debug("Failed to fetch version: jqXHR: ", jqXHR, " text: ", text, " status: ", status);
+        next();
+      },
+      dataType: "html"
+    });
+  });
 
   hawtioPluginLoader.addModule(pluginName);
 }

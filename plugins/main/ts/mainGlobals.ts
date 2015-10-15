@@ -27,4 +27,6 @@ module Main {
   export var grafanaServiceName = "grafana";
   export var appLibraryServiceName = "app-library";
 
+  export var version:any = {};
+
 }

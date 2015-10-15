@@ -17,6 +17,8 @@ var gulp = require('gulp'),
 
 var plugins = gulpLoadPlugins({});
 var pkg = require('./package.json');
+var bower = require('./bower.json');
+bower.packages = {};
 
 var config = {
   main: '.',
@@ -52,7 +54,6 @@ var normalSizeOptions = {
     showFiles: true,
     gzip: true
 };
-
 
 gulp.task('bower', function() {
   return gulp.src('index.html')
@@ -315,6 +316,15 @@ function createConnectConfig() {
   };
 };
 
+function getVersionString() {
+  return JSON.stringify({
+    name: bower.name,
+    version: bower.version,
+    commitId: bower.commitId,
+    packages: bower.packages
+  }, undefined, 2);
+}
+
 function setupAndListen(hawtio, config) {
   hawtio.setConfig(config);
   var debugLoggingOfProxy = config.other.debugLoggingOfProxy;
@@ -361,6 +371,11 @@ function setupAndListen(hawtio, config) {
     res.set('Content-Type', 'application/javascript');
     res.send(answer);
   });
+  hawtio.use('/version.json', function(req, res, next) {
+    var answer = getVersionString();
+    res.set('Content-Type', 'application/javascript');
+    res.send(answer);
+  });
   hawtio.use('/', function(req, res, next) {
     var path = req.originalUrl;
     // avoid returning these files, they should get pulled from js
@@ -382,7 +397,7 @@ function setupAndListen(hawtio, config) {
   });
 };
 
-gulp.task('connect', ['watch'], function() {
+gulp.task('connect', ['collect-dep-versions', 'watch'], function() {
   var config = createConnectConfig();
   setupAndListen(hawtio, config);
 });
@@ -391,6 +406,7 @@ gulp.task('reload', function() {
   gulp.src('.')
     .pipe(hawtio.reload());
 });
+
 
 // site tasks
 
@@ -481,6 +497,27 @@ gulp.task('tweak-urls', ['usemin'], function() {
     .pipe(gulp.dest('site'));
 });
 
+gulp.task('collect-dep-versions', ['get-commit-id'], function() {
+  return gulp.src('libs/**/.bower.json')
+    .pipe(map(function(buf, filename) {
+      var pkg = JSON.parse(buf.toString());
+      bower.packages[pkg.name] = {
+        version: pkg.version
+      };
+    }));
+});
+
+gulp.task('get-commit-id', function(cb) {
+  plugins.git.exec({ args: 'rev-parse HEAD'}, function(err, stdout) {
+    bower.commitId = stdout.trim();
+    cb();
+  });
+});
+
+gulp.task('write-version-json', ['collect-dep-versions'], function(cb) {
+  fs.writeFile('site/version.json', getVersionString(), cb);
+});
+
 gulp.task('copy-images', ['404', 'tweak-urls'], function() {
   var dirs = fs.readdirSync('./libs');
   var patterns = [];
@@ -535,7 +572,7 @@ gulp.task('deploy', function() {
     }));
 });
 
-gulp.task('site', ['site-fonts', 'swf', 'site-files', 'usemin', 'site-resources', 'tweak-urls', '404', 'copy-images', 'fetch-java-console', 'rename-java-console', 'delete-tmp-dir', 'update-java-console-href']);
+gulp.task('site', ['site-fonts', 'swf', 'site-files', 'usemin', 'site-resources', 'tweak-urls', '404', 'copy-images', 'fetch-java-console', 'rename-java-console', 'delete-tmp-dir', 'update-java-console-href', 'write-version-json']);
 
 gulp.task('build', ['bower', 'path-adjust', 'tsc', 'less', 'template', 'concat', 'clean']);
 

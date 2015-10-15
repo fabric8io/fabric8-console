@@ -6,4 +6,5 @@ declare module Main {
     var chatServiceName: string;
     var grafanaServiceName: string;
     var appLibraryServiceName: string;
+    var version: any;
 }
