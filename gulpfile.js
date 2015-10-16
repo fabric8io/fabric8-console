@@ -428,7 +428,7 @@ gulp.task('swf', function() {
 });
 
 gulp.task('site-files', ['swf', 'site-fonts'], function() {
-  return gulp.src(['resources/**', 'favicon.ico', 'resources/**', 'images/**', 'img/**', 'osconsole/config.*.js.tmpl', 'apiman/config.js'], {base: '.'})
+  return gulp.src(['resources/**', 'favicon.ico', 'resources/**', 'images/**', 'img/**', 'osconsole/config.*.js.tmpl', 'libs/codemirror/addon/**', 'libs/codemirror/mode/**', 'libs/nvd3/build/nv.d3.js'], {base: '.'})
     .pipe(plugins.chmod(644))
     .pipe(plugins.debug({title: 'site files'}))
     .pipe(gulp.dest('site'));
