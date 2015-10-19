@@ -4,19 +4,19 @@
 
 module Forge {
 
-  export var ReposController = controller("ReposController", ["$scope", "$dialog", "$window", "$templateCache", "$routeParams", "$location", "localStorage", "$http", "$timeout", "ForgeApiURL", "ServiceRegistry",
-    ($scope, $dialog, $window, $templateCache, $routeParams, $location:ng.ILocationService, localStorage, $http, $timeout, ForgeApiURL, ServiceRegistry) => {
+  export var ReposController = controller("ReposController", ["$scope", "$dialog", "$window", "$templateCache", "$routeParams", "$location", "localStorage", "$http", "$timeout", "ForgeApiURL", "KubernetesModel", "ServiceRegistry",
+    ($scope, $dialog, $window, $templateCache, $routeParams, $location:ng.ILocationService, localStorage, $http, $timeout, ForgeApiURL, KubernetesModel: Kubernetes.KubernetesModelService, ServiceRegistry) => {
 
-      log.info("repos controller start!");
+      $scope.model = KubernetesModel;
       $scope.resourcePath = $routeParams["path"];
       $scope.commandsLink = (path) => commandsLink(path, $scope.projectId);
 
-      var gogsUrl = ServiceRegistry.serviceLink(gogsServiceName);
-      if (gogsUrl) {
-        $scope.signUpUrl = UrlHelpers.join(gogsUrl, "user/sign_up");
-        $scope.forgotPasswordUrl = UrlHelpers.join(gogsUrl, "user/forget_password");
-      }
       initScope($scope, $location, $routeParams);
+
+      $scope.$on('kubernetesModelUpdated', function () {
+        updateLinks();
+        Core.$apply($scope);
+      });
 
       $scope.tableConfig = {
         data: 'projects',
@@ -99,6 +99,8 @@ module Forge {
         }).open();
       };
 
+      updateLinks();
+
       function doDelete(projects) {
         angular.forEach(projects, (project) => {
           log.info("Deleting " + angular.toJson($scope.projects));
@@ -116,6 +118,41 @@ module Forge {
               });
           }
         });
+      }
+
+      function updateLinks() {
+        var $gogsLink = ServiceRegistry.serviceReadyLink(gogsServiceName);
+        if ($gogsLink) {
+          $scope.signUpUrl = UrlHelpers.join($gogsLink, "user/sign_up");
+          $scope.forgotPasswordUrl = UrlHelpers.join($gogsLink, "user/forget_password");
+        }
+        $scope.$gogsLink = $gogsLink;
+        $scope.$forgeLink = ServiceRegistry.serviceReadyLink(Kubernetes.fabric8ForgeServiceName);
+
+        $scope.$hasCDPipelineTemplate = _.any($scope.model.templates, (t) => "cd-pipeline" === Kubernetes.getName(t));
+
+        var expectedRCS = [Kubernetes.gogsServiceName, Kubernetes.fabric8ForgeServiceName, Kubernetes.jenkinsServiceName];
+        var requiredRCs = {};
+        var ns = Kubernetes.currentKubernetesNamespace();
+        var runningCDPipeline = true;
+        angular.forEach(expectedRCS, (rcName) => {
+          var rc = $scope.model.getReplicationController(ns, rcName);
+          if (!rc) {
+            runningCDPipeline = false;
+          }
+          requiredRCs[rcName] = rc;
+        });
+        $scope.$requiredRCs = requiredRCs;
+        $scope.$runningCDPipeline = runningCDPipeline;
+        var url = "";
+        $location = Kubernetes.inject("$location");
+        if ($location) {
+          url = $location.url();
+        }
+        if (!url) {
+          url = window.location.toString();
+        }
+        $scope.$runCDPipelineLink = "/kubernetes/templates?returnTo=" + encodeURIComponent(url);
       }
 
       function updateData() {

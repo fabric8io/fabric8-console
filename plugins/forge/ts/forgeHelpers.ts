@@ -11,7 +11,7 @@ module Forge {
 
   export var defaultIconUrl = Core.url("/img/forge.svg");
 
-  export var gogsServiceName = "gogs";
+  export var gogsServiceName = Kubernetes.gogsServiceName;
   export var orionServiceName = "orion";
 
   export var loggedInToGogs = false;

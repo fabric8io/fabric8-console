@@ -20,19 +20,55 @@
          title="Log out from the git repository">
         <i class="fa fa-sign-out"></i> Log out</a>
       </a>
-<!--
-      <span class="pull-right" ng-show="login.loggedIn">&nbsp;</span>
+      <!--
+            <span class="pull-right" ng-show="login.loggedIn">&nbsp;</span>
 
-      <div class="user-icon-name pull-right" ng-show="login.loggedIn">
-        <img src="{{login.avatar_url}}" class="avatar-small-img" ng-show="login.avatar_url">&nbsp;
-        {{login.user}}
-      </div>
--->
+            <div class="user-icon-name pull-right" ng-show="login.loggedIn">
+              <img src="{{login.avatar_url}}" class="avatar-small-img" ng-show="login.avatar_url">&nbsp;
+              {{login.user}}
+            </div>
+      -->
     </div>
   </div>
 
 
-  <div ng-show="!login.authHeader || login.relogin">
+  <div ng-show="model.fetched && $hasCDPipelineTemplate && (!$runningCDPipeline || !$gogsLink || !$forgeLink)">
+    <div class="createProjectPage">
+      <div class="jumbotron">
+        <p>Waiting for the <b>CD Pipeline</b> application to startup...</p>
+
+        <ul class="pending-pods">
+          <li class="ngCellText" ng-repeat="item in $requiredRCs">
+            <a ng-href="{{item | kubernetesPageLink}}">
+              <img class="app-icon-small" ng-src="{{item.$iconUrl}}" ng-show="item.$iconUrl">
+              <b>{{item.metadata.name}}</b>
+            </a>
+            <a ng-show="item.$podCounters.podsLink" href="{{item.$podCounters.podsLink}}" title="View pods">
+              <span ng-show="item.$podCounters.ready" class="badge badge-success">{{item.$podCounters.ready}}</span>
+              <span ng-show="item.$podCounters.valid" class="badge badge-info">{{item.$podCounters.valid}}</span>
+              <span ng-show="item.$podCounters.waiting" class="badge">{{item.$podCounters.waiting}}</span>
+              <span ng-show="item.$podCounters.error" class="badge badge-warning">{{item.$podCounters.error}}</span>
+            </a>
+          </li>
+        </ul>
+        <p>We need at least one ready pod for each of the above controllers...</p>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="model.fetched && !$hasCDPipelineTemplate">
+    <div class="createProjectPage">
+      <div class="jumbotron">
+        <p class="text-warning">You are not running the <b>CD Pipeline</b> application in this workspace.</p>
+
+        <p>To be able to create new projects please run it!</p>
+
+        <p><a href="{{$runCDPipelineLink}}" class="btn btn-lg btn-default">Run the <b>CD Pipeline</b></a></p>
+      </div>
+    </div>
+  </div>
+
+  <div ng-show="$runningCDPipeline && $gogsLink && $forgeLink && (!login.authHeader || login.relogin)">
     <div ng-show="login.failed">
       <div class="bg-danger">
         <div class="invalid-login align-center">
@@ -75,7 +111,7 @@
     </form>
   </div>
 
-  <div ng-hide="fetched || !login.authHeader || login.relogin">
+  <div ng-hide="model.fetched || !login.authHeader || login.relogin || !$gogsLink ||!$forgeLink">
     <div class="row">
       <div class="col-md-12">
         <div class="align-center">
@@ -85,7 +121,7 @@
     </div>
   </div>
 
-  <div ng-show="fetched && login.authHeader">
+  <div ng-show="model.fetched && login.authHeader && $gogsLink && $forgeLink">
     <div class="createProjectPage">
       <div class="jumbotron">
         <p class="align-center">
