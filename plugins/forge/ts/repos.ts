@@ -152,7 +152,9 @@ module Forge {
         if (!url) {
           url = window.location.toString();
         }
-        $scope.$runCDPipelineLink = "/kubernetes/templates?returnTo=" + encodeURIComponent(url);
+        // TODO should we support any other template namespaces?
+        var templateNamespace = "default";
+        $scope.$runCDPipelineLink = "/kubernetes/namespace/" + templateNamespace + "/templates/" + ns + "?q=cd-pipeline&returnTo=" + encodeURIComponent(url);
       }
 
       function updateData() {
