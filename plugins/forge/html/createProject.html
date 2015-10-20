@@ -16,7 +16,7 @@
   <div class="row">
     <div class="col-md-12">
       <span class="pull-right">&nbsp;</span>
-      <a class="btn btn-default pull-right" ng-click="logout()" ng-show="login.loggedIn"
+      <a class="btn btn-default pull-right" ng-click="logout()" ng-show="login.loggedIn && $runningCDPipeline && $gogsLink && $forgeLink"
          title="Log out from the git repository">
         <i class="fa fa-sign-out"></i> Log out</a>
       </a>
@@ -35,7 +35,7 @@
   <div ng-show="model.fetched && $hasCDPipelineTemplate && (!$runningCDPipeline || !$gogsLink || !$forgeLink)">
     <div class="createProjectPage">
       <div class="jumbotron">
-        <p>Waiting for the <b>CD Pipeline</b> application to startup: <i class="fa fa-spinner fa-spin"></i></p>
+        <p>Waiting for the <b>CD Pipeline</b> application to startup: &nbsp;&nbsp;<i class="fa fa-spinner fa-spin"></i></p>
 
         <ul class="pending-pods">
           <li class="ngCellText" ng-repeat="item in $requiredRCs">
