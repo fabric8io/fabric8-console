@@ -96,6 +96,14 @@ module Forge {
                     if (schema) {
                       $scope.entity = {};
                       updateSchema(schema);
+                      // lets copy across any default values from the schema
+                      angular.forEach(schema["properties"], (property, name) => {
+                        var value = property.value;
+                        if (value) {
+                          log.info("Adding entity." + name + " = " + value);
+                          $scope.entity[name] = value;
+                        }
+                      });
                       $scope.inputList.push($scope.entity);
 
                       if (data.canMoveToNextStep) {
