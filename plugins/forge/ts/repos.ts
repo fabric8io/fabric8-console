@@ -137,10 +137,11 @@ module Forge {
         var runningCDPipeline = true;
         angular.forEach(expectedRCS, (rcName) => {
           var rc = $scope.model.getReplicationController(ns, rcName);
-          if (!rc) {
+          if (rc) {
+            requiredRCs[rcName] = rc;
+          } else {
             runningCDPipeline = false;
           }
-          requiredRCs[rcName] = rc;
         });
         $scope.$requiredRCs = requiredRCs;
         $scope.$runningCDPipeline = runningCDPipeline;
