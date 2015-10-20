@@ -35,7 +35,7 @@
   <div ng-show="model.fetched && $hasCDPipelineTemplate && (!$runningCDPipeline || !$gogsLink || !$forgeLink)">
     <div class="createProjectPage">
       <div class="jumbotron">
-        <p>Waiting for the <b>CD Pipeline</b> application to startup...</p>
+        <p>Waiting for the <b>CD Pipeline</b> application to startup: <i class="fa fa-spinner fa-spin"></i></p>
 
         <ul class="pending-pods">
           <li class="ngCellText" ng-repeat="item in $requiredRCs">
@@ -51,7 +51,7 @@
             </a>
           </li>
         </ul>
-        <p>We need at least one ready pod for each of the above controllers...</p>
+        <p>Please be patient while the above pods startup and become ready!</p>
       </div>
     </div>
   </div>
