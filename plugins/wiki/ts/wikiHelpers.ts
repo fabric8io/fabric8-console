@@ -796,6 +796,11 @@ module Wiki {
     $scope.startLink = startLink($scope);
     $scope.historyLink = startLink($scope) + "/history/" + ($scope.pageId || "");
     $scope.wikiRepository = new GitWikiRepository($scope);
+
+    $scope.$workspaceLink = Developer.workspaceLink();
+    $scope.$projectLink = Developer.projectLink($scope.projectId);
+    $scope.breadcrumbConfig = Developer.createProjectBreadcrumbs($scope.projectId, createSourceBreadcrumbs());
+    $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);
   }
 
   /**

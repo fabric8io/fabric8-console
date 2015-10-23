@@ -1,4 +1,13 @@
-<div ng-hide="inDashboard" class="logbar" ng-controller="Wiki.NavBarController">
+<div class="row">
+  <div hawtio-breadcrumbs></div>
+</div>
+
+<!--
+<div class="row">
+  <div hawtio-tabs></div>
+</div>
+-->
+<div ng-hide="inDashboard" class="wiki logbar" ng-controller="Wiki.NavBarController">
   <div class="wiki logbar-container">
     <ul class="nav nav-tabs">
       <li ng-show="branches.length || branch">
