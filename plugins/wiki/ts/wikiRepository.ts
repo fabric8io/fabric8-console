@@ -37,6 +37,11 @@ module Wiki {
           if (data) {
             var details: any = null;
             if (angular.isArray(data)) {
+              angular.forEach(data, (file) => {
+                if (!file.directory && file.type === "dir") {
+                  file.directory = true;
+                }
+              });
               details = {
                 directory: true,
                 children: data

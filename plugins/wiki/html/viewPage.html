@@ -49,7 +49,7 @@
       <div class="col-md-12" ng-controller="Wiki.FileDropController">
         <div class="wiki-icon-view" nv-file-drop nv-file-over uploader="uploader" over-class="ready-drop">
           <div class="column-box mouse-pointer well"
-               ng-repeat="child in children" 
+               ng-repeat="child in children track by $index"
                ng-class="isInGroup(gridOptions.selectedItems, child, 'selected', '')"
                ng-click="toggleSelectionFromGroup(gridOptions.selectedItems, child)">
             <div class="row">
