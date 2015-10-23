@@ -106,87 +106,90 @@ module Wiki {
       }
 
       // validate if the file exists, and use the synchronous call
-      var exists:boolean = wikiRepository.exists($scope.branch, path, null);
-      if (exists) {
-        $scope.fileExists.exists = true;
-        $scope.fileExists.name = path;
+      wikiRepository.exists($scope.branch, path, (exists) => {
+        $scope.fileExists.exists = exists;
+        $scope.fileExists.name = exists ? path : false;
+        if (!exists) {
+          doCreate();
+        }
         Core.$apply($scope);
-        return;
-      }
+      });
 
-      var name = Wiki.fileName(path);
-      var folder = Wiki.fileParent(path);
-      var exemplar = template.exemplar;
+      function doCreate() {
+        var name = Wiki.fileName(path);
+        var folder = Wiki.fileParent(path);
+        var exemplar = template.exemplar;
 
-      var commitMessage = "Created " + template.label;
-      var exemplarUri = Core.url("/plugins/wiki/exemplar/" + exemplar);
+        var commitMessage = "Created " + template.label;
+        var exemplarUri = Core.url("/plugins/wiki/exemplar/" + exemplar);
 
-      if (template.folder) {
-        Core.notification("success", "Creating new folder " + name);
+        if (template.folder) {
+          Core.notification("success", "Creating new folder " + name);
 
-        wikiRepository.createDirectory($scope.branch, path, commitMessage, (status) => {
-          var link = Wiki.viewLink($scope, path, $location);
-          goToLink(link, $timeout, $location);
-        });
-      } else if (template.profile) {
-
-        function toPath(profileName:string) {
-          var answer = "fabric/profiles/" + profileName;
-          answer = answer.replace(/-/g, "/");
-          answer = answer + ".profile";
-          return answer;
-        }
-
-        function toProfileName(path:string) {
-          var answer = path.replace(/^fabric\/profiles\//, "");
-          answer = answer.replace(/\//g, "-");
-          answer = answer.replace(/\.profile$/, "");
-          return answer;
-        }
-
-        // strip off any profile name in case the user creates a profile while looking at
-        // another profile
-        folder = folder.replace(/\/=?(\w*)\.profile$/, "");
-
-        var concatenated = folder + "/" + name;
-
-        var profileName = toProfileName(concatenated);
-        var targetPath = toPath(profileName);
-
-      } else if (template.generated) {
-        var options:Wiki.GenerateOptions = {
-          workspace: workspace,
-          form: $scope.formData,
-          name: fileName,
-          parentId: folder,
-          branch: $scope.branch,
-          success: (contents)=> {
-            if (contents) {
-              wikiRepository.putPageBase64($scope.branch, path, contents, commitMessage, (status) => {
-                log.debug("Created file " + name);
-                Wiki.onComplete(status);
-                returnToDirectory();
-              });
-            } else {
-              returnToDirectory();
-            }
-          },
-          error: (error)=> {
-            Core.notification('error', error);
-            Core.$apply($scope);
-          }
-        };
-        template.generated.generate(options);
-      } else {
-        // load the example data (if any) and then add the document to git and change the link to the new document
-        $http.get(exemplarUri)
-          .success(function(data, status, headers, config) {
-            putPage(path, name, folder, data, commitMessage);
-          })
-          .error(function(data, status, headers, config) {
-            // create an empty file
-            putPage(path, name, folder, "", commitMessage);
+          wikiRepository.createDirectory($scope.branch, path, commitMessage, (status) => {
+            var link = Wiki.viewLink($scope, path, $location);
+            goToLink(link, $timeout, $location);
           });
+        } else if (template.profile) {
+
+          function toPath(profileName:string) {
+            var answer = "fabric/profiles/" + profileName;
+            answer = answer.replace(/-/g, "/");
+            answer = answer + ".profile";
+            return answer;
+          }
+
+          function toProfileName(path:string) {
+            var answer = path.replace(/^fabric\/profiles\//, "");
+            answer = answer.replace(/\//g, "-");
+            answer = answer.replace(/\.profile$/, "");
+            return answer;
+          }
+
+          // strip off any profile name in case the user creates a profile while looking at
+          // another profile
+          folder = folder.replace(/\/=?(\w*)\.profile$/, "");
+
+          var concatenated = folder + "/" + name;
+
+          var profileName = toProfileName(concatenated);
+          var targetPath = toPath(profileName);
+
+        } else if (template.generated) {
+          var options:Wiki.GenerateOptions = {
+            workspace: workspace,
+            form: $scope.formData,
+            name: fileName,
+            parentId: folder,
+            branch: $scope.branch,
+            success: (contents)=> {
+              if (contents) {
+                wikiRepository.putPage($scope.branch, path, contents, commitMessage, (status) => {
+                  log.debug("Created file " + name);
+                  Wiki.onComplete(status);
+                  returnToDirectory();
+                });
+              } else {
+                returnToDirectory();
+              }
+            },
+            error: (error)=> {
+              Core.notification('error', error);
+              Core.$apply($scope);
+            }
+          };
+          template.generated.generate(options);
+        } else {
+          // load the example data (if any) and then add the document to git and change the link to the new document
+          $http.get(exemplarUri)
+            .success(function (data, status, headers, config) {
+              putPage(path, name, folder, data, commitMessage);
+            })
+            .error(function (data, status, headers, config) {
+              // create an empty file
+              putPage(path, name, folder, "", commitMessage);
+            });
+        }
       }
     };
 

@@ -11,7 +11,7 @@ module Wiki {
   export var templatePath = 'plugins/wiki/html/';
   export var tab:any = null;
 
-  export var _module = angular.module(pluginName, ['ngResource', 'hawtio-core', 'hawtio-ui', 'treeControl']);
+  export var _module = angular.module(pluginName, ['hawtio-core', 'hawtio-ui', 'treeControl', 'ui.codemirror']);
   export var controller = PluginHelpers.createControllerFunction(_module, 'Wiki');
   export var route = PluginHelpers.createRoutingFunction(templatePath);
 
@@ -38,15 +38,6 @@ module Wiki {
               when(startContext + path + '/newConfiguration/:factoryPid/:page*', { templateUrl: 'plugins/wiki/html/configuration.html' });
     });
 }]);
-
-  _module.factory('wikiRepository', ["localStorage", (localStorage) => {
-    return new GitWikiRepository(() => null);
-  }]);
-/*
-  _module.factory('wikiRepository', ["workspace", "jolokia", "localStorage", (workspace:Workspace, jolokia, localStorage) => {
-    return new GitWikiRepository(() => Git.createGitRepository(workspace, jolokia, localStorage));
-  }]);
-*/
 
   /**
    * Branch Menu service

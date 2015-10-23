@@ -269,18 +269,20 @@ module Wiki {
       var files = $scope.gridOptions.selectedItems;
       var fileCount = files.length;
       log.debug("Deleting selection: " + files);
+
+      var pathsToDelete = [];
       angular.forEach(files, (file, idx) => {
-        var path = $scope.pageId + "/" + file.name;
-        log.debug("About to delete " + path);
-        $scope.git = wikiRepository.removePage($scope.branch, path, null, (result) => {
-          if (idx + 1 === fileCount) {
-            $scope.gridOptions.selectedItems.splice(0, fileCount);
-            var message = Core.maybePlural(fileCount, "document");
-            Core.notification("success", "Deleted " + message);
-            Core.$apply($scope);
-            updateView();
-          }
-        });
+        var path = UrlHelpers.join($scope.pageId, file.name);
+        pathsToDelete.push(path);
+      });
+
+      log.debug("About to delete " + pathsToDelete);
+      $scope.git = wikiRepository.removePages($scope.branch, pathsToDelete, null, (result) => {
+        $scope.gridOptions.selectedItems = [];
+        var message = Core.maybePlural(fileCount, "document");
+        Core.notification("success", "Deleted " + message);
+        Core.$apply($scope);
+        updateView();
       });
       $scope.deleteDialog.close();
     };

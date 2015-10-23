@@ -32,7 +32,7 @@ module Wiki {
       if (branch) {
         query = "ref=" + branch;
       }
-      this.doGet(UrlHelpers.join("content", path), query,
+      this.doGet(UrlHelpers.join("content", path || "/"), query,
         (data, status, headers, config) => {
           if (data) {
             var details: any = null;
@@ -62,7 +62,7 @@ module Wiki {
         query = (query ? query + "&" : "") + "message=" + encodeURIComponent(commitMessage);
       }
       var body = contents;
-      this.doPost(UrlHelpers.join("content", path), query, body,
+      this.doPost(UrlHelpers.join("content", path || "/"), query, body,
         (data, status, headers, config) => {
           fn(data);
         });
@@ -141,6 +141,115 @@ module Wiki {
     }
 
 
+    /**
+     * Get the list of branches
+     * @method branches
+     * @for GitWikiRepository
+     * @param {Function} fn
+     * @return {any}
+     */
+    public branches(fn) {
+      var query = null;
+      this.doGet("listBranches", query,
+        (data, status, headers, config) => {
+          fn(data);
+        });
+    }
+
+    public exists(branch:string, path:string, fn): Boolean {
+      var answer = false;
+      this.getPage(branch, path, null, (data) => {
+        if (data.directory) {
+          if (data.children.length) {
+            answer = true;
+          }
+        } else {
+          answer = true;
+        }
+        log.info("exists " + path + " answer = " + answer);
+        if (angular.isFunction(fn)) {
+          fn(answer);
+        }
+      });
+      return answer;
+    }
+
+    public revertTo(branch:string, objectId:string, blobPath:string, commitMessage:string, fn) {
+      if (!commitMessage) {
+        commitMessage = "Reverting " + blobPath + " commit " + (objectId || branch);
+      }
+      var query = null;
+      if (branch) {
+        query = "ref=" + branch;
+      }
+      if (commitMessage) {
+        query = (query ? query + "&" : "") + "message=" + encodeURIComponent(commitMessage);
+      }
+      var body = "";
+      this.doPost(UrlHelpers.join("revert", objectId, blobPath || "/"), query, body,
+        (data, status, headers, config) => {
+          fn(data);
+        });
+    }
+
+    public rename(branch:string, oldPath:string,  newPath:string, commitMessage:string, fn) {
+      if (!commitMessage) {
+        commitMessage = "Renaming page " + oldPath + " to " + newPath;
+      }
+      var query = null;
+      if (branch) {
+        query = "ref=" + branch;
+      }
+      if (commitMessage) {
+        query = (query ? query + "&" : "") + "message=" + encodeURIComponent(commitMessage);
+      }
+      if (oldPath) {
+        query = (query ? query + "&" : "") + "old=" + encodeURIComponent(oldPath);
+      }
+      var body = "";
+      this.doPost(UrlHelpers.join("mv", newPath || "/"), query, body,
+        (data, status, headers, config) => {
+          fn(data);
+        });
+    }
+
+    public removePage(branch:string, path:string, commitMessage:string, fn) {
+      if (!commitMessage) {
+        commitMessage = "Removing page " + path;
+      }
+      var query = null;
+      if (branch) {
+        query = "ref=" + branch;
+      }
+      if (commitMessage) {
+        query = (query ? query + "&" : "") + "message=" + encodeURIComponent(commitMessage);
+      }
+      var body = "";
+      this.doPost(UrlHelpers.join("rm", path || "/"), query, body,
+        (data, status, headers, config) => {
+          fn(data);
+        });
+    }
+
+    public removePages(branch:string, paths:Array<string>, commitMessage:string, fn) {
+      if (!commitMessage) {
+        commitMessage = "Removing page" + (paths.length > 1 ? "s" : "") + " " + paths.join(", ");
+      }
+      var query = null;
+      if (branch) {
+        query = "ref=" + branch;
+      }
+      if (commitMessage) {
+        query = (query ? query + "&" : "") + "message=" + encodeURIComponent(commitMessage);
+      }
+      var body = paths;
+      this.doPost(UrlHelpers.join("rm"), query, body,
+        (data, status, headers, config) => {
+          fn(data);
+        });
+    }
+
+
 
     private doGet(path, query, successFn, errorFn = null, config = null) {
       var url = Forge.createHttpUrl(UrlHelpers.join(this.baseUrl, path));
@@ -202,69 +311,12 @@ module Wiki {
 
 
 
-    public getRepositoryLabel(fn, error) {
-/*
-      this.git().getRepositoryLabel(fn, error);
-*/
-    }
-
-    public exists(branch:string, path:string, fn): Boolean {
-/*
-      var fullPath = this.getPath(path);
-      return this.git().exists(branch, fullPath, fn);
-*/
-      return false;
-    }
-
     public completePath(branch:string, completionText:string, directoriesOnly:boolean, fn) {
 /*
       return this.git().completePath(branch, completionText, directoriesOnly, fn);
 */
     }
 
-
-
-    public putPageBase64(branch:string, path:string, contents:string, commitMessage:string, fn) {
-/*
-      var fullPath = this.getPath(path);
-      this.git().writeBase64(branch, fullPath, commitMessage, contents, fn);
-*/
-    }
-
-    public createDirectory(branch:string, path:string, commitMessage:string, fn) {
-/*
-      var fullPath = this.getPath(path);
-      this.git().createDirectory(branch, fullPath, commitMessage, fn);
-*/
-    }
-
-    public revertTo(branch:string, objectId:string, blobPath:string, commitMessage:string, fn) {
-/*
-      var fullPath = this.getLogPath(blobPath);
-      this.git().revertTo(branch, objectId, fullPath, commitMessage, fn);
-*/
-    }
-
-    public rename(branch:string, oldPath:string,  newPath:string, commitMessage:string, fn) {
-/*
-      var fullOldPath = this.getPath(oldPath);
-      var fullNewPath = this.getPath(newPath);
-      if (!commitMessage) {
-        commitMessage = "Renaming page " + oldPath + " to " + newPath;
-      }
-      this.git().rename(branch, fullOldPath, fullNewPath, commitMessage, fn);
-*/
-    }
-
-    public removePage(branch:string, path:string, commitMessage:string, fn) {
-/*
-      var fullPath = this.getPath(path);
-      if (!commitMessage) {
-        commitMessage = "Removing page " + path;
-      }
-      this.git().remove(branch, fullPath, commitMessage, fn);
-*/
-    }
 
     /**
      * Returns the full path to use in the git repo
@@ -303,22 +355,6 @@ module Wiki {
 */
     }
 
-    /**
-     * Get the list of branches
-     * @method branches
-     * @for GitWikiRepository
-     * @param {Function} fn
-     * @return {any}
-     */
-    public branches(fn) {
-/*
-      var git = this.git();
-      if (git) {
-        git.branches(fn);
-      }
-      return git;
-*/
-    }
 
 
     /**

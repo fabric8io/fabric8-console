@@ -15,12 +15,12 @@
 /// <reference path="d.ts/wiki/ts/wikiNavigation.d.ts"/>
 /// <reference path="d.ts/wiki/ts/wikiRepository.d.ts"/>
 /// <reference path="d.ts/wiki/ts/wikiTopLevel.d.ts"/>
-/// <reference path="d.ts/main/ts/mainGlobals.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgeHelpers.d.ts"/>
-/// <reference path="d.ts/main/ts/mainPlugin.d.ts"/>
-/// <reference path="d.ts/main/ts/about.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgePlugin.d.ts"/>
 /// <reference path="d.ts/forge/ts/command.d.ts"/>
 /// <reference path="d.ts/forge/ts/commands.d.ts"/>
 /// <reference path="d.ts/forge/ts/repo.d.ts"/>
 /// <reference path="d.ts/forge/ts/repos.d.ts"/>
+/// <reference path="d.ts/main/ts/mainGlobals.d.ts"/>
+/// <reference path="d.ts/main/ts/mainPlugin.d.ts"/>
+/// <reference path="d.ts/main/ts/about.d.ts"/>
