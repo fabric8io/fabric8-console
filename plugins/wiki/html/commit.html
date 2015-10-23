@@ -11,7 +11,11 @@
     </div>
   </script>
 
-  <div ng-hide="inDashboard" class="logbar" ng-controller="Wiki.NavBarController">
+  <div ng-hide="inDashboard" class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div ng-hide="inDashboard" class="wiki logbar" ng-controller="Wiki.NavBarController">
     <div class="wiki logbar-container">
       <ul class="nav nav-tabs">
         <li ng-show="branches.length || branch" class="dropdown">
