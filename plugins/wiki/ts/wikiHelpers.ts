@@ -748,7 +748,7 @@ module Wiki {
             break;
           default:
             // log.debug("No match for extension: ", extension, " using a generic file icon");
-            css = "fa fa-file-alt";
+            css = "fa fa-file-o";
         }
       }
     }
@@ -772,7 +772,7 @@ module Wiki {
         return "fa fa-file-text-o";
     }
     // TODO could we use different icons for markdown v xml v html
-    return "fa fa-file-alt";
+    return "fa fa-file-o";
   }
 
 

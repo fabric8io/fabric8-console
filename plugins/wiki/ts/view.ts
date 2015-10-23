@@ -304,7 +304,7 @@ module Wiki {
         if (selected && newPath) {
           var oldName = selected.name;
           var newName = Wiki.fileName(newPath);
-          var oldPath = $scope.pageId + "/" + oldName;
+          var oldPath = UrlHelpers.join($scope.pageId, oldName);
           log.debug("About to rename file " + oldPath + " to " + newPath);
           $scope.git = wikiRepository.rename($scope.branch, oldPath, newPath, null, (result) => {
             Core.notification("success", "Renamed file to  " + newName);
@@ -613,7 +613,7 @@ module Wiki {
 
     function getRenameFilePath() {
       var newFileName = $scope.rename.newFileName;
-      return ($scope.pageId && newFileName) ? $scope.pageId + "/" + newFileName : null;
+      return ($scope.pageId && newFileName) ? UrlHelpers.join($scope.pageId, newFileName) : null;
     }
   }]);
 }
