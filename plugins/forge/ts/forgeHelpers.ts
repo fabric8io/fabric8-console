@@ -162,6 +162,8 @@ module Forge {
     var authHeader = localStorage["gogsAuthorization"];
     var email = localStorage["gogsEmail"];
     var config = {
+      headers: {
+      }
 /*
       headers: {
         Authorization: authHeader,
@@ -198,8 +200,10 @@ module Forge {
   }
 
   export function isLoggedIntoGogs() {
+    var localStorage = Kubernetes.inject("localStorage") || {};
     var authHeader = localStorage["gogsAuthorization"];
-    return authHeader ? loggedInToGogs : false;
+    //return authHeader ? loggedInToGogs : false;
+    return authHeader ? true : false;
 /*
     var config = createHttpConfig();
     return config.headers.Authorization ? true : false;
