@@ -40,13 +40,6 @@
         </div>
       </div>
     </div>
-    <div ng-hide="!html" wiki-href-adjuster wiki-title-linker>
-      <div class="row" style="margin-left: 10px">
-        <div class="col-md-12">
-          <div compile="html"></div>
-        </div>
-      </div>
-    </div>
     <div class="row" ng-show="html && children">
       <div class="col-md-12 wiki-icon-view-header">
         <h5>Directories and Files</h5>
@@ -75,6 +68,13 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div ng-hide="!html" wiki-href-adjuster wiki-title-linker>
+      <div class="row" style="margin-left: 10px">
+        <div class="col-md-12">
+          <div compile="html"></div>
         </div>
       </div>
     </div>
