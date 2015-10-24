@@ -718,7 +718,7 @@ module Wiki {
             break;
           default:
             // log.debug("No match for extension: ", extension, " using a generic folder icon");
-            css = "fa fa-folder";
+            css = "fa fa-folder folder-icon";
         }
       } else {
         switch (extension) {
