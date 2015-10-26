@@ -9,6 +9,8 @@ module Wiki {
   _module.controller("Wiki.EditController", ["$scope", "$location", "$routeParams", "fileExtensionTypeRegistry", ($scope, $location, $routeParams, fileExtensionTypeRegistry) => {
 
     Wiki.initScope($scope, $routeParams, $location);
+    $scope.breadcrumbConfig.push(createEditingBreadcrumb($scope));
+
     var wikiRepository = $scope.wikiRepository;
 
     $scope.entity = {

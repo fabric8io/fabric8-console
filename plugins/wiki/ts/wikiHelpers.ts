@@ -816,12 +816,13 @@ module Wiki {
     $scope.branch = $routeParams["branch"] || $location.search()["branch"];
     $scope.objectId = $routeParams["objectId"] || $routeParams["diffObjectId1"];
     $scope.startLink = startLink($scope);
+    $scope.$viewLink = viewLink($scope, $scope.pageId, $location);
     $scope.historyLink = startLink($scope) + "/history/" + ($scope.pageId || "");
     $scope.wikiRepository = new GitWikiRepository($scope);
 
     $scope.$workspaceLink = Developer.workspaceLink();
     $scope.$projectLink = Developer.projectLink($scope.projectId);
-    $scope.breadcrumbConfig = Developer.createProjectBreadcrumbs($scope.projectId, createSourceBreadcrumbs());
+    $scope.breadcrumbConfig = Developer.createProjectBreadcrumbs($scope.projectId, createSourceBreadcrumbs($scope));
     $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);
   }
 

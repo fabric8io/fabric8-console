@@ -29,12 +29,21 @@ module Wiki {
     });
 
 
-  export function createSourceBreadcrumbs() {
+  export function createSourceBreadcrumbs($scope) {
+    var sourceLink = $scope.$viewLink || UrlHelpers.join(startLink($scope), "view");
     return [
       {
         label: "Source",
+        href: sourceLink,
         title: "Browse the source code of this project"
       }
     ]
+  }
+
+  export function createEditingBreadcrumb($scope) {
+      return {
+        label: "Editing",
+        title: "Editing this file"
+      };
   }
 }
