@@ -699,8 +699,8 @@ module Wiki {
       var lowerName = name.toLowerCase();
       if (lowerName == "pom.xml") {
         iconUrl = "img/maven-icon.png";
-      } else if (lowerName == "Jenkinsfile") {
-        iconUrl = "img/jenkins-logo.svg";
+      } else if (lowerName == "jenkinsfile") {
+        iconUrl = "img/jenkins-icon.svg";
       } else if (lowerName == "fabric8.yml") {
         iconUrl = "img/fabric8_icon.svg";
       }
