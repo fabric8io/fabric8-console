@@ -6,6 +6,7 @@ declare module Wiki {
     var droolsNamespaces: string[];
     var dozerNamespaces: string[];
     var activemqNamespaces: string[];
+    var useCamelCanvasByDefault: boolean;
     var excludeAdjustmentPrefixes: string[];
     enum ViewMode {
         List = 0,
