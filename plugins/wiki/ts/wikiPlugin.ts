@@ -35,7 +35,10 @@ module Wiki {
               when(startContext + path + '/dozer/mappings/:page*', {templateUrl: 'plugins/wiki/html/dozerMappings.html'}).
               when(startContext + path + '/configurations/:page*', { templateUrl: 'plugins/wiki/html/configurations.html' }).
               when(startContext + path + '/configuration/:pid/:page*', { templateUrl: 'plugins/wiki/html/configuration.html' }).
-              when(startContext + path + '/newConfiguration/:factoryPid/:page*', { templateUrl: 'plugins/wiki/html/configuration.html' });
+              when(startContext + path + '/newConfiguration/:factoryPid/:page*', { templateUrl: 'plugins/wiki/html/configuration.html' }).
+              when(startContext + path + '/camel/diagram/:page*', {templateUrl: 'plugins/wiki/html/camelDiagram.html'}).
+              when(startContext + path + '/camel/canvas/:page*', {templateUrl: 'plugins/wiki/html/camelCanvas.html'}).
+              when(startContext + path + '/camel/properties/:page*', {templateUrl: 'plugins/wiki/html/camelProperties.html'});
     });
 }]);
 
@@ -87,6 +90,7 @@ module Wiki {
       "text/x-scala": ["scala"],
       "javascript": ["js", "json", "javascript", "jscript", "ecmascript", "form"],
       "xml": ["xml", "xsd", "wsdl", "atom"],
+      "text/x-yaml": ["yaml", "yml"],
       "properties": ["properties"]
     };
   });

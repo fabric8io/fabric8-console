@@ -26,6 +26,7 @@
     "hawtio-oauth": "~2.0.26",
     "hawtio-preferences": "~2.0.3",
     "hawtio-template-cache": "~2.0.3",
+    "hawtio-integration": "~2.0.4",
     "hawtio-utilities": "~2.0.24",
     "angular-tree-control": "~0.2.21"
   },

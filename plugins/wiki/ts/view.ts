@@ -168,10 +168,14 @@ module Wiki {
           }
         }
       } else {
-        var xmlNamespaces = child.xmlNamespaces;
+        var xmlNamespaces = child.xml_namespaces || child.xmlNamespaces;
         if (xmlNamespaces && xmlNamespaces.length) {
           if (xmlNamespaces.any((ns) => Wiki.camelNamespaces.any(ns))) {
-            prefix = start + "/camel/canvas";
+            if (useCamelCanvasByDefault) {
+              prefix = start + "/camel/canvas";
+            } else {
+              prefix = start + "/camel/properties";
+            }
           } else if (xmlNamespaces.any((ns) => Wiki.dozerNamespaces.any(ns))) {
             prefix = start + "/dozer/mappings";
           } else {

@@ -14,6 +14,8 @@ module Wiki {
   export var dozerNamespaces = ["http://dozer.sourceforge.net"];
   export var activemqNamespaces = ["http://activemq.apache.org/schema/core"];
 
+  export var useCamelCanvasByDefault = false;
+
   export var excludeAdjustmentPrefixes = ["http://", "https://", "#"];
 
   export enum ViewMode { List, Icon };
@@ -673,7 +675,7 @@ module Wiki {
     var path = row.path;
     var branch = row.branch ;
     var directory = row.directory;
-    var xmlNamespaces = row.xmlNamespaces;
+    var xmlNamespaces = row.xml_namespaces || row.xmlNamespaces;
     var iconUrl = row.iconUrl;
     var entity = row.entity;
     if (entity) {
@@ -681,7 +683,7 @@ module Wiki {
       path = path || entity.path;
       branch = branch || entity.branch;
       directory = directory || entity.directory;
-      xmlNamespaces = xmlNamespaces || entity.xmlNamespaces;
+      xmlNamespaces = xmlNamespaces || entity.xml_namespaces || entity.xmlNamespaces;
       iconUrl = iconUrl || entity.iconUrl;
     }
     branch = branch || "master";
