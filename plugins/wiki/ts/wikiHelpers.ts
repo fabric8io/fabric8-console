@@ -695,10 +695,24 @@ module Wiki {
         log.debug("file " + name + " has namespaces " + xmlNamespaces);
       }
     }
+    if (!iconUrl && name) {
+      var lowerName = name.toLowerCase();
+      if (lowerName == "pom.xml") {
+        iconUrl = "img/maven-icon.png";
+      } else if (lowerName == "Jenkinsfile") {
+        iconUrl = "img/jenkins-logo.svg";
+      } else if (lowerName == "fabric8.yml") {
+        iconUrl = "img/fabric8_icon.svg";
+      }
+    }
+
     if (iconUrl) {
       css = null;
+      icon = iconUrl;
+/*
       var prefix = gitUrlPrefix();
       icon = UrlHelpers.join(prefix, "git", iconUrl);
+*/
 /*
       var connectionName = Core.getConnectionNameParameter();
       if (connectionName) {
@@ -722,6 +736,9 @@ module Wiki {
         }
       } else {
         switch (extension) {
+          case 'java':
+            icon = "img/java.svg";
+            break;
           case 'png':
           case 'svg':
           case 'jpg':

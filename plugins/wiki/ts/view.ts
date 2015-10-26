@@ -491,7 +491,7 @@ module Wiki {
           return dir.directory;
         });
         var profiles = details.children.filter((dir) => {
-          return dir.directory;
+          return false;
         });
         var files = details.children.filter((file) => {
           return !file.directory;
