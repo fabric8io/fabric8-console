@@ -83,6 +83,7 @@ module Wiki {
       "markdown": ["md", "markdown", "mdown", "mkdn", "mkd"],
       "htmlmixed": ["html", "xhtml", "htm"],
       "text/x-java": ["java"],
+      "text/x-groovy": ["groovy"],
       "text/x-scala": ["scala"],
       "javascript": ["js", "json", "javascript", "jscript", "ecmascript", "form"],
       "xml": ["xml", "xsd", "wsdl", "atom"],

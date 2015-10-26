@@ -541,6 +541,11 @@ module Wiki {
 
   export function fileFormat(name:string, fileExtensionTypeRegistry?) {
     var extension = fileExtension(name);
+    if (name) {
+      if (name === "Jenkinsfile") {
+        extension = "groovy";
+      }
+    }
     var answer = null;
     if (!fileExtensionTypeRegistry) {
       fileExtensionTypeRegistry = HawtioCore.injector.get("fileExtensionTypeRegistry");
