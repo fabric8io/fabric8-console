@@ -5,3 +5,8 @@ ln -s `pwd`/../hawtio-kubernetes/dist/hawtio-kubernetes.js libs/hawtio-kubernete
 ln -s `pwd`/../hawtio-kubernetes/dist/hawtio-kubernetes.css libs/hawtio-kubernetes/dist/hawtio-kubernetes.css
 echo "Now the libs/hawtio-kubernetes/dist folder is:"
 ls -l libs/hawtio-kubernetes/dist
+
+ln -fs `pwd`/../hawtio-forms/dist/hawtio-forms.js libs/hawtio-forms/dist/hawtio-forms.js
+ln -fs `pwd`/../hawtio-forms/dist/hawtio-forms.css libs/hawtio-forms/dist/hawtio-forms.css
+echo "Hawtio forms linked too..."
+ls -la libs/hawtio-forms/dist
