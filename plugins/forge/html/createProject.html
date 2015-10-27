@@ -31,7 +31,6 @@
     </div>
   </div>
 
-
   <div ng-show="model.fetched && $runningCDPipeline && (!$gogsLink || !$forgeLink)">
     <div class="createProjectPage">
       <div class="jumbotron">
@@ -128,7 +127,7 @@
           <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/forge/command/project-new"
              ng-show="login.loggedIn"
              title="Create a new project in this workspace using a wizard">
-            <i class="fa fa-plus"></i> Create Project using Wizard</a>
+            <i class="fa fa-plus"></i> Create Project using Wizard
           </a>
         </p>
 
@@ -137,6 +136,21 @@
           Delivery Pipelines.
         </p>
       </div>
+    </div>
+  </div>
+
+  <div class="createProjectPage">
+    <div class="jumbotron">
+      <p class="align-center">
+        <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/buildConfigEdit/"
+           title="Import an existing project from a git source control repository">
+          <i class="fa fa-plus"></i> Import Project from Git
+        </a>
+      </p>
+
+      <p class="lead align-center">
+        Import a project which already exists in git
+      </p>
     </div>
   </div>
 </div>
