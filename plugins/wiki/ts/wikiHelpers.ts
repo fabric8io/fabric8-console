@@ -447,9 +447,7 @@ module Wiki {
 
   export function startLink($scope) {
     var projectId = $scope.projectId;
-    var owner = $scope.owner;
-    var repoId = $scope.repoId || projectId;
-    var start = UrlHelpers.join(Developer.projectLink(projectId), "/wiki", owner, repoId);
+    var start = UrlHelpers.join(Developer.projectLink(projectId), "/wiki");
     var branch = $scope.branch;
     if (branch) {
       start = UrlHelpers.join(start, 'branch', branch);

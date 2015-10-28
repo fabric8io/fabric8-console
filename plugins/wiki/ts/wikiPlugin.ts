@@ -20,7 +20,7 @@ module Wiki {
     // allow optional branch paths...
     angular.forEach(["", "/branch/:branch"], (path) => {
       //var startContext = '/wiki';
-      var startContext = '/workspaces/:namespace/projects/:projectId/wiki/:owner/:repoId';
+      var startContext = '/workspaces/:namespace/projects/:projectId/wiki';
       $routeProvider.
               when(UrlHelpers.join(startContext, path, 'view'), route('viewPage.html', false)).
               when(UrlHelpers.join(startContext, path, 'create/:page*'), route('create.html', false)).

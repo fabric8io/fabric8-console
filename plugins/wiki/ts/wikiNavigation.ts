@@ -9,20 +9,13 @@ module Wiki {
   Developer.customProjectSubTabFactories.push(
     (context) => {
       var projectLink = context.projectLink;
-      var projectName = context.projectName;
-      var owner = "";
-      var repoName = "";
-      if (projectName) {
-        // TODO this is a bit of a hack - we should expose this a bit better somewhere?
-        var idx = projectName.indexOf('-');
-        if (idx > 0) {
-          owner = projectName.substring(0, idx);
-          repoName = projectName.substring(idx + 1);
-        }
+      var wikiLink = null;
+      if (projectLink) {
+        wikiLink = UrlHelpers.join(projectLink, "wiki", "view");
       }
       return {
-        isValid: () => projectLink && owner && repoName && Developer.forgeReadyLink(),
-        href: UrlHelpers.join(projectLink, "wiki", owner, repoName, "view"),
+        isValid: () => wikiLink && Developer.forgeReadyLink(),
+        href: wikiLink,
         label: "Source",
         title: "Browse the source code of this project"
       };

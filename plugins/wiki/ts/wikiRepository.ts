@@ -23,7 +23,9 @@ module Wiki {
       this.config = Forge.createHttpConfig();
       var owner = $scope.owner;
       var repoName = $scope.repoId;
-      this.baseUrl = UrlHelpers.join(ForgeApiURL, "repos/user", owner, repoName);
+      var projectId = $scope.projectId;
+      var ns = $scope.namespace || Kubernetes.currentKubernetesNamespace();
+      this.baseUrl = UrlHelpers.join(ForgeApiURL, "repos/project", ns, projectId);
     }
 
     public getPage(branch:string, path:string, objectId:string, fn) {
