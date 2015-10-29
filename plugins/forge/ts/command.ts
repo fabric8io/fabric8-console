@@ -63,6 +63,8 @@ module Forge {
           var resourcePath = $scope.resourcePath;
           var url = executeCommandApiUrl(ForgeApiURL, commandId);
           var request = {
+            namespace: $scope.namespace,
+            projectName: $scope.projectId,
             resource: resourcePath,
             inputList: $scope.inputList
           };
@@ -119,15 +121,16 @@ module Forge {
               }
               if (!$scope.invalid) {
                 $scope.response = data;
-                var status = ((data || {}).status || "").toString().toLowerCase();
+                var dataOrEmpty = (data || {});
+                var status = (dataOrEmpty.status || "").toString().toLowerCase();
                 $scope.responseClass = toBackgroundStyle(status);
 
-                var fullName = ((data || {}).outputProperties || {}).fullName;
-                if ($scope.response && fullName && $scope.id === 'project-new') {
+                var outputProperties = (dataOrEmpty.outputProperties || {});
+                var projectId = dataOrEmpty.projectName || outputProperties.fullName;
+                if ($scope.response && projectId && $scope.id === 'project-new') {
                   $scope.response = null;
                   // lets forward to the devops edit page
-                  var projectId = fullName.replace('/', "-");
-                  var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit/user", fullName);
+                  var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit");
                   log.info("Moving to the devops edit path: " + editPath);
                   $location.path(editPath);
                 }
@@ -205,6 +208,8 @@ module Forge {
           var inputList = [].concat($scope.inputList);
           inputList[inputList.length - 1] = $scope.entity;
           var request = {
+            namespace: $scope.namespace,
+            projectName: $scope.projectId,
             resource: resourcePath,
             inputList: $scope.inputList
           };
@@ -257,7 +262,7 @@ module Forge {
           var commandId = $scope.id;
           if (commandId) {
             var resourcePath = $scope.resourcePath;
-            var url = commandInputApiUrl(ForgeApiURL, commandId, resourcePath);
+            var url = commandInputApiUrl(ForgeApiURL, commandId, $scope.namespace, $scope.projectId, resourcePath);
             url = createHttpUrl(url);
             $http.get(url, createHttpConfig()).
               success(function (data, status, headers, config) {

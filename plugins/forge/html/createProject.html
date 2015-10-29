@@ -16,7 +16,8 @@
   <div class="row">
     <div class="col-md-12">
       <span class="pull-right">&nbsp;</span>
-      <a class="btn btn-default pull-right" ng-click="logout()" ng-show="login.loggedIn && $runningCDPipeline && $gogsLink && $forgeLink"
+      <a class="btn btn-default pull-right" ng-click="logout()"
+         ng-show="login.loggedIn && $runningCDPipeline && $gogsLink && $forgeLink"
          title="Log out from the git repository">
         <i class="fa fa-sign-out"></i> Log out</a>
       </a>
@@ -34,7 +35,8 @@
   <div ng-show="model.fetched && $runningCDPipeline && (!$gogsLink || !$forgeLink)">
     <div class="createProjectPage">
       <div class="jumbotron">
-        <p>Waiting for the <b>CD Pipeline</b> application to startup: &nbsp;&nbsp;<i class="fa fa-spinner fa-spin"></i></p>
+        <p>Waiting for the <b>CD Pipeline</b> application to startup: &nbsp;&nbsp;<i class="fa fa-spinner fa-spin"></i>
+        </p>
 
         <ul class="pending-pods">
           <li class="ngCellText" ng-repeat="item in $requiredRCs">
@@ -123,34 +125,35 @@
   <div ng-show="model.fetched && login.authHeader && $gogsLink && $forgeLink">
     <div class="createProjectPage">
       <div class="jumbotron">
-        <p class="align-center">
-          <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/forge/command/project-new"
-             ng-show="login.loggedIn"
-             title="Create a new project in this workspace using a wizard">
-            <i class="fa fa-plus"></i> Create Project using Wizard
-          </a>
-        </p>
+        <div class="col-md-6">
+          <p class="align-center">
+            <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/forge/command/project-new"
+               ng-show="login.loggedIn"
+               title="Create a new project in this workspace using a wizard">
+              <i class="fa fa-plus"></i> Create Project using Wizard
+            </a>
+          </p>
 
-        <p class="lead align-center">
-          This wizard guides you though creating a new project, the git repository and the related builds and Continuous
-          Delivery Pipelines.
-        </p>
+          <p class="align-center">
+            This wizard guides you though creating a new project, the git repository and the related builds and
+            Continuous
+            Delivery Pipelines.
+          </p>
+        </div>
+
+        <div class="col-md-6">
+          <p class="align-center">
+            <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/buildConfigEdit/"
+               title="Import an existing project from a git source control repository">
+              <i class="fa fa-plus"></i> Import Project from Git
+            </a>
+          </p>
+
+          <p class="align-center">
+            Import a project which already exists in git
+          </p>
+        </div>
       </div>
-    </div>
-  </div>
-
-  <div class="createProjectPage">
-    <div class="jumbotron">
-      <p class="align-center">
-        <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/buildConfigEdit/"
-           title="Import an existing project from a git source control repository">
-          <i class="fa fa-plus"></i> Import Project from Git
-        </a>
-      </p>
-
-      <p class="lead align-center">
-        Import a project which already exists in git
-      </p>
     </div>
   </div>
 </div>

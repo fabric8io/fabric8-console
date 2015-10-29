@@ -119,7 +119,7 @@ module Forge {
       };
 
 
-      var url = UrlHelpers.join(ForgeApiURL, "commands", $scope.resourcePath);
+      var url = UrlHelpers.join(ForgeApiURL, "commands", $scope.namespace, $scope.projectId, $scope.resourcePath);
       url = createHttpUrl(url);
       log.info("Fetching commands from: " + url);
       $http.get(url, createHttpConfig()).

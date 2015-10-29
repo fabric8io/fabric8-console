@@ -21,6 +21,7 @@ module Forge {
   }
 
   export function initScope($scope, $location, $routeParams) {
+    $scope.namespace = $routeParams["namespace"] || Kubernetes.currentKubernetesNamespace();
     $scope.projectId = $routeParams["project"];
     $scope.$workspaceLink = Developer.workspaceLink();
     $scope.$projectLink = Developer.projectLink($scope.projectId);
@@ -57,8 +58,8 @@ module Forge {
     return UrlHelpers.join(ForgeApiURL, "/repos/user", path);
   }
 
-  export function commandApiUrl(ForgeApiURL, commandId, resourcePath = null) {
-    return UrlHelpers.join(ForgeApiURL, "command", commandId, resourcePath);
+  export function commandApiUrl(ForgeApiURL, commandId, ns, projectId, resourcePath = null) {
+    return UrlHelpers.join(ForgeApiURL, "command", commandId, ns, projectId, resourcePath);
   }
 
   export function executeCommandApiUrl(ForgeApiURL, commandId) {
@@ -69,8 +70,12 @@ module Forge {
     return UrlHelpers.join(ForgeApiURL, "command", "validate", commandId);
   }
 
-  export function commandInputApiUrl(ForgeApiURL, commandId, resourcePath) {
-    return UrlHelpers.join(ForgeApiURL, "commandInput", commandId, resourcePath);
+  export function commandInputApiUrl(ForgeApiURL, commandId, ns, projectId, resourcePath) {
+    if (ns && projectId) {
+      return UrlHelpers.join(ForgeApiURL, "commandInput", commandId, ns, projectId, resourcePath);
+    } else {
+      return UrlHelpers.join(ForgeApiURL, "commandInput", commandId);
+    }
   }
 
 
