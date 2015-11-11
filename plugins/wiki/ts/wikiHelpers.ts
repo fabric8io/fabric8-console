@@ -809,10 +809,13 @@ module Wiki {
    */
   export function initScope($scope, $routeParams, $location) {
     $scope.pageId = Wiki.pageId($routeParams, $location);
+
+    // lets let these to be inherited if we include a template on another page
+    $scope.projectId = $routeParams["projectId"] || $scope.id;
+    $scope.namespace = $routeParams["namespace"] || $scope.namespace;
+
     $scope.owner = $routeParams["owner"];
     $scope.repoId = $routeParams["repoId"];
-    $scope.projectId = $routeParams["projectId"];
-    $scope.namespace = $routeParams["namespace"];
     $scope.branch = $routeParams["branch"] || $location.search()["branch"];
     $scope.objectId = $routeParams["objectId"] || $routeParams["diffObjectId1"];
     $scope.startLink = startLink($scope);
