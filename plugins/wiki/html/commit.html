@@ -1,12 +1,10 @@
-<link rel="stylesheet" href="plugins/wiki/css/wiki.css" type="text/css"/>
-
 <div ng-controller="Wiki.CommitController">
   <script type="text/ng-template" id="fileCellTemplate.html">
     <div class="ngCellText">
-      <a ng-href="{{row.entity.fileLink}}" class="file-name"
-         title="{{row.entity.title}}">
-        <span class="file-icon" ng-class="row.entity.fileClass" ng-bind-html-unsafe="row.entity.fileIconHtml"></span>
-        <span ng-class="row.entity.changeClass">{{row.entity.path}}</span>
+      <a ng-href="{{row.entity.fileLink}}" class="file-name text-nowrap" title="{{row.entity.title}}">
+        <span ng-class="row.entity.changeClass"></span>
+        <span class="file-icon" ng-class="row.entity.fileClass" ng-bind-html="row.entity.fileIconHtml"></span>
+        {{row.entity.path}}
       </a>
     </div>
   </script>
