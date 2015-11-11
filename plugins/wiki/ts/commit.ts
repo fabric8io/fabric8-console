@@ -17,7 +17,6 @@ module Wiki {
     var wikiRepository = $scope.wikiRepository;
 
     $scope.commitId = $scope.objectId;
-    $scope.selectedItems = [];
 
     // TODO we could configure this?
     $scope.dateFormat = 'EEE, MMM d, y : hh:mm:ss a';
@@ -29,7 +28,7 @@ module Wiki {
       selectWithCheckboxOnly: true,
       showSelectionCheckbox: true,
       displaySelectionCheckbox : true, // old pre 2.0 config!
-      selectedItems: $scope.selectedItems,
+      selectedItems: [],
       filterOptions: {
         filterText: ''
       },
@@ -59,12 +58,13 @@ module Wiki {
 
 
     $scope.canRevert = () => {
-      return $scope.selectedItems.length === 1;
+      return $scope.gridOptions.selectedItems.length === 1;
     };
 
     $scope.revert = () => {
-      if ($scope.selectedItems.length > 0) {
-        var path = commitPath($scope.selectedItems[0]);
+      var selectedItems = $scope.gridOptions.selectedItems;
+      if (selectedItems.length > 0) {
+        var path = commitPath(selectedItems[0]);
         var objectId = $scope.commitId;
         if (path && objectId) {
           var commitMessage = "Reverting file " + $scope.pageId + " to previous version " + objectId;
@@ -82,8 +82,9 @@ module Wiki {
     }
 
     $scope.diff = () => {
-      if ($scope.selectedItems.length > 0) {
-        var commit = $scope.selectedItems[0];
+      var selectedItems = $scope.gridOptions.selectedItems;
+      if (selectedItems.length > 0) {
+        var commit = selectedItems[0];
         /*
          var commit = row;
          var entity = row.entity;

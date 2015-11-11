@@ -59,26 +59,18 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-4">
-      <div class="control-group">
-        <button class="btn" ng-disabled="!selectedItems.length" ng-click="diff()"
-                title="Compare the selected versions of the files to see how they differ"><i class="fa fa-exchange"></i>
-          Compare
-        </button>
+  <div class="row filter-header">
+    <div class="col-md-12">
+      <hawtio-filter ng-model="gridOptions.filterOptions.filterText"
+                     css-class="input-xxlarge"
+                     placeholder="Filter..."></hawtio-filter>
 
-        <!--
-                <button class="btn" ng-disabled="!canRevert()" ng-click="revert()"
-                        title="Revert to this version of the file"><i class="fa fa-exchange"></i> Revert
-                </button>
-        -->
-      </div>
-    </div>
-    <div class="col-md-8">
-      <div class="control-group">
-        <input class="col-md-12 search-query" type="text" ng-model="gridOptions.filterOptions.filterText"
-               placeholder="search">
-      </div>
+      <span class="pull-right">&nbsp;</span>
+      <a class="btn btn-default pull-right" ng-disabled="!gridOptions.selectedItems.length" ng-click="diff()"
+         title="Compare the selected versions of the files to see how they differ">
+        <i class="fa fa-exchange"></i>
+        Compare
+      </a>
     </div>
   </div>
 
