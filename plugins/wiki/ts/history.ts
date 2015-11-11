@@ -41,7 +41,7 @@ module Wiki {
         {
           field: 'sha',
           displayName: 'Change',
-          cellTemplate: $templateCache.get('changeCellTemplate.html'),
+          cellTemplate: '<div class="ngCellText"><a class="commit-link" ng-href="{{row.entity.commitLink}}{{hash}}" title="{{row.entity.sha}}">{{row.entity.sha | limitTo:7}} <i class="fa fa-arrow-circle-right"></i></a></div>',
           cellFilter: "",
           width: "*"
         },
