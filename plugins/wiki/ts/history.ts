@@ -104,7 +104,7 @@ module Wiki {
           objectId = _;
         }
       }
-      var link = startLink($scope) + "/diff/" + $scope.pageId + "/" + objectId + "/" + baseObjectId;
+      var link = startLink($scope) + "/diff/" + objectId + "/" + baseObjectId + "/" + $scope.pageId;
       var path = Core.trimLeading(link, "#");
       $location.path(path);
     };

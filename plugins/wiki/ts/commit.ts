@@ -92,7 +92,8 @@ module Wiki {
          commit = entity;
          }
          */
-        var link = startLink($scope) + "/diff/" + commitPath(commit) + "/" + $scope.commitId + "/";
+        var otherCommitId = $scope.commitId;
+        var link = UrlHelpers.join(startLink($scope),  "/diff/" + $scope.commitId + "/" + otherCommitId + "/" + commitPath(commit));
         var path = Core.trimLeading(link, "#");
         $location.path(path);
       }
