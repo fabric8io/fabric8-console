@@ -24,7 +24,7 @@ var config = {
   main: '.',
   ts: ['plugins/**/*.ts'],
   testTs: ['test-plugins/**/*.ts'],
-  less: './less/**/*.less',
+  less: ['./plugins/**/*.less'],
   templates: ['plugins/**/*.html'],
   testTemplates: ['test-plugins/**/*.html'],
   templateModule: pkg.name + '-templates',
@@ -176,7 +176,7 @@ gulp.task('clean', ['concat'], function() {
 });
 
 gulp.task('watch', ['build', 'build-example'], function() {
-  plugins.watch(['libs/**/*.js', 'libs/**/*.css', 'index.html', config.dist + '/' + config.js], function() {
+  plugins.watch(['libs/**/*.js', 'libs/**/*.css', 'index.html', config.dist + '/*'], function() {
     gulp.start('reload');
   });
   plugins.watch(['libs/**/*.d.ts', config.ts, config.templates], function() {
@@ -185,8 +185,8 @@ gulp.task('watch', ['build', 'build-example'], function() {
   plugins.watch([config.testTs, config.testTemplates], function() {
     gulp.start(['example-tsc', 'example-template', 'example-concat', 'example-clean']);
   });
-  plugins.watch(config.less, function(){
-    gulp.start('less', 'reload');
+  plugins.watch(config.less, function() {
+    gulp.start('less');
   });
 });
 

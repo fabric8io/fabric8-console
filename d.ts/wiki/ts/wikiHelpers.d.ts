@@ -50,6 +50,14 @@ declare module Wiki {
             invalid: string;
             extension: string;
         }[];
+    } | {
+        label: string;
+        tooltip: string;
+        icon: string;
+        exemplar: string;
+        regex: RegExp;
+        invalid: string;
+        extension: string;
     })[];
     function isFMCContainer(workspace: any): boolean;
     function isWikiEnabled(workspace: any, jolokia: any, localStorage: any): boolean;
