@@ -35,6 +35,8 @@ module Wiki {
         {
           field: '$date',
           displayName: 'Modified',
+          defaultSort: true,
+          ascending: false,
           cellTemplate: '<div class="ngCellText text-nowrap" title="{{row.entity.$date | date:\'EEE, MMM d, yyyy : HH:mm:ss Z\'}}">{{row.entity.$date.relative()}}</div>',
           width: "**"
         },
@@ -122,7 +124,7 @@ module Wiki {
           log.$date = Developer.asDate(log.date);
           log.commitLink = startLink($scope) + "/commit/" + $scope.pageId + "/" + commitId;
         });
-        $scope.logs = logArray;
+        $scope.logs = _.sortBy(logArray, "$date").reverse();
         Core.$apply($scope);
       });
       Wiki.loadBranches(jolokia, wikiRepository, $scope, isFmc);
