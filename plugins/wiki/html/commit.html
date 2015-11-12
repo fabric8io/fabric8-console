@@ -8,6 +8,13 @@
       </a>
     </div>
   </script>
+  <script type="text/ng-template" id="viewDiffTemplate.html">
+    <div class="ngCellText">
+      <a ng-href="{{row.entity.$diffLink}}" ng-show="row.entity.$diffLink" title="View the actual changes to this change">
+        View Diff
+      </a>
+    </div>
+  </script>
 
   <div ng-hide="inDashboard" class="row">
     <div hawtio-breadcrumbs></div>

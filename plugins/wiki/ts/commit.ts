@@ -40,6 +40,11 @@ module Wiki {
           width: "***",
           cellFilter: ""
         },
+        {
+          field: '$diffLink',
+          displayName: 'Options',
+          cellTemplate: $templateCache.get('viewDiffTemplate.html')
+        }
       ]
     };
 
@@ -121,6 +126,7 @@ module Wiki {
           if (path) {
             commit.fileLink = startLink($scope) + '/version/' + path + '/' + commitId;
           }
+          commit.$diffLink = startLink($scope) + "/diff/" + commitId + "/" + commitId + "/" + (path || "");
           if (changeType) {
             changeType = changeType.toLowerCase();
             if (changeType.startsWith("a")) {
