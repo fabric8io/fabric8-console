@@ -1,44 +1,45 @@
 <div ng-controller="Wiki.HistoryController">
   <div class="row">
-    <div hawtio-breadcrumbs></div>
-  </div>
-
-  <div ng-hide="inDashboard" class="wiki logbar" ng-controller="Wiki.NavBarController">
-    <div class="wiki logbar-container">
-      <ul class="nav nav-tabs">
+    <div class="wiki source-nav-widget">
+      <div class="inline-block app-path" hawtio-breadcrumbs></div>
+      <div ng-hide="inDashboard" class="inline-block source-path" ng-controller="Wiki.NavBarController">
+        <ol class="inline-block breadcrumb">
+          <li ng-repeat="link in breadcrumbs">
+            <a ng-href="{{link.href}}{{hash}}">{{link.name}}</a>
+          </li>
+        </ol>
+      </div>
+      <ul class="source-controls pull-right nav nav-tabs" ng-controller="Wiki.NavBarController">
         <li ng-show="branches.length || branch" class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-             title="The branch to view">
+            title="The branch to view">
             {{branch || 'branch'}}
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
             <li ng-repeat="otherBranch in branches">
               <a ng-href="{{branchLink(otherBranch)}}{{hash}}"
-                 ng-hide="otherBranch === branch"
-                 title="Switch to the {{otherBranch}} branch"
-                 data-placement="bottom">
+                ng-hide="otherBranch === branch"
+                title="Switch to the {{otherBranch}} branch"
+                data-placement="bottom">
                 {{otherBranch}}</a>
             </li>
           </ul>
         </li>
-        <li ng-repeat="link in breadcrumbs">
-          <a ng-href="{{link.href}}{{hash}}">{{link.name}}</a>
-        </li>
         <li class="ng-scope active">
-          <a>History</a>
+          <a class="btn" href="">History</a>
         </li>
 
         <li class="pull-right" hawtio-show object-name="{{gitMBean}}" method-name="write">
-          <a class="btn" ng-disabled="!gridOptions.selectedItems.length" ng-click="diff()"
-                  title="Compare the selected versions of the files to see how they differ">
+          <a class="btn" href="" ng-disabled="!gridOptions.selectedItems.length" ng-click="diff()"
+            title="Compare the selected versions of the files to see how they differ">
             <i class="fa fa-exchange"></i> Compare
           </a>
         </li>
         <li class="pull-right">
-          <a class="btn" ng-disabled="!canRevert()" ng-click="revert()"
-                  title="Revert to this version of the file" hawtio-show object-name="{{gitMBean}}"
-                  method-name="revertTo">
+          <a class="btn" href="" ng-disabled="!canRevert()" ng-click="revert()"
+            title="Revert to this version of the file" hawtio-show object-name="{{gitMBean}}"
+            method-name="revertTo">
             <i class="fa fa-exchange"></i> Revert
           </a>
         </li>
@@ -46,7 +47,7 @@
     </div>
   </div>
 
-  <div class="wiki-fixed row">
+  <div class="row">
     <div class="col-md-12">
       <div class="control-group">
         <input class="col-md-12 search-query" type="text" ng-model="gridOptions.filterOptions.filterText"

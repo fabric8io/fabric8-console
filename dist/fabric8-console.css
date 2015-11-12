@@ -35,6 +35,7 @@
 
 .source-nav-widget {
   position: static;
+  white-space: nowrap;
 }
 .source-nav-widget .app-path .breadcrumb {
   padding-right: 0;
