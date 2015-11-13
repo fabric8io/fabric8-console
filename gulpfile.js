@@ -350,7 +350,8 @@ function setupAndListen(hawtio, config) {
       }
     };
     if (googleClientId && googleClientSecret) {
-      config.master_uri = kubeBase;
+      // route the client to the proxy
+      config.master_uri = "http://localhost:9000/kubernetes";
       config.google = {
         clientId: googleClientId,
         clientSecret: googleClientSecret,

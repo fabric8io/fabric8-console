@@ -22,3 +22,13 @@ ln -fs `pwd`/../hawtio-ui/dist/hawtio-ui.js libs/hawtio-ui/dist/hawtio-ui.js
 ln -fs `pwd`/../hawtio-ui/dist/hawtio-ui.css libs/hawtio-ui/dist/hawtio-ui.css
 echo "hawtio-ui linked too..."
 ls -la libs/hawtio-ui/dist
+
+# hawtio-core
+ln -fs `pwd`/../hawtio-core/hawtio-core.js libs/hawtio-core/hawtio-core.js
+echo "hawtio-core linked too..."
+ls -la libs/hawtio-core
+
+# hawtio-oauth
+ln -fs `pwd`/../hawtio-oauth/dist/hawtio-oauth.js libs/hawtio-oauth/dist/hawtio-oauth.js
+echo "hawtio-oauth linked too..."
+ls -la libs/hawtio-oauth/dist
