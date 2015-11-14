@@ -33,6 +33,33 @@
   margin-top: inherit;
 }
 
+.commit-avatar img {
+  height: 36px;
+  width: 36px;
+}
+.commit-table > tbody > tr > td.commit-avatar,
+.commit-table > tbody > tr > td.commit-links {
+  vertical-align: middle;
+}
+.commit-table tr {
+  border: 1px solid #f0f0f0;
+}
+.commit-table td {
+  padding: 8px 4px;
+}
+.commit-table td:first-child,
+.commit-table td:last-child {
+  padding: 8px 8px;
+}
+.commit-table td .commit-details {
+  padding: 0px;
+  margin: 0px;
+}
+.commit-table td .commit-history-message {
+  padding: 0px;
+  margin: 0px;
+}
+
 .source-nav-widget {
   position: static;
   white-space: nowrap;

@@ -19,6 +19,7 @@
 /// <reference path="d.ts/wiki/ts/formTable.d.ts"/>
 /// <reference path="d.ts/wiki/ts/gitPreferences.d.ts"/>
 /// <reference path="d.ts/wiki/ts/history.d.ts"/>
+/// <reference path="d.ts/wiki/ts/historyDirective.d.ts"/>
 /// <reference path="d.ts/wiki/ts/navbar.d.ts"/>
 /// <reference path="d.ts/wiki/ts/view.d.ts"/>
 /// <reference path="d.ts/wiki/ts/wikiDialogs.d.ts"/>

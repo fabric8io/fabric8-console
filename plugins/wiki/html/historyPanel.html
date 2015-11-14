@@ -1,0 +1,28 @@
+<div ng-controller="Wiki.HistoryController">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="commit-table">
+        <tr class="commit-row" ng-repeat="commit in logs | filter:filterTemplates track by $index">
+          <td class="commit-avatar" title="{{commit.name}}">
+              <img ng-show="commit.avatar_url" src="{{commit.avatar_url}}"/>
+            </div>
+          </td>
+          <td>
+            <p class="commit-history-message">{{commit.short_message}}</p>
+
+            <p class="commit-details text-nowrap">
+              <span class="commit-history-author">{{commit.author}}</span>
+              <span class=""> committed </span>
+              <span class="commit-date" title="{{commit.$date | date:'EEE, MMM d, yyyy : HH:mm:ss Z'}}">{{commit.$date.relative()}}</span>
+            </p>
+          </td>
+          <td class="commit-links">
+            <a class="text-nowrap btn" ng-href="{{commit.commitLink}}{{hash}}" title="{{commit.sha}}">
+              {{commit.sha | limitTo:7}}
+              <i class="fa fa-arrow-circle-right"></i></a>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
