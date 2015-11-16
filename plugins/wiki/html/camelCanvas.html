@@ -1,7 +1,5 @@
 <div ng-controller="Wiki.CamelController">
-  <div ng-controller="Wiki.CamelCanvasController">
-
-    <div class="remove-wiki-fixed">
+  <div class="camel-canvas-page" ng-controller="Wiki.CamelCanvasController">
 
       <ng-include src="'plugins/wiki/html/camelNavBar.html'"></ng-include>
 
@@ -22,21 +20,17 @@
 
 
       <div class="row">
-        <div class="col-md-12">
           <ul class="nav nav-tabs">
-            <li ng-class="{active : true}">
-              <a ng-href='{{startLink()}}/camel/canvas/{{pageId}}' title="Edit the diagram in a draggy droppy way"
-                 data-placement="bottom">
-                <i class="icon-picture"></i> Canvas</a></li>
-            <li ng-class="{active : false}">
-              <a href='' ng-click='confirmSwitchToTreeView()' title="Switch to the tree based view"
-                 data-placement="bottom">
-                <i class="icon-sitemap"></i> Tree</a></li>
+            <!-- navigation tabs -->
+            <li ng-repeat="nav in camelSubLevelTabs" ng-show="isValid(nav)" ng-class="{active : isActive(nav)}">
+              <a ng-href="{{nav.href()}}{{hash}}" title="{{nav.title}}"
+                data-placement="bottom" ng-bind-html="nav.content"></a></li>
 
+            <!-- controls -->
             <li class="pull-right">
               <a href='' title="Add new pattern node connecting to this pattern" ng-click="addDialog.open()"
                  data-placement="bottom">
-                <i class="icon-plus"></i> Add</a></li>
+                 <i class="icon-plus"></i> Add</a></li>
 
             <li class="pull-right">
               <a href='' title="Automatically layout the diagram " ng-click="doLayout()"
@@ -120,7 +114,6 @@
   </div>
   -->
 
-        </div>
       </div>
 
       <div class="panes" hawtio-window-height>
@@ -164,10 +157,10 @@
               <div>
                 <!-- pattern form -->
                 <div ng-show="!selectedEndpoint">
-                  <div simple-form
+                  <div hawtio-form-2="nodeModel"
                        name="formEditor"
-                       entity='nodeData'
-                       data='nodeModel'
+                       entity="nodeData"
+                       data="nodeModel"
                        schema="schema"
                        onsubmit="updateProperties"></div>
                 </div>
@@ -211,6 +204,5 @@
         </div>
       </div>
 
-    </div>
   </div>
 </div>

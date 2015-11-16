@@ -1,27 +1,54 @@
-.camel-canvas-container {
-  min-height: 100%;
+/* wiki camel editor stuff */
+
+.camel-canvas-page {
+  .row {
+    .col-md-12 {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 0;
+      float: none;
+    }
+  }
+  div.hawtio-form-tabs ul.nav-tabs li {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: none !important;
+    border: none !important;
+  }
+  div.hawtio-form-tabs div.tab-content {
+    border: none;
+    box-shadow: none;
+    padding: 0;
+  }
+  .form-horizontal .form-group {
+    margin-right: auto;
+    margin-left: auto;
+  }
 }
 
-/* wiki camel editor stuff */
 .panes {
   position: relative;
   display: block;
-  min-height: 100%;
+  top: 5px;
+  .left-pane {
+    position: absolute;
+    left: 0;
+    right: 285px;
+    height: 100%;
+    padding-bottom: 5px;
+  }
+
+  .right-pane {
+    position: absolute;
+    right: 0;
+    width: 275px;
+    height: 100%;
+  }
+
 }
 
-.panes > .left-pane {
-  position: absolute;
-  left: 0;
-  right: 285px;
-  height: 100%;
-}
-
-.panes > .right-pane {
-  position: absolute;
-  right: 0;
-  width: 275px;
-  height: 100%;
-}
 
 .camel-viewport {
   overflow: auto;
@@ -49,8 +76,7 @@
 }
 
 .camel-props > .prop-viewport {
-  overflow-y: auto;
-  overflow-x: visible;
+  overflow: auto;
   position: absolute;
   bottom: 0;
   top: 80px;
@@ -59,9 +85,9 @@
 
 .camel-props form > fieldset > legend {
   font-size: medium;
-  font-weight: bold;
+  font-weight: normal;
   margin: 0;
-  line-height: 12px;
+  line-height: 16px;
   padding: 3px;
 }
 
