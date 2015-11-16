@@ -20,6 +20,7 @@ ls -la libs/hawtio-forms/dist
 # hawtio-ui
 ln -fs `pwd`/../hawtio-ui/dist/hawtio-ui.js libs/hawtio-ui/dist/hawtio-ui.js
 ln -fs `pwd`/../hawtio-ui/dist/hawtio-ui.css libs/hawtio-ui/dist/hawtio-ui.css
+ln -fs `pwd`/../hawtio-ui/dist/site-base.css libs/hawtio-ui/dist/site-base.css
 echo "hawtio-ui linked too..."
 ls -la libs/hawtio-ui/dist
 

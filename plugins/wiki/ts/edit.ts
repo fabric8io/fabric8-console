@@ -61,7 +61,7 @@ module Wiki {
     $scope.create = () => {
       // lets combine the file name with the current pageId (which is the directory)
       var path = $scope.pageId + "/" + $scope.fileName;
-      console.log("creating new file at " + path);
+      log.debug("creating new file at " + path);
       saveTo(path);
     };
 
@@ -148,7 +148,7 @@ module Wiki {
         contents = JSON.stringify($scope.formEntity, null, "  ");
       }
       log.debug("Saving file, branch: ", $scope.branch, " path: ", $scope.path);
-      //console.log("About to write contents '" + contents + "'");
+      //log.debug("About to write contents '" + contents + "'");
       wikiRepository.putPage($scope.branch, path, contents, commitMessage, (status) => {
         Wiki.onComplete(status);
         $scope.modified = false;

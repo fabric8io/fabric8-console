@@ -102,7 +102,7 @@ module Wiki {
      * Converts a path and a set of endpoint parameters into a URI we can then use to store in the XML
      */
     function createEndpointURI(endpointScheme:string, slashesText:string, endpointPath:string, endpointParameters:any) {
-      console.log("scheme " + endpointScheme + " path " + endpointPath + " parameters " + endpointParameters);
+      log.debug("scheme " + endpointScheme + " path " + endpointPath + " parameters " + endpointParameters);
       // now lets create the new URI from the path and parameters
       // TODO should we use JMX for this?
       var uri = ((endpointScheme) ? endpointScheme + ":" + slashesText : "") + (endpointPath ? endpointPath : "");
@@ -171,7 +171,7 @@ module Wiki {
     };
 
     $scope.cancel = () => {
-      console.log("cancelling...");
+      log.debug("cancelling...");
       // TODO show dialog if folks are about to lose changes...
     };
 
@@ -182,11 +182,11 @@ module Wiki {
       /*
        if ($scope.breadcrumbs && $scope.breadcrumbs.length > 1) {
        var viewLink = $scope.breadcrumbs[$scope.breadcrumbs.length - 2];
-       console.log("goToView has found view " + viewLink);
+       log.debug("goToView has found view " + viewLink);
        var path = Core.trimLeading(viewLink, "#");
        $location.path(path);
        } else {
-       console.log("goToView has no breadcrumbs!");
+       log.debug("goToView has no breadcrumbs!");
        }
        */
     }
@@ -196,7 +196,7 @@ module Wiki {
       var parentFolder = $scope.selectedFolder || $scope.rootFolder;
       var key = nodeModel["_id"];
       if (!key) {
-        console.log("WARNING: no id for model " + JSON.stringify(nodeModel));
+        log.debug("WARNING: no id for model " + JSON.stringify(nodeModel));
       } else {
         var treeNode = $scope.selectedFolder;
         if (key === "route") {
@@ -214,7 +214,7 @@ module Wiki {
             if (children && children.length) {
               treeNode = getRouteFolder($scope.rootFolder, $scope.selectedRouteId) || children[children.length - 1];
             } else {
-              console.log("Could not add a new route to the empty tree!");
+              log.debug("Could not add a new route to the empty tree!");
               return;
             }
           }
@@ -317,7 +317,7 @@ module Wiki {
         var idx = node;
         node = $scope.nodeStates[idx];
         if (!node) {
-          console.log("Cant find node at " + idx);
+          log.debug("Cant find node at " + idx);
           return "node-" + idx;
         }
       }
@@ -613,7 +613,7 @@ module Wiki {
               $scope.endpointPath = endpointPath;
               $scope.endpointParameters = endpointParameters;
 
-              console.log("endpoint " + endpointScheme + " path " + endpointPath + " and parameters " + JSON.stringify(endpointParameters));
+              log.debug("endpoint " + endpointScheme + " path " + endpointPath + " and parameters " + JSON.stringify(endpointParameters));
               $scope.loadEndpointSchema(endpointScheme);
               $scope.selectedEndpoint = {
                 endpointScheme: endpointScheme,

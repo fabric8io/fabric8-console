@@ -150,7 +150,7 @@ module Wiki {
       if ($scope.selectedPaletteNode) {
         $scope.selectedComponentNode = null;
       }
-      console.log("Selected " + $scope.selectedPaletteNode + " : " + $scope.selectedComponentNode);
+      log.debug("Selected " + $scope.selectedPaletteNode + " : " + $scope.selectedComponentNode);
     };
 
     $scope.onComponentSelect = (node) => {
@@ -158,11 +158,11 @@ module Wiki {
       if ($scope.selectedComponentNode) {
         $scope.selectedPaletteNode = null;
         var nodeName = node.key;
-        console.log("loading endpoint schema for node " + nodeName);
+        log.debug("loading endpoint schema for node " + nodeName);
         $scope.loadEndpointSchema(nodeName);
         $scope.selectedComponentName = nodeName;
       }
-      console.log("Selected " + $scope.selectedPaletteNode + " : " + $scope.selectedComponentNode);
+      log.debug("Selected " + $scope.selectedPaletteNode + " : " + $scope.selectedComponentNode);
     };
 
     $scope.selectedNodeModel = () => {
@@ -190,7 +190,7 @@ module Wiki {
       if (nodeModel) {
         addNewNode(nodeModel);
       } else {
-        console.log("WARNING: no nodeModel!");
+        log.debug("WARNING: no nodeModel!");
       }
       $scope.addDialog.close();
     };
@@ -240,14 +240,14 @@ module Wiki {
     };
 
     $scope.cancel = () => {
-      console.log("cancelling...");
+      log.debug("cancelling...");
       // TODO show dialog if folks are about to lose changes...
     };
 
     $scope.$watch('workspace.tree', function () {
       if (!$scope.git) {
         // lets do this asynchronously to avoid Error: $digest already in progress
-        //console.log("Reloading the view as we now seem to have a git mbean!");
+        //log.debug("Reloading the view as we now seem to have a git mbean!");
         setTimeout(updateView, 50);
       }
     });
@@ -334,7 +334,7 @@ module Wiki {
             }
           }
         }
-        console.log("nodeDrop nodeId: " + nodeId + " sourceId: " + sourceId + " hitMode: " + hitMode);
+        log.debug("nodeDrop nodeId: " + nodeId + " sourceId: " + sourceId + " hitMode: " + hitMode);
 
         sourceNode.move(node, hitMode);
       }
@@ -349,7 +349,7 @@ module Wiki {
       var key = nodeModel["_id"];
       var beforeNode = null;
       if (!key) {
-        console.log("WARNING: no id for model " + JSON.stringify(nodeModel));
+        log.debug("WARNING: no id for model " + JSON.stringify(nodeModel));
       } else {
         var treeNode = $scope.treeNode;
         if (key === "route") {
@@ -367,7 +367,7 @@ module Wiki {
             if (children && children.length) {
               treeNode = children[children.length - 1];
             } else {
-              console.log("Could not add a new route to the empty tree!");
+              log.debug("Could not add a new route to the empty tree!");
               return;
             }
           }
@@ -444,7 +444,7 @@ module Wiki {
           $scope.camelContextTree = tree;
         }
       } else {
-        console.log("No XML found for page " + $scope.pageId);
+        log.debug("No XML found for page " + $scope.pageId);
       }
       Core.$applyLater($scope);
     }
@@ -452,7 +452,7 @@ module Wiki {
     function updateView() {
       $scope.loadEndpointNames();
       $scope.pageId = Wiki.pageId($routeParams, $location);
-      console.log("Has page id: " + $scope.pageId + " with $routeParams " + JSON.stringify($routeParams));
+      log.debug("Has page id: " + $scope.pageId + " with $routeParams " + JSON.stringify($routeParams));
 
       wikiRepository.getPage($scope.branch, $scope.pageId, $scope.objectId, onResults);
     }
@@ -463,11 +463,11 @@ module Wiki {
       /*
        if ($scope.breadcrumbs && $scope.breadcrumbs.length > 1) {
        var viewLink = $scope.breadcrumbs[$scope.breadcrumbs.length - 2];
-       console.log("goToView has found view " + viewLink);
+       log.debug("goToView has found view " + viewLink);
        var path = Core.trimLeading(viewLink, "#");
        $location.path(path);
        } else {
-       console.log("goToView has no breadcrumbs!");
+       log.debug("goToView has no breadcrumbs!");
        }
        */
     }
