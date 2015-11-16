@@ -1,10 +1,7 @@
 <div ng-controller="Wiki.CamelController">
   <div ng-controller="Wiki.CamelCanvasController">
-    <div class="row">
-      <div hawtio-breadcrumbs></div>
-    </div>
 
-    <div class="wiki-fixed">
+    <div class="remove-wiki-fixed">
 
       <ng-include src="'plugins/wiki/html/camelNavBar.html'"></ng-include>
 
@@ -28,7 +25,7 @@
         <div class="col-md-12">
           <ul class="nav nav-tabs">
             <li ng-class="{active : true}">
-              <a ng-href='{{startLink}}/camel/canvas/{{pageId}}' title="Edit the diagram in a draggy droppy way"
+              <a ng-href='{{startLink()}}/camel/canvas/{{pageId}}' title="Edit the diagram in a draggy droppy way"
                  data-placement="bottom">
                 <i class="icon-picture"></i> Canvas</a></li>
             <li ng-class="{active : false}">

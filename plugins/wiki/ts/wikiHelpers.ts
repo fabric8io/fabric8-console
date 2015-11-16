@@ -446,9 +446,9 @@ module Wiki {
   }
 
   export function startLink($scope) {
-    var projectId = $scope.projectId;
-    var start = UrlHelpers.join(Developer.projectLink(projectId), "/wiki");
-    var branch = $scope.branch;
+    var projectId = $scope.$eval('projectId');
+    var start = UrlHelpers.join(HawtioCore.documentBase(), Developer.projectLink(projectId), "/wiki");
+    var branch = $scope.$eval('branch');
     if (branch) {
       start = UrlHelpers.join(start, 'branch', branch);
     }

@@ -1,18 +1,25 @@
 <ul class="nav nav-tabs">
-  <li ng-class="{active : false}">
+
+  <!--
+  <li ng-class="{ active : isActive({ id: 'canvas' }) }">
     <a href='' ng-click='confirmSwitchToCanvasView()' title="Edit the diagram in a draggy droppy way"
         data-placement="bottom">
-      <i class="icon-picture"></i> Canvas</a></li>
+        <i class="fa fa-icon-picture"></i> Canvas</a>
+    </li>
+    -->
+
   <li ng-repeat="nav in camelSubLevelTabs" ng-show="isValid(nav)" ng-class="{active : isActive(nav)}">
     <a ng-href="{{nav.href()}}{{hash}}" title="{{nav.title}}"
-       data-placement="bottom" ng-bind-html-unsafe="nav.content"></a></li>
+       data-placement="bottom" ng-bind-html="nav.content"></a></li>
 
   <li class="pull-right">
     <a href='' title="Add new pattern node connecting to this pattern" ng-click="addNode()" data-placement="bottom">
       <i class="icon-plus"></i> Add</a></li>
+
   <li class="pull-right">
     <a href='' title="Deletes the selected pattern" ng-disabled="!canDelete()" ng-click="removeNode()" data-placement="bottom">
       <i class="icon-remove"></i> Delete</a></li>
+
 </ul>
 
 <div modal="addDialog.show" close="addDialog.close()" ng-options="addDialog.options">

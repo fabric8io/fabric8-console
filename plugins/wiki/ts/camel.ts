@@ -34,26 +34,24 @@ module Wiki {
     };
 
     $scope.camelSubLevelTabs = [
-      /*{
-        content: '<i class="icon-picture"></i> Canvas',
+      {
+        content: '<i class="fa fa-picture-o"></i> Canvas',
         title: "Edit the diagram in a draggy droppy way",
         isValid: (workspace:Workspace) => true,
-        href: () => Wiki.startLink($scope.branch) + "/camel/canvas/" + $scope.pageId
+        href: () => Wiki.startLink($scope) + "/camel/canvas/" + $scope.pageId
       },
-      */{
-        content: '<i class=" icon-sitemap"></i> Tree',
+      {
+        content: '<i class="fa fa-tree"></i> Tree',
         title: "View the routes as a tree",
         isValid: (workspace:Workspace) => true,
-        href: () => Wiki.startLink($scope.branch) + "/camel/properties/" + $scope.pageId
-      },
-      /*
+        href: () => Wiki.startLink($scope) + "/camel/properties/" + $scope.pageId
+      }/*,
        {
-       content: '<i class="icon-sitemap"></i> Diagram',
+       content: '<i class="fa fa-sitemap"></i> Diagram',
        title: "View a diagram of the route",
        isValid: (workspace:Workspace) => true,
-       href: () => Wiki.startLink($scope.branch) + "/camel/diagram/" + $scope.pageId
-       },
-       */
+       href: () => Wiki.startLink($scope) + "/camel/diagram/" + $scope.pageId
+       },*/
     ];
 
     var routeModel = _apacheCamelModel.definitions.route;
@@ -475,7 +473,9 @@ module Wiki {
     }
 
     $scope.doSwitchToCanvasView = () => {
-      $location.url(Core.trimLeading((Wiki.startLink($scope.branch) + "/camel/canvas/" + $scope.pageId), '#'));
+      var link = $location.url().replace(/\/properties\//, '/canvas/');
+      log.debug("Link: ", link);
+      $location.url(link);
     };
 
     $scope.confirmSwitchToCanvasView = () => {
