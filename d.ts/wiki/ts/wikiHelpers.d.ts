@@ -65,6 +65,7 @@ declare module Wiki {
     function customViewLinks($scope: any): string[];
     function createWizardTree(workspace: any, $scope: any): any;
     function addCreateWizardFolders(workspace: any, $scope: any, parent: any, templates: any[]): void;
+    function startWikiLink(projectId: any, branch: any): string;
     function startLink($scope: any): string;
     function isIndexPage(path: string): boolean;
     function viewLink($scope: any, pageId: string, $location: any, fileName?: string): string;

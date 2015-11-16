@@ -84,7 +84,7 @@
       <div class="col-md-12">
         <div class="diff-panel">
           <div class="diff-filename">
-            {{diff.new_path}}
+            <a href="{{diff.$viewLink}}">{{diff.new_path}}</a>
           </div>
           <div class="diff-delta">
             <textarea id="source" ui-codemirror="codeMirrorOptions" ng-model="diff.diff"></textarea>

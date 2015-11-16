@@ -445,14 +445,18 @@ module Wiki {
     });
   }
 
-  export function startLink($scope) {
-    var projectId = $scope.$eval('projectId');
-    var start = UrlHelpers.join(HawtioCore.documentBase(), Developer.projectLink(projectId), "/wiki");
-    var branch = $scope.$eval('branch');
+  export function startWikiLink(projectId, branch) {
+    var start = UrlHelpers.join(Developer.projectLink(projectId), "/wiki");
     if (branch) {
       start = UrlHelpers.join(start, 'branch', branch);
     }
     return start;
+  }
+
+  export function startLink($scope) {
+    var projectId = $scope.projectId;
+    var branch = $scope.branch;
+    return startWikiLink(projectId, branch);
   }
 
   /**

@@ -98,7 +98,11 @@ module Wiki {
             commit.$date = Developer.asDate(commit.date);
           }
           angular.forEach(commitDetail.diffs, (diff) => {
-            // TODO add link to view file link
+            // add link to view file link
+            var path = diff.new_path;
+            if (path) {
+              diff.$viewLink = UrlHelpers.join(Wiki.startWikiLink($scope.projectId, commitId), "view", path);
+            }
           });
         }
         Core.$apply($scope);
