@@ -122,7 +122,7 @@ module Wiki {
           // lets use the shorter hash for links by default
           var commitId = log.sha;
           log.$date = Developer.asDate(log.date);
-          log.commitLink = startLink($scope) + "/commit/" + $scope.pageId + "/" + commitId;
+          log.commitLink = startLink($scope) + "/commitDetail/" + $scope.pageId + "/" + commitId;
         });
         $scope.logs = _.sortBy(logArray, "$date").reverse();
         Core.$apply($scope);

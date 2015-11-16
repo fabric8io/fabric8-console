@@ -13,6 +13,7 @@
 /// <reference path="d.ts/wiki/ts/camel.d.ts"/>
 /// <reference path="d.ts/wiki/ts/camelCanvas.d.ts"/>
 /// <reference path="d.ts/wiki/ts/commit.d.ts"/>
+/// <reference path="d.ts/wiki/ts/commitDetail.d.ts"/>
 /// <reference path="d.ts/wiki/ts/create.d.ts"/>
 /// <reference path="d.ts/wiki/ts/edit.d.ts"/>
 /// <reference path="d.ts/wiki/ts/fileDrop.d.ts"/>

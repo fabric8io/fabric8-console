@@ -109,6 +109,14 @@ module Wiki {
         });
     }
 
+    public commitDetail(commitId:string, fn) {
+      var query = null;
+      this.doGet(UrlHelpers.join("commitDetail", commitId), query,
+        (data, status, headers, config) => {
+          fn(data);
+        });
+    }
+
     public commitTree(commitId:string, fn) {
       var query = null;
       this.doGet(UrlHelpers.join("commitTree", commitId), query,

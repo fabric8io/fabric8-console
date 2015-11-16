@@ -30,6 +30,7 @@ module Wiki {
               when(startContext + path + '/version/:page*\/:objectId', {templateUrl: 'plugins/wiki/html/viewPage.html'}).
               when(startContext + path + '/history/:page*', {templateUrl: 'plugins/wiki/html/history.html'}).
               when(startContext + path + '/commit/:page*\/:objectId', {templateUrl: 'plugins/wiki/html/commit.html'}).
+              when(startContext + path + '/commitDetail/:page*\/:objectId', {templateUrl: 'plugins/wiki/html/commitDetail.html'}).
               when(startContext + path + '/diff/:diffObjectId1/:diffObjectId2/:page*', {templateUrl: 'plugins/wiki/html/viewPage.html', reloadOnSearch: false}).
               when(startContext + path + '/formTable/:page*', {templateUrl: 'plugins/wiki/html/formTable.html'}).
               when(startContext + path + '/dozer/mappings/:page*', {templateUrl: 'plugins/wiki/html/dozerMappings.html'}).

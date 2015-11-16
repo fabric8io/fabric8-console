@@ -12,6 +12,7 @@ declare module Wiki {
         putPage(branch: string, path: string, contents: string, commitMessage: string, fn: any): void;
         history(branch: string, objectId: string, path: string, limit: number, fn: any): void;
         commitInfo(commitId: string, fn: any): void;
+        commitDetail(commitId: string, fn: any): void;
         commitTree(commitId: string, fn: any): void;
         diff(objectId: string, baseObjectId: string, path: string, fn: any): void;
         branches(fn: any): void;
