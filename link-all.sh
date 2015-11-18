@@ -17,6 +17,13 @@ ln -fs `pwd`/../hawtio-forms/dist/hawtio-forms.css libs/hawtio-forms/dist/hawtio
 echo "hawtio-forms linked too..."
 ls -la libs/hawtio-forms/dist
 
+# hawtio-dashboard
+ln -fs `pwd`/../hawtio-dashboard/dist/hawtio-dashboard.js libs/hawtio-dashboard/dist/hawtio-dashboard.js
+ln -fs `pwd`/../hawtio-dashboard/dist/hawtio-dashboard.css libs/hawtio-dashboard/dist/hawtio-dashboard.css
+echo "hawtio-dashboard linked too..."
+ls -la libs/hawtio-dashboard/dist
+
+
 # hawtio-ui
 ln -fs `pwd`/../hawtio-ui/dist/hawtio-ui.js libs/hawtio-ui/dist/hawtio-ui.js
 ln -fs `pwd`/../hawtio-ui/dist/hawtio-ui.css libs/hawtio-ui/dist/hawtio-ui.css

@@ -826,7 +826,6 @@ module Wiki {
     $scope.$viewLink = viewLink($scope, $scope.pageId, $location);
     $scope.historyLink = startLink($scope) + "/history/" + ($scope.pageId || "");
     $scope.wikiRepository = new GitWikiRepository($scope);
-
     $scope.$workspaceLink = Developer.workspaceLink();
     $scope.$projectLink = Developer.projectLink($scope.projectId);
     $scope.breadcrumbConfig = Developer.createProjectBreadcrumbs($scope.projectId, createSourceBreadcrumbs($scope));
