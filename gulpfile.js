@@ -120,7 +120,7 @@ gulp.task('tsc', ['clean-defs'], function() {
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.typescript(config.tsProject))
     .on('error', plugins.notify.onError({
-      message: '#{ error.message }',
+      message: '<%= error.message %>',
       title: 'Typescript compilation error'
     }));
 
@@ -167,6 +167,10 @@ gulp.task('concat', ['template'], function() {
   return gulp.src(['compiled.js', 'templates.js'])
     .pipe(plugins.concat(config.js))
     .pipe(plugins.ngAnnotate())
+    .on('error', plugins.notify.onError({
+      message: '<%= error.message %>',
+      title: 'ng-annotate error'
+    }))
     .pipe(gulp.dest(config.dist));
 });
 
