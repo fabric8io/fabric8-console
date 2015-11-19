@@ -27,8 +27,8 @@ declare module Forge {
     function createHttpConfig(): {
         headers: {};
     };
-    function createHttpUrl(url: any, authHeader?: any, email?: any): any;
+    function createHttpUrl(projectId: any, url: any, authHeader?: any, email?: any): any;
     function commandMatchesText(command: any, filterText: any): any;
-    function isLoggedIntoGogs(): boolean;
+    function isLoggedIntoGogs(ns: any, projectId: any): any;
     function redirectToGogsLoginIfRequired($scope: any, $location: any): void;
 }

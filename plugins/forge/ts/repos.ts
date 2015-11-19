@@ -163,7 +163,7 @@ module Forge {
         var email = $scope.login.email || "";
         if (authHeader) {
           var url = reposApiUrl(ForgeApiURL);
-          url = createHttpUrl(url, authHeader, email);
+          url = createHttpUrl($scope.projectId, url, authHeader, email);
           var config = {
 /*
             headers: {

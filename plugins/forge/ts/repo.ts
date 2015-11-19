@@ -22,7 +22,7 @@ module Forge {
         function updateData() {
           if ($scope.name) {
             var url = repoApiUrl(ForgeApiURL, $scope.name);
-            url = createHttpUrl(url);
+            url = createHttpUrl($scope.projectId, url);
             var config = createHttpConfig();
             $http.get(url, config).
               success(function (data, status, headers, config) {

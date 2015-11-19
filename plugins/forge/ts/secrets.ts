@@ -27,17 +27,16 @@ module Forge {
       log.info("Found source secret namespace " + $scope.sourceSecretNamespace);
       log.info("Found source secret for " + ns + "/" + projectId + " = " + $scope.sourceSecret);
 
-      // TODO deduce the kind from the buildConfig git url
-      var kind = "ssh";
-      var savedUrl = $location.path();
-      $scope.addNewSecretLink = Developer.projectWorkspaceLink(ns, projectId, UrlHelpers.join("namespace", $scope.sourceSecretNamespace, "secretCreate?kind=" + kind + "&savedUrl=" + savedUrl));
+      $scope.$on('$routeUpdate', ($event) => {
+        updateData();
+      });
 
       $scope.$on('kubernetesModelUpdated', function () {
-        checkNamespaceCreated();
+        updateData();
       });
 
       $scope.tableConfig = {
-        data: 'personalSecrets',
+        data: 'filteredSecrets',
         showSelectionCheckbox: true,
         enableRowClickSelection: true,
         multiSelect: false,
@@ -71,6 +70,14 @@ module Forge {
       $scope.$watchCollection("tableConfig.selectedItems", () => {
         selectedSecretName();
       });
+
+      function updateData() {
+        checkNamespaceCreated();
+        updateProject();
+        Core.$apply($scope);
+      }
+
+      checkNamespaceCreated();
 
       function selectedSecretName() {
         $scope.selectedSecretName = createdSecret || getProjectSourceSecret(localStorage, ns, projectId);
@@ -122,11 +129,63 @@ module Forge {
       checkNamespaceCreated();
 
 
+      function updateProject() {
+        angular.forEach($scope.model.buildconfigs, (project) => {
+          if (projectId === Kubernetes.getName(project)) {
+            $scope.project = project;
+          }
+        });
+        $scope.gitUrl = Core.pathGet($scope.project, ['spec', 'source', 'git', 'uri']);
+        var parser = parseUrl($scope.gitUrl);
+        var kind = parser.protocol;
+        // these kinds of URLs show up as http
+        if ($scope.gitUrl && $scope.gitUrl.startsWith("git@")) {
+          kind = "ssh";
+        }
+        var host = parser.host;
+        log.info("===== got kind: " + kind + " host " + host + " for " + $scope.gitUrl);
+        var requiredDataKeys = Kubernetes.sshSecretDataKeys;
+        if (kind && kind.startsWith('http')) {
+          kind = 'https';
+          requiredDataKeys = Kubernetes.httpsSecretDataKeys;
+        } else {
+          kind = 'ssh';
+        }
+        $scope.kind = kind;
+        var savedUrl = $location.path();
+        $scope.addNewSecretLink = Developer.projectWorkspaceLink(ns, projectId, UrlHelpers.join("namespace", $scope.sourceSecretNamespace, "secretCreate?kind=" + kind + "&savedUrl=" + savedUrl));
+
+        var filteredSecrets = [];
+        angular.forEach($scope.personalSecrets, (secret) => {
+          var data = secret.data;
+          if (data) {
+            var valid = true;
+            angular.forEach(requiredDataKeys, (key) => {
+              if (!data[key]) {
+                valid = false;
+              }
+            });
+            if (valid) {
+              filteredSecrets.push(secret);
+            }
+          }
+          $scope.filteredSecrets = _.sortBy(filteredSecrets, "_key");
+        });
+      }
+
       function onPersonalSecrets(secrets) {
         $scope.personalSecrets = secrets;
         $scope.fetched = true;
         $scope.cancel();
+        updateProject();
         Core.$apply($scope);
+      }
+
+      function onBuildConfigs(buildconfigs) {
+        if (onBuildConfigs && !($scope.model.buildconfigs || []).length) {
+          $scope.model.buildconfigs = buildconfigs;
+        }
+        updateProject();
       }
 
       function checkNamespaceCreated() {
@@ -135,6 +194,7 @@ module Forge {
         function watchSecrets() {
           log.info("watching secrets on namespace: " + namespaceName);
           Kubernetes.watch($scope, $element, "secrets", namespaceName, onPersonalSecrets);
+          Kubernetes.watch($scope, $element, "buildconfigs", ns, onBuildConfigs);
           Core.$apply($scope);
         }
 

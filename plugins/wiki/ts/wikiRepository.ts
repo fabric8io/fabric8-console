@@ -15,6 +15,7 @@ module Wiki {
     private $http;
     private config;
     private baseUrl;
+    private projectId;
 
 
     constructor($scope) {
@@ -24,6 +25,7 @@ module Wiki {
       var owner = $scope.owner;
       var repoName = $scope.repoId;
       var projectId = $scope.projectId;
+      this.projectId = projectId;
       var ns = $scope.namespace || Kubernetes.currentKubernetesNamespace();
       this.baseUrl = UrlHelpers.join(ForgeApiURL, "repos/project", ns, projectId);
     }
@@ -267,7 +269,7 @@ module Wiki {
 
 
     private doGet(path, query, successFn, errorFn = null, config = null) {
-      var url = Forge.createHttpUrl(UrlHelpers.join(this.baseUrl, path));
+      var url = Forge.createHttpUrl(this.projectId, UrlHelpers.join(this.baseUrl, path));
       if (query) {
         url += "&" + query;
       }
@@ -286,7 +288,7 @@ module Wiki {
     }
 
     private doPost(path, query, body, successFn, errorFn = null) {
-      var url = Forge.createHttpUrl(UrlHelpers.join(this.baseUrl, path));
+      var url = Forge.createHttpUrl(this.projectId, UrlHelpers.join(this.baseUrl, path));
       if (query) {
         url += "&" + query;
       }
@@ -303,7 +305,7 @@ module Wiki {
 
 
     private doPostForm(path, query, body, successFn, errorFn = null) {
-      var url = Forge.createHttpUrl(UrlHelpers.join(this.baseUrl, path));
+      var url = Forge.createHttpUrl(this.projectId, UrlHelpers.join(this.baseUrl, path));
       if (query) {
         url += "&" + query;
       }

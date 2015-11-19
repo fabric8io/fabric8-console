@@ -17,6 +17,9 @@ module Forge {
 
 
   export function getProjectSourceSecret(localStorage, ns, projectId) {
+    if (!ns) {
+      ns = Kubernetes.currentKubernetesNamespace();
+    }
     var secretKey = createLocalStorageKey(secretNameKey, ns, projectId);
     var sourceSecret = localStorage[secretKey];
     return sourceSecret;
@@ -25,6 +28,18 @@ module Forge {
   export function setProjectSourceSecret(localStorage, ns, projectId, secretName) {
     var secretKey = createLocalStorageKey(secretNameKey, ns, projectId);
     localStorage[secretKey] = secretName;
+  }
+
+  export function parseUrl(url) {
+    if (url) {
+      var parser = document.createElement('a');
+      parser.href = url;
+      return parser;
+    }
+    return {
+      protocol: "",
+      host: ""
+    };
   }
 
   function createLocalStorageKey(prefix, ns, name) {

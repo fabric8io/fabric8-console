@@ -164,17 +164,9 @@ module Forge {
   }
 
   export function createHttpConfig() {
-    var authHeader = localStorage["gogsAuthorization"];
-    var email = localStorage["gogsEmail"];
     var config = {
       headers: {
       }
-/*
-      headers: {
-        Authorization: authHeader,
-        Email: email
-      }
-*/
     };
     return config;
   }
@@ -187,12 +179,19 @@ module Forge {
     return url;
   }
 
-  export function createHttpUrl(url, authHeader = null, email = null) {
+  export function createHttpUrl(projectId, url, authHeader = null, email = null) {
+    var localStorage = Kubernetes.inject("localStorage") || {};
+    var ns = Kubernetes.currentKubernetesNamespace();
+    var secret = getProjectSourceSecret(localStorage, ns, projectId);
+    var secretNS = getSourceSecretNamespace(localStorage);
+
     authHeader = authHeader || localStorage["gogsAuthorization"];
     email = email || localStorage["gogsEmail"];
 
     url = addQueryArgument(url, "_gogsAuth", authHeader);
     url = addQueryArgument(url, "_gogsEmail", email);
+    url = addQueryArgument(url, "secret", secret);
+    url = addQueryArgument(url, "secretNamespace", secretNS);
     return url;
   }
 
@@ -204,22 +203,23 @@ module Forge {
     }
   }
 
-  export function isLoggedIntoGogs() {
+  export function isLoggedIntoGogs(ns, projectId) {
     var localStorage = Kubernetes.inject("localStorage") || {};
-    var authHeader = localStorage["gogsAuthorization"];
-    //return authHeader ? loggedInToGogs : false;
-    return authHeader ? true : false;
+
+    return getProjectSourceSecret(localStorage, ns, projectId);
 /*
-    var config = createHttpConfig();
-    return config.headers.Authorization ? true : false;
+    var authHeader = localStorage["gogsAuthorization"];
+    return authHeader ? true : false;
 */
   }
 
   export function redirectToGogsLoginIfRequired($scope, $location) {
-    if (!isLoggedIntoGogs()) {
-      var devLink = Developer.projectLink($scope.projectId);
-      var loginPage = UrlHelpers.join(devLink, "forge/repos");
-      log.info("Not logged in so redirecting to " + loginPage);
+    var ns = $scope.namespace || Kubernetes.currentKubernetesNamespace();
+    var projectId = $scope.projectId;
+
+    if (!isLoggedIntoGogs(ns, projectId)) {
+      var loginPage = Developer.projectSecretsLink(ns, projectId);
+      log.info("No secret setup so redirecting to " + loginPage);
       $location.path(loginPage)
     }
   }

@@ -7,6 +7,7 @@ declare module Wiki {
         private $http;
         private config;
         private baseUrl;
+        private projectId;
         constructor($scope: any);
         getPage(branch: string, path: string, objectId: string, fn: any): void;
         putPage(branch: string, path: string, contents: string, commitMessage: string, fn: any): void;
