@@ -1,0 +1,33 @@
+// <reference path="../../includes.ts"/>
+/// <reference path="forgeHelpers.ts"/>
+
+module Forge {
+
+  const secretNamespaceKey = "fabric8SourceSecretNamespace";
+  const secretNameKey = "fabric8SourceSecret";
+
+  export function getSourceSecretNamespace(localStorage) {
+    var secretNamespace = localStorage[secretNamespaceKey];
+    var userName = Kubernetes.currentUserName();
+    if (!secretNamespace) {
+      secretNamespace = "user-secrets-source-" + userName;
+    }
+    return secretNamespace;
+  }
+
+
+  export function getProjectSourceSecret(localStorage, ns, projectId) {
+    var secretKey = createLocalStorageKey(secretNameKey, ns, projectId);
+    var sourceSecret = localStorage[secretKey];
+    return sourceSecret;
+  }
+
+  export function setProjectSourceSecret(localStorage, ns, projectId, secretName) {
+    var secretKey = createLocalStorageKey(secretNameKey, ns, projectId);
+    localStorage[secretKey] = secretName;
+  }
+
+  function createLocalStorageKey(prefix, ns, name) {
+    return prefix + "/" + ns + "/" + name;
+  }
+}

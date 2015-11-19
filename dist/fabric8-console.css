@@ -33,6 +33,10 @@
   margin-top: inherit;
 }
 
+.select-table-filter {
+  padding-bottom: 5px;
+}
+
 /* wiki camel editor stuff */
 .camel-canvas-page .row .col-md-12 {
   width: 100%;
