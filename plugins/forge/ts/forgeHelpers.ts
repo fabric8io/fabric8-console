@@ -203,7 +203,7 @@ module Forge {
     }
   }
 
-  export function isLoggedIntoGogs(ns, projectId) {
+  export function isSourceSecretDefinedForProject(ns, projectId) {
     var localStorage = Kubernetes.inject("localStorage") || {};
 
     return getProjectSourceSecret(localStorage, ns, projectId);
@@ -213,11 +213,11 @@ module Forge {
 */
   }
 
-  export function redirectToGogsLoginIfRequired($scope, $location) {
+  export function redirectToSetupSecretsIfNotDefined($scope, $location) {
     var ns = $scope.namespace || Kubernetes.currentKubernetesNamespace();
     var projectId = $scope.projectId;
 
-    if (!isLoggedIntoGogs(ns, projectId)) {
+    if (!isSourceSecretDefinedForProject(ns, projectId)) {
       var loginPage = Developer.projectSecretsLink(ns, projectId) + "Required";
       log.info("No secret setup so redirecting to " + loginPage);
       $location.path(loginPage)

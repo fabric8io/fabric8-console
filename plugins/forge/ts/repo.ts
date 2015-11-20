@@ -11,7 +11,7 @@ module Forge {
         $scope.name = $routeParams["path"];
 
         initScope($scope, $location, $routeParams);
-        redirectToGogsLoginIfRequired($scope, $location);
+        redirectToSetupSecretsIfNotDefined($scope, $location);
 
         $scope.$on('$routeUpdate', ($event) => {
           updateData();

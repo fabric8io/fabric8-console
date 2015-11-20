@@ -25,7 +25,7 @@ module Forge {
       $scope.fetched = $scope.commands.length !== 0;
 
       initScope($scope, $location, $routeParams);
-      redirectToGogsLoginIfRequired($scope, $location);
+      redirectToSetupSecretsIfNotDefined($scope, $location);
 
 
       $scope.tableConfig = {

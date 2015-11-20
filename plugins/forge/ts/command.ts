@@ -28,7 +28,7 @@ module Forge {
           $scope.breadcrumbConfig = Developer.createProjectSettingsBreadcrumbs($scope.projectId);
           $scope.subTabConfig = Developer.createProjectSettingsSubNavBars($scope.projectId);
         }
-        redirectToGogsLoginIfRequired($scope, $location);
+        redirectToSetupSecretsIfNotDefined($scope, $location);
 
         $scope.$completeLink = $scope.$projectLink;
         if ($scope.projectId) {
