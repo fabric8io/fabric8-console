@@ -138,7 +138,9 @@ module Forge {
         var parser = parseUrl($scope.gitUrl);
         var kind = parser.protocol;
         // these kinds of URLs show up as http
-        if ($scope.gitUrl && $scope.gitUrl.startsWith("git@")) {
+        if (!$scope.gitUrl) {
+          kind = "https";
+        } else if ($scope.gitUrl && $scope.gitUrl.startsWith("git@")) {
           kind = "ssh";
         }
         var host = parser.host;
@@ -151,7 +153,10 @@ module Forge {
         }
         $scope.kind = kind;
         var savedUrl = $location.path();
-        $scope.addNewSecretLink = Developer.projectWorkspaceLink(ns, projectId, UrlHelpers.join("namespace", $scope.sourceSecretNamespace, "secretCreate?kind=" + kind + "&savedUrl=" + savedUrl));
+        const newSecretPath = UrlHelpers.join("namespace", $scope.sourceSecretNamespace, "secretCreate?kind=" + kind + "&savedUrl=" + savedUrl);
+        $scope.addNewSecretLink = (projectId) ?
+          Developer.projectWorkspaceLink(ns, projectId, newSecretPath) :
+          UrlHelpers.join(HawtioCore.documentBase(), Kubernetes.context, newSecretPath);
 
         var filteredSecrets = [];
         angular.forEach($scope.personalSecrets, (secret) => {

@@ -13,24 +13,6 @@
     <div hawtio-tabs></div>
   </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <span class="pull-right">&nbsp;</span>
-      <a class="btn btn-default pull-right" ng-click="logout()"
-         ng-show="login.loggedIn && $runningCDPipeline && $gogsLink && $forgeLink"
-         title="Log out from the git repository">
-        <i class="fa fa-sign-out"></i> Log out</a>
-      </a>
-      <!--
-            <span class="pull-right" ng-show="login.loggedIn">&nbsp;</span>
-
-            <div class="user-icon-name pull-right" ng-show="login.loggedIn">
-              <img src="{{login.avatar_url}}" class="avatar-small-img" ng-show="login.avatar_url">&nbsp;
-              {{login.user}}
-            </div>
-      -->
-    </div>
-  </div>
 
   <div ng-show="model.fetched && $runningCDPipeline && (!$gogsLink || !$forgeLink)">
     <div class="createProjectPage">

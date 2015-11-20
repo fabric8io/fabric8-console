@@ -43,6 +43,6 @@ module Forge {
   }
 
   function createLocalStorageKey(prefix, ns, name) {
-    return prefix + "/" + ns + "/" + name;
+    return prefix + "/" + ns + "/" + (name || "");
   }
 }

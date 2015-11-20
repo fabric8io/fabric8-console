@@ -146,8 +146,13 @@ module Forge {
                 if ($scope.response && projectId && $scope.id === 'project-new') {
                   $scope.response = null;
                   // lets forward to the devops edit page
-                  //var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit");
-                  var editPath = Developer.projectSecretsLink($scope.namespace, projectId);
+                  // lets set the secret name if its null
+                  if (!getProjectSourceSecret(localStorage, $scope.namespace, projectId)) {
+                    var defaultSecretName = getProjectSourceSecret(localStorage, $scope.namespace,  null);
+                    setProjectSourceSecret(localStorage, $scope.namespace, projectId, defaultSecretName);
+                  }
+                  var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit");
+                  //var editPath = Developer.projectSecretsLink($scope.namespace, projectId);
                   log.info("Moving to the secrets edit path: " + editPath);
                   $location.path(editPath);
                 }
