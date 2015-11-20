@@ -19,6 +19,8 @@ module Forge {
       var userName = Kubernetes.currentUserName();
       $scope.sourceSecret = getProjectSourceSecret(localStorage, ns, projectId);
 
+      $scope.setupSecretsLink = Developer.projectSecretsLink(ns, projectId);
+
       var createdSecret = $location.search()["secret"];
 
       var projectClient = Kubernetes.createKubernetesClient("projects");
@@ -170,6 +172,7 @@ module Forge {
       }
 
       function onPersonalSecrets(secrets) {
+        log.info("got secrets!");
         $scope.personalSecrets = secrets;
         $scope.fetched = true;
         $scope.cancel();
@@ -188,7 +191,7 @@ module Forge {
         var namespaceName = $scope.sourceSecretNamespace;
 
         function watchSecrets() {
-          log.debug("watching secrets on namespace: " + namespaceName);
+          log.info("watching secrets on namespace: " + namespaceName);
           Kubernetes.watch($scope, $element, "secrets", namespaceName, onPersonalSecrets);
           Kubernetes.watch($scope, $element, "buildconfigs", ns, onBuildConfigs);
           Core.$apply($scope);

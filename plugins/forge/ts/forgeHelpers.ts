@@ -218,7 +218,7 @@ module Forge {
     var projectId = $scope.projectId;
 
     if (!isLoggedIntoGogs(ns, projectId)) {
-      var loginPage = Developer.projectSecretsLink(ns, projectId);
+      var loginPage = Developer.projectSecretsLink(ns, projectId) + "Required";
       log.info("No secret setup so redirecting to " + loginPage);
       $location.path(loginPage)
     }

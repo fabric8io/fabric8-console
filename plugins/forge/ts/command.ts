@@ -79,7 +79,8 @@ module Forge {
               $scope.executing = false;
               $scope.invalid = false;
               $scope.validationError = null;
-              if (data) {
+
+            if (data) {
                 data.message = data.message || data.output;
                 var wizardResults = data.wizardResults;
                 if (wizardResults) {
@@ -101,16 +102,27 @@ module Forge {
                     var schema = _.last(stepInputs);
                     if (schema) {
                       $scope.entity = {};
-                      updateSchema(schema);
                       // lets copy across any default values from the schema
-                      angular.forEach(schema["properties"], (property, name) => {
-                        var value = property.value;
-                        if (value) {
-                          log.info("Adding entity." + name + " = " + value);
-                          $scope.entity[name] = value;
-                        }
-                      });
+
+                      function copyValuesFromSchema() {
+                        angular.forEach(schema["properties"], (property, name) => {
+                          var value = property.value;
+                          if (value) {
+                            log.info("Adding entity." + name + " = " + value);
+                            $scope.entity[name] = value;
+                          }
+                        });
+                      }
+
+                      copyValuesFromSchema();
                       $scope.inputList.push($scope.entity);
+
+                      $timeout(() => {
+                        // lets do this async to be sure they don't get overwritten by the form widget
+                        copyValuesFromSchema();
+                      }, 200);
+
+                      updateSchema(schema);
 
                       if (data.canMoveToNextStep) {
                         // lets clear the response we've another wizard page to do
@@ -134,8 +146,9 @@ module Forge {
                 if ($scope.response && projectId && $scope.id === 'project-new') {
                   $scope.response = null;
                   // lets forward to the devops edit page
-                  var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit");
-                  log.info("Moving to the devops edit path: " + editPath);
+                  //var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit");
+                  var editPath = Developer.projectSecretsLink($scope.namespace, projectId);
+                  log.info("Moving to the secrets edit path: " + editPath);
                   $location.path(editPath);
                 }
               }
@@ -218,7 +231,6 @@ module Forge {
             inputList: $scope.inputList
           };
           url = createHttpUrl($scope.projectId, url);
-          //log.info("About to post to " + url + " payload: " + angular.toJson(request));
           $scope.validating = true;
           $http.post(url, request, createHttpConfig()).
             success(function (data, status, headers, config) {

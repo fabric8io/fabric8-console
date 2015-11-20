@@ -18,6 +18,7 @@ module Forge {
     angular.forEach([context, '/workspaces/:namespace/projects/:project/forge'], (path) => {
       $routeProvider
         .when(UrlHelpers.join(path, '/secrets'), route('secrets.html', false))
+        .when(UrlHelpers.join(path, '/secretsRequired'), route('secretsRequired.html', false))
         .when(UrlHelpers.join(path, '/commands'), route('commands.html', false))
         .when(UrlHelpers.join(path, '/commands/:path*'), route('commands.html', false))
         .when(UrlHelpers.join(path, '/command/:id'), route('command.html', false))
