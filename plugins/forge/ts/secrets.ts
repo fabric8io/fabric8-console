@@ -24,8 +24,8 @@ module Forge {
       var projectClient = Kubernetes.createKubernetesClient("projects");
       $scope.sourceSecretNamespace = getSourceSecretNamespace(localStorage);
 
-      log.info("Found source secret namespace " + $scope.sourceSecretNamespace);
-      log.info("Found source secret for " + ns + "/" + projectId + " = " + $scope.sourceSecret);
+      log.debug("Found source secret namespace " + $scope.sourceSecretNamespace);
+      log.debug("Found source secret for " + ns + "/" + projectId + " = " + $scope.sourceSecret);
 
       $scope.$on('$routeUpdate', ($event) => {
         updateData();
@@ -62,7 +62,6 @@ module Forge {
       if (createdSecret) {
         $location.search("secret", null);
         $scope.selectedSecretName = createdSecret;
-        log.info("========= setting the selected secret to: " + $scope.selectedSecretName);
       } else {
         selectedSecretName();
       }
@@ -88,7 +87,6 @@ module Forge {
           if (name) {
             $scope.selectedSecretName = name;
             if (createdSecret && name !== createdSecret) {
-              log.info("----- clearing the createdSecret!");
               // lets clear the previously created secret
               createdSecret = null;
             }
@@ -110,7 +108,6 @@ module Forge {
         }
         $scope.tableConfig.selectedItems = selectedItems;
         selectedSecretName();
-        log.info("==== cancel for selection: " + current + " generated selectedItems: " + selectedItems + " has selection: " + $scope.selectedSecretName);
       };
 
       $scope.canSave = () => {
@@ -143,7 +140,6 @@ module Forge {
           kind = "ssh";
         }
         var host = parser.host;
-        log.info("===== got kind: " + kind + " host " + host + " for " + $scope.gitUrl);
         var requiredDataKeys = Kubernetes.sshSecretDataKeys;
         if (kind && kind.startsWith('http')) {
           kind = 'https';
@@ -192,7 +188,7 @@ module Forge {
         var namespaceName = $scope.sourceSecretNamespace;
 
         function watchSecrets() {
-          log.info("watching secrets on namespace: " + namespaceName);
+          log.debug("watching secrets on namespace: " + namespaceName);
           Kubernetes.watch($scope, $element, "secrets", namespaceName, onPersonalSecrets);
           Kubernetes.watch($scope, $element, "buildconfigs", ns, onBuildConfigs);
           Core.$apply($scope);
@@ -202,7 +198,6 @@ module Forge {
           angular.forEach($scope.model.projects, (project) => {
             var name = Kubernetes.getName(project);
             if (name === namespaceName) {
-              log.info("Found secret namespace! " + name);
               $scope.secretNamespace = project;
               watchSecrets();
             }
@@ -210,7 +205,6 @@ module Forge {
         }
 
         if (!$scope.secretNamespace && $scope.model.projects && $scope.model.projects.length) {
-          // lets create a new namespace!
           log.info("Creating a new namespace for the user secrets.... " + namespaceName);
           var project = {
             apiVersion: Kubernetes.defaultApiVersion,
@@ -235,6 +229,5 @@ module Forge {
             });
         }
       }
-
     }]);
 }
