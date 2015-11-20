@@ -53,7 +53,7 @@ module Wiki {
       localStorage: localStorage,
       modelName: 'mode',
       paramName: 'wikiViewMode',
-      initialValue: Wiki.ViewMode.List,
+      initialValue: Wiki.ViewMode.Icon,
       to: Core.numberToString,
       from: Core.parseIntValue
     });
