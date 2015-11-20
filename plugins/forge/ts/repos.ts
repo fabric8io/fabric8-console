@@ -18,6 +18,10 @@ module Forge {
         Core.$apply($scope);
       });
 
+      var projectId = null;
+      var ns = $scope.namespace;
+      $scope.sourceSecret = getProjectSourceSecret(localStorage, ns, projectId);
+
       $scope.tableConfig = {
         data: 'projects',
         showSelectionCheckbox: true,

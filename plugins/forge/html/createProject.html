@@ -51,50 +51,7 @@
     </div>
   </div>
 
-  <div ng-show="$runningCDPipeline && $gogsLink && $forgeLink && (!login.authHeader || login.relogin)">
-    <div ng-show="login.failed">
-      <div class="bg-danger">
-        <div class="invalid-login align-center">
-          <h3>Invalid login/password. Please try again!</h3>
-        </div>
-      </div>
-    </div>
-    <h2 ng-hide="login.failed">Please login to the git repository so that you can create a project</h2>
-
-    <form>
-      <div class="form-group">
-        <label for="gitUsername">User name</label>
-        <input type="text" class="form-control" id="gitUsername" placeholder="Enter user name" required="true"
-               ng-model="login.user">
-      </div>
-      <div class="form-group">
-        <label for="gitPassword">Password</label>
-        <input type="password" class="form-control" id="gitPassword" placeholder="Password" required="true"
-               ng-model="login.password">
-      </div>
-      <div class="form-group">
-        <label for="gitEmail">Email address</label>
-        <input type="email" class="form-control" id="gitEmail" placeholder="Enter email" required="true"
-               ng-model="login.email">
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn btn-primary" ng-click="doLogin()"
-                ng-disabled="!login.user || !login.password || !login.email">
-          <i class="fa fa-sign-in"></i> Sign In
-        </button>
-      </div>
-
-      <div class="form-group" ng-show="forgotPasswordUrl">
-        <a href="{{forgotPasswordUrl}}">Forgot password?</a>
-      </div>
-
-      <div class="form-group" ng-show="signUpUrl">
-        <a href="{{signUpUrl}}">Need an account? Sign up now.</a>
-      </div>
-    </form>
-  </div>
-
-  <div ng-hide="model.fetched || !login.authHeader || login.relogin || !$gogsLink ||!$forgeLink">
+  <div ng-hide="model.fetched || !$gogsLink ||!$forgeLink">
     <div class="row">
       <div class="col-md-12">
         <div class="align-center">
@@ -104,25 +61,9 @@
     </div>
   </div>
 
-  <div ng-show="model.fetched && login.authHeader && $gogsLink && $forgeLink">
+  <div ng-show="model.fetched && $gogsLink && $forgeLink">
     <div class="createProjectPage">
       <div class="jumbotron">
-        <div class="col-md-6">
-          <p class="align-center">
-            <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/forge/command/project-new"
-               ng-show="login.loggedIn"
-               title="Create a new project in this workspace using a wizard">
-              <i class="fa fa-plus"></i> Create Project using Wizard
-            </a>
-          </p>
-
-          <p class="align-center">
-            This wizard guides you though creating a new project, the git repository and the related builds and
-            Continuous
-            Delivery Pipelines.
-          </p>
-        </div>
-
         <div class="col-md-6">
           <p class="align-center">
             <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/buildConfigEdit/"
@@ -132,8 +73,37 @@
           </p>
 
           <p class="align-center">
-            Import a project which already exists in git
+            Import a project which already exists in git repository
           </p>
+        </div>
+
+        <div class="col-md-6">
+          <div ng-show="sourceSecret">
+            <p class="align-center">
+              <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/forge/command/project-new"
+                 title="Create a new project in this workspace using a wizard">
+                <i class="fa fa-plus"></i> Create Project using Wizard
+              </a>
+            </p>
+
+            <p class="align-center">
+              This wizard guides you though creating a new project, the git repository and the related builds and
+              Continuous
+              Delivery Pipelines.
+            </p>
+          </div>
+          <div ng-hide="sourceSecret">
+            <p class="align-center">
+              <a class="btn btn-default btn-lg" href="{{$workspaceLink}}/forge/secrets"
+                 title="Setup the secrets so that you can create new projects">
+                <i class="fa fa-pencil-square-o"></i> Setup Source Secret
+              </a>
+            </p>
+
+            <p class="align-center">
+              Setup a secret so that you can create new projects and git repositories.
+            </p>
+          </div>
         </div>
       </div>
     </div>
