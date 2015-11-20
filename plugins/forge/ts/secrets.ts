@@ -122,6 +122,11 @@ module Forge {
         var selected = selectedSecretName();
         if (selected) {
           setProjectSourceSecret(localStorage, ns, projectId, selected);
+
+          if (!projectId) {
+            // lets redirect back to the create project page
+            $location.path(Developer.createProjectLink(ns));
+          }
         }
       };
 
