@@ -12,6 +12,11 @@ module Forge {
       $scope.commandsLink = (path) => commandsLink(path, $scope.projectId);
 
       initScope($scope, $location, $routeParams);
+      $scope.breadcrumbConfig.push({
+        label: "Create Project"
+      });
+      $scope.subTabConfig = [];
+
 
       $scope.$on('kubernetesModelUpdated', function () {
         updateLinks();
