@@ -15,7 +15,7 @@ module Forge {
       .when(UrlHelpers.join(context, '/repos/:path*'), route('repo.html', false))
       .when(UrlHelpers.join(context, '/repos'), route('repos.html', false));
 
-    angular.forEach([context, '/workspaces/:namespace/projects/:project/forge'], (path) => {
+    angular.forEach([context, '/workspaces/:namespace/projects/:project/forge', '/workspaces/:namespace/forge'], (path) => {
       $routeProvider
         .when(UrlHelpers.join(path, '/commands'), route('commands.html', false))
         .when(UrlHelpers.join(path, '/commands/:path*'), route('commands.html', false))
