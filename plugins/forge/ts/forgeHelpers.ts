@@ -21,7 +21,8 @@ module Forge {
   }
 
   export function initScope($scope, $location, $routeParams) {
-    $scope.namespace = $routeParams["namespace"] || Kubernetes.currentKubernetesNamespace();
+    $scope.namespace = $routeParams["namespace"] || $scope.namespace || Kubernetes.currentKubernetesNamespace();
+    Kubernetes.setCurrentKubernetesNamespace($scope.namespace);
     $scope.projectId = $routeParams["project"];
     $scope.$workspaceLink = Developer.workspaceLink();
     $scope.$projectLink = Developer.projectLink($scope.projectId);

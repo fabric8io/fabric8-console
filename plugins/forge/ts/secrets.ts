@@ -32,6 +32,7 @@ module Forge {
       log.debug("Found source secret for " + ns + "/" + projectId + " = " + $scope.sourceSecret);
 
       $scope.$on('$routeUpdate', ($event) => {
+        log.info("====== route changed so now namespace route is $routeParams.namespace = " + $routeParams.namespace + " $scope.namespace " + $scope.namespace + " while ns = " + ns);
         updateData();
       });
 
