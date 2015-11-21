@@ -19,12 +19,14 @@ module Forge {
       var userName = Kubernetes.currentUserName();
       $scope.sourceSecret = getProjectSourceSecret(localStorage, ns, projectId);
 
-      $scope.setupSecretsLink = Developer.projectSecretsLink(ns, projectId);
 
       var createdSecret = $location.search()["secret"];
 
       var projectClient = Kubernetes.createKubernetesClient("projects");
       $scope.sourceSecretNamespace = getSourceSecretNamespace(localStorage);
+
+      $scope.setupSecretsLink = Developer.projectSecretsLink(ns, projectId);
+      $scope.secretNamespaceLink = Developer.secretsNamespaceLink(ns, projectId, $scope.sourceSecretNamespace);
 
       log.debug("Found source secret namespace " + $scope.sourceSecretNamespace);
       log.debug("Found source secret for " + ns + "/" + projectId + " = " + $scope.sourceSecret);
