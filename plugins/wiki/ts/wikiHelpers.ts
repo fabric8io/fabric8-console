@@ -817,6 +817,7 @@ module Wiki {
     // lets let these to be inherited if we include a template on another page
     $scope.projectId = $routeParams["projectId"] || $scope.id;
     $scope.namespace = $routeParams["namespace"] || $scope.namespace;
+    Kubernetes.setCurrentKubernetesNamespace($scope.namespace);
 
     $scope.owner = $routeParams["owner"];
     $scope.repoId = $routeParams["repoId"];
