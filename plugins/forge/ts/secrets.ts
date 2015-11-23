@@ -95,7 +95,7 @@ module Forge {
                 if (localStoredSecretName === Kubernetes.getName(secret)) {
                   valid = true;
                 }
-              })
+              });
               if (!valid) {
                 log.info("Clearing secret name configuration: " + localStoredSecretName + " as the secret no longer exists!");
                 localStoredSecretName = "";
@@ -267,7 +267,7 @@ module Forge {
               watchSecrets();
             },
             (err) => {
-              Core.notification('error', "Failed to create secret namespace: " + namespaceName + "\n" + err);
+              log.warn("Failed to create secret namespace: " + namespaceName + ": " + angular.toJson(err));
             });
         }
       }
