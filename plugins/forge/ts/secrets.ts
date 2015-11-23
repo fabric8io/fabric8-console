@@ -17,22 +17,20 @@ module Forge {
       var projectId = $scope.projectId;
       var ns = $scope.namespace;
       var userName = Kubernetes.currentUserName();
-      $scope.sourceSecret = getProjectSourceSecret(localStorage, ns, projectId);
-
 
       var createdSecret = $location.search()["secret"];
-
       var projectClient = Kubernetes.createKubernetesClient("projects");
-      $scope.sourceSecretNamespace = getSourceSecretNamespace(localStorage);
 
+      $scope.sourceSecretNamespace = getSourceSecretNamespace(localStorage);
       $scope.setupSecretsLink = Developer.projectSecretsLink(ns, projectId);
       $scope.secretNamespaceLink = Developer.secretsNamespaceLink(ns, projectId, $scope.sourceSecretNamespace);
+
+      getCurrentSecretName();
 
       log.debug("Found source secret namespace " + $scope.sourceSecretNamespace);
       log.debug("Found source secret for " + ns + "/" + projectId + " = " + $scope.sourceSecret);
 
       $scope.$on('$routeUpdate', ($event) => {
-        log.info("====== route changed so now namespace route is $routeParams.namespace = " + $routeParams.namespace + " $scope.namespace " + $scope.namespace + " while ns = " + ns);
         updateData();
       });
 
@@ -83,12 +81,40 @@ module Forge {
 
       checkNamespaceCreated();
 
+      function getCurrentSecretName() {
+        var answer = null;
+        if (createdSecret) {
+          answer = createdSecret;
+        } else {
+          var localStoredSecretName = getProjectSourceSecret(localStorage, ns, projectId);
+          if (localStoredSecretName) {
+            // lets check that its valid and if not lets clear it
+            if ($scope.personalSecrets && $scope.personalSecrets.length) {
+              var valid = false;
+              angular.forEach($scope.personalSecrets, (secret) => {
+                if (localStoredSecretName === Kubernetes.getName(secret)) {
+                  valid = true;
+                }
+              })
+              if (!valid) {
+                log.info("Clearing secret name configuration: " + localStoredSecretName + " as the secret no longer exists!");
+                localStoredSecretName = "";
+                setProjectSourceSecret(localStorage, ns, projectId, localStoredSecretName);
+              }
+            }
+          }
+          answer = localStoredSecretName;
+        }
+        $scope.sourceSecret = answer;
+        return answer;
+      }
+
       function selectedSecretName() {
-        $scope.selectedSecretName = createdSecret || getProjectSourceSecret(localStorage, ns, projectId);
+        $scope.selectedSecretName = getCurrentSecretName();
         var selectedItems = $scope.tableConfig.selectedItems;
         if (selectedItems && selectedItems.length) {
           var secret = selectedItems[0];
-          const name = Kubernetes.getName(secret);
+          var name = Kubernetes.getName(secret);
           if (name) {
             $scope.selectedSecretName = name;
             if (createdSecret && name !== createdSecret) {
@@ -103,7 +129,7 @@ module Forge {
       $scope.cancel = () => {
         var selectedItems = $scope.tableConfig.selectedItems;
         selectedItems.splice(0, selectedItems.length);
-        var current = createdSecret || getProjectSourceSecret(localStorage, ns, projectId);
+        var current = getCurrentSecretName();
         if (current) {
           angular.forEach($scope.personalSecrets, (secret) => {
             if (!selectedItems.length && current === Kubernetes.getName(secret)) {
@@ -117,8 +143,8 @@ module Forge {
 
       $scope.canSave = () => {
         var selected = selectedSecretName();
-        var current = getProjectSourceSecret(localStorage, ns, projectId);
-        return selected && selected !== current;
+        var current = getCurrentSecretName();
+        return selected && (selected !== current || selected == createdSecret);
       };
 
       $scope.save = () => {
