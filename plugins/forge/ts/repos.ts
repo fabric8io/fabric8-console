@@ -4,8 +4,8 @@
 
 module Forge {
 
-  export var ReposController = controller("ReposController", ["$scope", "$dialog", "$window", "$templateCache", "$routeParams", "$location", "localStorage", "$http", "$timeout", "ForgeApiURL", "KubernetesModel", "ServiceRegistry",
-    ($scope, $dialog, $window, $templateCache, $routeParams, $location:ng.ILocationService, localStorage, $http, $timeout, ForgeApiURL, KubernetesModel: Kubernetes.KubernetesModelService, ServiceRegistry) => {
+  export var ReposController = controller("ReposController", ["$scope", "$dialog", "$window", "$element", "$templateCache", "$routeParams", "$location", "localStorage", "$http", "$timeout", "ForgeApiURL", "KubernetesModel", "ServiceRegistry",
+    ($scope, $dialog, $window, $element, $templateCache, $routeParams, $location:ng.ILocationService, localStorage, $http, $timeout, ForgeApiURL, KubernetesModel: Kubernetes.KubernetesModelService, ServiceRegistry) => {
 
       $scope.model = KubernetesModel;
       $scope.resourcePath = $routeParams["path"];
@@ -108,7 +108,37 @@ module Forge {
         }).open();
       };
 
+
       updateLinks();
+      watchSecrets();
+
+      function onPersonalSecrets(secrets) {
+        if ($scope.sourceSecret) {
+          var found = false;
+          angular.forEach(secrets, (secret) => {
+            var name = Kubernetes.getName(secret);
+            if (name === $scope.sourceSecret) {
+              // lets verify that it has the valid fields
+              var requiredDataKeys = Kubernetes.httpsSecretDataKeys;
+              var valid = secretValid(secret, requiredDataKeys);
+              if (valid) {
+                found = true;
+              } else {
+                log.warn("secret " + name + " is not valid, it does not contain keys: " + requiredDataKeys + " so clearing!");
+              }
+            }
+          });
+          if (!found) {
+            $scope.sourceSecret = "";
+          }
+        }
+        Core.$apply($scope);
+      }
+
+      function watchSecrets() {
+        var namespaceName = getSourceSecretNamespace(localStorage);
+        Kubernetes.watch($scope, $element, "secrets", namespaceName, onPersonalSecrets);
+      }
 
       function doDelete(projects) {
         angular.forEach(projects, (project) => {

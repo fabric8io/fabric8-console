@@ -30,6 +30,22 @@ module Forge {
     localStorage[secretKey] = secretName;
   }
 
+  export function secretValid(secret, requiredDataKeys) {
+    var data = secret.data;
+    var valid = true;
+    if (data) {
+      angular.forEach(requiredDataKeys, (key) => {
+        if (!data[key]) {
+          valid = false;
+        }
+      });
+    } else {
+      valid = false;
+    }
+    return valid;
+  }
+
+
   export function parseUrl(url) {
     if (url) {
       var parser = document.createElement('a');

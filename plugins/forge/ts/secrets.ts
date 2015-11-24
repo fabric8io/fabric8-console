@@ -14,6 +14,7 @@ module Forge {
       $scope.breadcrumbConfig = Developer.createProjectSettingsBreadcrumbs($scope.projectId);
       $scope.subTabConfig = Developer.createProjectSettingsSubNavBars($scope.projectId);
 
+
       var projectId = $scope.projectId;
       var ns = $scope.namespace;
       var userName = Kubernetes.currentUserName();
@@ -21,6 +22,7 @@ module Forge {
       var createdSecret = $location.search()["secret"];
       var projectClient = Kubernetes.createKubernetesClient("projects");
 
+      $scope.requiredDataKeys = Kubernetes.httpsSecretDataKeys;
       $scope.sourceSecretNamespace = getSourceSecretNamespace(localStorage);
       $scope.setupSecretsLink = Developer.projectSecretsLink(ns, projectId);
       $scope.secretNamespaceLink = Developer.secretsNamespaceLink(ns, projectId, $scope.sourceSecretNamespace);
@@ -93,7 +95,9 @@ module Forge {
               var valid = false;
               angular.forEach($scope.personalSecrets, (secret) => {
                 if (localStoredSecretName === Kubernetes.getName(secret)) {
-                  valid = true;
+                  if (secretValid(secret, $scope.requiredDataKeys)) {
+                    valid = true;
+                  }
                 }
               });
               if (!valid) {
@@ -186,6 +190,7 @@ module Forge {
           kind = 'ssh';
         }
         $scope.kind = kind;
+        $scope.requiredDataKeys = requiredDataKeys;
         var savedUrl = $location.path();
         const newSecretPath = UrlHelpers.join("namespace", $scope.sourceSecretNamespace, "secretCreate?kind=" + kind + "&savedUrl=" + savedUrl);
         $scope.addNewSecretLink = (projectId) ?
@@ -194,20 +199,12 @@ module Forge {
 
         var filteredSecrets = [];
         angular.forEach($scope.personalSecrets, (secret) => {
-          var data = secret.data;
-          if (data) {
-            var valid = true;
-            angular.forEach(requiredDataKeys, (key) => {
-              if (!data[key]) {
-                valid = false;
-              }
-            });
-            if (valid) {
-              filteredSecrets.push(secret);
-            }
+          var valid = secretValid(secret, requiredDataKeys);
+          if (valid) {
+            filteredSecrets.push(secret);
           }
-          $scope.filteredSecrets = _.sortBy(filteredSecrets, "_key");
         });
+        $scope.filteredSecrets = _.sortBy(filteredSecrets, "_key");
       }
 
       function onPersonalSecrets(secrets) {
@@ -227,7 +224,7 @@ module Forge {
       }
 
       function checkNamespaceCreated() {
-        var namespaceName = $scope.sourceSecretNamespace;
+        var namespaceName = getSourceSecretNamespace(localStorage);
 
         function watchSecrets() {
           log.info("watching secrets on namespace: " + namespaceName);
