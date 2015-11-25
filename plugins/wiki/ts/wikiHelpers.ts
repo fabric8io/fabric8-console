@@ -831,6 +831,8 @@ module Wiki {
     $scope.$projectLink = Developer.projectLink($scope.projectId);
     $scope.breadcrumbConfig = Developer.createProjectBreadcrumbs($scope.projectId, createSourceBreadcrumbs($scope));
     $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);
+
+    Forge.redirectToSetupSecretsIfNotDefined($scope, $location);
   }
 
   /**
