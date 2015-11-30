@@ -22,7 +22,7 @@
     "hawtio-core-navigation": "~2.0.51",
     "hawtio-extension-service": "~2.0.2",
     "hawtio-kube3d": "~2.0.10",
-    "hawtio-kubernetes": "~2.1.112",
+    "hawtio-kubernetes": "~2.1.113",
     "hawtio-oauth": "~2.0.34",
     "hawtio-preferences": "~2.0.3",
     "hawtio-template-cache": "~2.0.3",
