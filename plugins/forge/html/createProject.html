@@ -1,9 +1,4 @@
 <div class="row" ng-controller="Forge.ReposController">
-  <style>
-    .createProjectPage {
-      padding-top: 40px;
-    }
-  </style>
 
   <div class="row">
     <div hawtio-breadcrumbs></div>
@@ -17,24 +12,28 @@
   <div ng-show="model.fetched && $runningCDPipeline && (!$gogsLink || !$forgeLink)">
     <div class="createProjectPage">
       <div class="jumbotron">
-        <p>Waiting for the <b>CD Pipeline</b> application to startup: &nbsp;&nbsp;<i class="fa fa-spinner fa-spin"></i>
-        </p>
+        <div class="row">
+          <div class="col-md-12">
+            <p>Waiting for the <b>CD Pipeline</b> application to startup: &nbsp;&nbsp;<i class="fa fa-spinner fa-spin"></i>
+            </p>
 
-        <ul class="pending-pods">
-          <li class="ngCellText" ng-repeat="item in $requiredRCs">
-            <a ng-href="{{item | kubernetesPageLink}}">
-              <img class="app-icon-small" ng-src="{{item.$iconUrl}}" ng-show="item.$iconUrl">
-              <b>{{item.metadata.name}}</b>
-            </a>
-            <a ng-show="item.$podCounters.podsLink" href="{{item.$podCounters.podsLink}}" title="View pods">
-              <span ng-show="item.$podCounters.ready" class="badge badge-success">{{item.$podCounters.ready}}</span>
-              <span ng-show="item.$podCounters.valid" class="badge badge-info">{{item.$podCounters.valid}}</span>
-              <span ng-show="item.$podCounters.waiting" class="badge">{{item.$podCounters.waiting}}</span>
-              <span ng-show="item.$podCounters.error" class="badge badge-warning">{{item.$podCounters.error}}</span>
-            </a>
-          </li>
-        </ul>
-        <p>Please be patient while the above pods are ready!</p>
+            <ul class="pending-pods">
+              <li class="ngCellText" ng-repeat="item in $requiredRCs">
+                <a ng-href="{{item | kubernetesPageLink}}">
+                  <img class="app-icon-small" ng-src="{{item.$iconUrl}}" ng-show="item.$iconUrl">
+                  <b>{{item.metadata.name}}</b>
+                </a>
+                <a ng-show="item.$podCounters.podsLink" href="{{item.$podCounters.podsLink}}" title="View pods">
+                  <span ng-show="item.$podCounters.ready" class="badge badge-success">{{item.$podCounters.ready}}</span>
+                  <span ng-show="item.$podCounters.valid" class="badge badge-info">{{item.$podCounters.valid}}</span>
+                  <span ng-show="item.$podCounters.waiting" class="badge">{{item.$podCounters.waiting}}</span>
+                  <span ng-show="item.$podCounters.error" class="badge badge-warning">{{item.$podCounters.error}}</span>
+                </a>
+              </li>
+            </ul>
+            <p>Please be patient while the above pods are ready!</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -42,11 +41,15 @@
   <div ng-show="model.fetched && !$runningCDPipeline">
     <div class="createProjectPage">
       <div class="jumbotron">
-        <p class="text-warning">You are not running the <b>CD Pipeline</b> application in this workspace.</p>
+        <div class="row">
+          <div class="col-md-12">
+            <p class="text-warning">You are not running the <b>CD Pipeline</b> application in this workspace.</p>
 
-        <p>To be able to create new projects please run it!</p>
+            <p>To be able to create new projects please run it!</p>
 
-        <p><a href="{{$runCDPipelineLink}}" class="btn btn-lg btn-default">Run the <b>CD Pipeline</b></a></p>
+            <p><a href="{{$runCDPipelineLink}}" class="btn btn-lg btn-default">Run the <b>CD Pipeline</b></a></p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -64,47 +67,49 @@
   <div ng-show="model.fetched && $gogsLink && $forgeLink">
     <div class="createProjectPage">
       <div class="jumbotron">
-        <div class="col-md-6">
-          <p class="align-center">
-            <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/buildConfigEdit/"
-               title="Import an existing project from a git source control repository">
-              <i class="fa fa-plus"></i> Import Project from Git
-            </a>
-          </p>
-
-          <p class="align-center">
-            Import a project which already exists in a git repository
-          </p>
-        </div>
-
-        <div class="col-md-6">
-          <div ng-show="sourceSecret">
+        <div class="row">
+          <div class="col-md-6">
             <p class="align-center">
-              <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/forge/command/project-new"
-                 title="Create a new project in this workspace using a wizard">
-                <i class="fa fa-plus"></i> Create Java Project using Wizard
+              <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/buildConfigEdit/"
+                 title="Import an existing project from a git source control repository">
+                <i class="fa fa-plus"></i> Import Project from Git
               </a>
             </p>
 
             <p class="align-center">
-              This wizard guides you though creating a new Java project from our library of sample projects with the configured
-              <a href="{{$workspaceLink}}/forge/secrets"
-                 title="View or change the secret used to create new projects">
-                source secret
-              </a>
+              Import a project which already exists in a git repository
             </p>
           </div>
-          <div ng-hide="sourceSecret">
-            <p class="align-center">
-              <a class="btn btn-default btn-lg" href="{{$workspaceLink}}/forge/secrets"
-                 title="Setup the secrets so that you can create new projects and git repositories in the Gogs service">
-                <i class="fa fa-pencil-square-o"></i> Setup Gogs Secret
-              </a>
-            </p>
 
-            <p class="align-center">
-              Setup a secret so that you can create new projects and git repositories in the gogs service.
-            </p>
+          <div class="col-md-6">
+            <div ng-show="sourceSecret">
+              <p class="align-center">
+                <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/forge/command/project-new"
+                   title="Create a new project in this workspace using a wizard">
+                  <i class="fa fa-plus"></i> Create Java Project using Wizard
+                </a>
+              </p>
+
+              <p class="align-center">
+                This wizard guides you though creating a new Java project from our library of sample projects with the configured
+                <a href="{{$workspaceLink}}/forge/secrets"
+                   title="View or change the secret used to create new projects">
+                  source secret
+                </a>
+              </p>
+            </div>
+            <div ng-hide="sourceSecret">
+              <p class="align-center">
+                <a class="btn btn-default btn-lg" href="{{$workspaceLink}}/forge/secrets"
+                   title="Setup the secrets so that you can create new projects and git repositories in the Gogs service">
+                  <i class="fa fa-pencil-square-o"></i> Setup Gogs Secret
+                </a>
+              </p>
+
+              <p class="align-center">
+                Setup a secret so that you can create new projects and git repositories in the gogs service.
+              </p>
+            </div>
           </div>
         </div>
       </div>
