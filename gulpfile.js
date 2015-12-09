@@ -477,7 +477,11 @@ gulp.task('site-resources', [], function() {
 });
 
 gulp.task('fetch-java-console', function() {
-  return plugins.download(urljoin('https://github.com/hawtio/openshift-jvm/archive', 'v' + pkg.properties['openshift-jvm-version'] + '-build.tar.gz'))
+
+  var base = 'https://github.com/hawtio/openshift-jvm/archive/'
+  var name = 'v' + pkg.properties['openshift-jvm-version'] + '-build.tar.gz';
+
+  return plugins.remoteSrc([name], { base: base })
     .pipe(plugins.gunzip())
     .pipe(plugins.untar())
     .pipe(plugins.debug({ title: 'java console file: '}))
@@ -533,7 +537,7 @@ gulp.task('get-commit-id', function(cb) {
   });
 });
 
-gulp.task('write-version-json', ['collect-dep-versions'], function(cb) {
+gulp.task('write-version-json', ['site-files', 'collect-dep-versions'], function(cb) {
   fs.writeFile('site/version.json', getVersionString(), cb);
 });
 
