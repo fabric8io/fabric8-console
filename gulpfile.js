@@ -476,29 +476,46 @@ gulp.task('site-resources', [], function() {
              .pipe(gulp.dest('site'));
 });
 
-gulp.task('fetch-java-console', function() {
+function getJavaConsoleName() {
+  return 'v' + pkg.properties['openshift-jvm-version'] + '-build.tar.gz';
+}
 
+function getJavaConsoleDir() {
+  return 'openshift-jvm-' + pkg.properties['openshift-jvm-version'] + '-build';
+}
+
+gulp.task('download-java-console', function() {
   var base = 'https://github.com/hawtio/openshift-jvm/archive/'
-  var name = 'v' + pkg.properties['openshift-jvm-version'] + '-build.tar.gz';
-
+  var name = getJavaConsoleName();
   return plugins.remoteSrc([name], { base: base })
-    .pipe(plugins.gunzip())
-    .pipe(plugins.untar())
-    .pipe(plugins.debug({ title: 'java console file: '}))
     .pipe(gulp.dest('site'));
 });
 
+gulp.task('fetch-java-console', ['download-java-console'], function() {
+  var name = getJavaConsoleName();
+  return gulp.src([urljoin('site', name)])
+    .pipe(plugins.gunzip())
+    .pipe(plugins.untar())
+    .pipe(plugins.debug({ title: 'java console file: '}))
+    .pipe(gulp.dest('.'));
+
+});
+
 gulp.task('rename-java-console', ['fetch-java-console'], function() {
-  var dir = 'openshift-jvm-' + pkg.properties['openshift-jvm-version'] + '-build';
+  var dir = getJavaConsoleDir();
   return gulp.src([urljoin('site', dir, '**')])
            .pipe(gulp.dest('site/java'));
 });
 
 gulp.task('delete-tmp-dir', ['rename-java-console'], function() {
-  return del('site/openshift-jvm-' + pkg.properties['openshift-jvm-version'] + '-build');
+  return del(urljoin('site', getJavaConsoleDir()));
 });
 
-gulp.task('update-java-console-href', ['delete-tmp-dir'], function() {
+gulp.task('delete-download-file', ['rename-java-console'], function() {
+  return del(urljoin('site', getJavaConsoleName()));
+});
+
+gulp.task('update-java-console-href', ['delete-tmp-dir', 'delete-download-file'], function() {
   return gulp.src(['site/java/index.html', 'site/java/404.html'])
     .pipe(plugins.regexReplace({ regex: '<base href="/"', replace: '<base href="/java/"' }))
     .pipe(plugins.regexReplace({ regex: 'img/logo-origin-thin.svg', replace: '/img/fabric8_logo.svg' }))
