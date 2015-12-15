@@ -198,17 +198,24 @@ module Forge {
           UrlHelpers.join(HawtioCore.documentBase(), Kubernetes.context, newSecretPath);
 
         var filteredSecrets = [];
+        var selection = [];
+        var currentSecretName = getCurrentSecretName();
         angular.forEach($scope.personalSecrets, (secret) => {
           var valid = secretValid(secret, requiredDataKeys);
           if (valid) {
+            var secretName = Kubernetes.getName(secret);
+            secret["_key"] = secretName;
             filteredSecrets.push(secret);
+            if (secretName === currentSecretName) {
+              selection.push(secret);
+            }
           }
         });
         $scope.filteredSecrets = _.sortBy(filteredSecrets, "_key");
+        $scope.tableConfig.selectedItems = selection;
       }
 
       function onPersonalSecrets(secrets) {
-        log.info("got secrets!");
         $scope.personalSecrets = secrets;
         $scope.fetched = true;
         $scope.cancel();
