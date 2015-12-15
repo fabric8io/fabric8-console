@@ -184,10 +184,11 @@ module Forge {
               $scope.previousSchemaJson = json;
               $scope.schema = schema;
 
+              var entity = $scope.entity;
+              var properties = schema.properties || {};
+
               if ($scope.id === "project-new") {
-                var entity = $scope.entity;
                 // lets hide the target location!
-                var properties = schema.properties || {};
                 var overwrite = properties.overwrite;
                 var catalog = properties.catalog;
                 var targetLocation = properties.targetLocation;
@@ -207,6 +208,11 @@ module Forge {
                   if (!entity.catalog) {
                     entity.catalog = "fabric8";
                   }
+                }
+              } else if ($scope.id === "devops-edit") {
+                var pipeline = properties.pipeline;
+                if (pipeline) {
+                  pipeline.formTemplate = $templateCache.get("devOpsPipelineChooser.html");
                 }
               }
             }
