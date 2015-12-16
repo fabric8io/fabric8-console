@@ -57,6 +57,19 @@ module Forge {
 
         $scope.$on('$routeChangeSuccess', onRouteChanged);
 
+        $scope.isFormValid = () => {
+          var schema = $scope.schema || {};
+          var entity = $scope.entity || {};
+          var valid = true;
+          angular.forEach(schema.required, (propertyName) => {
+            var value = entity[propertyName];
+            if (!value) {
+              valid = false;
+            }
+          });
+          return valid;
+        };
+
         $scope.execute = () => {
           // TODO check if valid...
           $scope.response = null;
@@ -192,6 +205,7 @@ module Forge {
                 var overwrite = properties.overwrite;
                 var catalog = properties.catalog;
                 var targetLocation = properties.targetLocation;
+                var archetype = properties.archetype;
                 if (targetLocation) {
                   targetLocation.hidden = true;
                   if (overwrite) {
@@ -208,6 +222,9 @@ module Forge {
                   if (!entity.catalog) {
                     entity.catalog = "fabric8";
                   }
+                }
+                if (archetype) {
+                  archetype.formTemplate = $templateCache.get("devOpsArchetypeChooser.html");
                 }
               } else if ($scope.id === "devops-edit") {
                 var pipeline = properties.pipeline;

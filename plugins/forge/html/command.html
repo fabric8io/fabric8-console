@@ -4,6 +4,7 @@
       <div class="col-sm-12">
         <div class="">
           <hawtio-filter ng-model="tableConfig.filterOptions.filterText"
+                         save-as="forge-pipeline-selector"
                          css-class="input-xxlarge"
                          placeholder="Filter pipelines..."></hawtio-filter>
         </div>
@@ -58,6 +59,35 @@
     </div>
   </script>
 
+  <script type="text/ng-template" id="devOpsArchetypeChooser.html">
+    <div ng-controller="Forge.ArchetypePicker">
+      <p>{{selected.description}}</p>
+
+      <div class="col-sm-12">
+        <div class="">
+          <hawtio-filter ng-model="tableConfig.filterOptions.filterText"
+                         save-as="forge-artifact-selector"
+                         css-class="input-xxlarge"
+                         placeholder="Filter archetypes..."></hawtio-filter>
+        </div>
+      </div>
+      <div class="col-sm-12 archetype-chooser-border">
+        <div class="archetype-chooser-panel">
+          <table class="table table-bordered table-striped archetype-chooser" hawtio-simple-table="tableConfig"></table>
+        </div>
+      </div>
+      <!--<div class="form-group">
+        <label class="col-sm-2 control-label">Description</label>
+
+        <div class="col-sm-10">
+          <div class="panel panel-default">
+            <div class="panel-body">{{selected.description}}</div>
+          </div>
+        </div>
+      </div>-->
+    </div>
+  </script>
+
   <div class="row">
     <div hawtio-breadcrumbs></div>
   </div>
@@ -107,7 +137,7 @@
         </div>
       </div>
       <div ng-show="fetched && !wizardCompleted">
-        <div hawtio-form-2="schema" entity='entity'></div>
+        <div hawtio-form-2="schema" entity='entity' name="forge"></div>
       </div>
     </div>
   </div>
@@ -118,7 +148,7 @@
       <button class="btn btn-primary"
               title="Perform this command"
               ng-show="fetched"
-              ng-disabled="executing"
+              ng-disabled="executing || !isFormValid()"
               ng-click="execute()">
         Execute
       </button>
