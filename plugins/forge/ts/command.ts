@@ -59,14 +59,28 @@ module Forge {
 
         $scope.isFormValid = () => {
           var schema = $scope.schema || {};
+          var properties = schema.properties || {};
           var entity = $scope.entity || {};
           var valid = true;
+          var missingFields = [];
           angular.forEach(schema.required, (propertyName) => {
             var value = entity[propertyName];
             if (!value) {
               valid = false;
+              var property = properties[propertyName] || {};
+              var title = property.title || propertyName;
+              missingFields.push(title);
             }
           });
+          var validationMessage = "";
+          if (missingFields.length) {
+            if (missingFields.length == 1) {
+              validationMessage = "required field: " + missingFields[0];
+            } else {
+              validationMessage = "required fields: " + missingFields.join(", ");
+            }
+          }
+          $scope.validationMessage = validationMessage;
           return valid;
         };
 
@@ -334,6 +348,9 @@ module Forge {
           var entity = $scope.entity;
           if (schema) {
             angular.forEach(schema.properties, (property, key) => {
+              if (!property.label) {
+                property.label = property.title;
+              }
               var value = property.value;
               if (value && !entity[key]) {
                 entity[key] = value;

@@ -142,16 +142,30 @@
     </div>
   </div>
   <div class="row" ng-hide="wizardCompleted">
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-2">
-      <button class="btn btn-primary"
-              title="Perform this command"
-              ng-show="fetched"
-              ng-disabled="executing || !isFormValid()"
-              ng-click="execute()">
-        Execute
-      </button>
-    </div>
+    <form>
+      <div class="form-group">
+        <div class="col-sm-2">
+          <p class="text-warning pull-right" ng-show="validationMessage">{{validationMessage}}</p>
+        </div>
+        <div class="col-sm-10">
+          <div class="pull-right">
+            <a class="btn btn-default"
+               title="Cancel this command"
+               ng-show="$projectLink"
+               href="{{$projectLink}}">
+              Cancel
+            </a>
+            &nbsp;&nbsp;
+            <button class="btn btn-primary"
+                    title="Perform this command"
+                    ng-show="fetched"
+                    ng-disabled="executing || !isFormValid()"
+                    ng-click="execute()">
+              Next&nbsp;&nbsp;&gt;
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
