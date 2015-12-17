@@ -36,15 +36,18 @@
 .createProjectPage {
   padding-top: 40px;
 }
+/*
 .pipeline-chooser-panel {
   display: block;
   height: 150px;
   overflow-y: auto;
   overflow-x: hidden;
 }
+
 .pipeline-chooser-panel-border {
   padding-bottom: 20px;
 }
+*/
 /*
 table.pipeline-chooser thead,
 table.pipeline-chooser tbody {
