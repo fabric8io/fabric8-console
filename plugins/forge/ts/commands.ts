@@ -74,7 +74,8 @@ module Forge {
         },
 
         clearSelected: () => {
-          $scope.commandSelector.expandedFolders = {};
+          //$scope.commandSelector.expandedFolders = {};
+          openAllCommands();
           Core.$apply($scope);
         },
 
@@ -119,6 +120,62 @@ module Forge {
       };
 
 
+      function openAllCommands() {
+        $scope.commandSelector.expandedFolders = {};
+        angular.forEach($scope.commands, (command) => {
+          var id = command.id || command.name;
+          if (id) {
+            $scope.commandSelector.expandedFolders[id] = true;
+          }
+        });
+      }
+
+      /**
+       * Lets remove any dodgy characters
+       */
+      function toElementId(name) {
+        return name.replace("/", "_");
+      }
+
+      var ignorePrefixes = ["addon-", "archetype-", "fabric8-", "git-"];
+      var ignoreCommands = {
+        "devops-edit": true,
+        "devops-new-build": true,
+
+        // forge commands
+        "build-and-install-an-addon": true,
+        "install-an-addon": true,
+        "install-an-addon-from-git": true,
+        "remove-an-addon": true,
+        "update-an-addon": true,
+
+        // project commands
+        "build": true,
+        "project-new": true,
+        "": true,
+        "": true,
+        "": true,
+        "": true,
+      };
+
+      /**
+       * Lets filter out some unusable
+       * @param id
+       */
+      function isValidCommand(id) {
+        if (!id) return false;
+        var answer = true;
+        angular.forEach(ignorePrefixes, (prefix) => {
+          if (answer && id.startsWith(prefix)) {
+            answer = false;
+          }
+        });
+        if (answer && ignoreCommands[id]) {
+          return false;
+        }
+        return answer;
+      }
+
       var url = UrlHelpers.join(ForgeApiURL, "commands", $scope.namespace, $scope.projectId, $scope.resourcePath);
       url = createHttpUrl($scope.projectId, url);
       log.info("Fetching commands from: " + url);
@@ -131,38 +188,44 @@ module Forge {
             $scope.commands = _.sortBy(data, "name");
             angular.forEach($scope.commands, (command) => {
               var id = command.id || command.name;
-              command.$link = commandLink($scope.projectId, id, resourcePath);
+              if (isValidCommand(id)) {
+                command.$link = commandLink($scope.projectId, id, resourcePath);
 
-              var name = command.name || command.id;
-              var folderName = command.category;
-              var shortName = name;
-              var names = name.split(":", 2);
-              if (names != null && names.length > 1) {
-                folderName = names[0];
-                shortName = names[1].trim();
+                var name = command.name || command.id;
+                var folderName = command.category;
+                var shortName = name;
+                var names = name.split(":", 2);
+                if (names != null && names.length > 1) {
+                  folderName = names[0];
+                  shortName = names[1].trim();
+                }
+                if (folderName === "Project/Build") {
+                  folderName = "Project";
+                }
+                command.$shortName = shortName;
+                command.$folderName = folderName;
+                var folder = folderMap[folderName];
+                if (!folder) {
+                  const lowerName = folderName.toLowerCase();
+                  folder = {
+                    name: folderName,
+                    lowerName: lowerName,
+                    id: "folder_" + toElementId(lowerName),
+                    commands: []
+                  };
+                  folderMap[folderName] = folder;
+                  folders.push(folder);
+                }
+                folder.commands.push(command);
               }
-              if (folderName === "Project/Build") {
-                folderName = "Project";
-              }
-              command.$shortName = shortName;
-              command.$folderName = folderName;
-              var folder = folderMap[folderName];
-              if (!folder) {
-                folder = {
-                  name: folderName,
-                  commands: []
-                };
-                folderMap[folderName] = folder;
-                folders.push(folder);
-              }
-              folder.commands.push(command);
             });
-            folders = _.sortBy(folders, "name");
+            folders = _.sortBy(folders, "lowerName");
             angular.forEach(folders, (folder) => {
               folder.commands = _.sortBy(folder.commands, "$shortName");
             });
             $scope.commandSelector.folders = folders;
 
+            openAllCommands();
             setModelCommands($scope.model, $scope.resourcePath, $scope.commands);
             $scope.fetched = true;
           }

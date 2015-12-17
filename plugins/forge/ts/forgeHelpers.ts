@@ -28,6 +28,19 @@ module Forge {
     $scope.$projectLink = Developer.projectLink($scope.projectId);
     $scope.breadcrumbConfig = Developer.createProjectBreadcrumbs($scope.projectId);
     $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);
+
+    if ("project-new" === $scope.id) {
+      $scope.breadcrumbConfig.push({
+        label: "Create Project"
+      });
+    } else {
+      $scope.breadcrumbConfig.push(_.last($scope.subTabConfig));
+      $scope.breadcrumbConfig.push({
+        label: "Forge",
+        href: Forge.projectCommandsLink($scope.namespace, $scope.projectId)
+      });
+    }
+    $scope.subTabConfig = [];
   }
 
   export function commandLink(projectId, name, resourcePath) {
@@ -49,6 +62,10 @@ module Forge {
     } else {
       return UrlHelpers.join(link, "/forge/commands");
     }
+  }
+
+  export function projectCommandsLink(ns, projectId) {
+    return Developer.projectWorkspaceLink(ns, projectId, "forge/commands", false);
   }
 
   export function reposApiUrl(ForgeApiURL) {

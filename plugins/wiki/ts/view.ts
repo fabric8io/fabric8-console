@@ -223,7 +223,7 @@ module Wiki {
     };
 
     $scope.forgeLink = () => {
-      return Developer.projectWorkspaceLink($scope.namespace, $scope.projectId, "forge/commands", false);
+      return Forge.projectCommandsLink($scope.namespace, $scope.projectId);
     };
 
     $scope.branchLink = (branch) => {

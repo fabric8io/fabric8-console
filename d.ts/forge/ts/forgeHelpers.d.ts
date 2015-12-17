@@ -13,6 +13,7 @@ declare module Forge {
     function initScope($scope: any, $location: any, $routeParams: any): void;
     function commandLink(projectId: any, name: any, resourcePath: any): string;
     function commandsLink(resourcePath: any, projectId: any): string;
+    function projectCommandsLink(ns: any, projectId: any): string;
     function reposApiUrl(ForgeApiURL: any): string;
     function repoApiUrl(ForgeApiURL: any, path: any): string;
     function commandApiUrl(ForgeApiURL: any, commandId: any, ns: any, projectId: any, resourcePath?: any): string;
