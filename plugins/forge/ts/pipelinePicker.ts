@@ -41,13 +41,20 @@ module Forge {
             }
           ]
         };
-        var pipeline = $scope.entity.pipeline || {};
-        var pipelineValue = angular.isString(pipeline) ? pipeline : pipeline.value;
-        var initialSelection = getSelection(pipelineValue);
-        if (initialSelection) {
-          $scope.tableConfig.selectedItems = [initialSelection];
-          updateSelection();
-          Core.$apply($scope);
+        entityChanged();
+
+        $scope.$watch("entity.pipeline", entityChanged);
+        $scope.$watchCollection("tableConfig.selectedItems", updateSelection);
+
+        function entityChanged() {
+          var pipeline = $scope.entity.pipeline || {};
+          var pipelineValue = angular.isString(pipeline) ? pipeline : pipeline.value;
+          var initialSelection = getSelection(pipelineValue);
+          if (initialSelection) {
+            $scope.tableConfig.selectedItems = [initialSelection];
+            updateSelection();
+            Core.$apply($scope);
+          }
         }
 
         function getSelection(value) {
@@ -62,7 +69,6 @@ module Forge {
           return answer;
         }
 
-        $scope.$watchCollection("tableConfig.selectedItems", updateSelection);
 
         function updateSelection() {
           var selection = $scope.tableConfig.selectedItems;
@@ -78,6 +84,7 @@ module Forge {
           //log.info("==== Selected pipeline is: " + angular.toJson($scope.selected));
           $scope.html = description ? marked(description) : "";
           $scope.entity.pipeline = selectedValue;
+          log.info("entity pipeline is now: " + $scope.entity.pipeline);
           Core.$apply($scope);
         }
       }]);
