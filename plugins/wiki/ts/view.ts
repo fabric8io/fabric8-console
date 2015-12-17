@@ -222,6 +222,10 @@ module Wiki {
       return (pageName) ? Wiki.editLink($scope, pageName, $location) : null;
     };
 
+    $scope.forgeLink = () => {
+      return Developer.projectWorkspaceLink($scope.namespace, $scope.projectId, "forge/commands", false);
+    };
+
     $scope.branchLink = (branch) => {
       if (branch) {
         return Wiki.branchLink(branch, $scope.pageId, $location);
