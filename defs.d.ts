@@ -2,6 +2,7 @@
 /// <reference path="d.ts/forge/ts/forgeHelpers.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgePlugin.d.ts"/>
 /// <reference path="d.ts/forge/ts/archetypePicker.d.ts"/>
+/// <reference path="d.ts/forge/ts/commandOverrides.d.ts"/>
 /// <reference path="d.ts/forge/ts/command.d.ts"/>
 /// <reference path="d.ts/forge/ts/commands.d.ts"/>
 /// <reference path="d.ts/forge/ts/pipelinePicker.d.ts"/>

@@ -1,5 +1,6 @@
 /// <reference path="../../includes.ts"/>
 /// <reference path="forgeHelpers.ts"/>
+/// <reference path="commandOverrides.ts"/>
 /// <reference path="forgePlugin.ts"/>
 
 module Forge {
@@ -210,42 +211,7 @@ module Forge {
               console.log("updated schema: " + json);
               $scope.previousSchemaJson = json;
               $scope.schema = schema;
-
-              var entity = $scope.entity;
-              var properties = schema.properties || {};
-
-              if ($scope.id === "project-new") {
-                // lets hide the target location!
-                var overwrite = properties.overwrite;
-                var catalog = properties.catalog;
-                var targetLocation = properties.targetLocation;
-                var archetype = properties.archetype;
-                if (targetLocation) {
-                  targetLocation.hidden = true;
-                  if (overwrite) {
-                    overwrite.hidden = true;
-                  }
-                  console.log("hiding targetLocation!");
-
-                  // lets default the type
-                  if (!entity.type) {
-                    entity.type = "From Archetype Catalog";
-                  }
-                }
-                if (catalog) {
-                  if (!entity.catalog) {
-                    entity.catalog = "fabric8";
-                  }
-                }
-                if (archetype) {
-                  archetype.formTemplate = $templateCache.get("devOpsArchetypeChooser.html");
-                }
-              } else if ($scope.id === "devops-edit") {
-                var pipeline = properties.pipeline;
-                if (pipeline) {
-                  pipeline.formTemplate = $templateCache.get("devOpsPipelineChooser.html");
-                }
-              }
+              configureCommands($timeout, $templateCache, $scope.id, $scope.entity, schema);
             }
           }
         }

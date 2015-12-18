@@ -1,7 +1,6 @@
 /// <reference path="../../includes.d.ts" />
 /// <reference path="forgeHelpers.d.ts" />
-/// <reference path="commandOverrides.d.ts" />
 /// <reference path="forgePlugin.d.ts" />
 declare module Forge {
-    var CommandController: ng.IModule;
+    function configureCommands($timeout: any, $templateCache: any, commandId: any, entity: any, schema: any): void;
 }
