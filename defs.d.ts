@@ -2,13 +2,15 @@
 /// <reference path="d.ts/forge/ts/forgeHelpers.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgePlugin.d.ts"/>
 /// <reference path="d.ts/forge/ts/archetypePicker.d.ts"/>
+/// <reference path="d.ts/forge/ts/secretHelpers.d.ts"/>
+/// <reference path="d.ts/forge/ts/camelAddComponent.d.ts"/>
+/// <reference path="d.ts/forge/ts/camelOverview.d.ts"/>
 /// <reference path="d.ts/forge/ts/commandOverrides.d.ts"/>
 /// <reference path="d.ts/forge/ts/command.d.ts"/>
 /// <reference path="d.ts/forge/ts/commands.d.ts"/>
 /// <reference path="d.ts/forge/ts/pipelinePicker.d.ts"/>
 /// <reference path="d.ts/forge/ts/repo.d.ts"/>
 /// <reference path="d.ts/forge/ts/repos.d.ts"/>
-/// <reference path="d.ts/forge/ts/secretHelpers.d.ts"/>
 /// <reference path="d.ts/forge/ts/secrets.d.ts"/>
 /// <reference path="d.ts/main/ts/mainGlobals.d.ts"/>
 /// <reference path="d.ts/main/ts/mainPlugin.d.ts"/>

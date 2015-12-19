@@ -66,6 +66,12 @@
             data-placement="bottom">
             <i class="{{childAction.icon}}"></i> {{childAction.name}}</a>
         </li>
+        <li class="divider">
+        </li>
+        <li ng-show="camelLink()">
+          <a ng-href="{{camelLink()}}{{hash}}" title="View the camel perspective for this project" data-placement="bottom">
+            <img class="menu-icon" src="/img/icons/camel.svg"> Camel</a>
+        </li>
       </ul>
     </li>
     <li class="pull-right" ng-show="forgeLink()">

@@ -1,0 +1,66 @@
+<div ng-controller="Forge.CamelOverviewController">
+  <script type="text/ng-template" id="endpointFileName.html">
+    <div class="ngCellText">
+      <a href="{{row.entity.$fileLink}}">
+        {{row.entity.fileName}}
+      </a>
+    </div>
+  </script>
+
+  <div class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div class="row">
+    <div hawtio-tabs></div>
+  </div>
+
+  <div ng-hide="fetched">
+    <div class="row select-table-filter">
+      <div class="col-md-12">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div ng-show="fetched">
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Camel Endpoints</h2>
+      </div>
+    </div>
+    <div class="row select-table-filter">
+      <div class="col-md-12">
+        <hawtio-filter ng-show="camelProject.endpoints.length > 1"
+                       ng-model="tableConfig.filterOptions.filterText"
+                       css-class="input-xxlarge"
+                       placeholder="Filter endpoints..."></hawtio-filter>
+
+        <span class="pull-right">&nbsp;</span>
+        <a class="btn btn-primary pull-right"
+           title="Edit the endpoint details"
+           ng-disabled="!tableConfig.selectedItems.length"
+           ng-click="editEndpoint()">
+          <i class="fa fa-pencil-square-o"></i> Edit Endpoint
+        </a>
+        <span class="pull-right">&nbsp;</span>
+        <a class="btn btn-default pull-right"
+           title="Create a new endpoint"
+           href="{{createEndpointLink}}"><i class="fa fa-plus"></i> Create Endpoint</a>
+        <span class="pull-right">&nbsp;</span>
+        <a class="btn btn-default pull-right"
+           title="Add a new kind of component to the project"
+           href="{{addComponentLink}}"><i class="fa fa-plus"></i> Add Component</a>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-bordered table-striped" hawtio-simple-table="tableConfig"></table>
+      </div>
+    </div>
+  </div>
+</div>

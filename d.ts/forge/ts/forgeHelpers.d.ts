@@ -14,6 +14,8 @@ declare module Forge {
     function commandLink(projectId: any, name: any, resourcePath: any): string;
     function commandsLink(resourcePath: any, projectId: any): string;
     function projectCommandsLink(ns: any, projectId: any): string;
+    function projectPerspectiveLink(ns: any, projectId: any, page: any): string;
+    function projectCamelOverviewLink(ns: any, projectId: any): string;
     function reposApiUrl(ForgeApiURL: any): string;
     function repoApiUrl(ForgeApiURL: any, path: any): string;
     function commandApiUrl(ForgeApiURL: any, commandId: any, ns: any, projectId: any, resourcePath?: any): string;
@@ -32,4 +34,6 @@ declare module Forge {
     function commandMatchesText(command: any, filterText: any): any;
     function isSourceSecretDefinedForProject(ns: any, projectId: any): any;
     function redirectToSetupSecretsIfNotDefined($scope: any, $location: any): void;
+    function executeCommand($scope: any, $http: any, ForgeApiURL: any, commandId: any, projectId: any, request: any, onData: any): void;
+    function gotoCommand($location: any, projectId: any, commandId: any, resourcePath: any, input: any, pageNumber: any): void;
 }

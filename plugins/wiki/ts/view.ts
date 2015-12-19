@@ -226,6 +226,10 @@ module Wiki {
       return Forge.projectCommandsLink($scope.namespace, $scope.projectId);
     };
 
+    $scope.camelLink = () => {
+      return Forge.projectCamelOverviewLink($scope.namespace, $scope.projectId);
+    };
+
     $scope.branchLink = (branch) => {
       if (branch) {
         return Wiki.branchLink(branch, $scope.pageId, $location);

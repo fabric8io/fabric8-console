@@ -39,6 +39,13 @@ module Forge {
         label: "Forge",
         href: Forge.projectCommandsLink($scope.namespace, $scope.projectId)
       });
+      if ($scope.id && $scope.id.startsWith("camel-")) {
+        $scope.breadcrumbConfig.push({
+          iconHtml: '<img class="menu-icon" src="/img/icons/camel.svg">',
+          label: 'Camel',
+          href: Forge.projectCamelOverviewLink($scope.namespace, $scope.projectId)
+        });
+      }
     }
     $scope.subTabConfig = [];
   }
@@ -67,6 +74,15 @@ module Forge {
   export function projectCommandsLink(ns, projectId) {
     return Developer.projectWorkspaceLink(ns, projectId, "forge/commands", false);
   }
+
+  export function projectPerspectiveLink(ns, projectId, page) {
+    return Developer.projectWorkspaceLink(ns, projectId, UrlHelpers.join("forge", page), false);
+  }
+
+  export function projectCamelOverviewLink(ns, projectId) {
+    return Forge.projectPerspectiveLink(ns, projectId, "camelOverview");
+  }
+
 
   export function reposApiUrl(ForgeApiURL) {
     return UrlHelpers.join(ForgeApiURL, "/repos");
@@ -239,6 +255,57 @@ module Forge {
       var loginPage = Developer.projectSecretsLink(ns, projectId) + "Required";
       log.info("No secret setup so redirecting to " + loginPage);
       $location.path(loginPage)
+    }
+  }
+
+  /**
+   * Executes a simple forge command that expects JSON results
+   */
+  export function executeCommand($scope, $http, ForgeApiURL, commandId, projectId, request, onData) {
+    var url = executeCommandApiUrl(ForgeApiURL, commandId);
+    url = createHttpUrl(projectId, url);
+    log.info("About to post to " + url + " payload: " + angular.toJson(request));
+    $http.post(url, request, createHttpConfig()).
+    success(function (data, status, headers, config) {
+      if (data) {
+        if (data.status == "SUCCESS") {
+          var message = data.message;
+          if (message) {
+            try {
+              var jsonData = angular.fromJson(message);
+              if (angular.isFunction(onData)) {
+                onData(jsonData);
+              } else {
+                log.warn("onData is not a function!: " + onData);
+              }
+            } catch (e) {
+              log.error("Failed to parse JSON result " + e + ". JSON: " + message);
+            }
+          }
+        } else {
+          log.warn("Failed to find camel data! " + data.status + " message: " + data.message);
+        }
+      }
+      $scope.fetched = true;
+      Core.$apply($scope);
+    }).
+    error(function (data, status, headers, config) {
+      $scope.fetched = true;
+      log.warn("Failed to load " + url + " " + data + " " + status);
+      Core.$apply($scope);
+    });
+  }
+
+  /**
+   * Redirects to the forge command on the given page number with the input data
+   */
+  export function gotoCommand($location, projectId, commandId, resourcePath, input, pageNumber) {
+    var href = commandLink(projectId, commandId, "");
+    log.info("Navigating to forge page " + href + " with input " + angular.toJson(input) + " page " + pageNumber);
+    $location.path(href);
+    $location.search(input);
+    if (pageNumber) {
+      $location.search("_page", pageNumber);
     }
   }
 }

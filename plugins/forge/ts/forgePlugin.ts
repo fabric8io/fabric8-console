@@ -29,6 +29,13 @@ module Forge {
         .when(UrlHelpers.join(path, '/secretsRequired'), route('secretsRequired.html', false));
     });
 
+    // project perspectives
+    angular.forEach(['/workspaces/:namespace/projects/:project/forge'], (path) => {
+      $routeProvider
+        .when(UrlHelpers.join(path, '/camelOverview'), route('camelOverview.html', false))
+        .when(UrlHelpers.join(path, '/camelAddComponent'), route('camelAddComponent.html', false));
+    });
+
   }]);
 
   _module.factory('ForgeApiURL', ['$q', '$rootScope', ($q:ng.IQService, $rootScope:ng.IRootScopeService) => {
