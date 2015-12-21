@@ -56,7 +56,7 @@ module Forge {
           var input = {
             endpoints: endpoint.endpointUri
           };
-          gotoCommand($location, projectId, "camel-edit-component", resourcePath, input, 2);
+          gotoCommand($location, projectId, "camel-edit-endpoint", resourcePath, input, 2);
         }
       };
 

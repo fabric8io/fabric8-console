@@ -42,8 +42,32 @@ module Forge {
         };
         $scope.inputList = [$scope.entity];
 
+/*
         $scope.schema = getModelCommandInputs(ForgeModel, $scope.resourcePath, $scope.id);
         onSchemaLoad();
+*/
+
+        $scope.startup = true;
+
+        function checkIfShouldMoveToPage2() {
+          // lets move to the second page if specified via parameters...
+          var search = $location.search();
+          var pageNumber = search["_page"];
+          if (pageNumber && pageNumber > 1 && $scope.inputList.length < 2 && $scope.startup) {
+            var firstPage = {};
+            angular.forEach(search, (value, key) => {
+              if (key && !key.startsWith("_")) {
+                // TODO we could try check this against the schema to avoid bad properties?
+                // though maybe the REST API in fabric8-forge could do that for us?
+                firstPage[key] = value;
+              }
+            });
+            $scope.inputList = [firstPage, $scope.entity];
+            return true;
+          } else {
+            return false;
+          }
+        }
 
         function onRouteChanged() {
           console.log("route updated; lets clear the entity");
@@ -52,8 +76,13 @@ module Forge {
           $scope.inputList = [$scope.entity];
           $scope.previousSchemaJson = "";
           $scope.schema = null;
+          if (checkIfShouldMoveToPage2()) {
+            $scope.moveToPage2OnStartup = true;
+            $scope.execute();
+          } else {
+            updateData();
+          }
           Core.$apply($scope);
-          updateData();
         }
 
         $scope.$on('$routeChangeSuccess', onRouteChanged);
@@ -118,9 +147,13 @@ module Forge {
                       if (messages.length) {
                         var message = messages[0];
                         if (message) {
-                          $scope.invalid = true;
-                          $scope.validationError = message.description;
-                          $scope.validationInput = message.inputName;
+                          if ($scope.startup && $scope.moveToPage2OnStartup) {
+                            // ignore the errors as we're loading the first page and haven't started with a pre-populated entity
+                          } else {
+                            $scope.invalid = true;
+                            $scope.validationError = message.description;
+                            $scope.validationInput = message.inputName;
+                          }
                         }
                       }
                     }
@@ -185,6 +218,7 @@ module Forge {
                   $location.path(editPath);
                 }
               }
+              $scope.startup = false;
               Core.$apply($scope);
             }).
             error(function (data, status, headers, config) {
@@ -269,7 +303,11 @@ module Forge {
             });
         }
 
-        updateData();
+        if (checkIfShouldMoveToPage2()) {
+          $scope.fetched = true;
+        } else {
+          updateData();
+        }
 
         function toBackgroundStyle(status) {
           if (!status) {
