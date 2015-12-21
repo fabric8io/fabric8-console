@@ -54,15 +54,14 @@ module Forge {
           var search = $location.search();
           var pageNumber = search["_page"];
           if (pageNumber && pageNumber > 1 && $scope.inputList.length < 2 && $scope.startup) {
-            var firstPage = {};
             angular.forEach(search, (value, key) => {
               if (key && !key.startsWith("_")) {
                 // TODO we could try check this against the schema to avoid bad properties?
                 // though maybe the REST API in fabric8-forge could do that for us?
-                firstPage[key] = value;
+                $scope.entity[key] = value;
               }
             });
-            $scope.inputList = [firstPage, $scope.entity];
+            $scope.inputList = [$scope.entity];
             return true;
           } else {
             return false;
