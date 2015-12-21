@@ -151,11 +151,7 @@ module Forge {
 
         // project commands
         "build": true,
-        "project-new": true,
-        "": true,
-        "": true,
-        "": true,
-        "": true,
+        "project-new": true
       };
 
       /**

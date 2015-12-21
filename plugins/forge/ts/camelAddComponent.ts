@@ -34,9 +34,9 @@ module Forge {
             displayName: 'Description'
           },
           {
-            field: 'label',
-            displayName: 'Labels',
-            cellTemplate: $templateCache.get("labels.html")
+            field: '$tagsText',
+            displayName: 'Tags',
+            cellTemplate: '<div class="ngCellText"><span class="badge" ng-repeat="tag in row.entity.tags">{{tag}}</span></div>'
           },
         ]
       };
@@ -46,14 +46,15 @@ module Forge {
         if (selection && selection.length) {
           var component = selection[0];
 
-          var input = {
-            name: component.scheme
-          };
+          var input = {};
           var nextCommand = "camel-add-endpoint";
           var nextPage = 1;
           if (addComponent) {
             nextCommand = "camel-add-component";
             nextPage = 2;
+            input["name"] = component.scheme;
+          } else {
+            input["componentName"] = component.scheme;
           }
           gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
         }
@@ -75,12 +76,19 @@ module Forge {
           resource: "",
           inputList: [
             {
+              excludeProject: addComponent ? "true" : "false",
               format: "JSON"
             }
           ]
         };
         var onData = (jsonData) => {
           $scope.camelComponents = angular.fromJson(jsonData);
+          angular.forEach($scope.camelComponents, (component) => {
+            var tags = component.tags;
+            if (tags) {
+              component.$tagsText = tags.join(",");
+            }
+          });
           log.info("Got data: " + angular.toJson($scope.camelComponents, true));
         };
         executeCommand($scope, $http, ForgeApiURL, commandId, projectId, request, onData);

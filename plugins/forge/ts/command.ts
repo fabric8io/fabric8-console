@@ -31,6 +31,11 @@ module Forge {
         }
         redirectToSetupSecretsIfNotDefined($scope, $location);
 
+        // for camel commands lets cancel / complete back to the camel perspective
+        if ($scope.id && $scope.id.startsWith("camel-")) {
+          $scope.$projectLink = Forge.projectCamelOverviewLink($scope.namespace, $scope.projectId);
+        }
+
         $scope.$completeLink = $scope.$projectLink;
         if ($scope.projectId) {
 
