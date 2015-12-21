@@ -46,7 +46,8 @@ module Forge {
       };
 
 
-      $scope.createEndpointLink = commandLink(projectId, "camel-add-endpoint", "");
+      //$scope.createEndpointLink = commandLink(projectId, "camel-add-endpoint", "");
+      $scope.createEndpointLink = Forge.projectPerspectiveLink($scope.namespace, projectId, "camelAddEndpoint");
       $scope.addComponentLink = Forge.projectPerspectiveLink($scope.namespace, projectId, "camelAddComponent");
 
       $scope.editEndpoint = () => {

@@ -53,7 +53,7 @@ module Forge {
           // lets move to the second page if specified via parameters...
           var search = $location.search();
           var pageNumber = search["_page"];
-          if (pageNumber && pageNumber > 1 && $scope.inputList.length < 2 && $scope.startup) {
+          if (pageNumber && $scope.inputList.length < 2 && $scope.startup) {
             angular.forEach(search, (value, key) => {
               if (key && !key.startsWith("_")) {
                 // TODO we could try check this against the schema to avoid bad properties?
@@ -62,10 +62,11 @@ module Forge {
               }
             });
             $scope.inputList = [$scope.entity];
-            return true;
-          } else {
-            return false;
+            if (pageNumber > 1) {
+              return true;
+            }
           }
+          return false;
         }
 
         function onRouteChanged() {

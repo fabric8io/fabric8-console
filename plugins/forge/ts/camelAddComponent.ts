@@ -10,6 +10,8 @@ module Forge {
       $scope.id = "camel-get-components";
       initScope($scope, $location, $routeParams);
 
+      var addComponent = $location.path().endsWith("Component");
+
       var resourcePath = "";
 
       $scope.tableConfig = {
@@ -47,9 +49,13 @@ module Forge {
           var input = {
             name: component.scheme
           };
-          gotoCommand($location, $scope.projectId, "camel-add-component", resourcePath, input, 2);
-
-          // TODO forward to page 2 of the camel-add-component forge command!
+          var nextCommand = "camel-add-endpoint";
+          var nextPage = 1;
+          if (addComponent) {
+            nextCommand = "camel-add-component";
+            nextPage = 2;
+          }
+          gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
         }
       };
 
