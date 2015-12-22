@@ -71,6 +71,7 @@ declare module Wiki {
     function viewLink($scope: any, pageId: string, $location: any, fileName?: string): string;
     function branchLink($scope: any, pageId: string, $location: any, fileName?: string): string;
     function editLink($scope: any, pageId: string, $location: any): string;
+    function customEditLink($scope: any, pageId: string, $location: any, editView?: string): string;
     function createLink($scope: any, pageId: string, $location: any): string;
     function encodePath(pageId: string): string;
     function decodePath(pageId: string): string;

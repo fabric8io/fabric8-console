@@ -516,6 +516,25 @@ module Wiki {
     return link;
   }
 
+  export function customEditLink($scope, pageId:string, $location, editView = "edit") {
+    var link:string = null;
+    var format = Wiki.fileFormat(pageId);
+    switch (format) {
+      case "image":
+        break;
+      default:
+      var start = startLink($scope);
+      if (pageId) {
+        link = UrlHelpers.join(start, editView, encodePath(pageId));
+      } else {
+        // lets use the current path
+        var path = $location.path();
+        link = "#" + path.replace(/(view|create)/, editView);
+      }
+    }
+    return link;
+  }
+
   export function createLink($scope, pageId:string, $location) {
     var path = $location.path();
     var start = startLink($scope);

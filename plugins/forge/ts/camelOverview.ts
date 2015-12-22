@@ -84,7 +84,15 @@ module Forge {
           angular.forEach($scope.camelProject.endpoints, (endpoint) => {
             var fileName = endpoint.fileName;
             if (fileName) {
-              endpoint.$fileLink = Wiki.editLink($scope, UrlHelpers.join("src/main/java", fileName), $location);
+              var prefix = "src/main/java";
+              if (fileName.endsWith(".xml")) {
+                prefix = "src/main/resources";
+                var pageId = UrlHelpers.join(prefix, fileName);
+                endpoint.$fileLink = Wiki.customEditLink($scope, pageId, $location, "camel/properties");
+              } else {
+                var pageId = UrlHelpers.join(prefix, fileName);
+                endpoint.$fileLink = Wiki.editLink($scope, pageId, $location);
+              }
               var kind = "";
               if (endpoint.consumerOnly) {
                 kind = endpoint.producerOnly ? "pipe" : "consumer";

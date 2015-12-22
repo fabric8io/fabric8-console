@@ -128,11 +128,13 @@ module Forge {
           var commandId = $scope.id;
           var resourcePath = $scope.resourcePath;
           var url = executeCommandApiUrl(ForgeApiURL, commandId);
+          var inputList = $scope.inputList;
+          inputList[inputList.length - 1] = postProcessEntity($scope.entity);
           var request = {
             namespace: $scope.namespace,
             projectName: $scope.projectId,
             resource: resourcePath,
-            inputList: $scope.inputList
+            inputList: inputList
           };
           url = createHttpUrl($scope.projectId, url);
           log.info("About to post to " + url + " payload: " + angular.toJson(request));
@@ -269,13 +271,17 @@ module Forge {
           var resourcePath = $scope.resourcePath;
           var url = validateCommandApiUrl(ForgeApiURL, commandId);
           // lets put the entity in the last item in the list
+/*
           var inputList = [].concat($scope.inputList);
-          inputList[inputList.length - 1] = $scope.entity;
+          inputList[inputList.length - 1] = postProcessEntity($scope.entity);
+*/
+          var inputList = $scope.inputList;
+          inputList[inputList.length - 1] = postProcessEntity($scope.entity);
           var request = {
             namespace: $scope.namespace,
             projectName: $scope.projectId,
             resource: resourcePath,
-            inputList: $scope.inputList
+            inputList: inputList
           };
           url = createHttpUrl($scope.projectId, url);
           $scope.validating = true;
@@ -348,6 +354,23 @@ module Forge {
           } else {
             Core.$apply($scope);
           }
+        }
+
+        function postProcessEntity(entity) {
+          var answer = {};
+          angular.forEach(entity, (value, key) => {
+            // no values should typically be objects, so lets transform them
+            if (!angular.isArray(value) && angular.isObject(value)) {
+              // lets convert the value to a string
+              var textValue = value.label || value.id || value.name || value.$id || value._key;
+              log.info("Converting property " + key + " to value " + textValue + " for selection: " + angular.toJson(value));
+              if (value) {
+                value = textValue;
+              }
+            }
+            answer[key] = value;
+          });
+          return answer;
         }
 
         function onSchemaLoad() {

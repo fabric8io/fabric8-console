@@ -55,7 +55,22 @@ module Forge {
           }
         };
       }
+    } else if (commandId === "camel-add-endpoint") {
+      var current = entity.componentName;
+      if (angular.isString(current)) {
+        var componentName = properties.componentName;
+        if (componentName) {
+          var components = componentName.enum;
+          if (components) {
+            angular.forEach(components, (component) => {
+              var scheme = component.scheme || component.label;
+              if (scheme && scheme === current) {
+                entity.componentName = component;
+              }
+            });
+          }
+        }
+      }
     }
   }
-
 }
