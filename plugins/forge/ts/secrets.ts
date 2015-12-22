@@ -83,31 +83,35 @@ module Forge {
 
       checkNamespaceCreated();
 
+      function getLocalStoredSecretName() {
+        var localStoredSecretName = getProjectSourceSecret(localStorage, ns, projectId);
+        if (localStoredSecretName) {
+          // lets check that its valid and if not lets clear it
+          if ($scope.personalSecrets && $scope.personalSecrets.length) {
+            var valid = false;
+            angular.forEach($scope.personalSecrets, (secret) => {
+              if (localStoredSecretName === Kubernetes.getName(secret)) {
+                if (secretValid(secret, $scope.requiredDataKeys)) {
+                  valid = true;
+                }
+              }
+            });
+            if (!valid) {
+              log.info("Clearing secret name configuration: " + localStoredSecretName + " as the secret no longer exists!");
+              localStoredSecretName = "";
+              setProjectSourceSecret(localStorage, ns, projectId, localStoredSecretName);
+            }
+          }
+        }
+        return localStoredSecretName;
+      }
+
       function getCurrentSecretName() {
         var answer = null;
         if (createdSecret) {
           answer = createdSecret;
         } else {
-          var localStoredSecretName = getProjectSourceSecret(localStorage, ns, projectId);
-          if (localStoredSecretName) {
-            // lets check that its valid and if not lets clear it
-            if ($scope.personalSecrets && $scope.personalSecrets.length) {
-              var valid = false;
-              angular.forEach($scope.personalSecrets, (secret) => {
-                if (localStoredSecretName === Kubernetes.getName(secret)) {
-                  if (secretValid(secret, $scope.requiredDataKeys)) {
-                    valid = true;
-                  }
-                }
-              });
-              if (!valid) {
-                log.info("Clearing secret name configuration: " + localStoredSecretName + " as the secret no longer exists!");
-                localStoredSecretName = "";
-                setProjectSourceSecret(localStorage, ns, projectId, localStoredSecretName);
-              }
-            }
-          }
-          answer = localStoredSecretName;
+          answer = getLocalStoredSecretName();
         }
         $scope.sourceSecret = answer;
         return answer;
@@ -143,6 +147,10 @@ module Forge {
         }
         $scope.tableConfig.selectedItems = selectedItems;
         selectedSecretName();
+      };
+
+      $scope.hasSavedSecret = () => {
+        return getLocalStoredSecretName();
       };
 
       $scope.canSave = () => {
