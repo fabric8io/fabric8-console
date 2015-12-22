@@ -207,7 +207,7 @@ module Forge {
 
         var filteredSecrets = [];
         var selection = [];
-        var currentSecretName = getCurrentSecretName();
+        var currentSecretName = getCurrentSecretName() || selectedSecretName();
         angular.forEach($scope.personalSecrets, (secret) => {
           var valid = secretValid(secret, requiredDataKeys);
           if (valid) {
