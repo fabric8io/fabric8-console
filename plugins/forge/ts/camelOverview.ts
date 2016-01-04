@@ -13,6 +13,33 @@ module Forge {
       var resourcePath = "";
       var projectId = $scope.projectId;
 
+      $scope.componentTable = {
+        data: 'camelProject.components',
+        showSelectionCheckbox: true,
+        enableRowClickSelection: true,
+        multiSelect: false,
+        selectedItems: [],
+        filterOptions: {
+          filterText: $location.search()["cq"] || ''
+        },
+        columnDefs: [
+          {
+            field: 'scheme',
+            displayName: 'Scheme',
+            defaultSort: true
+          },
+          {
+            field: 'syntax',
+            displayName: 'Syntrax',
+            defaultSort: true
+          },
+          {
+            field: 'description',
+            displayName: 'Description'
+          }
+        ]
+      };
+
       $scope.tableConfig = {
         data: 'camelProject.endpoints',
         showSelectionCheckbox: true,
@@ -40,6 +67,31 @@ module Forge {
           {
             field: 'fileName',
             displayName: 'File',
+            cellTemplate: $templateCache.get("endpointFileName.html")
+          },
+        ]
+      };
+
+      $scope.routeTable = {
+        data: 'camelProject.routes',
+        showSelectionCheckbox: true,
+        enableRowClickSelection: true,
+        multiSelect: false,
+        selectedItems: [],
+        filterOptions: {
+          filterText: $location.search()["rq"] || ''
+        },
+        columnDefs: [
+/*
+          {
+            field: 'endpointInstance',
+            displayName: 'Name',
+            defaultSort: true
+          },
+*/
+          {
+            field: 'fileName',
+            displayName: 'Route File',
             cellTemplate: $templateCache.get("endpointFileName.html")
           },
         ]
@@ -80,6 +132,7 @@ module Forge {
           ]
         };
         var onData = (jsonData) => {
+          var routes = [];
           $scope.camelProject = jsonData || {};
           angular.forEach($scope.camelProject.endpoints, (endpoint) => {
             var fileName = endpoint.fileName;
@@ -100,8 +153,19 @@ module Forge {
                 kind = "producer";
               }
               endpoint.$kind = kind;
+
+              // lets add routes dynamically if the camel component doesn't return them
+              if (!_.some(routes, {"fileName": fileName})) {
+                routes.push({
+                  fileName: fileName,
+                  $fileLink: endpoint.$fileLink
+                });
+              }
             }
           });
+          if (!angular.isArray($scope.camelProject.routes) || !$scope.camelProject.routes.length) {
+            $scope.camelProject.routes = routes;
+          }
 
           log.info("Got data: " + angular.toJson($scope.camelProject, true));
         };
