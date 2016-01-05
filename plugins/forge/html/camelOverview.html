@@ -62,7 +62,7 @@
               <a class="btn btn-default pull-right"
                  title="Create a new Endpoint for the selected Component"
                  ng-disabled="!componentTable.selectedItems.length"
-                 href="{{createEndpointLink}}"><i class="fa fa-plus"></i> Create Endpoint</a>
+                 ng-click="createEndpointForComponent()"><i class="fa fa-plus"></i> Create Endpoint</a>
               <span class="pull-right">&nbsp;</span>
               <a class="btn btn-default pull-right"
                  title="Add a new kind of Component to the project"

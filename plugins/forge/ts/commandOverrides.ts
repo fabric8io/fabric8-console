@@ -56,18 +56,29 @@ module Forge {
         };
       }
     } else if (commandId === "camel-add-endpoint") {
+      var componentNameProperty = properties.componentName || {};
+      convertToStringArray(componentNameProperty.enum, "label");
+
       var current = entity.componentName;
       if (angular.isString(current)) {
         var componentName = properties.componentName;
         if (componentName) {
-          var components = componentName.enum;
-          if (components) {
-            angular.forEach(components, (component) => {
-              var scheme = component.scheme || component.label;
-              if (scheme && scheme === current) {
-                entity.componentName = component;
-              }
-            });
+          if (!entity.componentName) {
+            entity.componentName = componentName;
+          }
+        }
+      }
+    }
+  }
+
+  function convertToStringArray(array, propertyName = "value") {
+    if (angular.isArray(array)) {
+      for (var i = 0, size = array.length; i < size; i++) {
+        var value = array[i];
+        if (!angular.isString(value) && angular.isObject(value)) {
+          var textValue = value[propertyName];
+          if (textValue) {
+            array[i] = textValue;
           }
         }
       }

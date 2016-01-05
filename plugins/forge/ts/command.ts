@@ -364,7 +364,7 @@ module Forge {
               // lets convert the value to a string
               var textValue = value.label || value.id || value.name || value.$id || value._key;
               log.info("Converting property " + key + " to value " + textValue + " for selection: " + angular.toJson(value));
-              if (value) {
+              if (textValue) {
                 value = textValue;
               }
             }

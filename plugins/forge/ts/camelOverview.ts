@@ -113,6 +113,19 @@ module Forge {
         }
       };
 
+      $scope.createEndpointForComponent = () => {
+        var selection = $scope.componentTable.selectedItems;
+        if (selection && selection.length) {
+          var component = selection[0];
+          var input = {
+            componentName: component.scheme
+          };
+          gotoCommand($location, projectId, "camel-add-endpoint", resourcePath, input, 1);
+        } else {
+          log.warn("No component selected!");
+        }
+      };
+
       $scope.$on('$routeUpdate', ($event) => {
         updateData();
       });
