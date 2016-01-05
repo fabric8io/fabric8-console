@@ -1,4 +1,5 @@
 /// <reference path="d.ts/includes.d.ts"/>
+/// <reference path="d.ts/angular2/ts/app.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgeHelpers.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgePlugin.d.ts"/>
 /// <reference path="d.ts/forge/ts/archetypePicker.d.ts"/>
