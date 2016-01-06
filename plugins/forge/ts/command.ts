@@ -37,11 +37,9 @@ module Forge {
         }
 
         $scope.$completeLink = $scope.$projectLink;
-        if ($scope.projectId) {
-
-        }
         $scope.commandsLink = commandsLink($scope.resourcePath, $scope.projectId);
-        $scope.completedLink = $scope.projectId ? UrlHelpers.join($scope.$projectLink, "environments") : $scope.$projectLink;
+        //$scope.completedLink = $scope.projectId ? UrlHelpers.join($scope.$projectLink, "environments") : $scope.$projectLink;
+        $scope.completedLink = $scope.$completeLink;
 
         $scope.entity = {
         };

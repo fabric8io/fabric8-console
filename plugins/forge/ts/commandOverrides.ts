@@ -61,12 +61,13 @@ module Forge {
 
       var current = entity.componentName;
       if (angular.isString(current)) {
-        var componentName = properties.componentName;
-        if (componentName) {
-          if (!entity.componentName) {
-            entity.componentName = componentName;
+        // lets hide some fields
+        angular.forEach(["componentNameFilter", "componentName"], (propertyName) => {
+          var property = properties[propertyName];
+          if (property) {
+            property.hidden = true;
           }
-        }
+        })
       }
     }
   }
