@@ -40,7 +40,7 @@ module Forge {
       if (pipeline) {
         pipeline.formTemplate = $templateCache.get("devOpsPipelineChooser.html");
       }
-    } else if (commandId === "camel-edit-endpoint") {
+    } else if (commandId === "camel-edit-endpoint" || commandId === "camel-edit-endpoint-xml") {
       var endpoints = properties.endpoints;
       if (endpoints) {
         // remove the first dummy select value
@@ -55,7 +55,7 @@ module Forge {
           }
         };
       }
-    } else if (commandId === "camel-add-endpoint") {
+    } else if (commandId === "camel-add-endpoint" || commandId === "camel-add-endpoint-xml") {
       var componentNameProperty = properties.componentName || {};
       convertToStringArray(componentNameProperty.enum, "label");
 

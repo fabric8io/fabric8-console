@@ -109,7 +109,12 @@ module Forge {
           var input = {
             endpoints: endpoint.endpointUri
           };
-          gotoCommand($location, projectId, "camel-edit-endpoint", resourcePath, input, 2);
+          var commandId = "camel-edit-endpoint";
+          var fileName = endpoint.fileName || "";
+          if (fileName.endsWith(".xml")) {
+            commandId = "camel-edit-endpoint-xml";
+          }
+          gotoCommand($location, projectId, commandId, resourcePath, input, 2);
         }
       };
 
@@ -120,7 +125,11 @@ module Forge {
           var input = {
             componentName: component.scheme
           };
-          gotoCommand($location, projectId, "camel-add-endpoint", resourcePath, input, 1);
+          var commandId = "camel-add-endpoint";
+          if (isXmlProject()) {
+            commandId = "camel-add-endpoint-xml";
+          }
+          gotoCommand($location, projectId, commandId, resourcePath, input, 1);
         } else {
           log.warn("No component selected!");
         }
@@ -129,6 +138,22 @@ module Forge {
       $scope.$on('$routeUpdate', ($event) => {
         updateData();
       });
+
+      function isXmlProject() {
+        var javaCount = 0;
+        var xmlCount = 0;
+        angular.forEach($scope.camelProject.routes, (route) => {
+          var fileName = route.fileName;
+          if (fileName) {
+            if (fileName.toLowerCase().endsWith(".xml")) {
+              xmlCount++;
+            } else {
+              javaCount++;
+            }
+          }
+        });
+        return xmlCount || !javaCount;
+      }
 
       updateData();
 
@@ -154,7 +179,7 @@ module Forge {
               if (fileName.endsWith(".xml")) {
                 prefix = "src/main/resources";
                 var pageId = UrlHelpers.join(prefix, fileName);
-                endpoint.$fileLink = Wiki.customEditLink($scope, pageId, $location, "camel/properties");
+                endpoint.$fileLink = Wiki.customEditLink($scope, pageId, $location, "camel/canvas");
               } else {
                 var pageId = UrlHelpers.join(prefix, fileName);
                 endpoint.$fileLink = Wiki.editLink($scope, pageId, $location);
