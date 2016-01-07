@@ -129,14 +129,48 @@
       <p class="bg-danger">{{validationError}}</p>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-12">
-      <div ng-hide="fetched">
+  <div ng-hide="fetched">
+    <div class="row">
+      <div class="col-md-12">
         <div class="align-center">
           <i class="fa fa-spinner fa-spin"></i>
         </div>
       </div>
-      <div ng-show="fetched && !wizardCompleted">
+    </div>
+  </div>
+  <div ng-show="fetched && !wizardCompleted">
+
+    <div ng-show="id == 'devops-edit' && $projectLink && !schema.properties.pipeline && schema.properties.chatRoom">
+      <div class="row forge-form-top-padding">
+        <div class="col-md-12">
+          <form class="hawtio-form-2 form-horizontal">
+            <fieldset>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Pipeline</label>
+                <div class="col-sm-10">
+                  <a href="{{$projectLink}}/wiki/view/Jenkinsfile"
+                     class="btn btn-lg btn-default"
+                     title="View the Jenkins Workflow definition">
+                    <img class="menu-icon" src="/img/jenkins-icon.svg">&nbsp;
+                    View Jenkins Workflow
+                  </a>
+                  &nbsp;
+                  <a href="{{$projectLink}}/wiki/branch/master/edit/Jenkinsfile"
+                     class="btn btn-lg btn-primary"
+                     title="Edit the Jenkins Workflow">
+                    <i class="fa fa-edit"></i>&nbsp;
+                    Edit
+                  </a>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
         <div hawtio-form-2="schema" entity='entity' name="forge"></div>
       </div>
     </div>

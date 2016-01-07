@@ -43,6 +43,10 @@
   margin-top: 10px;
 }
 
+.row.forge-form-top-padding {
+  margin-top: 20px;
+}
+
 .createProjectPage {
   padding-top: 40px;
 }
