@@ -138,11 +138,11 @@ module Forge {
           log.info("About to post to " + url + " payload: " + angular.toJson(request));
           $http.post(url, request, createHttpConfig()).
             success(function (data, status, headers, config) {
-              $scope.executing = false;
+            try {
               $scope.invalid = false;
               $scope.validationError = null;
 
-            if (data) {
+              if (data) {
                 data.message = data.message || data.output;
                 var wizardResults = data.wizardResults;
                 if (wizardResults) {
@@ -214,7 +214,7 @@ module Forge {
                   // lets forward to the devops edit page
                   // lets set the secret name if its null
                   if (!getProjectSourceSecret(localStorage, $scope.namespace, projectId)) {
-                    var defaultSecretName = getProjectSourceSecret(localStorage, $scope.namespace,  null);
+                    var defaultSecretName = getProjectSourceSecret(localStorage, $scope.namespace, null);
                     setProjectSourceSecret(localStorage, $scope.namespace, projectId, defaultSecretName);
                   }
                   var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit");
@@ -223,8 +223,12 @@ module Forge {
                   $location.path(editPath);
                 }
               }
-              $scope.startup = false;
-              Core.$apply($scope);
+            } catch (e) {
+              log.error("Failed to process execute() results: " + e, e);
+            }
+            $scope.startup = false;
+            $scope.executing = false;
+            Core.$apply($scope);
             }).
             error(function (data, status, headers, config) {
               $scope.executing = false;
@@ -256,7 +260,7 @@ module Forge {
         }
 
         function validate() {
-          if ($scope.executing || $scope.validating) {
+          if ($scope.wizardCompleted || $scope.executing || $scope.validating) {
             return;
           }
           var newJson = angular.toJson($scope.entity);
@@ -285,8 +289,8 @@ module Forge {
           $scope.validating = true;
           $http.post(url, request, createHttpConfig()).
             success(function (data, status, headers, config) {
-              this.validation = data;
-              //console.log("got validation " + angular.toJson(data, true));
+              $scope.validation = data;
+              console.log("got validation " + angular.toJson(data, true));
               var wizardResults = data.wizardResults;
               if (wizardResults) {
                 var stepInputs = wizardResults.stepInputs;
