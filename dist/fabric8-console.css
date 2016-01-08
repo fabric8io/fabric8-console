@@ -33,6 +33,33 @@
   margin-top: inherit;
 }
 
+.camel-node-list {
+  padding: 5px;
+  margin: 5px;
+}
+.camel-node {
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: lightgrey;
+  border: 5px;
+  border-color: black;
+  vertical-align: middle;
+  margin: 5px 10px;
+  padding: 5px;
+  display: inline-block;
+}
+.camel-node.camelContext {
+  background: lightgreen;
+}
+.camel-node.route {
+  background: lightsalmon;
+}
+.camel-node.from,
+.camel-node.to,
+.camel-node.log {
+  background: lightblue;
+}
+
 .camel-tabs .nav-tabs {
   margin-top: 10px;
 }

@@ -30,6 +30,18 @@
     <div class="camel-tabs">
       <tabset>
         <tab heading="Routes">
+
+          <div ng-controller="Forge.CamelRoutesController">
+            <div class="camel-node-list">
+              <div ng-repeat="node in contexts | filter:filterContexts track by $index"
+                  ng-include="'plugins/forge/html/camelNode.html'">
+              </div>
+            </div>
+          </div>
+
+        </tab>
+
+        <tab heading="Route Builders">
           <div class="row select-table-filter">
             <div class="col-md-12">
               <hawtio-filter ng-show="camelProject.routes.length > 1"

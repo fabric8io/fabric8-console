@@ -33,6 +33,7 @@ module Forge {
     angular.forEach(['/workspaces/:namespace/projects/:project/forge'], (path) => {
       $routeProvider
         .when(UrlHelpers.join(path, '/camelOverview'), route('camelOverview.html', false))
+        .when(UrlHelpers.join(path, '/camelRoutes'), route('camelRoutes.html', false))
         .when(UrlHelpers.join(path, '/camelAddComponent'), route('camelAddComponent.html', false))
         .when(UrlHelpers.join(path, '/camelAddEndpoint'), route('camelAddEndpoint.html', false));
     });

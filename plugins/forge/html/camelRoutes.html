@@ -1,0 +1,30 @@
+<div ng-controller="Forge.CamelRoutesController">
+  <div class="row">
+    <div hawtio-breadcrumbs></div>
+  </div>
+
+  <div class="row">
+    <div hawtio-tabs></div>
+  </div>
+
+  <div ng-hide="fetched">
+    <div class="row select-table-filter">
+      <div class="col-md-12">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div ng-show="fetched">
+    <div ng-controller="Forge.CamelRoutesController">
+      <div class="camel-node-list">
+        <div ng-repeat="node in contexts | filter:filterContexts track by $index"
+            ng-include="'plugins/forge/html/camelNode.html'">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

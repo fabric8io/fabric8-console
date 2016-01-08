@@ -1,0 +1,11 @@
+<div class="camel-node-container" ng-controller="Forge.CamelNodeController">
+  <div class="camel-node {{pattern}}" title="{{description}}">
+    {{label}}
+  </div>
+  <div class="camel-node-list"
+      ng-show="node.children.length">
+    <div ng-repeat="node in node.children | filter:filterContexts track by $index"
+      ng-include="'plugins/forge/html/camelNode.html'">
+    </div>
+  </div>
+</div>
