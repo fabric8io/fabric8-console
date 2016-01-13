@@ -1,11 +1,9 @@
 /// <reference path="d.ts/includes.d.ts"/>
 /// <reference path="d.ts/angular2/ts/angular2Exports.d.ts"/>
 /// <reference path="d.ts/angular2/ts/angular2Helpers.d.ts"/>
-/// <reference path="d.ts/angular2/ts/angular1ViewShim.d.ts"/>
+/// <reference path="d.ts/angular2/ts/angular2Plugin.d.ts"/>
 /// <reference path="d.ts/angular2/ts/angular2Test.d.ts"/>
 /// <reference path="d.ts/angular2/ts/rootComponent.d.ts"/>
-/// <reference path="d.ts/angular2/ts/angular2Plugin.d.ts"/>
-/// <reference path="d.ts/angular2/ts/shims.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgeHelpers.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgePlugin.d.ts"/>
 /// <reference path="d.ts/forge/ts/archetypePicker.d.ts"/>

@@ -1,29 +1,27 @@
 
 /// <reference path="angular2Exports.ts"/>
-/// <reference path="rootComponent.ts"/>
+/// <reference path="angular2Helpers.ts"/>
 
 module Angular2Core {
 
   export var _module = angular.module(pluginName, []);
 
-  export var bootstrap = new Promise((resolve, reject) => {
-    log.debug("Bootstrapping angular2");
-    log.debug("ng: ", ng);
-    ng.platform.browser.bootstrap(RootComponent, [].concat(ng.router.ROUTER_PROVIDERS)).then((ref) => {
-      resolve(ref);
-    });
-
-  });
-
-  hawtioPluginLoader.registerPreBootstrapTask({
-    name: 'angular2-bootstrap',
-    task: (next) => {
-      bootstrap.then((ref) => {
-        log.debug("Angular 2 bootstrapped, root component: ", ref);
-        next();
-      });
+  hawtioPluginLoader.registerPreBootstrapTask((next) => {
+    if (HawtioCore.UpgradeAdapter) {
+      log.debug("Adding HTTP and Router providers");
+      HawtioCore.UpgradeAdapter.addProvider(ng.http.HTTP_PROVIDERS);
+      HawtioCore.UpgradeAdapter.addProvider(ng.router.ROUTER_PROVIDERS);
     }
+    next();
   });
+
+  /*
+  hawtioPluginLoader.registerPreBootstrapTask((next) => {
+    ng.router.ROUTER_DIRECTIVES.forEach((directive) => {
+      _module.directive(_.camelCase(directive.name), HawtioCore.UpgradeAdapter.downgradeNg2Component(directive));
+    });
+  });
+  */
 
   hawtioPluginLoader.addModule(pluginName);
 
