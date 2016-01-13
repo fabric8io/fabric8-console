@@ -1,11 +1,32 @@
 <div class="camel-node-container" ng-controller="Forge.CamelNodeController">
   <div class="camel-node {{pattern}}" title="{{description}}">
-    {{label}}
+    <span class="dropdown">
+      <a href="" class="dropdown-toggle" data-toggle="dropdown">
+        {{label}}
+      </a>
+      <ul class="dropdown-menu">
+        <li ng-show="addRouteEnabled">
+          <a ng-click="addRoute()" title="Add new route"
+             data-placement="bottom">
+            <i class="fa fa-plus"></i> Add Route</a>
+        </li>
+        <li ng-show="editLink">
+          <a ng-href="{{editLink}}" title="Edit this node"
+             data-placement="bottom">
+            <i class="fa fa-file-o"></i> Edit</a>
+        </li>
+        <li>
+          <a ng-click="deletePrompt()" title="Delete this node"
+             data-placement="bottom">
+            <i class="fa fa-remove"></i> Delete</a>
+        </li>
+      </ul>
+    </span>
   </div>
   <div class="camel-node-list"
-      ng-show="node.children.length">
+       ng-show="node.children.length">
     <div ng-repeat="node in node.children | filter:filterContexts track by $index"
-      ng-include="'plugins/forge/html/camelNode.html'">
+         ng-include="'plugins/forge/html/camelNode.html'">
     </div>
   </div>
 </div>

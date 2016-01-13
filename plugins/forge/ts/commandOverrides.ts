@@ -69,6 +69,11 @@ module Forge {
           }
         })
       }
+    } else if (commandId.startsWith("camel-")) {
+      var componentNameProperty = properties.componentName;
+      if (componentNameProperty) {
+        convertToStringArray(componentNameProperty.enum, "label");
+      }
     }
   }
 
