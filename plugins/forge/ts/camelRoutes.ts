@@ -17,6 +17,8 @@ module Forge {
 
       updateData();
 
+      $scope.updateData = updateData;
+
       function updateData() {
         var commandId = $scope.id;
         var projectId = $scope.projectId;
@@ -40,7 +42,9 @@ module Forge {
             }
 */
           });
-          log.info("Got data: " + angular.toJson($scope.contexts, true));
+          //log.info("Got data: " + angular.toJson($scope.contexts, true));
+          log.info("Updated the camel routes");
+          Core.$apply($scope);
         };
         executeCommand($scope, $http, ForgeApiURL, commandId, projectId, request, onData);
       }

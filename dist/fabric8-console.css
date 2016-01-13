@@ -52,6 +52,11 @@
 .camel-node.camelContext {
   background: lightgreen;
 }
+img.camel-icon {
+  width: 24px;
+  height: 24px;
+  padding-right: 5px;
+}
 .camel-node a {
   color: black;
 }

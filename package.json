@@ -15,6 +15,7 @@
     "gulp-concat-filenames": "^1.0.0",
     "gulp-debug": "^2.0.1",
     "gulp-dedupe": "0.0.2",
+    "gulp-file": "^0.2.0",
     "gulp-filter": "^3.0.1",
     "gulp-flatten": "^0.2.0",
     "gulp-foreach": "^0.1.0",

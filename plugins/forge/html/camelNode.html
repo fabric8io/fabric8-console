@@ -1,6 +1,7 @@
 <div class="camel-node-container" ng-controller="Forge.CamelNodeController">
   <div class="camel-node {{pattern}}" title="{{description}}">
     <span class="dropdown">
+      <img ng-show="icon" src="{{icon}}" class="camel-icon"/>
       <a href="" class="dropdown-toggle" data-toggle="dropdown">
         {{label}}
       </a>

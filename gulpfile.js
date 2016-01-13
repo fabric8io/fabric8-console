@@ -13,7 +13,9 @@ var gulp = require('gulp'),
     del = require('del'),
     vinylPaths = require('vinyl-paths'),
     stringifyObject = require('stringify-object'),
-    del = require('del');
+    del = require('del'),
+    file = require('gulp-file'),
+    foreach = require('gulp-foreach');
 
 var plugins = gulpLoadPlugins({});
 var pkg = require('./package.json');
@@ -83,6 +85,37 @@ gulp.task('example-tsc', ['tsc'], function() {
     return tsResult.js
         .pipe(plugins.concat('test-compiled.js'))
         .pipe(gulp.dest('.'));
+});
+
+gulp.task('camel-icons', function () {
+  var code = '/// <reference path="../../includes.ts"/>\n' +
+          '  /// <reference path="forgeHelpers.ts"/>\n' +
+          '\n' +
+          '  module Forge {\n\n' +
+          '    export var camelIcons = loadCamelIcons();\n\n' +
+          '    function loadCamelIcons() {\n' +
+          '      var answer = {};';
+
+  var fs = require('fs');
+
+  fs.readdir('libs/hawtio-integration/img/icons/camel/', function (err, files) {
+    if (err) throw err;
+    files.forEach(function (file) {
+      if (file.endsWith(".png")) {
+        code = code + "\n      answer = addCamelIcon(answer, '" + file + "');";
+      }
+    });
+
+    code = code + "\n      return answer;\n  }\n\n}\n";
+
+    var fileName = 'plugins/forge/ts/camelIcons.ts';
+    fs.writeFile(fileName, code, function (err) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log("Generated: " + fileName);
+    });
+  });
 });
 
 gulp.task('example-template', ['example-tsc'], function() {

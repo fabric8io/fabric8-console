@@ -89,7 +89,7 @@ module Forge {
               component.$tagsText = tags.join(",");
             }
           });
-          log.info("Got data: " + angular.toJson($scope.camelComponents, true));
+          //log.info("Got data: " + angular.toJson($scope.camelComponents, true));
         };
         executeCommand($scope, $http, ForgeApiURL, commandId, projectId, request, onData);
       }

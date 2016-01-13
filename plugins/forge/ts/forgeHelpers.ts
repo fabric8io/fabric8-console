@@ -261,7 +261,7 @@ module Forge {
   /**
    * Executes a simple forge command that expects JSON results
    */
-  export function executeCommand($scope, $http, ForgeApiURL, commandId, projectId, request, onData) {
+  export function executeCommand($scope, $http, ForgeApiURL, commandId, projectId, request, onData, json = true) {
     var url = executeCommandApiUrl(ForgeApiURL, commandId);
     url = createHttpUrl(projectId, url);
     log.info("About to post to " + url + " payload: " + angular.toJson(request));
@@ -272,7 +272,7 @@ module Forge {
           var message = data.message;
           if (message) {
             try {
-              var jsonData = angular.fromJson(message);
+              var jsonData = json ? angular.fromJson(message) : message;
               if (angular.isFunction(onData)) {
                 onData(jsonData);
               } else {
@@ -307,5 +307,13 @@ module Forge {
     if (pageNumber) {
       $location.search("_page", pageNumber);
     }
+  }
+
+  export function addCamelIcon(map, fileName) {
+    var postfix = "24.png";
+    if (angular.isString(fileName) && fileName.endsWith(postfix)) {
+      map[fileName.substring(0, fileName.length - postfix.length)] = "/img/icons/camel/" + fileName;
+    }
+    return map;
   }
 }

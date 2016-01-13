@@ -155,6 +155,8 @@ module Forge {
         return xmlCount || !javaCount;
       }
 
+      $scope.updateData = updateData;
+
       updateData();
 
       function updateData() {
@@ -204,8 +206,9 @@ module Forge {
           if (!angular.isArray($scope.camelProject.routes) || !$scope.camelProject.routes.length) {
             $scope.camelProject.routes = routes;
           }
-
-          log.info("Got data: " + angular.toJson($scope.camelProject, true));
+          log.info("loaded the camel project");
+          Core.$apply($scope);
+          //log.info("Got data: " + angular.toJson($scope.camelProject, true));
         };
         executeCommand($scope, $http, ForgeApiURL, commandId, projectId, request, onData);
       }

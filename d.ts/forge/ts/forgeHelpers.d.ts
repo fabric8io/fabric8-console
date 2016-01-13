@@ -34,6 +34,7 @@ declare module Forge {
     function commandMatchesText(command: any, filterText: any): any;
     function isSourceSecretDefinedForProject(ns: any, projectId: any): any;
     function redirectToSetupSecretsIfNotDefined($scope: any, $location: any): void;
-    function executeCommand($scope: any, $http: any, ForgeApiURL: any, commandId: any, projectId: any, request: any, onData: any): void;
+    function executeCommand($scope: any, $http: any, ForgeApiURL: any, commandId: any, projectId: any, request: any, onData: any, json?: boolean): void;
     function gotoCommand($location: any, projectId: any, commandId: any, resourcePath: any, input: any, pageNumber: any): void;
+    function addCamelIcon(map: any, fileName: any): any;
 }

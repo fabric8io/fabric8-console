@@ -1,0 +1,102 @@
+/// <reference path="../../includes.ts"/>
+  /// <reference path="forgeHelpers.ts"/>
+
+  module Forge {
+
+    export var camelIcons = loadCamelIcons();
+
+    function loadCamelIcons() {
+      var answer = {};
+      answer = addCamelIcon(answer, 'aggregate24.png');
+      answer = addCamelIcon(answer, 'bean24.png');
+      answer = addCamelIcon(answer, 'camel.png');
+      answer = addCamelIcon(answer, 'camel_context_icon.png');
+      answer = addCamelIcon(answer, 'camel_route.png');
+      answer = addCamelIcon(answer, 'camel_route_folder.png');
+      answer = addCamelIcon(answer, 'camel_tracing.png');
+      answer = addCamelIcon(answer, 'channel24.png');
+      answer = addCamelIcon(answer, 'channelAdapter24.png');
+      answer = addCamelIcon(answer, 'channelPurger24.png');
+      answer = addCamelIcon(answer, 'choice24.png');
+      answer = addCamelIcon(answer, 'commandMessage24.png');
+      answer = addCamelIcon(answer, 'competingConsumers24.png');
+      answer = addCamelIcon(answer, 'contentBasedRouter24.png');
+      answer = addCamelIcon(answer, 'contentFilter24.png');
+      answer = addCamelIcon(answer, 'controlBus24.png');
+      answer = addCamelIcon(answer, 'convertBodyTo24.png');
+      answer = addCamelIcon(answer, 'correlationIdentifier24.png');
+      answer = addCamelIcon(answer, 'datatypeChannel24.png');
+      answer = addCamelIcon(answer, 'deadLetterChannel24.png');
+      answer = addCamelIcon(answer, 'detour24.png');
+      answer = addCamelIcon(answer, 'distributionAggregate24.png');
+      answer = addCamelIcon(answer, 'documentMessage24.png');
+      answer = addCamelIcon(answer, 'durableSubscription24.png');
+      answer = addCamelIcon(answer, 'dynamicRouter24.png');
+      answer = addCamelIcon(answer, 'edit_camel_route.png');
+      answer = addCamelIcon(answer, 'encapsulatedSynchronous24.png');
+      answer = addCamelIcon(answer, 'endoints.png');
+      answer = addCamelIcon(answer, 'endpoint24.png');
+      answer = addCamelIcon(answer, 'endpointDrools24.png');
+      answer = addCamelIcon(answer, 'endpointFile24.png');
+      answer = addCamelIcon(answer, 'endpointFolder24.png');
+      answer = addCamelIcon(answer, 'endpointQueue24.png');
+      answer = addCamelIcon(answer, 'endpointRepository24.png');
+      answer = addCamelIcon(answer, 'endpointTimer24.png');
+      answer = addCamelIcon(answer, 'endpoint_folder.png');
+      answer = addCamelIcon(answer, 'endpoint_node.png');
+      answer = addCamelIcon(answer, 'enrich24.png');
+      answer = addCamelIcon(answer, 'envelopeWrapper24.png');
+      answer = addCamelIcon(answer, 'eventDrivenConsumer24.png');
+      answer = addCamelIcon(answer, 'eventMessage24.png');
+      answer = addCamelIcon(answer, 'fileTransfer24.png');
+      answer = addCamelIcon(answer, 'filter24.png');
+      answer = addCamelIcon(answer, 'flow24.png');
+      answer = addCamelIcon(answer, 'generic24.png');
+      answer = addCamelIcon(answer, 'guaranteedMessaging24.png');
+      answer = addCamelIcon(answer, 'idempotentConsumer24.png');
+      answer = addCamelIcon(answer, 'invalidMessageChannel24.png');
+      answer = addCamelIcon(answer, 'loadBalance24.png');
+      answer = addCamelIcon(answer, 'log24.png');
+      answer = addCamelIcon(answer, 'marshal24.png');
+      answer = addCamelIcon(answer, 'message24.png');
+      answer = addCamelIcon(answer, 'messageBroker24.png');
+      answer = addCamelIcon(answer, 'messageBus24.png');
+      answer = addCamelIcon(answer, 'messageDispatcher24.png');
+      answer = addCamelIcon(answer, 'messageExpiration24.png');
+      answer = addCamelIcon(answer, 'messageSelector24.png');
+      answer = addCamelIcon(answer, 'messageSequence24.png');
+      answer = addCamelIcon(answer, 'messageStore24.png');
+      answer = addCamelIcon(answer, 'messaging24.png');
+      answer = addCamelIcon(answer, 'messagingAdapter24.png');
+      answer = addCamelIcon(answer, 'messagingBridge24.png');
+      answer = addCamelIcon(answer, 'messagingGateway24.png');
+      answer = addCamelIcon(answer, 'multicast24.png');
+      answer = addCamelIcon(answer, 'node24.png');
+      answer = addCamelIcon(answer, 'normalizer24.png');
+      answer = addCamelIcon(answer, 'pipeline24.png');
+      answer = addCamelIcon(answer, 'pointToPoint24.png');
+      answer = addCamelIcon(answer, 'pollEnrich24.png');
+      answer = addCamelIcon(answer, 'pollingConsumer24.png');
+      answer = addCamelIcon(answer, 'process24.png');
+      answer = addCamelIcon(answer, 'processManager24.png');
+      answer = addCamelIcon(answer, 'processor24.png');
+      answer = addCamelIcon(answer, 'recipientList24.png');
+      answer = addCamelIcon(answer, 'requestReply24.png');
+      answer = addCamelIcon(answer, 'resequence24.png');
+      answer = addCamelIcon(answer, 'returnAddress24.png');
+      answer = addCamelIcon(answer, 'route24.png');
+      answer = addCamelIcon(answer, 'routingSlip24.png');
+      answer = addCamelIcon(answer, 'setBody24.png');
+      answer = addCamelIcon(answer, 'sharedDatabase24.png');
+      answer = addCamelIcon(answer, 'smartProxy24.png');
+      answer = addCamelIcon(answer, 'split24.png');
+      answer = addCamelIcon(answer, 'storeInLibrary24.png');
+      answer = addCamelIcon(answer, 'testMessage24.png');
+      answer = addCamelIcon(answer, 'transactionalClient24.png');
+      answer = addCamelIcon(answer, 'transform24.png');
+      answer = addCamelIcon(answer, 'unmarshal24.png');
+      answer = addCamelIcon(answer, 'wireTap24.png');
+      return answer;
+  }
+
+}

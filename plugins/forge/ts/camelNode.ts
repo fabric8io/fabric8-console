@@ -15,16 +15,27 @@ module Forge {
       var resourcePath = "";
 
       $scope.pattern = node.pattern;
+
+      var icon = camelIcons[$scope.pattern];
       $scope.label = node.label || $scope.pattern;
       $scope.description = node.description || $scope.pattern;
 
       switch ($scope.pattern) {
         case "camelContext":
           $scope.addRouteEnabled = true;
+          icon = "/img/icons/camel/camel.png";
+          break;
+        case "route":
+          icon = "/img/icons/camel/camel_route.png";
+          break;
+        case "from":
+        case "to":
+          icon = "/img/icons/camel/endpoint24.png";
           break;
         default:
           $scope.addRouteEnabled = false;
       }
+      $scope.icon = icon;
       $scope.editLink = "TODO";
 
       $scope.deletePrompt = () => {
@@ -61,10 +72,10 @@ module Forge {
           ]
         };
         var onData = (jsonData) => {
-          log.info("Deleted and got data: " + angular.toJson(jsonData, true));
+          log.info("Deleted and got data: " + jsonData);
           $scope.updateData();
         };
-        executeCommand($scope, $http, ForgeApiURL, commandId, projectId, request, onData);
+        executeCommand($scope, $http, ForgeApiURL, commandId, projectId, request, onData, false);
       }
 
       $scope.deleteNode = () => {

@@ -4,6 +4,7 @@
 /// <reference path="d.ts/forge/ts/archetypePicker.d.ts"/>
 /// <reference path="d.ts/forge/ts/secretHelpers.d.ts"/>
 /// <reference path="d.ts/forge/ts/camelAddComponent.d.ts"/>
+/// <reference path="d.ts/forge/ts/camelIcons.d.ts"/>
 /// <reference path="d.ts/forge/ts/camelNode.d.ts"/>
 /// <reference path="d.ts/forge/ts/camelOverview.d.ts"/>
 /// <reference path="d.ts/forge/ts/camelRoutes.d.ts"/>
