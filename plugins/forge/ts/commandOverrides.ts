@@ -55,7 +55,7 @@ module Forge {
           }
         };
       }
-    } else if (commandId === "camel-add-endpoint" || commandId === "camel-add-endpoint-xml") {
+    } else if (commandId === "camel-add-endpoint") {
       var componentNameProperty = properties.componentName || {};
       convertToStringArray(componentNameProperty.enum, "label");
 
@@ -69,7 +69,7 @@ module Forge {
           }
         })
       }
-    } else if (commandId === "camel-add-endpoint-node-xml") {
+    } else if (commandId === "camel-add-endpoint-xml" || commandId === "camel-edit-node-xml") {
       var componentNameProperty = properties.componentName || {};
       convertToStringArray(componentNameProperty.enum, "label");
 

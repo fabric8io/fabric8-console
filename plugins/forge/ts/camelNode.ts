@@ -42,8 +42,8 @@ module Forge {
         icon = "/img/icons/camel/generic24.png";
       }
       $scope.addEndpointEnabled = addEndpointEnabled;
+      $scope.editEnabled = true;
       $scope.icon = icon;
-      $scope.editLink = "TODO";
 
       $scope.deletePrompt = () => {
         UI.multiItemConfirmActionDialog(<UI.MultiItemConfirmActionOptions>{
@@ -95,12 +95,24 @@ module Forge {
         gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
       };
 
+      $scope.editNode = () => {
+        log.info("about to edit the node!");
+
+        var input = {
+          node: key,
+          xml: xml
+        };
+        var nextCommand = "camel-edit-node-xml";
+        var nextPage = 1;
+        gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
+      };
+
       $scope.addEndpointNode = () => {
         var input = {
           node: key,
           xml: xml
         };
-        var nextCommand = "camel-add-endpoint-node-xml";
+        var nextCommand = "camel-add-endpoint-xml";
         var nextPage = 1;
         gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
       };
