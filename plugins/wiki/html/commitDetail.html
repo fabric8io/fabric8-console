@@ -48,7 +48,7 @@
     </div>
   -->
 
-  <div class="row"  ng-show="commit">
+  <div class="row" ng-show="commit">
     <div class="col-md-12">
       <div class="commit-summary-panel">
         <p class="commit-history-message bg-info">{{commit.short_message}}</p>
@@ -56,7 +56,7 @@
     </div>
   </div>
 
-  <div class="row"  ng-show="commit">
+  <div class="row" ng-show="commit">
     <div class="col-md-12">
       <table class="commit-table">
         <tr class="commit-row">
@@ -73,6 +73,13 @@
           <td>
             commit
             <span class="commit-sha">{{commit.sha}}</span>
+          </td>
+          <td>
+            <a class="btn pull-right" href="" ng-click="revert()"
+               title="Revert to this version of the file">
+              <i class="fa fa-exchange"></i> Revert
+            </a>
+          </td>
         </tr>
       </table>
     </div>

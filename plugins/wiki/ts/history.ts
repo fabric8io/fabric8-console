@@ -23,7 +23,7 @@ module Wiki {
     $scope.gridOptions = {
       data: 'logs',
       showFilter: false,
-      enableRowClickSelection: false,
+      enableRowClickSelection: true,
       multiSelect: true,
       selectedItems: [],
       showSelectionCheckbox: true,

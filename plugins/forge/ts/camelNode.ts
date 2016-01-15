@@ -16,6 +16,7 @@ module Forge {
 
       $scope.pattern = node.pattern;
 
+      var addEndpointEnabled = true;
       var icon = camelIcons[$scope.pattern];
       $scope.label = node.label || $scope.pattern;
       $scope.description = node.description || $scope.pattern;
@@ -24,6 +25,7 @@ module Forge {
         case "camelContext":
           $scope.addRouteEnabled = true;
           icon = "/img/icons/camel/camel.png";
+           addEndpointEnabled = false;
           break;
         case "route":
           icon = "/img/icons/camel/camel_route.png";
@@ -31,10 +33,15 @@ module Forge {
         case "from":
         case "to":
           icon = "/img/icons/camel/endpoint24.png";
+          addEndpointEnabled = false;
           break;
         default:
           $scope.addRouteEnabled = false;
       }
+      if (!icon) {
+        icon = "/img/icons/camel/generic24.png";
+      }
+      $scope.addEndpointEnabled = addEndpointEnabled;
       $scope.icon = icon;
       $scope.editLink = "TODO";
 
@@ -84,6 +91,16 @@ module Forge {
           xml: xml
         };
         var nextCommand = "camel-delete-node-xml";
+        var nextPage = 1;
+        gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
+      };
+
+      $scope.addEndpointNode = () => {
+        var input = {
+          node: key,
+          xml: xml
+        };
+        var nextCommand = "camel-add-endpoint-node-xml";
         var nextPage = 1;
         gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
       };

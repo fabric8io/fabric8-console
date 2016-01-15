@@ -69,6 +69,17 @@ module Forge {
           }
         })
       }
+    } else if (commandId === "camel-add-endpoint-node-xml") {
+      var componentNameProperty = properties.componentName || {};
+      convertToStringArray(componentNameProperty.enum, "label");
+
+      // lets hide some fields
+      angular.forEach(["xml", "node"], (propertyName) => {
+        var property = properties[propertyName];
+        if (property && entity[propertyName]) {
+          property.hidden = true;
+        }
+      });
     } else if (commandId.startsWith("camel-")) {
       var componentNameProperty = properties.componentName;
       if (componentNameProperty) {

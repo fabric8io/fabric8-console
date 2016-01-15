@@ -11,6 +11,11 @@
              data-placement="bottom">
             <i class="fa fa-plus"></i> Add Route</a>
         </li>
+        <li ng-show="addEndpointEnabled">
+          <a ng-click="addEndpointNode()" title="Add new endpoint"
+             data-placement="bottom">
+            <i class="fa fa-plus"></i> Add Endpoint</a>
+        </li>
         <li ng-show="editLink">
           <a ng-href="{{editLink}}" title="Edit this node"
              data-placement="bottom">

@@ -39,15 +39,9 @@ module Wiki {
       }
     });
 
-
-    $scope.canRevert = () => {
-      return $scope.gridOptions.selectedItems.length === 1;
-    };
-
     $scope.revert = () => {
-      var selectedItems = $scope.gridOptions.selectedItems;
-      if (selectedItems.length > 0) {
-        var path = commitPath(selectedItems[0]);
+      if ($scope.commit) {
+        var path = commitPath($scope.commit);
         var objectId = $scope.commitId;
         if (path && objectId) {
           var commitMessage = "Reverting file " + $scope.pageId + " to previous version " + objectId;
@@ -61,7 +55,7 @@ module Wiki {
     };
 
     function commitPath(commit) {
-      return commit.path || commit.name;
+      return commit.path || commit.name || "/";
     }
 
     $scope.diff = () => {
