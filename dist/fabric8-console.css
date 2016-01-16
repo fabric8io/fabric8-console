@@ -50,10 +50,10 @@
   display: inline-block;
 }
 .camel-node.camelContext {
-  background: lightgreen;
+  background: burlywood;
 }
 img.camel-icon {
-  width: 24px;
+  width: 32px;
   height: 24px;
   padding-right: 5px;
 }
@@ -61,12 +61,23 @@ img.camel-icon {
   color: black;
 }
 .camel-node.route {
+  background: burlywood;
+}
+.camel-node.log {
+  background: lightblue;
+}
+.camel-node.transform {
   background: lightsalmon;
 }
 .camel-node.from,
-.camel-node.to,
-.camel-node.log {
-  background: lightblue;
+.camel-node.to {
+  background: white;
+}
+.camel-node.from img.camel-icon,
+.camel-node.to img.camel-icon {
+  width: 40px;
+  height: 24px;
+  padding-right: 5px;
 }
 
 .camel-tabs .nav-tabs {

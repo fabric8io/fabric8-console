@@ -24,16 +24,28 @@ module Forge {
       switch ($scope.pattern) {
         case "camelContext":
           $scope.addRouteEnabled = true;
-          icon = "/img/icons/camel/camel.png";
+          icon = "/img/icons/camel/camel_route_folder.png";
            addEndpointEnabled = false;
           break;
         case "route":
-          icon = "/img/icons/camel/camel_route.png";
+          icon = "/img/icons/camel/camel.png";
           break;
         case "from":
         case "to":
           icon = "/img/icons/camel/endpoint24.png";
           addEndpointEnabled = false;
+          var componentName = "";
+          var uri = node.properties.uri;
+          if (uri) {
+            var parts = uri.split(":");
+            if (parts && parts.length) {
+              componentName = parts[0];
+            }
+          }
+          icon = camelEndpointIcons[componentName];
+          if (!icon) {
+            icon =  camelEndpointIcons["core"] || "/img/icons/camel/endpoint24.png";
+          }
           break;
         default:
           $scope.addRouteEnabled = false;

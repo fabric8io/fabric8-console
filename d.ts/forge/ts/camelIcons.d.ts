@@ -2,4 +2,5 @@
 /// <reference path="forgeHelpers.d.ts" />
 declare module Forge {
     var camelIcons: {};
+    var camelEndpointIcons: {};
 }

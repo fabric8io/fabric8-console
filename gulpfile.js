@@ -93,6 +93,7 @@ gulp.task('camel-icons', function () {
           '\n' +
           '  module Forge {\n\n' +
           '    export var camelIcons = loadCamelIcons();\n\n' +
+          '    export var camelEndpointIcons = loadCamelEndpointIcons();\n\n' +
           '    function loadCamelIcons() {\n' +
           '      var answer = {};';
 
@@ -106,16 +107,32 @@ gulp.task('camel-icons', function () {
       }
     });
 
-    code = code + "\n      return answer;\n  }\n\n}\n";
+    code = code + "\n      return answer;\n  }\n\n";
 
-    var fileName = 'plugins/forge/ts/camelIcons.ts';
-    fs.writeFile(fileName, code, function (err) {
-      if (err) {
-        return console.log(err);
-      }
-      console.log("Generated: " + fileName);
+    code = code + "\n" +
+            '    function loadCamelEndpointIcons() {\n' +
+                      '      var answer = {};';
+
+    fs.readdir('img/icons/camel/', function (err, files) {
+      if (err) throw err;
+      files.forEach(function (file) {
+        if (file.endsWith(".png")) {
+          code = code + "\n      answer = addCamelEndpointIcon(answer, '" + file + "');";
+        }
+      });
+
+      code = code + "\n      return answer;\n  }\n\n}\n";
+
+      var fileName = 'plugins/forge/ts/camelIcons.ts';
+      fs.writeFile(fileName, code, function (err) {
+        if (err) {
+          return console.log(err);
+        }
+        console.log("Generated: " + fileName);
+      });
     });
   });
+
 });
 
 gulp.task('example-template', ['example-tsc'], function() {
