@@ -1,38 +1,23 @@
 <div class="camel-node-container" ng-controller="Forge.CamelNodeController">
   <div class="camel-node {{pattern}}" title="{{description}}">
-    <span class="dropdown">
-      <img ng-show="icon" src="{{icon}}" class="camel-icon"/>
-      <a href="" class="dropdown-toggle" data-toggle="dropdown">
-        {{label}}
-      </a>
-      <ul class="dropdown-menu">
-        <li ng-show="addRouteEnabled">
-          <a ng-click="addRoute()" title="Add new route"
-             data-placement="bottom">
-            <i class="fa fa-plus"></i> Add Route</a>
-        </li>
-        <li ng-show="addEndpointEnabled">
-          <a ng-click="addEndpointNode()" title="Add new endpoint"
-             data-placement="bottom">
-            <i class="fa fa-plus"></i> Add Endpoint</a>
-        </li>
-        <li ng-show="editEnabled">
-          <a ng-click="editNode()" title="Edit this node"
-             data-placement="bottom">
-            <i class="fa fa-file-o"></i> Edit</a>
-        </li>
-        <li>
-          <a ng-click="deletePrompt()" title="Delete this node"
-             data-placement="bottom">
-            <i class="fa fa-remove"></i> Delete</a>
-        </li>
-      </ul>
-    </span>
-  </div>
-  <div class="camel-node-list"
-       ng-show="node.children.length">
-    <div ng-repeat="node in node.children | filter:filterContexts track by $index"
-         ng-include="'plugins/forge/html/camelNode.html'">
+    <div ng-hide="node.children.length">
+      <div title="{{description}}">
+        <span ng-include="'plugins/forge/html/camelNodeMenu.html'"></span>
+      </div>
+    </div>
+    <div class="expandable opened" title="{{description}}" ng-show="node.children.length">
+      <span class="title">
+        <i class="expandable-indicator"></i>
+      </span>
+      &nbsp;
+      <span ng-include="'plugins/forge/html/camelNodeMenu.html'"></span>
+      <div class="expandable-body">
+        <div class="camel-node-list">
+          <div ng-repeat="node in node.children | filter:filterContexts track by $index"
+               ng-include="'plugins/forge/html/camelNode.html'">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

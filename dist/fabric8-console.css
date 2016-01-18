@@ -50,6 +50,9 @@
   display: inline-block;
 }
 .camel-node.camelContext {
+  /*
+  background: burlywood;
+  */
   background: white;
 }
 img.camel-icon {

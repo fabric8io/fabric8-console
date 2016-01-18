@@ -9,6 +9,13 @@ module Forge {
 
       var node = $scope.node || {};
       var key = node.key;
+      var children = node.children || [];
+
+      if (children.length) {
+        $scope.hasChildren = true;
+        $scope.expandClass = "expandable closed";
+        //$scope.expandClass = "expandable opened";
+      }
 
       // TODO make this visible in the parent scope!
       var xml = $scope.xml || "META-INF/spring/camel-context.xml";
