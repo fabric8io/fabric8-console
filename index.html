@@ -131,7 +131,7 @@
           }
 
           #main {
-            margin-top: 35px;
+            margin-top: 29px;
           }
         </style>
 
@@ -149,18 +149,20 @@
             User <b class="caret"></b>
           </a>
           <ul class="dropdown-menu" hawtio-extension name="hawtio-user">
-            <!--
-            <li>
-              <a href="#">Link</a>
-            </li>
-            -->
           </ul>
         </li>
       </ul>
     </nav>
 
+
     <div id="main" class="container-fluid ng-cloak" ng-controller="HawtioNav.ViewController">
-      <div ng-include src="viewPartial"></div>
+      <div class="row" style="margin-left: -20px; margin-right: -20px">
+        <div hawtio-main-outlet ng-class="getClass()">
+          <hawtio-breadcrumbs-outlet></hawtio-breadcrumbs-outlet>
+          <div ng-include src="viewPartial"></div>
+        </div>
+        <hawtio-tabs-outlet></hawtio-tabs-outlet>
+      </div>
     </div>
 
     <!-- add any scripts under dist/ here -->
