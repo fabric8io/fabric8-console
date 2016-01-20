@@ -767,6 +767,9 @@ module Wiki {
           case 'java':
             icon = "img/java.svg";
             break;
+          case 'go':
+            icon = "img/icons/gopher.png";
+            break;
           case 'png':
           case 'svg':
           case 'jpg':
