@@ -206,6 +206,7 @@
       answer = addCamelEndpointIcon(answer, 'camel-sap_500x400.png');
       answer = addCamelEndpointIcon(answer, 'camel-saxon_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-scalate_200x150.png');
+      answer = addCamelEndpointIcon(answer, 'camel-seda_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-servlet_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-servletlistener_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-sip_200x150.png');

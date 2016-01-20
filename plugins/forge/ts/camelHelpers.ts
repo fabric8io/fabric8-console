@@ -10,6 +10,13 @@ module Forge {
     }
     if (!icon) {
       switch (scheme) {
+        case "vm":
+        case "jms":
+        case "direct":
+        case "direct-vm":
+          scheme = "seda";
+          break;
+
         case "validator":
           scheme = "bean-validator";
           break;
