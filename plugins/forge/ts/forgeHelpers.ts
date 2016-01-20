@@ -309,20 +309,4 @@ module Forge {
     }
   }
 
-  export function addCamelIcon(map, fileName) {
-    var postfix = "24.png";
-    if (angular.isString(fileName) && fileName.endsWith(postfix)) {
-      map[fileName.substring(0, fileName.length - postfix.length)] = "/img/icons/camel/" + fileName;
-    }
-    return map;
-  }
-
-  export function addCamelEndpointIcon(map, fileName) {
-    var prefix = "camel-";
-    var postfix = "_200x150.png";
-    if (angular.isString(fileName) && fileName.endsWith(postfix) && fileName.startsWith(prefix)) {
-      map[fileName.substring(prefix.length, fileName.length - postfix.length)] = "/img/icons/camel/" + fileName;
-    }
-    return map;
-  }
 }

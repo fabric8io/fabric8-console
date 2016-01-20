@@ -19,17 +19,22 @@
 
 
   <div ng-show="fetched">
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Camel Components</h2>
+    <div class="row camel-component-filter">
+      <div class="col-md-4">
+        <h3>Camel Components</h3>
       </div>
-    </div>
-    <div class="row select-table-filter">
-      <div class="col-md-12">
-        <hawtio-filter ng-show="camelComponents.length > 1"
-                       ng-model="tableConfig.filterOptions.filterText"
-                       css-class="input-xxlarge"
-                       placeholder="Filter components..."></hawtio-filter>
+      <div class="col-md-4">
+        <div class="center-block">
+          <label class="control-label" for="tagFilter">Filter: </label>&nbsp;
+          <select id="tagFilter" name="singleSelect" ng-model="filter"
+                  ng-options="tag for tag in tags"/>
+          &nbsp;
+          <button type="button" class="close" aria-label="Close" ng-click="filter = null">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-4">
         <a class="btn btn-primary pull-right"
            title="Add the selected component to the project"
            ng-disabled="!tileConfig.selectedItems.length"

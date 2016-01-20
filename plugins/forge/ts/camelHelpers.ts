@@ -10,13 +10,32 @@ module Forge {
     }
     if (!icon) {
       switch (scheme) {
+        case "validator":
+          scheme = "bean-validator";
+          break;
+
+        case "xslt":
+          scheme = "xmlrpc";
+          break;
+
         case "scheduler":
           scheme = "timer";
           break;
 
         case "rest":
         case "rest-api":
+        case "cxfrs":
           scheme = "http";
+          break;
+
+        case "aws-ddb":
+        case "aws-sdb":
+        case "cql":
+        case "elsql":
+        case "gora":
+        case "krati":
+        case "pgevent":
+          scheme = "sql";
           break;
       }
       icon = camelEndpointIcons[scheme];
@@ -25,5 +44,26 @@ module Forge {
       icon = camelEndpointIcons["core"] || "/img/icons/camel/endpoint24.png";
     }
     return icon;
+  }
+
+
+  export function addCamelIcon(map, fileName) {
+    var postfix = "24.png";
+    if (angular.isString(fileName) && fileName.endsWith(postfix)) {
+      map[fileName.substring(0, fileName.length - postfix.length)] = "/img/icons/camel/" + fileName;
+    }
+    return map;
+  }
+
+  export function addCamelEndpointIcon(map, fileName) {
+    var prefix = "camel-";
+    if (angular.isString(fileName) && fileName.startsWith(prefix)) {
+      angular.forEach(["_200x150.png", ".svg"], (postfix) => {
+        if (fileName.endsWith(postfix)) {
+          map[fileName.substring(prefix.length, fileName.length - postfix.length)] = "/img/icons/camel/" + fileName;
+        }
+      });
+    }
+    return map;
   }
 }

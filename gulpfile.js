@@ -116,7 +116,7 @@ gulp.task('camel-icons', function () {
     fs.readdir('img/icons/camel/', function (err, files) {
       if (err) throw err;
       files.forEach(function (file) {
-        if (file.endsWith(".png")) {
+        if (file.endsWith(".png") || file.endsWith(".svg") || file.endsWith(".jpg")) {
           code = code + "\n      answer = addCamelEndpointIcon(answer, '" + file + "');";
         }
       });

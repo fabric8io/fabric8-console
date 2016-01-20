@@ -104,6 +104,15 @@ img.camel-icon {
 */
   margin-top: 10px;
 }
+.camel-component-filter {
+  margin-top: 20px;
+}
+.camel-component-filter h3 {
+  margin: 0px;
+}
+.camel-component-filter .close {
+  float: none;
+}
 
 .row.forge-form-top-padding {
   margin-top: 20px;

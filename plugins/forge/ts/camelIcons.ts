@@ -112,6 +112,7 @@
       answer = addCamelEndpointIcon(answer, 'camel-avro_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-aws_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-bean-validator_200x150.png');
+      answer = addCamelEndpointIcon(answer, 'camel-bean.svg');
       answer = addCamelEndpointIcon(answer, 'camel-box_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-cache_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-cmis_200x150.png');
@@ -212,6 +213,7 @@
       answer = addCamelEndpointIcon(answer, 'camel-smpp_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-snmp_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-solr_200x150.png');
+      answer = addCamelEndpointIcon(answer, 'camel-spark-rest_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-spring-batch_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-spring-integration_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-spring-ldap_200x150.png');

@@ -22,6 +22,9 @@ module Forge {
         multiSelect: false
       };
 
+
+      $scope.$watch("filter", updateFilter);
+
       $scope.addComponent = () => {
         var selection = $scope.tileConfig.selectedItems;
         if (selection && selection.length) {
@@ -48,6 +51,23 @@ module Forge {
 
       updateData();
 
+      function updateFilter() {
+        var components = $scope.camelAllComponents;
+        var filter = $scope.filter;
+        if (filter) {
+          components = [];
+          angular.forEach($scope.camelAllComponents, (component) => {
+            var tags = component.tags;
+            //if (tags && _.indexOf(tags, filter) >= 0) {
+            if (tags && tags.indexOf(filter) >= 0) {
+              components.push(component);
+            }
+          });
+        }
+        $scope.camelComponents = components;
+        Core.$apply($scope);
+      }
+
       function updateData() {
         var commandId = $scope.id;
         var projectId = $scope.projectId;
@@ -63,15 +83,22 @@ module Forge {
           ]
         };
         var onData = (jsonData) => {
-          $scope.camelComponents = angular.fromJson(jsonData);
-          angular.forEach($scope.camelComponents, (component) => {
+          $scope.camelAllComponents = angular.fromJson(jsonData);
+          var tagMap = {};
+          angular.forEach($scope.camelAllComponents, (component) => {
             var tags = component.tags;
             if (tags) {
               component.$icon = getCamelComponentIconUrl(component.scheme);
+              angular.forEach(tags, (tag) => {
+                tagMap[tag] = tag;
+              })
               component.$tagsText = tags.join(",");
             }
           });
+          $scope.tags = _.keys(tagMap).sort();
+
           //log.info("Got data: " + angular.toJson($scope.camelComponents, true));
+          updateFilter();
         };
         executeCommand($scope, $http, ForgeApiURL, commandId, projectId, request, onData);
       }
