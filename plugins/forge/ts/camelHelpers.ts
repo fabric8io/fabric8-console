@@ -10,10 +10,12 @@ module Forge {
     }
     if (!icon) {
       switch (scheme) {
-        case "vm":
-        case "jms":
+        case "aws-sqs":
         case "direct":
         case "direct-vm":
+        case "jms":
+        case "sjms":
+        case "vm":
           scheme = "seda";
           break;
 
@@ -22,6 +24,7 @@ module Forge {
           break;
 
         case "xslt":
+        case "xquery":
           scheme = "xmlrpc";
           break;
 
