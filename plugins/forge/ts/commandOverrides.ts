@@ -56,8 +56,7 @@ module Forge {
         };
       }
     } else if (commandId === "camel-add-endpoint") {
-      var componentNameProperty = properties.componentName || {};
-      convertToStringArray(componentNameProperty.enum, "label");
+      configureCamelComponentName(properties, $templateCache);
 
       var current = entity.componentName;
       if (angular.isString(current)) {
@@ -69,9 +68,25 @@ module Forge {
           }
         })
       }
-    } else if (commandId === "camel-add-endpoint-xml" || commandId === "camel-edit-node-xml") {
+    } else if (commandId === "camel-add-endpoint-xml") {
+      configureCamelComponentName(properties, $templateCache);
+
+
+      // lets hide some fields
+      angular.forEach(["xml", "node"], (propertyName) => {
+        var property = properties[propertyName];
+        if (property && entity[propertyName]) {
+          property.hidden = true;
+        }
+      });
+    } else if (commandId === "camel-edit-node-xml") {
       var componentNameProperty = properties.componentName || {};
+/*
       convertToStringArray(componentNameProperty.enum, "label");
+*/
+
+      componentNameProperty.formTemplate = $templateCache.get("camelComponentChooser.html");
+
 
       // lets hide some fields
       angular.forEach(["xml", "node"], (propertyName) => {
@@ -81,11 +96,15 @@ module Forge {
         }
       });
     } else if (commandId.startsWith("camel-")) {
-      var componentNameProperty = properties.componentName;
-      if (componentNameProperty) {
-        convertToStringArray(componentNameProperty.enum, "label");
-      }
+      configureCamelComponentName(properties, $templateCache);
     }
+  }
+
+
+  function configureCamelComponentName(properties, $templateCache) {
+    var componentNameProperty = properties.componentName || {};
+    componentNameProperty.formTemplate = $templateCache.get("camelComponentChooser.html");
+    componentNameProperty.title = "Component";
   }
 
   function convertToStringArray(array, propertyName = "value") {

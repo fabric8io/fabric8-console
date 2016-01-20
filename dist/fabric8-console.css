@@ -33,6 +33,18 @@
   margin-top: inherit;
 }
 
+.camel-component-chooser .tiles-view-pf .tile {
+  height: 80px;
+  width: 130px;
+  padding: 2px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.camel-component-chooser .camel-icon {
+  width: 64px;
+  height: 46px;
+}
+
 .camel-node-list {
   margin: 0px 10px;
 }

@@ -251,7 +251,7 @@ module Forge {
             });
             var json = angular.toJson(schemaWithoutValues);
             if (json !== $scope.previousSchemaJson) {
-              console.log("updated schema: " + json);
+              //console.log("updated schema: " + json);
               $scope.previousSchemaJson = json;
               $scope.schema = schema;
               configureCommands($timeout, $templateCache, $scope.id, $scope.entity, schema);
@@ -290,7 +290,7 @@ module Forge {
           $http.post(url, request, createHttpConfig()).
             success(function (data, status, headers, config) {
               $scope.validation = data;
-              console.log("got validation " + angular.toJson(data, true));
+              //console.debug("got validation " + angular.toJson(data, true));
               var wizardResults = data.wizardResults;
               if (wizardResults) {
                 var stepInputs = wizardResults.stepInputs;
