@@ -14,9 +14,7 @@ module Forge {
         var componentName = properties.componentName || {};
         $scope.components = componentName.enum;
         angular.forEach($scope.components, (component) => {
-          var scheme = component.scheme;
-          var icon = getCamelComponentIconUrl(scheme);
-          component.$icon = icon;
+          component.$icon = getCamelComponentIconUrl(component.scheme);
         });
 
         $scope.tileConfig = {

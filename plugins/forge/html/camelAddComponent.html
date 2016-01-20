@@ -32,13 +32,24 @@
                        placeholder="Filter components..."></hawtio-filter>
         <a class="btn btn-primary pull-right"
            title="Add the selected component to the project"
-           ng-disabled="!tableConfig.selectedItems.length"
+           ng-disabled="!tileConfig.selectedItems.length"
            ng-click="addComponent()"><i class="fa fa-plus"></i> Add Component</a>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <table class="table table-bordered table-striped" hawtio-simple-table="tableConfig"></table>
+        <div class="col-sm-12 camel-component-chooser">
+          <div class="col-md-12">
+            <div pf-data-tiles id="camelComponentTiles" config="tileConfig" items="camelComponents">
+              <div class="col-md-12" title="{{item.description}}">
+                <span>{{item.label}}</span>
+              </div>
+              <div class="col-md-12" title="{{item.description}}">
+                <img class="camel-icon" src="{{item.$icon}}">
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

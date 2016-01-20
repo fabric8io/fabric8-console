@@ -14,35 +14,16 @@ module Forge {
 
       var resourcePath = "";
 
-      $scope.tableConfig = {
-        data: 'camelComponents',
-        showSelectionCheckbox: true,
-        enableRowClickSelection: true,
-        multiSelect: false,
+      $scope.tileConfig = {
+        selectionMatchProp: "scheme",
         selectedItems: [],
-        filterOptions: {
-          filterText: $location.search()["q"] || ''
-        },
-        columnDefs: [
-          {
-            field: 'scheme',
-            displayName: 'Name',
-            defaultSort: true
-          },
-          {
-            field: 'description',
-            displayName: 'Description'
-          },
-          {
-            field: '$tagsText',
-            displayName: 'Tags',
-            cellTemplate: '<div class="ngCellText"><span class="badge" ng-repeat="tag in row.entity.tags">{{tag}}</span></div>'
-          },
-        ]
+        showSelectBox: false,
+        selectItems: true,
+        multiSelect: false
       };
 
       $scope.addComponent = () => {
-        var selection = $scope.tableConfig.selectedItems;
+        var selection = $scope.tileConfig.selectedItems;
         if (selection && selection.length) {
           var component = selection[0];
 
@@ -86,6 +67,7 @@ module Forge {
           angular.forEach($scope.camelComponents, (component) => {
             var tags = component.tags;
             if (tags) {
+              component.$icon = getCamelComponentIconUrl(component.scheme);
               component.$tagsText = tags.join(",");
             }
           });

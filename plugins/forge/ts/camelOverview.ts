@@ -102,6 +102,7 @@ module Forge {
       $scope.createEndpointLink = Forge.projectPerspectiveLink($scope.namespace, projectId, "camelAddEndpoint");
       $scope.addComponentLink = Forge.projectPerspectiveLink($scope.namespace, projectId, "camelAddComponent");
 
+
       $scope.editEndpoint = () => {
         var selection = $scope.tableConfig.selectedItems;
         if (selection && selection.length) {

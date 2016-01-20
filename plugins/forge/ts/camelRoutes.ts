@@ -10,6 +10,10 @@ module Forge {
       $scope.id = "camel-get-routes-xml";
       initScope($scope, $location, $routeParams);
 
+      var resourcePath = "";
+
+      // TODO find from model!
+      var xml = "META-INF/spring/camel-context.xml";
 
       $scope.$on('$routeUpdate', ($event) => {
         updateData();
@@ -18,6 +22,16 @@ module Forge {
       updateData();
 
       $scope.updateData = updateData;
+
+
+      $scope.addRoute = () => {
+        var input = {
+          xml: xml
+        };
+        var nextCommand = "camel-add-route-xml";
+        var nextPage = 1;
+        gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
+      };
 
       function updateData() {
         var commandId = $scope.id;
