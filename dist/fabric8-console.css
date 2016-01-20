@@ -121,6 +121,14 @@ img.camel-icon {
 .createProjectPage {
   padding-top: 40px;
 }
+.archetype-chooser-panel table tbody tr,
+.pipeline-chooser-panel table tbody tr {
+  cursor: pointer;
+}
+.archetype-chooser-panel table tbody tr:hover,
+.pipeline-chooser-panel table tbody tr:hover {
+  background-color: #f8faff;
+}
 /*
 .pipeline-chooser-panel {
   display: block;
