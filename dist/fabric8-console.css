@@ -354,3 +354,19 @@ img.menu-icon {
   padding-top: 6px;
   padding-right: 12px;
 }
+
+.wiki-grid .list-row {
+  line-height: 28px;
+  padding-left: 9px;
+}
+.wiki-grid .list-row .ngCellText .file-icon img {
+  width: 16px;
+}
+.wiki-grid .list-row .ngCellText .file-icon i,
+.wiki-grid .list-row .ngCellText .file-icon img {
+  margin-right: 1em;
+  margin-left: 1em;
+}
+.wiki-grid .list-row:nth-child(odd) {
+  background: #efefef;
+}
