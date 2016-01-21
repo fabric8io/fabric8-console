@@ -24,7 +24,6 @@ module Wiki {
         label: "Source",
         isActive: (subTab, path) => {
           var rootPath = subTab.href.replace(/\/view/, '');
-          log.debug("rootPath: ", rootPath, " path: ", path);
           return _.startsWith(path, rootPath);
         },
         title: "Browse the source code of this project"
