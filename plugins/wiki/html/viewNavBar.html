@@ -66,16 +66,6 @@
             data-placement="bottom">
             <i class="{{childAction.icon}}"></i> {{childAction.name}}</a>
         </li>
-        <li class="divider">
-        </li>
-        <li ng-show="camelLink()">
-          <a ng-href="{{camelLink()}}{{hash}}" title="View the camel perspective for this project" data-placement="bottom">
-            <img class="menu-icon" src="/img/icons/camel.svg"> Camel</a>
-        </li>
-        <li ng-show="forgeLink()">
-          <a ng-href="{{forgeLink()}}{{hash}}" title="Run a JBoss Forge command on this project" data-placement="bottom">
-            <i class="fa fa-wrench"></i> Forge</a>
-        </li>
       </ul>
     </li>
     <li class="pull-right" hawtio-show object-name="{{gitMBean}}" method-name="write">

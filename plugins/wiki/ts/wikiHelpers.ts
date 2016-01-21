@@ -770,6 +770,9 @@ module Wiki {
           case 'go':
             icon = "img/icons/gopher.png";
             break;
+          case 'swift':
+            icon = "img/icons/swift.png";
+            break;
           case 'png':
           case 'svg':
           case 'jpg':

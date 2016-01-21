@@ -92,6 +92,7 @@ module Wiki {
       "text/x-java": ["java"],
       "text/x-groovy": ["groovy"],
       "text/x-scala": ["scala"],
+      "text/x-swift": ["swift"],
       "javascript": ["js", "json", "javascript", "jscript", "ecmascript", "form"],
       "xml": ["xml", "xsd", "wsdl", "atom"],
       "text/x-yaml": ["yaml", "yml"],
