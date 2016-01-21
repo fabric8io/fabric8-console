@@ -1,5 +1,6 @@
 <div ng-hide="inDashboard" class="wiki source-nav-widget" ng-controller="Wiki.NavBarController">
   <div class="inline-block app-path" hawtio-breadcrumbs></div>
+  <div hawtio-tabs></div>
   <div class="inline-block source-path">
     <ol class="breadcrumb">
       <li ng-repeat="link in breadcrumbs" ng-class='{active : isActive(link.href) && !objectId}'>
