@@ -343,6 +343,57 @@ module Wiki {
       ]
     },
     {
+      label: "Source code",
+      tooltip: "Create a source file",
+      children: [
+        {
+          label: "Go",
+          tooltip: "A Go language file",
+          icon: "/img/icons/gopher.png",
+          exemplar: "document.go",
+          regex: defaultFileNamePattern,
+          invalid: defaultFileNamePatternInvalid,
+          extension: ".go"
+        },
+        {
+          label: "Python",
+          tooltip: "A Python language file",
+          icon: "/img/icons/python.png",
+          exemplar: "document.py",
+          regex: defaultFileNamePattern,
+          invalid: defaultFileNamePatternInvalid,
+          extension: ".py"
+        },
+        {
+          label: "JavaScript",
+          tooltip: "A JavaScript language file",
+          icon: "/img/icons/javascript.png",
+          exemplar: "document.js",
+          regex: defaultFileNamePattern,
+          invalid: defaultFileNamePatternInvalid,
+          extension: ".js"
+        },
+        {
+          label: "Ruby",
+          tooltip: "A Ruby language file",
+          icon: "/img/icons/ruby.png",
+          exemplar: "document.rb",
+          regex: defaultFileNamePattern,
+          invalid: defaultFileNamePatternInvalid,
+          extension: ".rb"
+        },
+        {
+          label: "Swift",
+          tooltip: "A Swift language file",
+          icon: "/img/icons/swift.png",
+          exemplar: "document.swift",
+          regex: defaultFileNamePattern,
+          invalid: defaultFileNamePatternInvalid,
+          extension: ".swift"
+        }
+      ]
+    },
+    {
       label: "Data Mapping Document",
       tooltip: "Dozer based configuration of mapping documents",
       icon: "/img/icons/dozer/dozer.gif",
@@ -769,6 +820,15 @@ module Wiki {
             break;
           case 'go':
             icon = "img/icons/gopher.png";
+            break;
+          case 'js':
+            icon = "img/icons/javascript.png";
+            break;
+          case 'py':
+            icon = "img/icons/python.png";
+            break;
+          case 'rb':
+            icon = "img/icons/ruby.png";
             break;
           case 'swift':
             icon = "img/icons/swift.png";

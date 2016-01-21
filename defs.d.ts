@@ -1,5 +1,8 @@
 /// <reference path="d.ts/includes.d.ts"/>
+/// <reference path="d.ts/main/ts/mainGlobals.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgeHelpers.d.ts"/>
+/// <reference path="d.ts/main/ts/mainPlugin.d.ts"/>
+/// <reference path="d.ts/main/ts/about.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgePlugin.d.ts"/>
 /// <reference path="d.ts/forge/ts/archetypePicker.d.ts"/>
 /// <reference path="d.ts/forge/ts/secretHelpers.d.ts"/>
@@ -38,6 +41,3 @@
 /// <reference path="d.ts/wiki/ts/wikiNavigation.d.ts"/>
 /// <reference path="d.ts/wiki/ts/wikiRepository.d.ts"/>
 /// <reference path="d.ts/wiki/ts/wikiTopLevel.d.ts"/>
-/// <reference path="d.ts/main/ts/mainGlobals.d.ts"/>
-/// <reference path="d.ts/main/ts/mainPlugin.d.ts"/>
-/// <reference path="d.ts/main/ts/about.d.ts"/>

@@ -43,7 +43,7 @@ module Wiki {
     $scope.newDocumentName = "";
 
     function returnToDirectory() {
-      var link = Wiki.viewLink($scope, $scope.pageId, $location)
+      var link = Wiki.viewLink($scope, $scope.pageId, $location);
       log.debug("Cancelling, going to link: ", link);
       Wiki.goToLink(link, $timeout, $location);
     }
