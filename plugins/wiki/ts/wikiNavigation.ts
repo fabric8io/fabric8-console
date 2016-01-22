@@ -22,6 +22,7 @@ module Wiki {
         isValid: () => wikiLink && Developer.forgeReadyLink(),
         href: wikiLink,
         label: "Source",
+        class: "fa fa-code-fork",
         isActive: (subTab, path) => {
           var rootPath = subTab.href.replace(/\/view/, '');
           return _.startsWith(path, rootPath);
@@ -50,6 +51,7 @@ module Wiki {
     return [
       {
         label: "Source",
+        class: "fa fa-code-fork",
         href: sourceLink,
         title: "Browse the source code of this project"
       }

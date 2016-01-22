@@ -2,6 +2,7 @@
 declare module Wiki {
     function createSourceBreadcrumbs($scope: any): {
         label: string;
+        class: string;
         href: any;
         title: string;
     }[];
