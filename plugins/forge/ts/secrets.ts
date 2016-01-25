@@ -12,7 +12,8 @@ module Forge {
 
       initScope($scope, $location, $routeParams);
       $scope.breadcrumbConfig = Developer.createProjectSettingsBreadcrumbs($scope.projectId);
-      $scope.subTabConfig = Developer.createProjectSettingsSubNavBars($scope.projectId);
+      $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);
+      $scope.tabs = Developer.createProjectSettingsSubNavBars($scope.projectId);
 
 
       var projectId = $scope.projectId;
