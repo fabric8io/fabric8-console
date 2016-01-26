@@ -17,7 +17,7 @@ module Forge {
       var catalog = properties.catalog;
       var targetLocation = properties.targetLocation;
       var archetype = properties.archetype;
-      var named = properties.named;
+      var named = properties.named || {};
       named.title = "Name";
 
       var projectType = properties.type || {};
