@@ -54,7 +54,6 @@ module Forge {
             var lower = typeName.toLowerCase();
             if (lower.startsWith("go")) {
               icon = "img/icons/gopher.png";
-              maven = false;
             } else if (lower.startsWith("integrat")) {
               icon = "img/icons/camel.svg";
             } else if (lower.startsWith("from archetype")) {
@@ -63,20 +62,17 @@ module Forge {
               icon = "img/icons/forge.svg";
             } else if (lower.startsWith("node")) {
               icon = "img/icons/javascript.png";
-              maven = false;
             } else if (lower.startsWith("python") || lower.startsWith("django")) {
               icon = "img/icons/python.png";
-              maven = false;
             } else if (lower.startsWith("ruby") || lower.startsWith("rails")) {
               icon = "img/icons/ruby.png";
-              maven = false;
             } else if (lower.startsWith("swift")) {
               icon = "img/icons/swift.png";
-              maven = false;
+            } else if (lower.startsWith("vert")) {
+              icon = "img/icons/vertx.png";
             }
           }
           projectType.$icon = icon;
-          projectType.$maven = maven;
         }
 
         function getSelection(value) {
