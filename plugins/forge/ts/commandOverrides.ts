@@ -10,11 +10,19 @@ module Forge {
   export function configureCommands($timeout, $templateCache, commandId, entity, schema) {
     var properties = schema.properties || {};
     if (commandId === "project-new") {
+      schema.controls = ["type", "*"];
+
       // lets hide the target location!
       var overwrite = properties.overwrite;
       var catalog = properties.catalog;
       var targetLocation = properties.targetLocation;
       var archetype = properties.archetype;
+      var named = properties.named;
+      named.title = "Name";
+
+      var projectType = properties.type || {};
+      projectType.formTemplate = $templateCache.get("forgeProjectTypeChooser.html");
+
       if (targetLocation) {
         targetLocation.hidden = true;
         if (overwrite) {
@@ -23,9 +31,11 @@ module Forge {
         console.log("hiding targetLocation!");
 
         // lets default the type
+/*
         if (!entity.type) {
           entity.type = "From Archetype Catalog";
         }
+*/
       }
       if (catalog) {
         if (!entity.catalog) {
@@ -35,6 +45,20 @@ module Forge {
       if (archetype) {
         archetype.formTemplate = $templateCache.get("devOpsArchetypeChooser.html");
       }
+
+      // lets hide fields if the project type value is currently a non-maven project
+      angular.forEach(["buildSystem", "finalName", "stack", "topLevelPackage", "version"], (propertyName) => {
+        var property = properties[propertyName];
+        if (property) {
+          property.isMavenProjectType = isMavenProjectType;
+
+          property['control-group-attributes'] = {
+            //'ng-hide': "entity.type == 'Go'"
+            'ng-hide': "isMavenProjectType(entity.type)"
+          };
+        }
+      });
+
     } else if (commandId === "devops-edit") {
       var pipeline = properties.pipeline;
       if (pipeline) {

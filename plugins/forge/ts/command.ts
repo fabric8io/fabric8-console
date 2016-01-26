@@ -25,6 +25,7 @@ module Forge {
 
 
         initScope($scope, $location, $routeParams);
+
         if ($scope.id === "devops-edit") {
           $scope.breadcrumbConfig = Developer.createProjectSettingsBreadcrumbs($scope.projectId);
           $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);

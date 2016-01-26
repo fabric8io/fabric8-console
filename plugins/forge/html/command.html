@@ -113,6 +113,31 @@
 
     </div>
   </script>
+  <script type="text/ng-template" id="forgeProjectTypeChooser.html">
+    <div ng-controller="Forge.ProjectTypePicker">
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Project Type</label>
+        <div class="col-sm-12 project-type-chooser">
+          <div class="col-md-12">
+            <div pf-data-tiles id="projectTypes" config="tileConfig" items="projectTypes">
+              <div class="col-md-12" title="{{item.description}}">
+                <img class="camel-icon" src="{{item.$icon}}">
+              </div>
+              <div class="col-md-12" title="{{item.description}}">
+                <span>{{item.label}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+          <p class="help-block">Choose the type of the project to create</p>
+        </div>
+      </div>
+
+    </div>
+  </script>
 
   <div class="row">
     <div hawtio-breadcrumbs></div>

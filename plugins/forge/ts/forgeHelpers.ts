@@ -309,4 +309,9 @@ module Forge {
     }
   }
 
+  export function isMavenProjectType(projectName) {
+    log.info("==== invoked isMavenProjectType with " + projectName);
+    return true;
+  }
+
 }
