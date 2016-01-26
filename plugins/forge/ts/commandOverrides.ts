@@ -46,15 +46,14 @@ module Forge {
         archetype.formTemplate = $templateCache.get("devOpsArchetypeChooser.html");
       }
 
+      projectType.isMavenProjectType = isMavenProjectType;
+
       // lets hide fields if the project type value is currently a non-maven project
       angular.forEach(["buildSystem", "finalName", "stack", "topLevelPackage", "version"], (propertyName) => {
         var property = properties[propertyName];
         if (property) {
-          property.isMavenProjectType = isMavenProjectType;
-
           property['control-group-attributes'] = {
-            //'ng-hide': "entity.type == 'Go'"
-            'ng-hide': "isMavenProjectType(entity.type)"
+            'ng-show': "config.properties.type.isMavenProjectType(entity.type)"
           };
         }
       });
@@ -105,10 +104,6 @@ module Forge {
       });
     } else if (commandId === "camel-edit-node-xml") {
       var componentNameProperty = properties.componentName || {};
-/*
-      convertToStringArray(componentNameProperty.enum, "label");
-*/
-
       componentNameProperty.formTemplate = $templateCache.get("camelComponentChooser.html");
 
 

@@ -310,7 +310,16 @@ module Forge {
   }
 
   export function isMavenProjectType(projectName) {
-    log.info("==== invoked isMavenProjectType with " + projectName);
+    if (projectName && angular.isString(projectName)) {
+      var lower = projectName.toLowerCase();
+      if (lower.startsWith("go") ||
+        lower.startsWith("node") ||
+        lower.startsWith("python") || lower.startsWith("django") ||
+        lower.startsWith("ruby") || lower.startsWith("rails") ||
+        lower.startsWith("swift")) {
+        return false;
+      }
+    }
     return true;
   }
 
