@@ -179,6 +179,23 @@ img.camel-icon {
   width: 64px;
   height: 46px;
 }
+.pipeline-chooser .tiles-view-pf .tile {
+  height: 200px;
+  width: 340px;
+  padding: 2px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+.form-group.pipeline-chooser {
+  margin-bottom: 0px;
+}
+.pipeline-name {
+  font-weight: bold;
+}
+.pipeline-environemnts-panel,
+.pipeline-stages-panel {
+  margin-top: 20px;
+}
 
 .createProjectPage {
   padding-top: 40px;
