@@ -16,6 +16,8 @@ module Wiki {
     Wiki.initScope($scope, $routeParams, $location);
     var wikiRepository = $scope.wikiRepository;
 
+    $scope.fetched = false;
+
     // TODO we could configure this?
     $scope.dateFormat = 'EEE, MMM d, y at HH:mm:ss Z';
     //'yyyy-MM-dd HH:mm:ss Z'
@@ -125,6 +127,7 @@ module Wiki {
           log.commitLink = startLink($scope) + "/commitDetail/" + $scope.pageId + "/" + commitId;
         });
         $scope.logs = _.sortBy(logArray, "$date").reverse();
+        $scope.fetched = true;
         Core.$apply($scope);
       });
       Wiki.loadBranches(jolokia, wikiRepository, $scope, isFmc);

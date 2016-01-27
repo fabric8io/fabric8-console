@@ -1,10 +1,17 @@
 <div ng-controller="Wiki.HistoryController">
-  <div ng-show="logs.length">
-    <!--
-    <div class="row">
-      <h4 class="project-overview-title"><a ng-href="{{$projectLink}}/wiki/history//">Commits</a></h4>
+  <div ng-hide="fetched">
+    <div class="align-center">
+      <div class="spinner spinner-lg"></div>
     </div>
-    -->
-    <div commit-history-panel></div>
+  </div>
+  <div ng-show="fetched">
+    <div ng-hide="logs.length">
+      <div class="align-center">
+        <h4>No Commit History</h4>
+      </div>
+    </div>
+    <div ng-show="logs.length">
+      <div commit-history-panel></div>
+    </div>
   </div>
 </div>
