@@ -49,10 +49,12 @@ body {
 #main {
   margin-top: 44px;
 }
+/*
 .row {
   margin-left: auto !important;
   margin-right: auto !important;
 }
+*/
 .pending-pods .ngCellText {
   padding-top: 5px;
   padding-bottom: 5px;
