@@ -32,6 +32,7 @@ module Forge {
             $scope.projectTypes.push(projectType);
           }
         });
+        $scope.projectTypes = _.sortBy($scope.projectTypes , "label");
 
         $scope.tileConfig = {
           selectionMatchProp: selectionValueProperty,

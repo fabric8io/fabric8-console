@@ -13,6 +13,10 @@ module Forge {
         var pipeline = properties.pipeline || {};
         $scope.pipelines = pipeline.typeaheadData;
 
+        angular.forEach($scope.pipelines, (pipeline) => {
+          pipeline.$description = marked(pipeline.descriptionMarkdown || "");
+        });
+
         $scope.tableConfig = {
           data: 'pipelines',
           primaryKeyFn: (item) => item.value,
@@ -41,17 +45,27 @@ module Forge {
             }
           ]
         };
+
+        var selectionValueProperty = "value";
+        $scope.tileConfig = {
+          selectionMatchProp: selectionValueProperty,
+          selectedItems: [],
+          showSelectBox: false,
+          selectItems: true,
+          multiSelect: false
+        };
+
         entityChanged();
 
         $scope.$watch("entity.pipeline", entityChanged);
-        $scope.$watchCollection("tableConfig.selectedItems", updateSelection);
+        $scope.$watchCollection("tileConfig.selectedItems", updateSelection);
 
         function entityChanged() {
           var pipeline = $scope.entity.pipeline || {};
           var pipelineValue = angular.isString(pipeline) ? pipeline : pipeline.value;
           var initialSelection = getSelection(pipelineValue);
           if (initialSelection) {
-            $scope.tableConfig.selectedItems = [initialSelection];
+            $scope.tileConfig.selectedItems = [initialSelection];
             updateSelection();
             Core.$apply($scope);
           }
@@ -71,7 +85,7 @@ module Forge {
 
 
         function updateSelection() {
-          var selection = $scope.tableConfig.selectedItems;
+          var selection = $scope.tileConfig.selectedItems;
           var selectedValue = "";
           var description = "";
           var selected = null;

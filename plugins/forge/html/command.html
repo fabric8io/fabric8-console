@@ -1,33 +1,58 @@
 <div ng-controller="Forge.CommandController">
+  <script type="text/ng-template" id="itemDescriptionTooltip.html">
+    <p ng-bind-html="item.$description"></p>
+  </script>
   <script type="text/ng-template" id="devOpsPipelineChooser.html">
     <div ng-controller="Forge.PipelinePicker">
-      <div class="col-sm-12">
-        <div class="">
-          <hawtio-filter ng-model="tableConfig.filterOptions.filterText"
-                         save-as="forge-pipeline-selector"
-                         css-class="input-xxlarge"
-                         placeholder="Filter pipelines..."></hawtio-filter>
-        </div>
-      </div>
-      <div class="col-sm-12 pipeline-chooser-panel-border">
-        <div class="pipeline-chooser-panel">
-          <table class="table table-bordered table-striped" hawtio-simple-table="tableConfig"></table>
-        </div>
-      </div>
-
-      <div class="form-group">
+      <div class="form-group pipeline-chooser">
         <label class="col-sm-2 control-label">Pipeline</label>
 
-        <div class="col-sm-10">
+
+        <!--
+              <div class="col-sm-12">
+                <div class="">
+                  <hawtio-filter ng-model="tableConfig.filterOptions.filterText"
+                                 save-as="forge-pipeline-selector"
+                                 css-class="pull-right input-xxlarge"
+                                 placeholder="Filter pipelines..."></hawtio-filter>
+                </div>
+              </div>
+        -->
+      </div>
+      <div class="pipeline-chooser">
+        <div pf-data-tiles config="tileConfig" items="pipelines">
+          <div class="col-md-12" hawtio-template-popover content="itemDescriptionTooltip.html">
+            <span class="pipeline-name"><i class="fa fa-ellipsis-h"></i>&nbsp;{{item.label}}</span>
+          </div>
           <!--
-                    <select ng-options="item as item.label for item in pipelines track by item.label"
-                            ng-model="pipelineModel.current"></select>
-                    <input type="text" class="form-control" ng-model="pipelineModel.value" typeahead="item.label for item in pipelines">
+                  <div class="col-md-12" title="{{item.description}}">
+                    <img class="camel-icon" src="{{item.$icon}}">
+                  </div>
           -->
-          <input type="text" ng-disabled="true" class="form-control" ng-model="selected.label">
+          <div class="col-md-12 pipeline-stages-panel" ng-show="item.stages.length" hawtio-template-popover
+               content="itemDescriptionTooltip.html">
+            <span title="These are the named stages inside the pipeline">Stages</span>
+            <div class="col-md-12 pipeline-stages">
+              <span ng-repeat="value in item.stages track by $index">
+                <span class="badge badge-success">{{value}}</span>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-12 pipeline-environemnts-panel" ng-show="item.environments.length" hawtio-template-popover
+               content="itemDescriptionTooltip.html">
+            <span title="The environments that the build deploys to during the pipeline">Environments</span>
+            <div class="col-md-12 pipeline-environemnts">
+              <span ng-repeat="value in item.environments track by $index">
+                <span class="badge">{{value}}</span>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
 
+<!--
       <div class="form-group">
         <label class="col-sm-2 control-label">Description</label>
 
@@ -35,14 +60,11 @@
           <div class="panel panel-default">
             <div class="panel-body">
               <div ng-bind-html="html"></div>
-<!--
-              <div compile="html"></div>
--->
             </div>
           </div>
         </div>
       </div>
-    </div>
+-->
   </script>
   <script type="text/ng-template" id="devOpsPipelineChooserStages.html">
     <div class="ngCellText">
