@@ -105,35 +105,30 @@
     <script src="libs/hawtio-dashboard/dist/jquery.gridster.js"></script>
     <script src="libs/hawtio-dashboard/dist/hawtio-dashboard.js"></script>
     <!-- endbower -->
+
+    <script type="text/javascript" src="libs/codemirror/addon/edit/closetag.js"></script>
+    <script type="text/javascript" src="libs/codemirror/addon/edit/continuelist.js"></script>
+    <script type="text/javascript" src="libs/codemirror/addon/edit/matchbrackets.js"></script>
+    <script type="text/javascript" src="libs/codemirror/addon/fold/foldcode.js"></script>
+    <script type="text/javascript" src="libs/codemirror/addon/fold/brace-fold.js"></script>
+    <script type="text/javascript" src="libs/codemirror/addon/fold/xml-fold.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/xml/xml.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/css/css.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/markdown/markdown.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/diff/diff.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/properties/properties.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/clike/clike.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/yaml/yaml.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/groovy/groovy.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/go/go.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/python/python.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/ruby/ruby.js"></script>
+    <script type="text/javascript" src="libs/codemirror/mode/swift/swift.js"></script>
+
+    <script src="libs/nvd3/build/nv.d3.js"></script>
     <!-- endbuild -->
-
-    <style>
-          .navbar-brand > img {
-            height: 20px;
-            margin-top: -5px;
-            margin-bottom: -5px;
-          }
-
-          body {
-            /* overwrite a top-padding from site-base.css in hawtio-ui */
-            padding-top: inherit;
-          }
-          .breadcrumb {
-            /* overwrite the bottom padding from pf's breadcrumb class */
-            margin-bottom: 0;
-          }
-          .wiki-icon-view {
-            border-radius: 0;
-            border: none;
-          }
-          .kubernetes-view .row.filter-header {
-            margin-top: 1em;
-          }
-
-          #main {
-            margin-top: 29px;
-          }
-        </style>
 
   </head>
 
@@ -141,6 +136,14 @@
     <nav class="navbar navbar-default navbar-fixed-top navbar-pf" role="navigation">
       <div class="navbar-header" hawtio-extension name="hawtio-header">
         <a class="navbar-brand" href="/"><img src="img/fabric8_logo_white.svg"></a>
+        <ul class="nav navbar-nav" ng-controller="Main.NavController">
+          <li ng-class="projectsActive() ? 'active' : ''">
+            <a href="/workspaces">Projects</a>
+          </li>
+          <li ng-class="runtimeActive() ? 'active' : ''">
+            <a href="/namespaces">Runtime</a>
+          </li>
+        </ul>
       </div>
       <ul class="nav navbar-nav navbar-utility">
         <li class="dropdown">
@@ -170,29 +173,6 @@
     <script src="dist/fabric8-console.js"></script>
     <script src="dist/fabric8-console-test.js"></script>
     <!-- endbuild -->
-
-    <script type="text/javascript" src="libs/codemirror/addon/edit/closetag.js"></script>
-    <script type="text/javascript" src="libs/codemirror/addon/edit/continuelist.js"></script>
-    <script type="text/javascript" src="libs/codemirror/addon/edit/matchbrackets.js"></script>
-    <script type="text/javascript" src="libs/codemirror/addon/fold/foldcode.js"></script>
-    <script type="text/javascript" src="libs/codemirror/addon/fold/brace-fold.js"></script>
-    <script type="text/javascript" src="libs/codemirror/addon/fold/xml-fold.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/javascript/javascript.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/xml/xml.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/css/css.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/htmlmixed/htmlmixed.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/markdown/markdown.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/diff/diff.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/properties/properties.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/clike/clike.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/yaml/yaml.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/groovy/groovy.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/go/go.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/python/python.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/ruby/ruby.js"></script>
-    <script type="text/javascript" src="libs/codemirror/mode/swift/swift.js"></script>
-
-    <script src="libs/nvd3/build/nv.d3.js"></script>
 
   </body>
 </html>
