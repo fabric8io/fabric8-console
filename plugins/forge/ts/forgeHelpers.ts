@@ -27,13 +27,14 @@ module Forge {
     $scope.$workspaceLink = Developer.workspaceLink();
     $scope.$projectLink = Developer.projectLink($scope.projectId);
     $scope.breadcrumbConfig = Developer.createProjectBreadcrumbs($scope.projectId);
-    $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);
 
     if ("project-new" === $scope.id) {
       $scope.breadcrumbConfig.push({
         label: "Create Project"
       });
+      $scope.subTabConfig = [];
     } else {
+      $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);
       $scope.breadcrumbConfig.push(_.last($scope.subTabConfig));
       $scope.breadcrumbConfig.push({
         label: "Forge",
@@ -47,7 +48,6 @@ module Forge {
         });
       }
     }
-    $scope.subTabConfig = [];
     updateForgeProject($scope);
   }
 

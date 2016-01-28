@@ -34,14 +34,30 @@ module Wiki {
         label: "Camel",
         icon: "/img/icons/camel.svg",
         href: camelLink,
-        title: "View the camel perspective for this project"
+        title: "View the camel perspective for this project",
+        isActive: (subTab, path) => {
+          if (path.search(/forge\/camel/) !== -1) {
+            return true;
+          }
+          if (path.search(/forge\/command\/camel/) !== -1) {
+            return true;
+          }
+          return false;
+        }
       },
       {
         isValid: () => forgeLink && Developer.forgeReadyLink() && Forge.forgeProject().hasBuilder("maven"),
         label: "Forge",
         href: forgeLink,
         class: "fa fa-wrench",
-        title: "Run a JBoss Forge command on this project"
+        title: "Run a JBoss Forge command on this project",
+        isActive: (subTab, path) => {
+          if (path.search(/forge\/command/) !== -1) {
+            return true;
+          }
+          return false;
+
+        }
       }];
     });
 

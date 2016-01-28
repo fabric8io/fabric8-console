@@ -9,7 +9,7 @@ module Forge {
 
   _module.config(['$routeProvider', ($routeProvider:ng.route.IRouteProvider) => {
 
-    console.log("Listening on: " + UrlHelpers.join(context, '/createProject'));
+    //console.log("Listening on: " + UrlHelpers.join(context, '/createProject'));
 
     $routeProvider.when(UrlHelpers.join(context, '/createProject'), route('createProject.html', false))
       .when(UrlHelpers.join(context, '/repos/:path*'), route('repo.html', false))
