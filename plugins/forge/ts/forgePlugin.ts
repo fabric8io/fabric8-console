@@ -45,6 +45,11 @@ module Forge {
   }]);
 
 
+  _module.factory('ForgeProject', ['$q', '$rootScope', ($q:ng.IQService, $rootScope:ng.IRootScopeService) => {
+    return new ForgeProjectService();
+  }]);
+
+
   _module.factory('ForgeModel', ['$q', '$rootScope', ($q:ng.IQService, $rootScope:ng.IRootScopeService) => {
     return {
       rootProject: {},

@@ -11,6 +11,8 @@ declare module Forge {
     var loggedInToGogs: boolean;
     function isForge(workspace: any): boolean;
     function initScope($scope: any, $location: any, $routeParams: any): void;
+    function updateForgeProject($scope: any): void;
+    function forgeProject(): any;
     function commandLink(projectId: any, name: any, resourcePath: any): string;
     function commandsLink(resourcePath: any, projectId: any): string;
     function projectCommandsLink(ns: any, projectId: any): string;

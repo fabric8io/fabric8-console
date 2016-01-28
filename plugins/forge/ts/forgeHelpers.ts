@@ -48,6 +48,21 @@ module Forge {
       }
     }
     $scope.subTabConfig = [];
+    updateForgeProject($scope);
+  }
+
+
+  export function updateForgeProject($scope) {
+    forgeProject().updateProject($scope);
+  }
+
+  export function forgeProject() {
+    var answer = Kubernetes.inject("ForgeProject");
+    if (!answer) {
+      log.warn("No ForgeProject service!");
+      answer = new ForgeProjectService();
+    }
+    return answer;
   }
 
   export function commandLink(projectId, name, resourcePath) {

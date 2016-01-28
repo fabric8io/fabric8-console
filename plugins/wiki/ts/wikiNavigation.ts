@@ -30,14 +30,14 @@ module Wiki {
         title: "Browse the source code of this project"
       },
       {
-        isValid: () => camelLink && Developer.forgeReadyLink(),
+        isValid: () => camelLink && Developer.forgeReadyLink() && Forge.forgeProject().hasPerspective("camel"),
         label: "Camel",
         icon: "/img/icons/camel.svg",
         href: camelLink,
         title: "View the camel perspective for this project"
       },
       {
-        isValid: () => forgeLink && Developer.forgeReadyLink(),
+        isValid: () => forgeLink && Developer.forgeReadyLink() && Forge.forgeProject().hasBuilder("maven"),
         label: "Forge",
         href: forgeLink,
         class: "fa fa-wrench",
