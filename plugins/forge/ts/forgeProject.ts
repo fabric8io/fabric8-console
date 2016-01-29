@@ -3,6 +3,29 @@
 
 module Forge {
 
+
+  export function updateForgeProject($scope) {
+    forgeProject().updateProject($scope);
+  }
+
+  export function forgeProject() {
+    var answer = Kubernetes.inject("ForgeProject");
+    if (!answer) {
+      log.warn("No ForgeProject service!");
+      answer = new ForgeProjectService();
+    }
+    return answer;
+  }
+
+  export function forgeProjectHasBuilder(name) {
+    return Forge.forgeProject().hasBuilder(name);
+  }
+
+  export function forgeProjectHasPerspective(name) {
+    return Forge.forgeProject().hasPerspective(name);
+  }
+
+
   export class ForgeProjectService {
     public projectId = "";
     public namespace = "";
