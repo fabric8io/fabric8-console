@@ -14,6 +14,11 @@
          data-placement="bottom">
         <i class="fa fa-plus"></i> Add Endpoint</a>
     </li>
+    <li ng-show="addPatternEnabled">
+      <a ng-click="addPatternNode()" title="Add a new Enterprise Integration Pattern"
+         data-placement="bottom">
+        <i class="fa fa-plus"></i> Add Pattern</a>
+    </li>
     <li ng-show="editEnabled">
       <a ng-click="editNode()" title="Edit this node"
          data-placement="bottom">

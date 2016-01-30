@@ -9,6 +9,7 @@
 /// <reference path="d.ts/forge/ts/camelIcons.d.ts"/>
 /// <reference path="d.ts/forge/ts/camelNode.d.ts"/>
 /// <reference path="d.ts/forge/ts/camelOverview.d.ts"/>
+/// <reference path="d.ts/forge/ts/camelPatternPicker.d.ts"/>
 /// <reference path="d.ts/forge/ts/camelRoutes.d.ts"/>
 /// <reference path="d.ts/forge/ts/commandOverrides.d.ts"/>
 /// <reference path="d.ts/forge/ts/command.d.ts"/>

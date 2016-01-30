@@ -61,6 +61,7 @@ module Forge {
         icon = "/img/icons/camel/generic24.png";
       }
       $scope.addEndpointEnabled = addEndpointEnabled;
+      $scope.addPatternEnabled = addEndpointEnabled;
       $scope.editEnabled = true;
       $scope.icon = icon;
 
@@ -122,6 +123,16 @@ module Forge {
           xml: xml
         };
         var nextCommand = "camel-edit-node-xml";
+        var nextPage = 1;
+        gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
+      };
+
+      $scope.addPatternNode = () => {
+        var input = {
+          parent: key,
+          xml: xml
+        };
+        var nextCommand = "camel-add-node-xml";
         var nextPage = 1;
         gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
       };

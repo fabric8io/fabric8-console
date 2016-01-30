@@ -135,6 +135,33 @@
 
     </div>
   </script>
+
+  <script type="text/ng-template" id="camelPatternChooser.html">
+    <div ng-controller="Forge.CamelPatternPicker">
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Pattern</label>
+        <div class="col-sm-12 camel-pattern-chooser">
+          <div class="col-md-12">
+            <div pf-data-tiles config="tileConfig" items="patterns">
+              <div class="col-md-12 {{item.$class}}" title="{{item.description}}">
+                <span>{{item.title}}</span>
+              </div>
+<!--
+              <div class="col-md-12" title="{{item.description}}">
+                <img class="camel-icon" src="{{item.$icon}}">
+              </div>
+-->
+            </div>
+          </div>
+        </div>
+        <label class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+          <p class="help-block">Choose the pattern you would like to create</p>
+        </div>
+      </div>
+    </div>
+  </script>
   <script type="text/ng-template" id="forgeProjectTypeChooser.html">
     <div ng-controller="Forge.ProjectTypePicker">
 

@@ -102,6 +102,27 @@ module Forge {
           property.hidden = true;
         }
       });
+    } else if (commandId === "camel-add-node-xml") {
+      configureCamelComponentName(properties, $templateCache);
+
+      var name = properties.name;
+      if (name) {
+        name.formTemplate = $templateCache.get("camelPatternChooser.html");
+/*
+        angular.forEach(name.enum, (pattern) => {
+          pattern.label = pattern.label || pattern.title || pattern.name;
+        });
+*/
+      }
+
+      // lets hide some fields
+      angular.forEach(["xml", "parent"], (propertyName) => {
+        var property = properties[propertyName];
+        if (property && entity[propertyName]) {
+          property.hidden = true;
+        }
+      });
+
     } else if (commandId === "camel-edit-node-xml") {
       var componentNameProperty = properties.componentName || {};
       componentNameProperty.formTemplate = $templateCache.get("camelComponentChooser.html");
