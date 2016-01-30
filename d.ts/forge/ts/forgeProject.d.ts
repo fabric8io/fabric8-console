@@ -1,6 +1,10 @@
 /// <reference path="../../includes.d.ts" />
 /// <reference path="forgeHelpers.d.ts" />
 declare module Forge {
+    function updateForgeProject($scope: any): void;
+    function forgeProject(): any;
+    function forgeProjectHasBuilder(name: any): any;
+    function forgeProjectHasPerspective(name: any): any;
     class ForgeProjectService {
         projectId: string;
         namespace: string;
