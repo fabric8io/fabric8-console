@@ -5,11 +5,12 @@
   height: 20px;
   margin-top: 0;
 }
-.navbar-header .navbar-inline {
+.navbar-header .nav.navbar-nav {
   font-size: 14px;
 }
-.navbar-header .navbar-inline .active > a {
+.navbar-header .nav.navbar-nav .active > a {
   font-weight: bold;
+  background-color: #565B5F;
 }
 .navbar-utility {
   bottom: 0;
