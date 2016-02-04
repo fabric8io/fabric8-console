@@ -23,6 +23,14 @@ module Forge {
       var projectType = properties.type || {};
       projectType.formTemplate = $templateCache.get("forgeProjectTypeChooser.html");
 
+
+      function hide(propertyName) {
+        var property = properties[propertyName];
+        if (property) {
+          property.hidden = true;
+        }
+      }
+
       if (targetLocation) {
         targetLocation.hidden = true;
         if (overwrite) {
@@ -80,6 +88,8 @@ module Forge {
       }
     } else if (commandId === "camel-add-endpoint") {
       configureCamelComponentName(properties, $templateCache);
+
+      hide("componentNameFilter");
 
       var current = entity.componentName;
       if (angular.isString(current)) {

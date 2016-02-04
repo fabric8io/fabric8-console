@@ -99,7 +99,7 @@ module Forge {
 
 
       $scope.addRouteBuilderLink = commandLink(projectId, "camel-new-routebuilder", "");
-      $scope.createEndpointLink = Forge.projectPerspectiveLink($scope.namespace, projectId, "camelAddEndpoint");
+      $scope.createEndpointLink = commandLink(projectId, "camel-add-endpoint", "");
       $scope.addComponentLink = Forge.projectPerspectiveLink($scope.namespace, projectId, "camelAddComponent");
 
 
