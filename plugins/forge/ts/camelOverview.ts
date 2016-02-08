@@ -91,7 +91,7 @@ module Forge {
 */
           {
             field: 'fileName',
-            displayName: 'Route File',
+            displayName: 'RouteBuilder',
             cellTemplate: $templateCache.get("endpointFileName.html")
           },
         ]
@@ -174,6 +174,7 @@ module Forge {
         };
         var onData = (jsonData) => {
           var routes = [];
+          var routeBuilderCount = 0;
           $scope.camelProject = jsonData || {};
           angular.forEach($scope.camelProject.endpoints, (endpoint) => {
             var fileName = endpoint.fileName;
@@ -184,6 +185,7 @@ module Forge {
                 var pageId = UrlHelpers.join(prefix, fileName);
                 endpoint.$fileLink = Wiki.customEditLink($scope, pageId, $location, "camel/canvas");
               } else {
+                routeBuilderCount++;
                 var pageId = UrlHelpers.join(prefix, fileName);
                 endpoint.$fileLink = Wiki.editLink($scope, pageId, $location);
               }
@@ -204,6 +206,7 @@ module Forge {
               }
             }
           });
+          $scope.camelProject.$routeBuilderCount = routeBuilderCount;
           if (!angular.isArray($scope.camelProject.routes) || !$scope.camelProject.routes.length) {
             $scope.camelProject.routes = routes;
           }

@@ -8,16 +8,6 @@
   </script>
 
   <div hawtio-tabs></div>
-<!--
-
-  <div class="row">
-    <div hawtio-breadcrumbs></div>
-  </div>
-
-  <div class="row">
-    <div hawtio-tabs></div>
-  </div>
--->
 
   <div ng-hide="fetched">
     <div class="row select-table-filter">
@@ -31,108 +21,113 @@
 
 
   <div ng-show="fetched">
-    <div class="camel-tabs">
-      <tabset>
-        <tab heading="Routes">
+    <div ng-hide="camelProject.$routeBuilderCount">
+      <div ng-controller="Forge.CamelRoutesController">
+        <div class="row">
+          <div class="col-md-12">
+            <a class="btn btn-default pull-right"
+               ng-show="contexts.length"
+               ng-click="addRoute()" title="Add new route"
+               data-placement="bottom">
+              <i class="fa fa-plus"></i> Add Route</a>
+            <span class="pull-right">&nbsp;</span>
+            <a class="btn btn-default pull-right"
+               title="Add a new kind of Component to the project"
+               href="{{addComponentLink}}"><i class="fa fa-plus"></i> Add Component</a>
+          </div>
 
-          <div ng-controller="Forge.CamelRoutesController">
-            <div class="col-md-12">
-              <a class="btn btn-default pull-right"
-                 ng-click="addRoute()" title="Add new route"
-                 data-placement="bottom">
-                <i class="fa fa-plus"></i> Add Route</a>
-              <span class="pull-right">&nbsp;</span>
-              <a class="btn btn-default pull-right"
-                 title="Add a new kind of Component to the project"
-                 href="{{addComponentLink}}"><i class="fa fa-plus"></i> Add Component</a>
+          <div class="camel-node-list">
+            <div ng-repeat="node in contexts | filter:filterContexts track by $index"
+                 ng-include="'plugins/forge/html/camelNode.html'">
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <div class="camel-node-list">
-              <div ng-repeat="node in contexts | filter:filterContexts track by $index"
-                  ng-include="'plugins/forge/html/camelNode.html'">
+    <div ng-show="camelProject.$routeBuilderCount">
+      <div class="camel-tabs">
+        <tabset>
+          <tab heading="Routes">
+
+            <div class="row">
+              <div class="col-md-12">
+                <a class="btn btn-default pull-right"
+                   ng-show="camelProject.$routeBuilderCount"
+                   title="Create a new RouteBuilder"
+                   href="{{addRouteBuilderLink}}"><i class="fa fa-plus"></i> New RouteBuilder</a>
+                <span class="pull-right">&nbsp;</span>
+                <a class="btn btn-default pull-right"
+                   title="Add a new kind of Component to the project"
+                   href="{{addComponentLink}}"><i class="fa fa-plus"></i> Add Component</a>
               </div>
             </div>
-          </div>
 
-        </tab>
-
-        <tab heading="Route Builders">
-          <div class="row select-table-filter">
-            <div class="col-md-12">
-              <hawtio-filter ng-show="camelProject.routes.length > 1"
-                             ng-model="routeTable.filterOptions.filterText"
-                             css-class="input-xxlarge"
-                             placeholder="Filter routes..."></hawtio-filter>
-
-              <span class="pull-right">&nbsp;</span>
-              <a class="btn btn-default pull-right"
-                 title="Create a new RouteBuilder"
-                 href="{{addRouteBuilderLink}}"><i class="fa fa-plus"></i> New RouteBuilder</a>
+            <div class="camel-routes-table">
+              <div class="row">
+                <div class="col-md-12">
+                  <table class="table table-bordered table-striped" hawtio-simple-table="routeTable"></table>
+                </div>
+              </div>
             </div>
-          </div>
+          </tab>
 
-          <div class="row">
-            <div class="col-md-12">
-              <table class="table table-bordered table-striped" hawtio-simple-table="routeTable"></table>
+          <tab heading="Components">
+            <div class="row select-table-filter">
+              <div class="col-md-12">
+                <hawtio-filter ng-show="camelProject.endpoints.length > 1"
+                               ng-model="componentTable.filterOptions.filterText"
+                               css-class="input-xxlarge"
+                               placeholder="Filter components..."></hawtio-filter>
+
+                <a class="btn btn-primary pull-right"
+                   title="Create a new Endpoint for the selected Component"
+                   ng-disabled="!componentTable.selectedItems.length"
+                   ng-click="createEndpointForComponent()"><i class="fa fa-plus"></i> Create Endpoint</a>
+                <span class="pull-right">&nbsp;</span>
+                <a class="btn btn-default pull-right"
+                   title="Add a new kind of Component to the project"
+                   href="{{addComponentLink}}"><i class="fa fa-plus"></i> Add Component</a>
+              </div>
             </div>
-          </div>
-        </tab>
 
-        <tab heading="Components">
-          <div class="row select-table-filter">
-            <div class="col-md-12">
-              <hawtio-filter ng-show="camelProject.endpoints.length > 1"
-                             ng-model="componentTable.filterOptions.filterText"
-                             css-class="input-xxlarge"
-                             placeholder="Filter components..."></hawtio-filter>
-
-              <a class="btn btn-primary pull-right"
-                 title="Create a new Endpoint for the selected Component"
-                 ng-disabled="!componentTable.selectedItems.length"
-                 ng-click="createEndpointForComponent()"><i class="fa fa-plus"></i> Create Endpoint</a>
-              <span class="pull-right">&nbsp;</span>
-              <a class="btn btn-default pull-right"
-                 title="Add a new kind of Component to the project"
-                 href="{{addComponentLink}}"><i class="fa fa-plus"></i> Add Component</a>
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-bordered table-striped" hawtio-simple-table="componentTable"></table>
+              </div>
             </div>
-          </div>
+          </tab>
 
-          <div class="row">
-            <div class="col-md-12">
-              <table class="table table-bordered table-striped" hawtio-simple-table="componentTable"></table>
+          <tab heading="Endpoints" ng-show="camelProject.$routeBuilderCount">
+            <div class="row select-table-filter">
+              <div class="col-md-12">
+                <hawtio-filter ng-show="camelProject.endpoints.length > 1"
+                               ng-model="tableConfig.filterOptions.filterText"
+                               css-class="input-xxlarge"
+                               placeholder="Filter endpoints..."></hawtio-filter>
+
+                <span class="pull-right">&nbsp;</span>
+                <a class="btn btn-primary pull-right"
+                   title="Edit the endpoint details"
+                   ng-disabled="!tableConfig.selectedItems.length"
+                   ng-click="editEndpoint()">
+                  <i class="fa fa-pencil-square-o"></i> Edit Endpoint
+                </a>
+                <span class="pull-right">&nbsp;</span>
+                <a class="btn btn-default pull-right"
+                   title="Create a new Endpoint"
+                   href="{{createEndpointLink}}"><i class="fa fa-plus"></i> Create Endpoint</a>
+              </div>
             </div>
-          </div>
-        </tab>
 
-        <tab heading="Endpoints">
-          <div class="row select-table-filter">
-            <div class="col-md-12">
-              <hawtio-filter ng-show="camelProject.endpoints.length > 1"
-                             ng-model="tableConfig.filterOptions.filterText"
-                             css-class="input-xxlarge"
-                             placeholder="Filter endpoints..."></hawtio-filter>
-
-              <span class="pull-right">&nbsp;</span>
-              <a class="btn btn-primary pull-right"
-                 title="Edit the endpoint details"
-                 ng-disabled="!tableConfig.selectedItems.length"
-                 ng-click="editEndpoint()">
-                <i class="fa fa-pencil-square-o"></i> Edit Endpoint
-              </a>
-              <span class="pull-right">&nbsp;</span>
-              <a class="btn btn-default pull-right"
-                 title="Create a new Endpoint"
-                 href="{{createEndpointLink}}"><i class="fa fa-plus"></i> Create Endpoint</a>
+            <div class="row">
+              <div class="col-md-12">
+                <table class="table table-bordered table-striped" hawtio-simple-table="tableConfig"></table>
+              </div>
             </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <table class="table table-bordered table-striped" hawtio-simple-table="tableConfig"></table>
-            </div>
-          </div>
-        </tab>
-      </tabset>
+          </tab>
+        </tabset>
+      </div>
     </div>
   </div>
 </div>
