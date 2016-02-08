@@ -65,7 +65,9 @@ module Forge {
               icon = "img/icons/javascript.png";
             } else if (lower.startsWith("python") || lower.startsWith("django")) {
               icon = "img/icons/python.png";
-            } else if (lower.startsWith("ruby") || lower.startsWith("rails")) {
+            } else if (lower.startsWith("rails")) {
+              icon = "img/icons/rails.png";
+            } else if (lower.startsWith("ruby")) {
               icon = "img/icons/ruby.png";
             } else if (lower.startsWith("swift")) {
               icon = "img/icons/swift.png";
