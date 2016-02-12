@@ -6,6 +6,10 @@ module Wiki {
   export var CamelCanvasController = _module.controller("Wiki.CamelCanvasController", ["$scope", "$element", "$routeParams", "$templateCache", "$interpolate", "$location", ($scope, $element, $routeParams, $templateCache, $interpolate, $location) => {
     var jsPlumbInstance = jsPlumb.getInstance();
 
+    $element.on('$destroy', () => {
+      jsPlumbInstance.reset();
+    });
+
     Wiki.initScope($scope, $routeParams, $location);
     var wikiRepository = $scope.wikiRepository;
 
@@ -356,11 +360,6 @@ module Wiki {
         arrowStyles,
         labelStyles
       ]
-    });
-
-    $scope.$on('$destroy', () => {
-      jsPlumbInstance.reset();
-      delete jsPlumbInstance;
     });
 
     // double click on any connection
