@@ -312,13 +312,13 @@ function createConnectConfig() {
     proto: kube.protocol(),
     port: kube.port(),
     hostname: kube.hostname(),
-    path: '/kubernetes/api',
+    path: '/api',
     targetPath: kube.path()
   }, {
     proto: oapi.protocol(),
     port: oapi.port(),
     hostname: oapi.hostname(),
-    path: '/kubernetes/oapi',
+    path: '/oapi',
     targetPath: oapi.path()
   }, {
     proto: kube.protocol(),
@@ -397,7 +397,7 @@ function setupAndListen(hawtio, config) {
     if (googleClientId && googleClientSecret) {
       console.log("Using google client ID and client secred");
       // route the client to the proxy
-      config.master_uri = "http://localhost:9000/kubernetes";
+      config.master_uri = "http://localhost:9000";
       config.google = {
         clientId: googleClientId,
         clientSecret: googleClientSecret,
@@ -416,6 +416,21 @@ function setupAndListen(hawtio, config) {
     } else {
       console.log("OAuth disabled");
       config.master_uri = kubeBase;
+    }
+    if (process.env.USE_PROXY) {
+      config.master_uri = 'http://localhost:9000';
+      config.api = {
+        openshift: {
+          proto: 'http',
+          hostPort: 'localhost:9000',
+          prefix: 'oapi'
+        },
+        k8s: {
+          proto: 'http',
+          hostPort: 'localhost:9000',
+          prefix: 'api'
+        }
+      }
     }
     var answer = "window.OPENSHIFT_CONFIG = " + stringifyObject(config);
     res.set('Content-Type', 'application/javascript');
