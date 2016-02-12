@@ -395,6 +395,7 @@ function setupAndListen(hawtio, config) {
       }
     };
     if (googleClientId && googleClientSecret) {
+      console.log("Using google client ID and client secred");
       // route the client to the proxy
       config.master_uri = "http://localhost:9000/kubernetes";
       config.google = {
@@ -406,11 +407,15 @@ function setupAndListen(hawtio, config) {
         redirectURI: "http://localhost:9000"
       };
     } else if (useAuthentication) {
+      console.log("Using openshift OAuth");
       config.master_uri = kubeBase;
       config.openshift = {
         oauth_authorize_uri: urljoin(kubeBase, '/oauth/authorize'),
         oauth_client_id: 'fabric8'
       };
+    } else {
+      console.log("OAuth disabled");
+      config.master_uri = kubeBase;
     }
     var answer = "window.OPENSHIFT_CONFIG = " + stringifyObject(config);
     res.set('Content-Type', 'application/javascript');
