@@ -39,7 +39,7 @@
             </div>
           </div>
 
-          <div class="col-md-12 pipeline-environemnts-panel" ng-show="item.environments.length" hawtio-template-popover
+          <div class="col-md-12 pipeline-environments-panel" ng-show="item.environments.length" hawtio-template-popover
                content="itemDescriptionTooltip.html">
             <span title="The environments that the build deploys to during the pipeline">Environments</span>
             <div class="col-md-12 pipeline-environemnts">
@@ -207,9 +207,22 @@
   </div>
   <div class="row" ng-show="executing">
     <div class="col-md-12">
-      <p class="bg-info">executing...
-        <i class="fa fa-spinner fa-spin"></i>
-      </p>
+      <div class="alert alert-success">
+        <span class="pficon pficon-info"></span>
+        <strong>Executing...</strong>
+      </div>
+    </div>
+  </div>
+  <div class="row" ng-show="errorData">
+    <div class="col-md-12">
+      <div class="alert alert-warning alert-dismissable">
+        <button type="button" class="close" ng-click="errorData = null" aria-hidden="true">
+          <span class="pficon pficon-close"></span>
+        </button>
+        <span class="pficon pficon-warning-triangle-o"></span>
+        <p>The last operation resulted in the following error:</p>
+        <div ng-bind-html="errorData"></div>
+      </div>
     </div>
   </div>
   <div class="row" ng-show="response">
@@ -235,11 +248,7 @@
   </div>
   <div ng-hide="fetched">
     <div class="row">
-      <div class="col-md-12">
-        <div class="align-center">
-          <i class="fa fa-spinner fa-spin"></i>
-        </div>
-      </div>
+      <div class="spinner spinner-lg"></div>
     </div>
   </div>
   <div ng-show="fetched && !wizardCompleted">
@@ -273,7 +282,11 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" ng-show="executing">
+      <div class="spinner spinner-lg"></div>
+    </div>
+
+    <div class="row" ng-hide="executing">
       <div class="col-md-12">
         <div hawtio-form-2="schema" entity='entity' name="forge"></div>
       </div>

@@ -234,6 +234,7 @@ module Forge {
             }).
             error(function (data, status, headers, config) {
               $scope.executing = false;
+              $scope.errorData = data;
               log.warn("Failed to load " + url + " " + data + " " + status);
             });
         };
