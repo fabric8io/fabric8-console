@@ -254,6 +254,12 @@ module Forge {
             });
             var json = angular.toJson(schemaWithoutValues);
             if (json !== $scope.previousSchemaJson) {
+              if ($scope.id === "project-new") {
+                log.debug("Adding project name regex");
+                Core.pathSet(schema, ['properties', 'named', 'input-attributes'], {
+                  pattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'
+                });
+              }
               //console.log("updated schema: " + json);
               $scope.previousSchemaJson = json;
               $scope.schema = schema;
@@ -346,7 +352,7 @@ module Forge {
               success(function (data, status, headers, config) {
                 if (data) {
                   $scope.fetched = true;
-                  console.log("updateData loaded schema");
+                  log.debug("updateData loaded schema: ", data);
                   updateSchema(data);
                   setModelCommandInputs(ForgeModel, $scope.resourcePath, $scope.id, $scope.schema);
                   onSchemaLoad();
