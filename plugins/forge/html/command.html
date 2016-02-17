@@ -297,6 +297,8 @@
       <div class="form-group">
         <div class="col-sm-2">
           <p class="text-warning pull-right" ng-show="validationMessage">{{validationMessage}}</p>
+          <p class="text-warning pull-right" ng-show="form.named.$error.pattern">Name must be a valid DNS domain name</p>
+          <p class="text-warning pull-right" ng-show="form.$error.required.length" ng-repeat="item in form.$error.required">{{getLabel(item.$name)}} is required</p>
         </div>
         <div class="col-sm-10">
           <div class="pull-right">
@@ -310,7 +312,7 @@
             <button class="btn btn-primary"
                     title="Perform this command"
                     ng-show="fetched"
-                    ng-disabled="executing || !isFormValid()"
+                    ng-disabled="executing || form.$invalid"
                     ng-click="execute()">
               Next&nbsp;&nbsp;&gt;
             </button>

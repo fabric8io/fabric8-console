@@ -75,7 +75,7 @@ module Forge {
         }
 
         function onRouteChanged() {
-          console.log("route updated; lets clear the entity");
+          log.debug("route updated; lets clear the entity");
           $scope.entity = {
           };
           $scope.inputList = [$scope.entity];
@@ -92,31 +92,16 @@ module Forge {
 
         $scope.$on('$routeChangeSuccess', onRouteChanged);
 
-        $scope.isFormValid = () => {
-          var schema = $scope.schema || {};
-          var properties = schema.properties || {};
-          var entity = $scope.entity || {};
-          var valid = true;
-          var missingFields = [];
-          angular.forEach(schema.required, (propertyName) => {
-            var value = entity[propertyName];
-            if (!value) {
-              valid = false;
-              var property = properties[propertyName] || {};
-              var title = property.title || propertyName;
-              missingFields.push(title);
-            }
-          });
-          var validationMessage = "";
-          if (missingFields.length) {
-            if (missingFields.length == 1) {
-              validationMessage = "required field: " + missingFields[0];
-            } else {
-              validationMessage = "required fields: " + missingFields.join(", ");
-            }
+        $scope.$on('hawtio-form2-form', ($event, formInfo) => {
+          if (formInfo.name === "forge") {
+            $scope.form = formInfo.form;
           }
-          $scope.validationMessage = validationMessage;
-          return valid;
+        });
+
+        $scope.getLabel = (name:string) => {
+          var property = $scope.schema.properties[name] || {};
+          var label = property.label || property.title || _.capitalize(name);
+          return label;
         };
 
         $scope.execute = () => {
@@ -254,13 +239,6 @@ module Forge {
             });
             var json = angular.toJson(schemaWithoutValues);
             if (json !== $scope.previousSchemaJson) {
-              if ($scope.id === "project-new") {
-                log.debug("Adding project name regex");
-                Core.pathSet(schema, ['properties', 'named', 'input-attributes'], {
-                  pattern: '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*'
-                });
-              }
-              //console.log("updated schema: " + json);
               $scope.previousSchemaJson = json;
               $scope.schema = schema;
               configureCommands($timeout, $templateCache, $scope.id, $scope.entity, schema);
@@ -308,7 +286,7 @@ module Forge {
                   updateSchema(schema);
                 }
               }
-              Core.$apply($scope);
+              //Core.$apply($scope);
 
               /*
                * Lets throttle the validations so that we only fire another validation a little

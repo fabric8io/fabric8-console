@@ -9,6 +9,11 @@ module Forge {
    */
   export function configureCommands($timeout, $templateCache, commandId, entity, schema) {
     var properties = schema.properties || {};
+    var required = schema.required || [];
+    _.forEach(required, (name) => {
+      Core.pathSet(properties, [name, 'input-attributes', 'required'], true);
+    });
+    log.debug("Configuring schema, commandId: ", commandId);
     if (commandId === "project-new") {
       schema.controls = ["type", "*"];
 
@@ -19,6 +24,7 @@ module Forge {
       var archetype = properties.archetype;
       var named = properties.named || {};
       named.title = "Name";
+      Core.pathSet(named, ['input-attributes', 'pattern'], '[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)');
 
       var projectType = properties.type || {};
       projectType.formTemplate = $templateCache.get("forgeProjectTypeChooser.html");
@@ -36,7 +42,7 @@ module Forge {
         if (overwrite) {
           overwrite.hidden = true;
         }
-        console.log("hiding targetLocation!");
+        log.debug("hiding targetLocation!");
 
         // lets default the type
 /*
