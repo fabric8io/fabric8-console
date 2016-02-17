@@ -62,7 +62,7 @@ module Forge {
             } else if (lower.startsWith("forge")) {
               icon = "img/icons/forge.svg";
             } else if (lower.startsWith("node")) {
-              icon = "img/icons/javascript.png";
+              icon = "img/icons/node.svg";
             } else if (lower.startsWith("python") || lower.startsWith("django")) {
               icon = "img/icons/python.png";
             } else if (lower.startsWith("rails")) {
