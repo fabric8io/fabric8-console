@@ -19,7 +19,7 @@ module Wiki {
 
 
     constructor($scope) {
-      var ForgeApiURL = Kubernetes.inject("ForgeApiURL");
+      var ForgeApiURL = Kubernetes.inject<string>("ForgeApiURL");
       this.$http = Kubernetes.inject("$http");
       this.config = Forge.createHttpConfig();
       var owner = $scope.owner;

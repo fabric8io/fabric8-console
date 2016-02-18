@@ -185,10 +185,7 @@ module Forge {
         $scope.$requiredRCs = requiredRCs;
         $scope.$runningCDPipeline = runningCDPipeline;
         var url = "";
-        $location = Kubernetes.inject("$location");
-        if ($location) {
-          url = $location.url();
-        }
+        url = $location.url();
         if (!url) {
           url = window.location.toString();
         }

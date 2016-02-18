@@ -177,7 +177,7 @@ module Forge {
       repo.$buildsLink = "/kubernetes/builds?q=/" + resourcePath + ".git";
       var injector = HawtioCore.injector;
       if (injector) {
-        var ServiceRegistry = injector.get("ServiceRegistry");
+        var ServiceRegistry = injector.get<Kubernetes.ServiceRegistryService>("ServiceRegistry");
         if (ServiceRegistry) {
           var orionLink = ServiceRegistry.serviceLink(orionServiceName);
           var gogsService = ServiceRegistry.findService(gogsServiceName);

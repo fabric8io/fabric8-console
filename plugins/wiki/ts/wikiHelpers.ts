@@ -713,7 +713,7 @@ module Wiki {
         var prefix = "";
         var injector = HawtioCore.injector;
         if (injector) {
-            prefix = injector.get("WikiGitUrlPrefix") || "";
+            prefix = injector.get<string>("WikiGitUrlPrefix") || "";
         }
         return prefix;
     }

@@ -9,7 +9,7 @@ module Forge {
   }
 
   export function forgeProject() {
-    var answer = Kubernetes.inject("ForgeProject");
+    var answer = Kubernetes.inject<ForgeProjectService>("ForgeProject");
     if (!answer) {
       log.warn("No ForgeProject service!");
       answer = new ForgeProjectService();

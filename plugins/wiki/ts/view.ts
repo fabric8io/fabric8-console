@@ -445,7 +445,7 @@ module Wiki {
           var imageURL = 'git/' + $scope.branch;
           log.debug("$scope: ", $scope);
           imageURL = UrlHelpers.join(imageURL, $scope.pageId);
-          var interpolateFunc = $interpolate($templateCache.get("imageTemplate.html"));
+          var interpolateFunc = $interpolate($templateCache.get<string>("imageTemplate.html"));
           $scope.html = interpolateFunc({
             imageURL: imageURL
           });
