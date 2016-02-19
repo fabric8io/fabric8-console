@@ -10,7 +10,7 @@ module Forge {
       $scope.id = "camel-get-components";
       initScope($scope, $location, $routeParams);
 
-      var addComponent = $location.path().endsWith("Component");
+      var addComponent = _.endsWith($location.path(), "Component");
 
       var resourcePath = "";
 

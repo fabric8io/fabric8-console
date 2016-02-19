@@ -65,7 +65,7 @@ module Forge {
         var password = login.password;
         if (user && password) {
           var userPwd = user + ':' + password;
-          login.authHeader = 'Basic ' + (userPwd.encodeBase64());
+          login.authHeader = 'Basic ' + btoa(userPwd);
           updateData();
         }
       };

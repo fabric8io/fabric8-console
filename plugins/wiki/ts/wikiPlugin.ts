@@ -70,7 +70,7 @@ module Wiki {
           }
         });
         if (extendedMenu.length > 1) {
-          menu.add(extendedMenu);
+          menu.push(extendedMenu);
         }
       }
     };

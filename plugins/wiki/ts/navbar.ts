@@ -107,11 +107,11 @@ module Wiki {
       var path = Wiki.pageId($routeParams, $location);
       var array = path ? path.split("/") : [];
       angular.forEach(array, (name) => {
-        if (!name.startsWith("/") && !href.endsWith("/")) {
+        if (!_.startsWith(name, "/") && !_.endsWith(href, "/")) {
           href += "/";
         }
         href += Wiki.encodePath(name);
-        if (!name.isBlank()) {
+        if (!Core.isBlank(name)) {
           $scope.breadcrumbs.push({href: href, name: name});
         }
       });

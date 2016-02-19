@@ -170,19 +170,19 @@ module Wiki {
       } else {
         var xmlNamespaces = child.xml_namespaces || child.xmlNamespaces;
         if (xmlNamespaces && xmlNamespaces.length) {
-          if (xmlNamespaces.any((ns) => Wiki.camelNamespaces.any(ns))) {
+          if (_.some(xmlNamespaces, (ns) => _.some(Wiki.camelNamespaces, ns))) {
             if (useCamelCanvasByDefault) {
               prefix = start + "/camel/canvas";
             } else {
               prefix = start + "/camel/properties";
             }
-          } else if (xmlNamespaces.any((ns) => Wiki.dozerNamespaces.any(ns))) {
+          } else if (_.some(xmlNamespaces, (ns) => _.some(Wiki.dozerNamespaces, ns))) {
             prefix = start + "/dozer/mappings";
           } else {
             log.debug("child " + path + " has namespaces " + xmlNamespaces);
           }
         }
-        if (child.path.endsWith(".form")) {
+        if (_.endsWith(child.path, ".form")) {
           postFix = "?form=/";
         } else if (Wiki.isIndexPage(child.path)) {
           // lets default to book view on index pages

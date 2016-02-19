@@ -192,7 +192,7 @@ module Forge {
         }
         var host = parser.host;
         var requiredDataKeys = Kubernetes.sshSecretDataKeys;
-        if (kind && kind.startsWith('http')) {
+        if (kind && _.startsWith(kind, 'http')) {
           kind = 'https';
           requiredDataKeys = Kubernetes.httpsSecretDataKeys;
         } else {

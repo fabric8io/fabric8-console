@@ -517,7 +517,7 @@ module Wiki {
    * @returns {boolean}
    */
   export function isIndexPage(path: string) {
-    return path && (path.endsWith("index.md") || path.endsWith("index.html") || path.endsWith("index")) ? true : false;
+    return path && (_.endsWith(path, "index.md") || _.endsWith(path, "index.html") || _.endsWith(path, "index")) ? true : false;
   }
 
   export function viewLink($scope, pageId:string, $location, fileName:string = null) {
@@ -532,11 +532,11 @@ module Wiki {
       var path:string = $location.path();
       link = "#" + path.replace(/(edit|create)/, "view");
     }
-    if (fileName && pageId && pageId.endsWith(fileName)) {
+    if (fileName && pageId && _.endsWith(pageId, fileName)) {
       return link;
     }
     if (fileName) {
-      if (!link.endsWith("/")) {
+      if (!_.endsWith(link, "/")) {
         link += "/";
       }
       link += fileName;
@@ -764,11 +764,11 @@ module Wiki {
     var extension = fileExtension(name);
     // TODO could we use different icons for markdown v xml v html
     if (xmlNamespaces && xmlNamespaces.length) {
-      if (xmlNamespaces.any((ns) => Wiki.camelNamespaces.any(ns))) {
+      if (_.some(xmlNamespaces, (ns) => _.some(Wiki.camelNamespaces, ns))) {
         icon = "img/icons/camel.svg";
-      } else if (xmlNamespaces.any((ns) => Wiki.dozerNamespaces.any(ns))) {
+      } else if (_.some(xmlNamespaces, (ns) => _.some(Wiki.dozerNamespaces, ns))) {
         icon = "img/icons/dozer/dozer.gif";
-      } else if (xmlNamespaces.any((ns) => Wiki.activemqNamespaces.any(ns))) {
+      } else if (_.some(xmlNamespaces, (ns) => _.some(Wiki.activemqNamespaces, ns))) {
         icon = "img/icons/messagebroker.svg";
       } else {
         log.debug("file " + name + " has namespaces " + xmlNamespaces);
@@ -980,7 +980,7 @@ module Wiki {
 
   export function pageIdFromURI(url:string) {
     var wikiPrefix = "/wiki/";
-    if (url && url.startsWith(wikiPrefix)) {
+    if (url && _.startsWith(url, wikiPrefix)) {
       var idx = url.indexOf("/", wikiPrefix.length + 1);
       if (idx > 0) {
         return url.substring(idx + 1, url.length)
@@ -1065,7 +1065,7 @@ module Wiki {
       return Wiki.branchLink($scope, href + extension, $location) + extension;
     }
 
-    if (!Wiki.excludeAdjustmentPrefixes.any((exclude) => {
+    if (!_.some(Wiki.excludeAdjustmentPrefixes, (exclude) => {
       return href.startsWith(exclude);
     })) {
       return '#' + folderPath + "/" + href + extension + $location.hash();

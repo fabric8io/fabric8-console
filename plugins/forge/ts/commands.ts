@@ -88,7 +88,7 @@ module Forge {
               selectedCommands = selectedCommands.concat(apps);
             }
           });
-          $scope.commandSelector.selectedCommands = selectedCommands.sortBy("name");
+          $scope.commandSelector.selectedCommands = _.sortBy(selectedCommands, "name");
         },
 
         select: (command, flag) => {
