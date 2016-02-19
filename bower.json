@@ -30,7 +30,8 @@
     "hawtio-integration": "~2.0.4",
     "hawtio-utilities": "~2.0.24",
     "angular-tree-control": "~0.2.21",
-    "hawtio-dashboard": "~2.0.6"
+    "hawtio-dashboard": "~2.0.6",
+    "sugar": "sugarjs#^1.4.1"
   },
   "devDependencies": {
     "hawtio-core-dts": "~2.0.0"
