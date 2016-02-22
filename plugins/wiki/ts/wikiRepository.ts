@@ -54,7 +54,7 @@ module Wiki {
               details = data;
               var content = data.content;
               if (content) {
-                details.text = content.decodeBase64();
+                details.text = window.atob(content);
               }
             }
             fn(details);

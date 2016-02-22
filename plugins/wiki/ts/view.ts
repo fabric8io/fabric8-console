@@ -197,7 +197,7 @@ module Wiki {
     };
 
     $scope.fileClass = (entity) => {
-      if (entity.name.has(".profile")) {
+      if (entity.name.indexOf(".profile") > -1) {
         return "green";
       }
       return "";
@@ -499,29 +499,14 @@ module Wiki {
       $scope.children = null;
 
       if (details.directory) {
-        var directories = details.children.filter((dir) => {
-          return dir.directory;
-        });
-        var profiles = details.children.filter((dir) => {
-          return false;
-        });
-        var files = details.children.filter((file) => {
-          return !file.directory;
-        });
-        directories = directories.sortBy((dir) => {
-          return dir.name;
-        });
-        profiles = profiles.sortBy((dir) => {
-          return dir.name;
-        });
-        files = files.sortBy((file) => {
-          return file.name;
-        })
-          .sortBy((file) => {
-            return file.name.split('.').last();
-          });
+        var directories = _.filter(details.children, (dir:any) => dir.directory);
+        var profiles = _.filter(details.children, (dir) => false);
+        var files = _.filter(details.children, (file:any) => !file.directory);
+        directories = _.sortBy(directories, (dir:any) => dir.name);
+        profiles = _.sortBy(profiles, (dir:any) => dir.name);
+        files = _.sortBy(_.sortBy(files, (file:any) => file.name), (file) => _.last(file.name.split('.')));
         // Also enrich the response with the current branch, as that's part of the coordinate for locating the actual file in git
-        $scope.children = (<any>Array).create(directories, profiles, files).map((file) => {
+        $scope.children = [].concat(directories, profiles, files).map((file) => {
           file.branch = $scope.branch;
           file.fileName = file.name;
           if (file.directory) {

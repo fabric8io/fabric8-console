@@ -84,7 +84,7 @@ module Wiki {
     updateView();
 
     function isCreate() {
-      return $location.path().startsWith("/wiki/create");
+      return _.startsWith($location.path(), "/wiki/create");
     }
 
     function updateView() {
@@ -100,7 +100,7 @@ module Wiki {
     function onFileContents(details) {
       var contents = details.text;
       $scope.entity.source = contents;
-      $scope.fileName = $scope.pageId.split('/').last();
+      $scope.fileName = _.last($scope.pageId.split('/'));
       log.debug("file name: ", $scope.fileName);
       log.debug("file details: ", details);
       updateSourceView();
