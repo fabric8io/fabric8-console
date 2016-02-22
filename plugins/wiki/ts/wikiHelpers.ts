@@ -933,10 +933,10 @@ module Wiki {
   export function loadBranches(jolokia, wikiRepository, $scope, isFmc = false) {
     wikiRepository.branches((response) => {
       // lets sort by version number
-      $scope.branches = response.sortBy((v) => Core.versionToSortableString(v), true);
+      $scope.branches = _.sortBy(response, (v:any) => Core.versionToSortableString(v), true);
 
       // default the branch name if we have 'master'
-      if (!$scope.branch && $scope.branches.find((branch) => {
+      if (!$scope.branch && _.find($scope.branches, (branch) => {
         return branch === "master";
       })) {
         $scope.branch = "master";
