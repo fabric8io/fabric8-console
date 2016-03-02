@@ -1,14 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us" class="layout-pf layout-pf-fixed transitions">
 
   <head>
     <title>fabric8-console</title>
     <base href='/'></base>
-    <meta charset="UTF8" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- build:css style.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="libs/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.css" />
+    <link rel="stylesheet" href="libs/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css" />
+    <link rel="stylesheet" href="libs/bootstrap-select/dist/css/bootstrap-select.css" />
+    <link rel="stylesheet" href="libs/bootstrap-switch/dist/css/bootstrap3/bootstrap-switch.css" />
+    <link rel="stylesheet" href="libs/bootstrap-treeview/dist/bootstrap-treeview.min.css" />
+    <link rel="stylesheet" href="libs/c3/c3.css" />
+    <link rel="stylesheet" href="libs/datatables/media/css/jquery.dataTables.css" />
+    <link rel="stylesheet" href="libs/datatables-colreorder/css/dataTables.colReorder.css" />
+    <link rel="stylesheet" href="libs/datatables-colvis/css/dataTables.colVis.css" />
+    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="libs/google-code-prettify/bin/prettify.min.css" />
     <link rel="stylesheet" href="libs/patternfly/dist/css/patternfly.css" />
     <link rel="stylesheet" href="libs/patternfly/dist/css/patternfly-additions.css" />
     <link rel="stylesheet" href="libs/nvd3/build/nv.d3.css" />
@@ -37,6 +50,17 @@
     <!-- bower:js -->
     <script src="libs/jquery/dist/jquery.js"></script>
     <script src="libs/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="libs/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="libs/bootstrap-select/dist/js/bootstrap-select.js"></script>
+    <script src="libs/bootstrap-switch/dist/js/bootstrap-switch.js"></script>
+    <script src="libs/bootstrap-treeview/dist/bootstrap-treeview.min.js"></script>
+    <script src="libs/d3/d3.js"></script>
+    <script src="libs/c3/c3.js"></script>
+    <script src="libs/datatables/media/js/jquery.dataTables.js"></script>
+    <script src="libs/datatables-colreorder/js/dataTables.colReorder.js"></script>
+    <script src="libs/datatables-colvis/js/dataTables.colVis.js"></script>
+    <script src="libs/google-code-prettify/bin/prettify.min.js"></script>
+    <script src="libs/matchHeight/jquery.matchHeight-min.js"></script>
     <script src="libs/patternfly/dist/js/patternfly.js"></script>
     <script src="libs/angular/angular.js"></script>
     <script src="libs/angular-sanitize/angular-sanitize.js"></script>
@@ -49,7 +73,6 @@
     <script src="libs/hawtio-extension-service/dist/hawtio-extension-service.js"></script>
     <script src="libs/hawtio-utilities/dist/angular-file-upload.js"></script>
     <script src="libs/hawtio-utilities/dist/hawtio-utilities.js"></script>
-    <script src="libs/d3/d3.js"></script>
     <script src="libs/angular-nvd3/dist/angular-nvd3.js"></script>
     <script src="libs/angular-resource/angular-resource.js"></script>
     <script src="libs/codemirror/lib/codemirror.js"></script>
@@ -130,38 +153,46 @@
   </head>
 
   <body>
-    <nav class="navbar navbar-default navbar-fixed-top navbar-pf" role="navigation">
-      <div class="navbar-header" hawtio-extension name="hawtio-header">
-        <a class="navbar-brand" href="/"><img src="img/fabric8_logo_white.svg"></a>
+    <nav class="navbar navbar-pf-vertical">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">
+          <img class="navbar-brand-icon" style="margin-top: 7px; height: 20px;" src="img/fabric8_logo_white.svg"/>
+        </a>
+      </div>
+      <nav class="collapse navbar-collapse">
         <ul class="nav navbar-nav" ng-controller="Main.NavController">
           <li ng-class="projectsActive() ? 'active' : ''">
-            <a href="/workspaces">Projects</a>
+            <a href="/workspaces" title="Projects" class="nav-item-iconic"><span class="fa fa-tasks"></span></a>
           </li>
           <li ng-class="runtimeActive() ? 'active' : ''">
-            <a href="/namespaces">Runtime</a>
+            <a href="/namespaces" title="Runtime" class="nav-item-iconic"><span class="fa fa-gears"></span></a>
           </li>
         </ul>
-      </div>
-      <ul class="nav navbar-nav navbar-utility">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-            <span class="pficon pficon-user"></span>
-            User <b class="caret"></b>
-          </a>
-          <ul class="hawtio-user-dropdown dropdown-menu" hawtio-extension name="hawtio-user">
-          </ul>
-        </li>
-      </ul>
+        <ul class="nav navbar-nav navbar-right navbar-iconic">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle nav-item-iconic" data-toggle="dropdown">
+              <span class="fa pficon-user" style="font-family: PatternFlyIcons-webfont;"></span>
+              <span class="caret"></span>
+            </a>
+            <ul class="hawtio-user-dropdown dropdown-menu" hawtio-extension name="hawtio-user">
+            </ul>
+          </li>
+        </ul>
+      </nav>
     </nav>
 
+    <hawtio-tabs-outlet></hawtio-tabs-outlet>
 
-    <div id="main" class="container-fluid ng-cloak" ng-controller="HawtioNav.ViewController">
-      <div class="row" style="margin-left: -20px; margin-right: -20px">
-        <div hawtio-main-outlet ng-class="getClass()">
-          <hawtio-breadcrumbs-outlet></hawtio-breadcrumbs-outlet>
-          <div ng-include src="viewPartial"></div>
-        </div>
-        <hawtio-tabs-outlet></hawtio-tabs-outlet>
+    <div id="main" class="container-fluid container-pf-nav-pf-vertical container-pf-nav-pf-vertical-with-secondary" ng-controller="HawtioNav.ViewController" hawtio-main-outlet>
+      <div class="row" ng-class="getClass()">
+        <hawtio-breadcrumbs-outlet></hawtio-breadcrumbs-outlet>
+        <div ng-include src="viewPartial"></div>
       </div>
     </div>
 

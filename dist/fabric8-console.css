@@ -1,38 +1,47 @@
-.navbar-header .navbar-brand {
-  margin-right: 15px;
+/*
+.navbar-header {
+  .navbar-brand {
+    > img {
+      height: 20px;
+      margin-top: 0;
+    }
+    margin-right: 15px;
+  }
+  .nav.navbar-nav {
+    font-size: 14px;
+    .active > a {
+      font-weight: bold;
+      background-color: #565B5F
+    }
+  }
 }
-.navbar-header .navbar-brand > img {
-  height: 20px;
-  margin-top: 0;
-}
-.navbar-header .nav.navbar-nav {
-  font-size: 14px;
-}
-.navbar-header .nav.navbar-nav .active > a {
-  font-weight: bold;
-  background-color: #565B5F;
-}
+
 .navbar-utility {
   bottom: 0;
+
+  li, li.dropdown {
+    height: 100%;
+    a.dropdown-toggle {
+      height: 100%;
+      padding: 13px 10px;
+      .pficon-user {
+        top: 13px !important;
+      }
+    }
+  }
 }
-.navbar-utility li,
-.navbar-utility li.dropdown {
-  height: 100%;
+
+.sidebar-pf {
+  .nav-pills.nav-stacked {
+    a {
+      i, .fa {
+        margin-top: -2px;
+        margin-right: 5px;
+      }
+    }
+  }
 }
-.navbar-utility li a.dropdown-toggle,
-.navbar-utility li.dropdown a.dropdown-toggle {
-  height: 100%;
-  padding: 13px 10px;
-}
-.navbar-utility li a.dropdown-toggle .pficon-user,
-.navbar-utility li.dropdown a.dropdown-toggle .pficon-user {
-  top: 13px !important;
-}
-.sidebar-pf .nav-pills.nav-stacked a i,
-.sidebar-pf .nav-pills.nav-stacked a .fa {
-  margin-top: -2px;
-  margin-right: 5px;
-}
+*/
 body {
   padding-top: inherit;
 }
@@ -47,9 +56,11 @@ body {
 .kubernetes-view .row.filter-header {
   margin-top: 1em;
 }
+/*
 #main {
   margin-top: 44px;
 }
+*/
 /*
 .row {
   margin-left: auto !important;
