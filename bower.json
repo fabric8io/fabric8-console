@@ -37,6 +37,9 @@
     "hawtio-core-dts": "~2.0.0"
   },
   "overrides": {
+    "google-code-prettify": {
+      "main": []
+    },
     "nvd3": {
       "main": [
         "build/nv.d3.css"
