@@ -15,6 +15,7 @@ var gulp = require('gulp'),
     stringifyObject = require('stringify-object'),
     del = require('del'),
     file = require('gulp-file'),
+    path = require('path'),
     foreach = require('gulp-foreach');
 
 var plugins = gulpLoadPlugins({});
@@ -32,6 +33,7 @@ var config = {
   templateModule: pkg.name + '-templates',
   testTemplateModule: pkg.name + '-test-templates',
   dist: './dist/',
+  site: './site/',
   js: pkg.name + '.js',
   testJs: pkg.name + '-test.js',
   css: pkg.name + '.css',
@@ -187,6 +189,10 @@ gulp.task('less', function () {
   return gulp.src(config.less)
     .pipe(plugins.less({
       paths: [ path.join(__dirname, 'less', 'includes') ]
+    }))
+    .on('error', plugins.notify.onError({
+      message: '<%= error.message %>',
+      title: 'less file compilation error'
     }))
     .pipe(plugins.concat(config.css))
     .pipe(gulp.dest('./dist'));
@@ -481,7 +487,7 @@ gulp.task('site-fonts', function() {
     .pipe(plugins.chmod(644))
     .pipe(plugins.dedupe({ same: false }))
     .pipe(plugins.debug({title: 'site font files'}))
-    .pipe(gulp.dest('site/fonts'));
+    .pipe(gulp.dest(urljoin(config.site, 'fonts/')));
 });
 
 gulp.task('swf', function() {
@@ -490,14 +496,14 @@ gulp.task('swf', function() {
     .pipe(plugins.chmod(644))
     .pipe(plugins.dedupe({ same: false }))
     .pipe(plugins.debug({title: 'swf files'}))
-    .pipe(gulp.dest('site/img/', { overwrite: false }));
+    .pipe(gulp.dest(urljoin(config.site, 'img/'), { overwrite: false }));
 });
 
 gulp.task('site-files', ['swf', 'site-fonts'], function() {
-  return gulp.src(['resources/**', 'favicon.ico', 'resources/**', 'images/**', 'img/**', 'osconsole/config.*.js.tmpl', 'libs/codemirror/addon/**', 'libs/codemirror/mode/**', 'libs/nvd3/build/nv.d3.js'], {base: '.'})
+  return gulp.src(['resources/**', 'favicon.ico', 'resources/**', 'images/**', 'img/**', 'osconsole/config.*.js.tmpl'], {base: '.'})
     .pipe(plugins.chmod(644))
     .pipe(plugins.debug({title: 'site files'}))
-    .pipe(gulp.dest('site'));
+    .pipe(gulp.dest(config.site));
 });
 
 gulp.task('usemin', ['site-files'], function() {
@@ -522,19 +528,19 @@ gulp.task('usemin', ['site-files'], function() {
       ]
     }))
     .pipe(plugins.debug({title: 'usemin'}))
-    .pipe(gulp.dest('site'));
+    .pipe(gulp.dest(config.site));
 });
 
 gulp.task('site-resources', [], function() {
   return gulp.src(['libs/*/img/**', 'libs/*/images/**', 'libs/*/resources/**'])
-             .pipe(through(function(file) {
-               var parts = file.relative.split('/');
-               var plugin = parts.shift();
-               file.base = urljoin(file.base, plugin);
-               this.emit('data', file);
-             }))
-             .pipe(plugins.debug({ title: 'site-resources'}))
-             .pipe(gulp.dest('site'));
+    .pipe(gulp.dest(function(file) {
+      var parts = file.relative.split(path.sep);
+      var plugin = parts.shift();
+      var kind = parts.shift();
+      var answer = urljoin(config.site, kind, plugin, parts.join('/'));
+      console.log("copying: ", file.relative, " to: ", answer);
+      return answer;
+    }));
 });
 
 function getJavaConsoleName() {
@@ -549,7 +555,7 @@ gulp.task('download-java-console', function() {
   var base = 'https://github.com/hawtio/openshift-jvm/archive/'
   var name = getJavaConsoleName();
   return plugins.remoteSrc([name], { base: base })
-    .pipe(gulp.dest('site'));
+    .pipe(gulp.dest(config.site));
 });
 
 gulp.task('fetch-java-console', ['download-java-console'], function() {
@@ -565,7 +571,7 @@ gulp.task('fetch-java-console', ['download-java-console'], function() {
 gulp.task('rename-java-console', ['fetch-java-console'], function() {
   var dir = getJavaConsoleDir();
   return gulp.src([urljoin('site', dir, '**')])
-           .pipe(gulp.dest('site/java'));
+           .pipe(gulp.dest(urljoin(config.site, 'java/')));
 });
 
 gulp.task('delete-tmp-dir', ['rename-java-console'], function() {
@@ -577,25 +583,25 @@ gulp.task('delete-download-file', ['rename-java-console'], function() {
 });
 
 gulp.task('update-java-console-href', ['delete-tmp-dir', 'delete-download-file'], function() {
-  return gulp.src(['site/java/index.html', 'site/java/404.html'])
+  return gulp.src([urljoin(config.site, 'java/index.html'), urljoin(config.site, 'java/404.html')])
     .pipe(plugins.regexReplace({ regex: '<base href="/"', replace: '<base href="/java/"' }))
     .pipe(plugins.regexReplace({ regex: 'img/logo-origin-thin.svg', replace: '/img/fabric8_logo.svg' }))
-    .pipe(gulp.dest('site/java'));
+    .pipe(gulp.dest(urljoin(config.site, 'java/')));
 });
 
 gulp.task('404', ['usemin'], function() {
-  return gulp.src('site/index.html')
+  return gulp.src(urljoin(config.site, 'index.html'))
     .pipe(plugins.rename('404.html'))
-    .pipe(gulp.dest('site'));
+    .pipe(gulp.dest(config.site));
 });
 
 gulp.task('tweak-urls', ['usemin'], function() {
-  return gulp.src('site/style.css')
+  return gulp.src(urljoin(config.site, 'style.css'))
     .pipe(plugins.replace(/url\(\.\.\//g, 'url('))
     .pipe(plugins.replace(/url\(libs\/bootstrap\/dist\//g, 'url('))
     .pipe(plugins.replace(/url\(libs\/patternfly\/components\/bootstrap\/dist\//g, 'url('))
     .pipe(plugins.debug({title: 'tweak-urls'}))
-    .pipe(gulp.dest('site'));
+    .pipe(gulp.dest(config.site));
 });
 
 gulp.task('collect-dep-versions', ['get-commit-id'], function() {
@@ -617,7 +623,7 @@ gulp.task('get-commit-id', function(cb) {
 });
 
 gulp.task('write-version-json', ['site-files', 'collect-dep-versions'], function(cb) {
-  fs.writeFile('site/version.json', getVersionString(), cb);
+  fs.writeFile(urljoin(config.site, 'version.json'), getVersionString(), cb);
 });
 
 gulp.task('copy-images', ['404', 'tweak-urls'], function() {
@@ -638,34 +644,22 @@ gulp.task('copy-images', ['404', 'tweak-urls'], function() {
   return gulp.src(patterns)
            .pipe(plugins.debug({ title: 'img-copy' }))
            .pipe(plugins.chmod(644))
-           .pipe(gulp.dest('site/img'));
+           .pipe(gulp.dest(urljoin(config.site, 'img/')));
 });
 
 gulp.task('serve-site', function() {
-  var config = createConnectConfig();
+  var conf = createConnectConfig();
   var staticAssets = [{
       path: '/',
-      dir: 'site/'
+      dir: config.site
   }];
-  var dirs = fs.readdirSync('site/libs');
-  dirs.forEach(function(dir) {
-    dir = 'site/libs/' + dir;
-    console.log("dir: ", dir);
-    if (fs.statSync(dir).isDirectory()) {
-      console.log("Adding directory to search path: ", dir);
-      staticAssets.push({
-        path: '/',
-        dir: dir
-      });
-    }
-  });
-  config.staticAssets = staticAssets;
-  config.fallback = 'site/404.html',
-  setupAndListen(hawtio, config);
+  conf.staticAssets = staticAssets;
+  conf.fallback = path.join(config.site, '404.html'),
+  setupAndListen(hawtio, conf);
 });
 
 gulp.task('deploy', function() {
-  return gulp.src(['site/**', 'site/**/*.*', 'site/*.*'], { base: 'site' })
+  return gulp.src([urljoin(config.site, '**'), urljoin(config.site, '**/*.*'), urljoin(config.site, '*.*')], { base: 'site' })
     .pipe(plugins.debug({title: 'deploy'}))
     .pipe(plugins.ghPages({
       branch: 'builds',
