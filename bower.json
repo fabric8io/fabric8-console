@@ -31,7 +31,8 @@
     "hawtio-kube3d": "~2.0.17",
     "hawtio-integration": "~2.0.4",
     "angular-tree-control": "~0.2.21",
-    "hawtio-dashboard": "~2.0.6"
+    "hawtio-dashboard": "~2.0.6",
+    "font-awesome": "^4.5.0"
   },
   "devDependencies": {
     "hawtio-core-dts": "~2.0.0"
@@ -71,6 +72,7 @@
     "angular-resource": "~1.3.9",
     "angular": "~1.3.5",
     "patternfly": "~3.1.0",
-    "bootstrap": "~3.3.6"
+    "bootstrap": "~3.3.6",
+    "font-awesome": "^4.5.0"
   }
 }
