@@ -69,10 +69,14 @@ module Forge {
               icon = "img/icons/rails.png";
             } else if (lower.startsWith("ruby")) {
               icon = "img/icons/ruby.png";
+            } else if (lower.startsWith("spring-boot") || lower.startsWith("springboot") || lower.startsWith("microservice")) {
+              icon = "img/icons/spring-boot-logo.png";
+            } else if (lower.startsWith("spring")) {
+              icon = "img/icons/spring-logo.png";
             } else if (lower.startsWith("swift")) {
               icon = "img/icons/swift.png";
             } else if (lower.startsWith("vert")) {
-              icon = "img/icons/vertx.png";
+              icon = "img/icons/vertx.svg";
             }
           }
           projectType.$icon = icon;
