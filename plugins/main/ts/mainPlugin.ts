@@ -129,6 +129,11 @@ module Main {
   });
 
   hawtioPluginLoader.registerPreBootstrapTask((next) => {
+    JVM.skipJolokia = true;
+    next();
+  }, true);
+
+  hawtioPluginLoader.registerPreBootstrapTask((next) => {
     $.ajax({
       url: 'version.json?rev=' + Date.now(), 
       success: (data) => {
