@@ -80,7 +80,8 @@ gulp.task('example-tsc', ['tsc'], function() {
   var tsResult = gulp.src(config.testTs)
     .pipe(plugins.typescript(config.testTsProject))
     .on('error', plugins.notify.onError({
-      message: '#{ error.message }',
+      onLast: true,
+      message: '<%= error.message =>',
       title: 'Typescript compilation error - test'
     }));
 
@@ -165,6 +166,7 @@ gulp.task('tsc', ['clean-defs'], function() {
     .pipe(plugins.sourcemaps.init())
     .pipe(plugins.typescript(config.tsProject))
     .on('error', plugins.notify.onError({
+      onLast: true,
       message: '<%= error.message %>',
       title: 'Typescript compilation error'
     }));
@@ -191,6 +193,7 @@ gulp.task('less', function () {
       paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
     .on('error', plugins.notify.onError({
+      onLast: true,
       message: '<%= error.message %>',
       title: 'less file compilation error'
     }))
@@ -216,6 +219,7 @@ gulp.task('concat', ['template'], function() {
     .pipe(plugins.concat(config.js))
     .pipe(plugins.ngAnnotate())
     .on('error', plugins.notify.onError({
+      onLast: true,
       message: '<%= error.message %>',
       title: 'ng-annotate error'
     }))
