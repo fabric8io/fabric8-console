@@ -23,20 +23,8 @@ module Forge {
           $scope.repoName = pathSteps[pathSteps.length - 1];
         }
 
-
         initScope($scope, $location, $routeParams);
-
-        if ($scope.id === "devops-edit") {
-          $scope.breadcrumbConfig = Developer.createProjectSettingsBreadcrumbs($scope.projectId);
-          $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);
-          $scope.tabs = Developer.createProjectSettingsSubNavBars($scope.projectId);
-        }
         redirectToSetupSecretsIfNotDefined($scope, $location);
-
-        // for camel commands lets cancel / complete back to the camel perspective
-        if ($scope.id && $scope.id.startsWith("camel-")) {
-          $scope.$projectLink = Forge.projectCamelOverviewLink($scope.namespace, $scope.projectId);
-        }
 
         $scope.$completeLink = $scope.$projectLink;
         $scope.commandsLink = commandsLink($scope.resourcePath, $scope.projectId);
@@ -60,7 +48,7 @@ module Forge {
           var pageNumber = search["_page"];
           if (pageNumber && $scope.inputList.length < 2 && $scope.startup) {
             angular.forEach(search, (value, key) => {
-              if (key && !key.startsWith("_")) {
+              if (key && !_.startsWith(key, "_")) {
                 // TODO we could try check this against the schema to avoid bad properties?
                 // though maybe the REST API in fabric8-forge could do that for us?
                 $scope.entity[key] = value;
@@ -87,7 +75,6 @@ module Forge {
           } else {
             updateData();
           }
-          Core.$apply($scope);
         }
 
         $scope.$on('$routeChangeSuccess', onRouteChanged);
@@ -156,7 +143,6 @@ module Forge {
                     if (schema) {
                       $scope.entity = {};
                       // lets copy across any default values from the schema
-
                       function copyValuesFromSchema() {
                         angular.forEach(schema["properties"], (property, name) => {
                           var value = property.value;
@@ -166,17 +152,13 @@ module Forge {
                           }
                         });
                       }
-
-                      copyValuesFromSchema();
+                      //copyValuesFromSchema();
                       $scope.inputList.push($scope.entity);
-
                       $timeout(() => {
                         // lets do this async to be sure they don't get overwritten by the form widget
                         copyValuesFromSchema();
                       }, 200);
-
                       updateSchema(schema);
-
                       if (data.canMoveToNextStep) {
                         // lets clear the response we've another wizard page to do
                         data = null;
@@ -196,18 +178,28 @@ module Forge {
 
                 var outputProperties = (dataOrEmpty.outputProperties || {});
                 var projectId = dataOrEmpty.projectName || outputProperties.fullName;
-                if ($scope.response && projectId && $scope.id === 'project-new') {
-                  $scope.response = null;
-                  // lets forward to the devops edit page
-                  // lets set the secret name if its null
-                  if (!getProjectSourceSecret(localStorage, $scope.namespace, projectId)) {
-                    var defaultSecretName = getProjectSourceSecret(localStorage, $scope.namespace, null);
-                    setProjectSourceSecret(localStorage, $scope.namespace, projectId, defaultSecretName);
+                if ($scope.response) {
+                  switch ($scope.id) {
+                    case 'project-new':
+                      if (projectId) {
+                        // lets forward to the devops edit page
+                        // lets set the secret name if its null
+                        if (!getProjectSourceSecret(localStorage, $scope.namespace, projectId)) {
+                          var defaultSecretName = getProjectSourceSecret(localStorage, $scope.namespace, null);
+                          setProjectSourceSecret(localStorage, $scope.namespace, projectId, defaultSecretName);
+                        }
+                        var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit");
+                        log.info("Moving to the secrets edit path: " + editPath);
+                        $location.path(editPath);
+                      }
+                      break;
+                    case 'devops-edit':
+                      if (status === 'success') {
+                        $location.path($scope.completedLink);
+                      }
+                      break;
+                    default:
                   }
-                  var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit");
-                  //var editPath = Developer.projectSecretsLink($scope.namespace, projectId);
-                  log.info("Moving to the secrets edit path: " + editPath);
-                  $location.path(editPath);
                 }
               }
             } catch (e) {
@@ -215,7 +207,6 @@ module Forge {
             }
             $scope.startup = false;
             $scope.executing = false;
-            Core.$apply($scope);
             }).
             error(function (data, status, headers, config) {
               $scope.executing = false;
@@ -314,9 +305,9 @@ module Forge {
             status = "";
           }
           if (status.startsWith("suc")) {
-            return "bg-success";
+            return "alert-success";
           }
-          return "bg-warning"
+          return "alert-warning";
         }
 
         function updateData() {
@@ -335,13 +326,10 @@ module Forge {
                   setModelCommandInputs(ForgeModel, $scope.resourcePath, $scope.id, $scope.schema);
                   onSchemaLoad();
                 }
-                Core.$apply($scope);
               }).
               error(function (data, status, headers, config) {
                 log.warn("Failed to load " + url + " " + data + " " + status);
               });
-          } else {
-            Core.$apply($scope);
           }
         }
 
@@ -365,7 +353,7 @@ module Forge {
         function onSchemaLoad() {
           // lets update the value if its blank with the default values from the properties
           var schema = $scope.schema;
-          $scope.fetched = schema;
+          $scope.fetched = schema ? true : false;
           var entity = $scope.entity;
           if (schema) {
             angular.forEach(schema.properties, (property, key) => {

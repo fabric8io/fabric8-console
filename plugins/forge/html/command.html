@@ -6,29 +6,12 @@
     <div ng-controller="Forge.PipelinePicker">
       <div class="form-group pipeline-chooser">
         <label class="col-sm-2 control-label">Pipeline</label>
-
-
-        <!--
-              <div class="col-sm-12">
-                <div class="">
-                  <hawtio-filter ng-model="tableConfig.filterOptions.filterText"
-                                 save-as="forge-pipeline-selector"
-                                 css-class="pull-right input-xxlarge"
-                                 placeholder="Filter pipelines..."></hawtio-filter>
-                </div>
-              </div>
-        -->
       </div>
       <div class="pipeline-chooser">
         <div pf-data-tiles config="tileConfig" items="pipelines">
           <div class="col-md-12" hawtio-template-popover content="itemDescriptionTooltip.html">
             <span class="pipeline-name"><i class="fa fa-ellipsis-h"></i>&nbsp;{{item.label}}</span>
           </div>
-          <!--
-                  <div class="col-md-12" title="{{item.description}}">
-                    <img class="camel-icon" src="{{item.$icon}}">
-                  </div>
-          -->
           <div class="col-md-12 pipeline-stages-panel" ng-show="item.stages.length" hawtio-template-popover
                content="itemDescriptionTooltip.html">
             <span title="These are the named stages inside the pipeline">Stages</span>
@@ -38,7 +21,6 @@
               </span>
             </div>
           </div>
-
           <div class="col-md-12 pipeline-environments-panel" ng-show="item.environments.length" hawtio-template-popover
                content="itemDescriptionTooltip.html">
             <span title="The environments that the build deploys to during the pipeline">Environments</span>
@@ -51,20 +33,6 @@
         </div>
       </div>
     </div>
-
-<!--
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Description</label>
-
-        <div class="col-sm-10">
-          <div class="panel panel-default">
-            <div class="panel-body">
-              <div ng-bind-html="html"></div>
-            </div>
-          </div>
-        </div>
-      </div>
--->
   </script>
   <script type="text/ng-template" id="devOpsPipelineChooserStages.html">
     <div class="ngCellText">
@@ -102,17 +70,6 @@
   </script>
   <script type="text/ng-template" id="camelComponentChooser.html">
     <div ng-controller="Forge.CamelComponentPicker">
-
-<!--
-      <div class="col-sm-12">
-        <div class="">
-          <hawtio-filter ng-model="tableConfig.filterOptions.filterText"
-                         save-as="forge-artifact-selector"
-                         css-class="input-xxlarge"
-                         placeholder="Filter archetypes..."></hawtio-filter>
-        </div>
-      </div>
--->
       <div class="form-group">
         <label class="col-sm-2 control-label">Component</label>
         <div class="col-sm-12 camel-component-chooser">
@@ -132,7 +89,6 @@
           <p class="help-block">Choose the component for the endpoint</p>
         </div>
       </div>
-
     </div>
   </script>
 
@@ -147,11 +103,6 @@
               <div class="col-md-12 {{item.$class}}" title="{{item.description}}">
                 <span>{{item.title}}</span>
               </div>
-<!--
-              <div class="col-md-12" title="{{item.description}}">
-                <img class="camel-icon" src="{{item.$icon}}">
-              </div>
--->
             </div>
           </div>
         </div>
@@ -225,14 +176,17 @@
       </div>
     </div>
   </div>
-  <div class="row" ng-show="response">
+  <div class="row forge-response" ng-show="response">
     <div class="col-md-12">
-      <p ng-show="response.message" ng-class="responseClass"><span class="response-message">{{response.message}}</span>
-      </p>
-
-      <p ng-show="response.output" ng-class="responseClass"><span class="response-output">{{response.output}}</span></p>
-
-      <p ng-show="response.err" ng-class="bg-warning"><span class="response-err">{{response.err}}</span></p>
+      <div class="alert" ng-show="response.message" ng-class="responseClass">
+        <pre class="response-message">{{response.message}}</pre>
+      </div>
+      <div class="alert" ng-show="response.output" ng-class="responseClass">
+        <pre class="response-output">{{response.output}}</pre>
+      </div>
+      <div class="alert" ng-show="response.err" ng-class="bg-warning">
+        <pre class="response-err">{{response.err}}</pre>
+      </div>
     </div>
   </div>
   <div class="row" ng-show="response && !invalid">
