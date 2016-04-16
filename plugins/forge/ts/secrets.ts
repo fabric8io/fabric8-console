@@ -249,8 +249,9 @@ module Forge {
           Core.$apply($scope);
         }
 
+        var projectsOrNamespaces = Kubernetes.isOpenShift ? $scope.model.projects : $scope.model.namespaces;
         if (!$scope.secretNamespace) {
-          angular.forEach($scope.model.projects, (project) => {
+          angular.forEach(projectsOrNamespaces, (project) => {
             var name = Kubernetes.getName(project);
             if (name === namespaceName) {
               $scope.secretNamespace = project;
@@ -259,11 +260,11 @@ module Forge {
           });
         }
 
-        if (!$scope.secretNamespace && $scope.model.projects && $scope.model.projects.length) {
+        if (!$scope.secretNamespace && projectsOrNamespaces && projectsOrNamespaces.length) {
           log.info("Creating a new namespace for the user secrets.... " + namespaceName);
           var project = {
             apiVersion: Kubernetes.defaultApiVersion,
-            kind: "Project",
+            kind: Kubernetes.isOpenShift ? "Project" : "Namespace",
             metadata: {
               name: namespaceName,
               labels: {

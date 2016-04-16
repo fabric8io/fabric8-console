@@ -262,6 +262,18 @@ module Forge {
     url = addQueryArgument(url, "_gogsEmail", email);
     url = addQueryArgument(url, "secret", secret);
     url = addQueryArgument(url, "secretNamespace", secretNS);
+
+    if (!Kubernetes.isOpenShift) {
+      // lets pass the git URL too
+      var model = Kubernetes.inject("KubernetesModel");
+      var gitUrl = Core.pathGet(model, ["project", "spec", "source", "git", "uri"]);
+      //log.info("Found git URL: " + gitUrl);
+      if (gitUrl) {
+      } else {
+        url = addQueryArgument(url, "gitUrl", gitUrl);
+        log.warn("Could not find the gitUrl to send to jboss forge!");
+      }
+    }
     return url;
   }
 
@@ -328,6 +340,11 @@ module Forge {
     error(function (data, status, headers, config) {
       $scope.fetched = true;
       log.warn("Failed to load " + url + " " + data + " " + status);
+      if (angular.isFunction(onData)) {
+        onData({});
+      } else {
+        log.warn("onData is not a function!: " + onData);
+      }
       Core.$apply($scope);
     });
   }
