@@ -21,7 +21,9 @@ module Forge {
       var userName = Kubernetes.currentUserName();
 
       var createdSecret = $location.search()["secret"];
-      var projectClient = Kubernetes.createKubernetesClient("projects");
+      var projectOrNamespaceKind = Kubernetes.isOpenShift ? "Project" : "Namespace";
+
+      var projectClient = Kubernetes.createKubernetesClient(projectOrNamespaceKind.toLowerCase() + "s");
 
       $scope.requiredDataKeys = Kubernetes.httpsSecretDataKeys;
       $scope.sourceSecretNamespace = getSourceSecretNamespace(localStorage);
@@ -262,9 +264,9 @@ module Forge {
 
         if (!$scope.secretNamespace && projectsOrNamespaces && projectsOrNamespaces.length) {
           log.info("Creating a new namespace for the user secrets.... " + namespaceName);
-          var project = {
+            var project = {
             apiVersion: Kubernetes.defaultApiVersion,
-            kind: Kubernetes.isOpenShift ? "Project" : "Namespace",
+            kind: projectOrNamespaceKind,
             metadata: {
               name: namespaceName,
               labels: {
