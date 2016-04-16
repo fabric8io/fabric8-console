@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
      Copyright 2005-2015 Red Hat, Inc.
@@ -17,43 +16,149 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
   <parent>
     <groupId>io.fabric8.apps</groupId>
     <artifactId>fabric8-console</artifactId>
     <version>2.3-SNAPSHOT</version>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
 
   <artifactId>console-kubernetes</artifactId>
-  <packaging>pom</packaging>
 
   <name>Fabric8 Console for Kubernetes</name>
 
+  <description>
+    [Fabric8 Console](http://fabric8.io/v2/console.html) for working with Fabric8 and Kubernetes
+  </description>
+
   <properties>
-    <fabric8.combineDependencies>true</fabric8.combineDependencies>
-    <fabric8.pureKubernetes>true</fabric8.pureKubernetes>
+    <docker.image>${fabric8.dockerUser}fabric8-console:${project.version}</docker.image>
+    <docker.port.container.http>9090</docker.port.container.http>
+    <docker.port.container.jolokia />
 
-    <fabric8.apply.OAUTH_PROVIDER>basic</fabric8.apply.OAUTH_PROVIDER>
-    <fabric8.apply.OAUTH_AUTHORIZE_URI />
+    <fabric8.service.name>fabric8</fabric8.service.name>
+    <fabric8.service.type>LoadBalancer</fabric8.service.type>
+    <fabric8.replicationController.name>fabric8</fabric8.replicationController.name>
 
-    <fabric8.helm.chart>fabric8-console-kubernetes</fabric8.helm.chart>
+    <fabric8.service.port>80</fabric8.service.port>
+    <fabric8.service.containerPort>9090</fabric8.service.containerPort>
+    <fabric8.container.name>fabric8</fabric8.container.name>
+    <fabric8.label.project>fabric8</fabric8.label.project>
+    <fabric8.label.provider>fabric8</fabric8.label.provider>
+
+    <fabric8.helm.chart>developer-kube</fabric8.helm.chart>
   </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>io.fabric8.apps</groupId>
-      <artifactId>console</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-    <dependency>
-      <groupId>io.fabric8.apps</groupId>
-      <artifactId>templates</artifactId>
-      <version>${project.version}</version>
-      <classifier>kubernetes</classifier>
-      <type>json</type>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-generator</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-arquillian</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>kubernetes-assertions</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+  <!--
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.14.2</version>
+        <configuration>
+          <autoPull>false</autoPull>
+          <images>
+            <image>
+              <name>${docker.image}</name>
+              <build>
+                <assembly>
+                  <dockerFileDir>${basedir}/src/main/docker</dockerFileDir>
+                </assembly>
+              </build>
+            </image>
+          </images>
+        </configuration>
+        <executions>
+          <execution>
+             <id>build</id>
+             <phase>package</phase>
+             <goals>
+               <goal>build</goal>
+             </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>fabric8-snapshot</id>
+      <properties>
+        <docker.image>${fabric8.dockerUser}developer-kube</docker.image>
+       </properties>
+    </profile>
+
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.jolokia</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>${docker.maven.plugin.version}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>build</goal>
+                  <goal>push</goal>
+                </goals>
+                <phase>package</phase>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+  -->
+
+  <profiles>
+    <profile>
+      <id>fabric8-snapshot</id>
+      <properties>
+        <docker.image>${fabric8.dockerUser}fabric8-console</docker.image>
+       </properties>
+    </profile>
+  </profiles>
 
 </project>
