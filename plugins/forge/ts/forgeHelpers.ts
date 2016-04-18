@@ -271,7 +271,7 @@ module Forge {
       if (gitUrl) {
       } else {
         url = addQueryArgument(url, "gitUrl", gitUrl);
-        log.warn("Could not find the gitUrl to send to jboss forge!");
+        log.debug("Could not find the gitUrl to send to jboss forge!");
       }
     }
     return url;
