@@ -178,6 +178,24 @@ module Forge {
 
                 var outputProperties = (dataOrEmpty.outputProperties || {});
                 var projectId = dataOrEmpty.projectName || outputProperties.fullName;
+
+                function goToPath(newPath) {
+                  var answer = newPath;
+                  var url = $location.url();
+                  var path = $location.path();
+                  if (url && path) {
+                    if (path.startsWith(url)) {
+                      var relativePath = Core.trimLeading(path, url);
+                      if (relativePath) {
+                        answer = relativePath;
+                      }
+                    } else {
+                      log.warn("path " + path + " does not start with url: "+ url);
+                    }
+                  }
+                  log.info("Navigating to the project dashboard path: " + answer);
+                  $location.path(answer);
+                }
                 if ($scope.response) {
                   switch ($scope.id) {
                     case 'project-new':
@@ -189,13 +207,12 @@ module Forge {
                           setProjectSourceSecret(localStorage, $scope.namespace, projectId, defaultSecretName);
                         }
                         var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit");
-                        log.info("Moving to the secrets edit path: " + editPath);
-                        $location.path(editPath);
+                        goToPath(editPath);
                       }
                       break;
                     case 'devops-edit':
                       if (status === 'success') {
-                        $location.path($scope.completedLink);
+                        goToPath($scope.completedLink);
                       }
                       break;
                     default:
