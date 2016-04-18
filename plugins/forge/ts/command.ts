@@ -181,18 +181,18 @@ module Forge {
 
                 function goToPath(newPath) {
                   var answer = newPath;
-                  var url = $location.url();
+                  var prefix = HawtioCore.documentBase();
                   var path = $location.path();
-                  log.info("$location.url(): "+ url);
+                  log.info("HawtioCore.documentBase(): "+ prefix);
                   log.info("$location.path(): "+ path);
-                  if (url && path) {
-                    if (_.startsWith(path, url)) {
-                      var relativePath = Core.trimLeading(path, url);
+                  if (prefix && path) {
+                    if (_.startsWith(path, prefix)) {
+                      var relativePath = Core.trimLeading(path, prefix);
                       if (relativePath) {
                         answer = relativePath;
                       }
                     } else {
-                      log.warn("path " + path + " does not start with url: "+ url);
+                      log.warn("path " + path + " does not start with url: "+ prefix);
                     }
                   }
                   log.info("Navigating to the project dashboard path: " + answer);
