@@ -179,12 +179,11 @@ module Forge {
                 var outputProperties = (dataOrEmpty.outputProperties || {});
                 var projectId = dataOrEmpty.projectName || outputProperties.fullName;
 
-                function goToPath(newPath) {
-                  var answer = newPath;
+                function goToPath(path) {
+                  var answer = path;
                   var prefix = HawtioCore.documentBase();
-                  var path = $location.path();
                   log.info("HawtioCore.documentBase(): "+ prefix);
-                  log.info("$location.path(): "+ path);
+                  log.info("newPath: "+ path);
                   if (prefix && path) {
                     if (_.startsWith(path, prefix)) {
                       var relativePath = Core.trimLeading(path, prefix);
@@ -192,7 +191,7 @@ module Forge {
                         answer = relativePath;
                       }
                     } else {
-                      log.warn("path " + path + " does not start with url: "+ prefix);
+                      log.warn("path " + path + " does not start with documentBase(): "+ prefix);
                     }
                   }
                   log.info("Navigating to the project dashboard path: " + answer);
