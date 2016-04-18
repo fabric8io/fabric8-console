@@ -184,7 +184,7 @@ module Forge {
                   var url = $location.url();
                   var path = $location.path();
                   if (url && path) {
-                    if (path.startsWith(url)) {
+                    if (_.startsWith(path, url)) {
                       var relativePath = Core.trimLeading(path, url);
                       if (relativePath) {
                         answer = relativePath;
