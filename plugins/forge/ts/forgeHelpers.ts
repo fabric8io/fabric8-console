@@ -302,7 +302,7 @@ module Forge {
     if (!isSourceSecretDefinedForProject(ns, projectId)) {
       var loginPage = Developer.projectSecretsLink(ns, projectId) + "Required";
       log.info("No secret setup so redirecting to " + loginPage);
-      $location.path(loginPage)
+      Kubernetes.goToPath($location, loginPage);
     }
   }
 
@@ -355,7 +355,7 @@ module Forge {
   export function gotoCommand($location, projectId, commandId, resourcePath, input, pageNumber) {
     var href = commandLink(projectId, commandId, "");
     log.info("Navigating to forge page " + href + " with input " + angular.toJson(input) + " page " + pageNumber);
-    $location.path(href);
+    Kubernetes.goToPath($location, href);
     $location.search(input);
     if (pageNumber) {
       $location.search("_page", pageNumber);

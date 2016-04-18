@@ -465,7 +465,7 @@ module Wiki {
        var viewLink = $scope.breadcrumbs[$scope.breadcrumbs.length - 2];
        log.debug("goToView has found view " + viewLink);
        var path = Core.trimLeading(viewLink, "#");
-       $location.path(path);
+       Kubernetes.goToPath($location, path);
        } else {
        log.debug("goToView has no breadcrumbs!");
        }

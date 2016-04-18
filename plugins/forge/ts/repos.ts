@@ -87,7 +87,7 @@ module Forge {
         }
         var link = commandsLink(resourcePath, $scope.projectId);
         log.info("moving to commands link: " + link);
-        $location.path(link);
+        Kubernetes.goToPath($location, link);
       };
 
       $scope.delete = (projects) => {

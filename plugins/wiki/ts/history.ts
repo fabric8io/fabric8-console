@@ -110,7 +110,7 @@ module Wiki {
       }
       var link = startLink($scope) + "/diff/" + objectId + "/" + baseObjectId + "/" + $scope.pageId;
       var path = Core.trimLeading(link, "#");
-      $location.path(path);
+      Kubernetes.goToPath($location, path);
     };
 
     updateView();

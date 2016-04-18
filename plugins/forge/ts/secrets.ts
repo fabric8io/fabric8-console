@@ -169,7 +169,7 @@ module Forge {
 
           if (!projectId) {
             // lets redirect back to the create project page
-            $location.path(Developer.createProjectLink(ns));
+            Kubernetes.goToPath($location, Developer.createProjectLink(ns));
           }
         }
       };

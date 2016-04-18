@@ -179,24 +179,6 @@ module Forge {
                 var outputProperties = (dataOrEmpty.outputProperties || {});
                 var projectId = dataOrEmpty.projectName || outputProperties.fullName;
 
-                function goToPath(path) {
-                  var answer = path;
-                  var prefix = HawtioCore.documentBase();
-                  log.info("HawtioCore.documentBase(): "+ prefix);
-                  log.info("newPath: "+ path);
-                  if (prefix && path) {
-                    if (_.startsWith(path, prefix)) {
-                      var relativePath = Core.trimLeading(path, prefix);
-                      if (relativePath) {
-                        answer = relativePath;
-                      }
-                    } else {
-                      log.warn("path " + path + " does not start with documentBase(): "+ prefix);
-                    }
-                  }
-                  log.info("Navigating to the project dashboard path: " + answer);
-                  $location.path(answer);
-                }
                 if ($scope.response) {
                   switch ($scope.id) {
                     case 'project-new':
@@ -208,12 +190,12 @@ module Forge {
                           setProjectSourceSecret(localStorage, $scope.namespace, projectId, defaultSecretName);
                         }
                         var editPath = UrlHelpers.join(Developer.projectLink(projectId), "/forge/command/devops-edit");
-                        goToPath(editPath);
+                        Kubernetes.goToPath($location, editPath);
                       }
                       break;
                     case 'devops-edit':
                       if (status === 'success') {
-                        goToPath($scope.completedLink);
+                        Kubernetes.goToPath($location, $scope.completedLink);
                       }
                       break;
                     default:

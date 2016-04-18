@@ -47,7 +47,7 @@ module Wiki {
         } else {
           menuItem.action = () => {
             var targetUrl = branchLink(item, <string>$scope.pageId, $location);
-            $location.path(Core.toPath(targetUrl));
+            Kubernetes.goToPath($location, Core.toPath(targetUrl));
             Core.$apply($scope);
           }
         }

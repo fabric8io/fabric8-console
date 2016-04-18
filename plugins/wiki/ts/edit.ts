@@ -137,7 +137,7 @@ module Wiki {
     function goToView() {
       var path = Core.trimLeading($scope.viewLink(), "#");
       log.debug("going to view " + path);
-      $location.path(Wiki.decodePath(path));
+      Kubernetes.goToPath($location, Wiki.decodePath(path));
       log.debug("location is now " + $location.path());
     }
 
