@@ -183,6 +183,8 @@ module Forge {
                   var answer = newPath;
                   var url = $location.url();
                   var path = $location.path();
+                  log.info("$location.url(): "+ url);
+                  log.info("$location.path(): "+ path);
                   if (url && path) {
                     if (_.startsWith(path, url)) {
                       var relativePath = Core.trimLeading(path, url);
