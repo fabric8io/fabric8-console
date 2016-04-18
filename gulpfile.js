@@ -16,6 +16,7 @@ var gulp = require('gulp'),
     del = require('del'),
     file = require('gulp-file'),
     path = require('path'),
+    argv= require('yargs').argv,
     foreach = require('gulp-foreach');
 
 var plugins = gulpLoadPlugins({});
@@ -169,7 +170,14 @@ gulp.task('tsc', ['clean-defs'], function() {
       onLast: true,
       message: '<%= error.message %>',
       title: 'Typescript compilation error'
-    }));
+    }))
+    .on('error', function(error) {
+      argv._.forEach(function(arg) {
+        if (arg === 'build') {
+          throw "Compilation error, halting build";
+        }
+      });
+    });
 
     return eventStream.merge(
       tsResult.js

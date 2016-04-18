@@ -52,7 +52,8 @@
     "url-join": "0.0.1",
     "vinyl-paths": "^2.0.0",
     "which": "^1.0.8",
-    "wiredep": "^2.2.2"
+    "wiredep": "^2.2.2",
+    "yargs": "^4.6.0"
   },
   "dependencies": {}
 }
