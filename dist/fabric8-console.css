@@ -95,8 +95,7 @@ body {
 .navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li > a:hover {
   text-decoration: none;
 }
-.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li.ng-hide + li:before,
-.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li.ng-hide + li:after {
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li.ng-hide:after {
   display: none;
 }
 .navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li + li:before {
