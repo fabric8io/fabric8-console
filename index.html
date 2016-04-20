@@ -160,11 +160,13 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">
-          <img class="navbar-brand-icon" style="margin-top: 7px; height: 20px;" src="img/fabric8_logo_white.svg"/>
+        <a class="fabric8 navbar-brand" href="/">
+          <img class="navbar-brand-icon" src="img/fabric8_logo_white.svg"/>
         </a>
       </div>
-      <nav class="collapse navbar-collapse">
+      <nav class="fabric8 collapse navbar-collapse">
+        <hawtio-breadcrumbs-outlet></hawtio-breadcrumbs-outlet>
+        <!--
         <ul class="nav navbar-nav" ng-controller="Main.NavController">
           <li ng-class="projectsActive() ? 'active' : ''">
             <a href="/workspaces" title="Projects" class="nav-item-iconic"><span class="fa fa-tasks"></span></a>
@@ -173,6 +175,7 @@
             <a href="/namespaces" title="Runtime" class="nav-item-iconic"><span class="fa fa-gears"></span></a>
           </li>
         </ul>
+        -->
         <ul class="nav navbar-nav navbar-right navbar-iconic">
           <li class="dropdown">
             <a href="#" class="dropdown-toggle nav-item-iconic" data-toggle="dropdown">
@@ -190,7 +193,6 @@
 
     <div id="main" class="container-fluid container-pf-nav-pf-vertical container-pf-nav-pf-vertical-with-secondary" ng-controller="HawtioNav.ViewController" hawtio-main-outlet>
       <div class="row" ng-class="getClass()">
-        <hawtio-breadcrumbs-outlet></hawtio-breadcrumbs-outlet>
         <div ng-include src="viewPartial"></div>
       </div>
     </div>

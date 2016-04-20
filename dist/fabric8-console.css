@@ -1,47 +1,3 @@
-/*
-.navbar-header {
-  .navbar-brand {
-    > img {
-      height: 20px;
-      margin-top: 0;
-    }
-    margin-right: 15px;
-  }
-  .nav.navbar-nav {
-    font-size: 14px;
-    .active > a {
-      font-weight: bold;
-      background-color: #565B5F
-    }
-  }
-}
-
-.navbar-utility {
-  bottom: 0;
-
-  li, li.dropdown {
-    height: 100%;
-    a.dropdown-toggle {
-      height: 100%;
-      padding: 13px 10px;
-      .pficon-user {
-        top: 13px !important;
-      }
-    }
-  }
-}
-
-.sidebar-pf {
-  .nav-pills.nav-stacked {
-    a {
-      i, .fa {
-        margin-top: -2px;
-        margin-right: 5px;
-      }
-    }
-  }
-}
-*/
 body {
   padding-top: inherit;
 }
@@ -56,17 +12,6 @@ body {
 .kubernetes-view .row.filter-header {
   margin-top: 1em;
 }
-/*
-#main {
-  margin-top: 44px;
-}
-*/
-/*
-.row {
-  margin-left: auto !important;
-  margin-right: auto !important;
-}
-*/
 .pending-pods .ngCellText {
   padding-top: 5px;
   padding-bottom: 5px;
@@ -96,6 +41,276 @@ body {
 }
 .wiki-fixed {
   margin-top: inherit;
+}
+
+.navbar.navbar-pf-vertical {
+  height: 48px;
+  max-height: 48px;
+  line-height: 48px;
+  padding: 0;
+  margin: 0;
+}
+.navbar.navbar-pf-vertical .navbar-header {
+  height: 100%;
+}
+.navbar.navbar-pf-vertical .navbar-header > .navbar-toggle {
+  display: none;
+}
+.navbar.navbar-pf-vertical .navbar-header > .fabric8.navbar-brand {
+  height: 100%;
+  margin-left: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.navbar.navbar-pf-vertical .navbar-header > .fabric8.navbar-brand .navbar-brand-icon {
+  height: 20px;
+}
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse {
+  height: auto !important;
+  padding: 0;
+}
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb {
+  display: inline-block;
+  height: 48px;
+  line-height: 48px;
+}
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb {
+  height: 48px;
+  padding: 0;
+  display: inline-block;
+}
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li {
+  display: inline-block;
+  height: 100%;
+}
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li a,
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li span {
+  display: inline-block;
+  height: auto;
+  font-size: 14px;
+  font-weight: 600;
+  color: #dbdada;
+  vertical-align: baseline;
+}
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li > a:hover {
+  text-decoration: none;
+}
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li.ng-hide + li:before,
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li.ng-hide + li:after {
+  display: none;
+}
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li + li:before,
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li + li:after,
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li:first-child:before {
+  vertical-align: middle;
+  margin-right: 10px;
+  margin-left: -15px;
+  border-right: 0.5px solid #4a4a4a;
+  border-top-right-radius: 32px;
+  border-bottom-right-radius: 32px;
+  content: "";
+  display: inline-block;
+  height: 100%;
+  width: 30px;
+  padding: 0;
+}
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.navbar-right.navbar-iconic .nav-item-iconic {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.nav-pf-vertical {
+  top: 50px;
+}
+.nav-pf-vertical .list-group li:first-child {
+  border-top: none;
+}
+
+.camel-component-chooser .tiles-view-pf .tile {
+  height: 80px;
+  width: 180px;
+  padding: 2px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+.camel-component-chooser .camel-icon {
+  width: 64px;
+  height: 46px;
+}
+.camel-pattern-chooser .tiles-view-pf .tile {
+  height: 60px;
+  width: 140px;
+  padding: 2px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+.camel-pattern-chooser .tiles-view-pf .tile .rest,
+.camel-pattern-chooser .tiles-view-pf .tile .routing,
+.camel-pattern-chooser .tiles-view-pf .tile .transformation {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  vertical-align: middle;
+  padding: 3px 10px;
+}
+.camel-pattern-chooser .tiles-view-pf .tile .routing {
+  background-color: #f0f0a0;
+}
+.camel-pattern-chooser .tiles-view-pf .tile .transformation {
+  background-color: #f0ccc4;
+}
+.camel-pattern-chooser .tiles-view-pf .tile .rest {
+  background-color: #bdedf0;
+}
+
+.camel-node-list {
+  margin: 0px 10px;
+}
+.camel-node {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  background: #f1f1f1;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+  vertical-align: middle;
+  margin: 3px;
+  padding: 3px 10px;
+  display: inline-block;
+}
+.camel-node.camelContext {
+  border-width: 0px;
+  background: white;
+}
+img.camel-icon {
+  width: 32px;
+  height: 24px;
+  padding-right: 5px;
+}
+.camel-node a {
+  color: black;
+}
+.camel-node.route {
+  background: #e8e0d8;
+}
+.camel-node.log {
+  background: #eef8ff;
+}
+.camel-node.transform {
+  background: #ffd1c3;
+}
+.camel-node.from,
+.camel-node.to {
+  background: white;
+}
+.camel-node.from img.camel-icon,
+.camel-node.to img.camel-icon {
+  width: 40px;
+  height: 24px;
+  padding-right: 5px;
+}
+
+.camel-tabs .nav-tabs {
+  margin-top: 10px;
+}
+.camel-tabs .tab-content {
+  margin-top: 10px;
+}
+.camel-routes-table {
+  margin-top: 20px;
+}
+.camel-component-filter {
+  margin-top: 20px;
+}
+.camel-component-filter h3 {
+  margin: 0px;
+}
+.camel-component-filter .close {
+  float: none;
+}
+
+.row.forge-form-top-padding {
+  margin-top: 20px;
+}
+.project-type-chooser .tiles-view-pf .tile {
+  height: 80px;
+  width: 220px;
+  padding: 2px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+.project-type-chooser .camel-icon {
+  width: 64px;
+  height: 46px;
+}
+.pipeline-chooser .tiles-view-pf .tile {
+  height: 200px;
+  width: 340px;
+  padding: 2px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+.form-group.pipeline-chooser {
+  margin-bottom: 0px;
+}
+.pipeline-name {
+  font-weight: bold;
+}
+.pipeline-environemnts-panel,
+.pipeline-stages-panel {
+  margin-top: 20px;
+}
+.forge-response .alert pre {
+  border: none;
+  background: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.createProjectPage {
+  padding-top: 40px;
+}
+.archetype-chooser-panel table tbody tr,
+.pipeline-chooser-panel table tbody tr {
+  cursor: pointer;
+}
+.archetype-chooser-panel table tbody tr:hover,
+.pipeline-chooser-panel table tbody tr:hover {
+  background-color: #f8faff;
+}
+/*
+.pipeline-chooser-panel {
+  display: block;
+  height: 150px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.pipeline-chooser-panel-border {
+  padding-bottom: 20px;
+}
+*/
+/*
+table.pipeline-chooser thead,
+table.pipeline-chooser tbody {
+  display: block;
+}
+
+table.pipeline-chooser tbody {
+  height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+*/
+
+.select-table-filter {
+  padding-bottom: 5px;
+}
+
+img.menu-icon {
+  width: 18px;
+  height: 18px;
+  vertical-align: text-bottom;
 }
 
 /* wiki camel editor stuff */
@@ -305,192 +520,4 @@ body {
 }
 .wiki-grid .list-row:nth-child(odd) {
   background: #efefef;
-}
-
-.camel-component-chooser .tiles-view-pf .tile {
-  height: 80px;
-  width: 180px;
-  padding: 2px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-}
-.camel-component-chooser .camel-icon {
-  width: 64px;
-  height: 46px;
-}
-.camel-pattern-chooser .tiles-view-pf .tile {
-  height: 60px;
-  width: 140px;
-  padding: 2px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-}
-.camel-pattern-chooser .tiles-view-pf .tile .rest,
-.camel-pattern-chooser .tiles-view-pf .tile .routing,
-.camel-pattern-chooser .tiles-view-pf .tile .transformation {
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  vertical-align: middle;
-  padding: 3px 10px;
-}
-.camel-pattern-chooser .tiles-view-pf .tile .routing {
-  background-color: #f0f0a0;
-}
-.camel-pattern-chooser .tiles-view-pf .tile .transformation {
-  background-color: #f0ccc4;
-}
-.camel-pattern-chooser .tiles-view-pf .tile .rest {
-  background-color: #bdedf0;
-}
-
-.camel-node-list {
-  margin: 0px 10px;
-}
-.camel-node {
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  background: #f1f1f1;
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
-  vertical-align: middle;
-  margin: 3px;
-  padding: 3px 10px;
-  display: inline-block;
-}
-.camel-node.camelContext {
-  border-width: 0px;
-  background: white;
-}
-img.camel-icon {
-  width: 32px;
-  height: 24px;
-  padding-right: 5px;
-}
-.camel-node a {
-  color: black;
-}
-.camel-node.route {
-  background: #e8e0d8;
-}
-.camel-node.log {
-  background: #eef8ff;
-}
-.camel-node.transform {
-  background: #ffd1c3;
-}
-.camel-node.from,
-.camel-node.to {
-  background: white;
-}
-.camel-node.from img.camel-icon,
-.camel-node.to img.camel-icon {
-  width: 40px;
-  height: 24px;
-  padding-right: 5px;
-}
-
-.camel-tabs .nav-tabs {
-  margin-top: 10px;
-}
-.camel-tabs .tab-content {
-  margin-top: 10px;
-}
-.camel-routes-table {
-  margin-top: 20px;
-}
-.camel-component-filter {
-  margin-top: 20px;
-}
-.camel-component-filter h3 {
-  margin: 0px;
-}
-.camel-component-filter .close {
-  float: none;
-}
-
-.row.forge-form-top-padding {
-  margin-top: 20px;
-}
-.project-type-chooser .tiles-view-pf .tile {
-  height: 80px;
-  width: 220px;
-  padding: 2px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-}
-.project-type-chooser .camel-icon {
-  width: 64px;
-  height: 46px;
-}
-.pipeline-chooser .tiles-view-pf .tile {
-  height: 200px;
-  width: 340px;
-  padding: 2px;
-  margin-right: 5px;
-  margin-bottom: 10px;
-}
-.form-group.pipeline-chooser {
-  margin-bottom: 0px;
-}
-.pipeline-name {
-  font-weight: bold;
-}
-.pipeline-environemnts-panel,
-.pipeline-stages-panel {
-  margin-top: 20px;
-}
-.forge-response .alert pre {
-  border: none;
-  background: inherit;
-  padding: 0;
-  margin: 0;
-}
-
-.createProjectPage {
-  padding-top: 40px;
-}
-.archetype-chooser-panel table tbody tr,
-.pipeline-chooser-panel table tbody tr {
-  cursor: pointer;
-}
-.archetype-chooser-panel table tbody tr:hover,
-.pipeline-chooser-panel table tbody tr:hover {
-  background-color: #f8faff;
-}
-/*
-.pipeline-chooser-panel {
-  display: block;
-  height: 150px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.pipeline-chooser-panel-border {
-  padding-bottom: 20px;
-}
-*/
-/*
-table.pipeline-chooser thead,
-table.pipeline-chooser tbody {
-  display: block;
-}
-
-table.pipeline-chooser tbody {
-  height: 100px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-*/
-
-.select-table-filter {
-  padding-bottom: 5px;
-}
-
-img.menu-icon {
-  width: 18px;
-  height: 18px;
-  vertical-align: text-bottom;
 }
