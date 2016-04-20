@@ -99,8 +99,10 @@ body {
 .navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li.ng-hide + li:after {
   display: none;
 }
-.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li + li:before,
-.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li + li:after,
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li + li:before {
+  display: none;
+}
+.navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li:after,
 .navbar.navbar-pf-vertical .fabric8.collapse.navbar-collapse .nav.navbar-nav.nav-breadcrumb .breadcrumb > li:first-child:before {
   vertical-align: middle;
   margin-right: 10px;
