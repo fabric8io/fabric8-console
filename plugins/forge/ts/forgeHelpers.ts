@@ -53,7 +53,7 @@ module Forge {
 
     if (_.startsWith($scope.id, "camel-")) {
       $scope.breadcrumbConfig.push({
-        iconHtml: '<img class="menu-icon" src="/img/icons/camel.svg">',
+        iconHtml: '<img class="menu-icon" src="' + Core.url('/img/icons/camel.svg') + '">',
         label: 'Camel',
         href: Forge.projectCamelOverviewLink($scope.namespace, $scope.projectId)
       });
