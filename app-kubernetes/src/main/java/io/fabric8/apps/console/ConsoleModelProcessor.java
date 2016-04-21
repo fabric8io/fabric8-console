@@ -16,9 +16,9 @@
 
 package io.fabric8.apps.console;
 
+import io.fabric8.kubernetes.api.model.KubernetesListBuilder;
 import io.fabric8.kubernetes.api.model.PodSpecBuilder;
 import io.fabric8.kubernetes.generator.annotation.KubernetesModelProcessor;
-import io.fabric8.openshift.api.model.TemplateBuilder;
 
 import java.util.Arrays;
 
@@ -26,24 +26,13 @@ import java.util.Arrays;
 public class ConsoleModelProcessor {
     int jenkinshiftPort = 9191;
 
-    public void onList(TemplateBuilder builder) {
-        builder.addNewOAuthClientObject()
-                .withNewMetadata()
-                .withName("fabric8")
-                .and()
-                .withRedirectURIs(Arrays.asList(
-                        "http://localhost:9090",
-                        "http://localhost:2772",
-                        "http://localhost:9000",
-                        "http://fabric8.${DOMAIN}",
-                        "https://fabric8.${DOMAIN}"
-                )).and()
-                .addNewServiceAccountObject()
+    public void onList(KubernetesListBuilder builder) {
+        builder.addNewServiceAccountItem()
                 .withNewMetadata().withName("fabric8").endMetadata()
-                .endServiceAccountObject()
+                .endServiceAccountItem()
                 .build();
 
-      builder.addNewServiceObject()
+      builder.addNewServiceItem()
               .withNewMetadata()
               .withName("jenkinshift")
               .addToLabels("group", "io.fabric8.apps")
@@ -62,7 +51,7 @@ public class ConsoleModelProcessor {
               .addToSelector("project", "fabric8")
               .addToSelector("provider", "fabric8")
               .endSpec()
-              .endServiceObject()
+              .endServiceItem()
               .build();
     }
 
