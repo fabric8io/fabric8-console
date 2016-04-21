@@ -38,6 +38,7 @@
     <docker.port.container.http>9090</docker.port.container.http>
     <docker.port.container.jolokia />
 
+    <fabric8.pureKubernetes>true</fabric8.pureKubernetes>
     <fabric8.service.name>fabric8</fabric8.service.name>
     <fabric8.service.type>LoadBalancer</fabric8.service.type>
     <fabric8.replicationController.name>fabric8</fabric8.replicationController.name>
