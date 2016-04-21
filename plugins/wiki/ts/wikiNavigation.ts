@@ -32,7 +32,7 @@ module Wiki {
       {
         isValid: () => camelLink && Developer.forgeReadyLink() && Forge.forgeProject().hasPerspective("camel"),
         label: "Camel",
-        icon: "/img/icons/camel.svg",
+        icon: "img/icons/camel.svg",
         href: camelLink,
         title: "View the camel perspective for this project",
         isActive: (subTab, path) => {
