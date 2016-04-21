@@ -139,7 +139,6 @@
     <modules>
       <module>app-console</module>
       <module>app-kubernetes</module>
-      <module>app-templates</module>
     </modules>
 
     <build>
