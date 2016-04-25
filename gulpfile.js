@@ -259,6 +259,7 @@ function createConnectConfig() {
 
   var kubeBase = process.env.KUBERNETES_MASTER || 'http://localhost:9000';
   var kube = uri(urljoin(kubeBase, 'api'));
+  var kubeapis = uri(urljoin(kubeBase, 'apis'));
   var oapi = uri(urljoin(kubeBase, 'oapi'));
   console.log("Connecting to Kubernetes on: " + kube);
 
@@ -360,6 +361,12 @@ function createConnectConfig() {
     hostname: oapi.hostname(),
     path: '/oapi',
     targetPath: oapi.path()
+  }, {
+    proto: kubeapis.protocol(),
+    port: kubeapis.port(),
+    hostname: kubeapis.hostname(),
+    path: '/apis',
+    targetPath: kubeapis.path()
   }, {
     proto: kube.protocol(),
     hostname: kube.hostname(),
