@@ -22,6 +22,9 @@ module Forge {
           if (typeName === "Parent" || typeName === "Forge Addon (JAR)" || typeName === "Java Resources (JAR)") {
             // ignore
           } else {
+            if (_.startsWith(typeName, "WildFly Swarm")) {
+              typeName = "WildFly Swarm Microservice";
+            }
             var projectType = {
               label: typeName,
               value: typeName,
@@ -77,6 +80,8 @@ module Forge {
               icon = "img/icons/swift.png";
             } else if (lower.startsWith("vert")) {
               icon = "img/icons/vertx.svg";
+            } else if (lower.startsWith("wildfly swarm")) {
+              icon = "img/icons/wildfly-swarm.png";
             }
           }
           projectType.$icon = icon;
