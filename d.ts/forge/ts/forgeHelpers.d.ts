@@ -37,4 +37,5 @@ declare module Forge {
     function executeCommand($scope: any, $http: any, ForgeApiURL: any, commandId: any, projectId: any, request: any, onData: any, json?: boolean): void;
     function gotoCommand($location: any, projectId: any, commandId: any, resourcePath: any, input: any, pageNumber: any): void;
     function isMavenProjectType(projectName: any): boolean;
+    function showStackBuildSystemFinalName(projectName: any): boolean;
 }

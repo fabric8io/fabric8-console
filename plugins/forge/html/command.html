@@ -68,6 +68,44 @@
       </div>
     </div>
   </script>
+  <script type="text/ng-template" id="devOpsDependenciesChooser.html">
+    <div ng-controller="Forge.DependenciesPicker">
+      <form>
+        <fieldset>
+          <div class="form-group">
+            <label class="col-sm-2 control-label">Search for dependencies</label>
+            <div class="col-sm-10">
+              <input type="text" ng-model="currentItem"
+                     class="form-control"
+                     placeholder="Web, Camel, JPA, Actuator, Devtools..."
+                     typeahead="id for id in config.properties.dependencies.enum | filter:$viewValue"
+                     typeahead-template-url="devOpsDependenciesItem.html"
+                     typeahead-on-select="onItemSelected">
+              <p class="help-block">Add Spring Boot Starters and dependencies to your application</p>
+            </div>
+          </div><div class="form-group">
+            <label class="col-sm-2 control-label">Selected Dependencies</label>
+            <div class="col-sm-10">
+              <span class="selected-items" ng-repeat="item in selectedItems">
+                <span class="label label-success">
+                  {{item.name}}&nbsp;&nbsp;
+                  <i class="fa fa-remove clickable" title="Remove this dependency" ng-click="removeItem(item)"></i>
+                </span>
+                &nbsp;
+                &nbsp;
+              </span>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </script>
+  <script type="text/ng-template" id="devOpsDependenciesItem.html">
+    <a class="typeahead-matches">
+         <p class="title"><!--{{match.model.group}} : -->{{match.model.name}}</p>
+         <p>{{match.model.description}}</p>
+     </a>
+  </script>
   <script type="text/ng-template" id="camelComponentChooser.html">
     <div ng-controller="Forge.CamelComponentPicker">
       <div class="form-group">

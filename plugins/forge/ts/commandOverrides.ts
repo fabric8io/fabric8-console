@@ -60,14 +60,29 @@ module Forge {
         archetype.formTemplate = $templateCache.get("devOpsArchetypeChooser.html");
       }
 
+      // spring boot wizard
+      var dependencies = properties.dependencies;
+      if (dependencies) {
+        dependencies.formTemplate = $templateCache.get("devOpsDependenciesChooser.html");
+      }
+
       projectType.isMavenProjectType = isMavenProjectType;
+      projectType.showStackBuildSystemFinalName = showStackBuildSystemFinalName;
 
       // lets hide fields if the project type value is currently a non-maven project
-      angular.forEach(["buildSystem", "finalName", "stack", "topLevelPackage", "version"], (propertyName) => {
+      angular.forEach(["topLevelPackage", "version"], (propertyName) => {
         var property = properties[propertyName];
         if (property) {
           property['control-group-attributes'] = {
             'ng-show': "config.properties.type.isMavenProjectType(entity.type)"
+          };
+        }
+      });
+      angular.forEach(["buildSystem", "finalName", "stack"], (propertyName) => {
+        var property = properties[propertyName];
+        if (property) {
+          property['control-group-attributes'] = {
+            'ng-show': "config.properties.type.showStackBuildSystemFinalName(entity.type)"
           };
         }
       });
