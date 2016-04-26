@@ -66,6 +66,12 @@ module Forge {
         dependencies.formTemplate = $templateCache.get("devOpsDependenciesChooser.html");
       }
 
+      // WildFly Swarm wizard
+      var fractions = properties.fractions;
+      if (fractions) {
+        fractions.formTemplate = $templateCache.get("devOpsFractionsChooser.html");
+      }
+
       projectType.isMavenProjectType = isMavenProjectType;
       projectType.showStackBuildSystemFinalName = showStackBuildSystemFinalName;
 

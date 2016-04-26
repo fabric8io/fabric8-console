@@ -22,11 +22,12 @@ module Forge {
           if (typeName === "Parent" || typeName === "Forge Addon (JAR)" || typeName === "Java Resources (JAR)") {
             // ignore
           } else {
-            if (_.startsWith(typeName, "WildFly Swarm")) {
-              typeName = "WildFly Swarm Microservice";
+            var label = typeName;
+            if (_.startsWith(label, "WildFly Swarm")) {
+              label = "WildFly Swarm";
             }
             var projectType = {
-              label: typeName,
+              label: label,
               value: typeName,
               $icon: "",
               $maven: true

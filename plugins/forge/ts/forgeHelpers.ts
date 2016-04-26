@@ -379,7 +379,8 @@ module Forge {
   export function showStackBuildSystemFinalName(projectName) {
     if (projectName && angular.isString(projectName)) {
       var lower = projectName.toLowerCase();
-      if (lower.startsWith("wildfly-swarm") ||
+      if (
+        lower.startsWith("wildfly-swarm") ||
         lower.startsWith("wildfly swarm") ||
         lower.startsWith("spring boot") || lower.startsWith("spring-boot")) {
         return false;
