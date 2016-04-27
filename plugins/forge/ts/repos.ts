@@ -4,8 +4,8 @@
 
 module Forge {
 
-  export var ReposController = controller("ReposController", ["$scope", "$dialog", "$window", "$element", "$templateCache", "$routeParams", "$location", "localStorage", "$http", "$timeout", "ForgeApiURL", "KubernetesModel", "ServiceRegistry",
-    ($scope, $dialog, $window, $element, $templateCache, $routeParams, $location:ng.ILocationService, localStorage, $http, $timeout, ForgeApiURL, KubernetesModel: Kubernetes.KubernetesModelService, ServiceRegistry) => {
+  export var ReposController = controller("ReposController", ["$scope", "$dialog", "$window", "$element", "$templateCache", "$routeParams", "$location", "localStorage", "$http", "$timeout", "ForgeApiURL", "KubernetesModel", "ServiceRegistry", "documentBase",
+    ($scope, $dialog, $window, $element, $templateCache, $routeParams, $location:ng.ILocationService, localStorage, $http, $timeout, ForgeApiURL, KubernetesModel: Kubernetes.KubernetesModelService, ServiceRegistry, documentBase) => {
 
       $scope.model = KubernetesModel;
       $scope.resourcePath = $routeParams["path"];
@@ -184,14 +184,10 @@ module Forge {
         });
         $scope.$requiredRCs = requiredRCs;
         $scope.$runningCDPipeline = runningCDPipeline;
-        var url = "";
-        url = $location.url();
-        if (!url) {
-          url = window.location.toString();
-        }
+        var url = window.location.toString();
         // TODO should we support any other template namespaces?
         var templateNamespace = "default";
-        $scope.$runCDPipelineLink = UrlHelpers.join(HawtioCore.documentBase(), "/kubernetes/namespace/", templateNamespace ,"/templates/", ns + "?q=cd-pipeline&returnTo=" + encodeURIComponent(url));
+        $scope.$runCDPipelineLink = UrlHelpers.join(documentBase, "kubernetes/namespace", templateNamespace ,"templates", ns + "?q=cd-pipeline&returnTo=" + URI.encode(url));
       }
 
       function updateData() {
