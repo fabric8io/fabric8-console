@@ -40,7 +40,6 @@ def release(project){
     artifactExtensionToWatchInCentral = 'pom'
     promoteToDockerRegistry = 'docker.io'
     dockerOrganisation = 'fabric8'
-    imagesToPromoteToDockerHub = ['templates']
     extraImagesToTag = ['fabric8-console']
   }
 }
