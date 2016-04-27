@@ -191,7 +191,7 @@ module Forge {
         }
         // TODO should we support any other template namespaces?
         var templateNamespace = "default";
-        $scope.$runCDPipelineLink = "/kubernetes/namespace/" + templateNamespace + "/templates/" + ns + "?q=cd-pipeline&returnTo=" + encodeURIComponent(url);
+        $scope.$runCDPipelineLink = UrlHelpers.join(HawtioCore.documentBase(), "/kubernetes/namespace/", templateNamespace ,"/templates/", ns + "?q=cd-pipeline&returnTo=" + encodeURIComponent(url));
       }
 
       function updateData() {
