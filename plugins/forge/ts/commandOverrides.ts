@@ -44,13 +44,25 @@ module Forge {
         }
         log.debug("hiding targetLocation!");
 
-        // lets default the type
-/*
-        if (!entity.type) {
-          entity.type = "From Archetype Catalog";
-        }
-*/
       }
+      var type = entity.type;
+      if (type) {
+        // lets check its not a random value like "war" that doesn't match anything!
+        var projectTypes = projectType.enum;
+        if (angular.isArray(projectTypes)) {
+          if (_.indexOf(projectTypes, type) < 0) {
+            log.info("project type " + type + " does not exist in available types: " + angular.toJson(projectTypes, true));
+            entity.type = "";
+          }
+        }
+      }
+
+      // lets default the type
+/*
+      if (!entity.type) {
+        entity.type = "From Archetype Catalog";
+      }
+*/
       if (catalog) {
         if (!entity.catalog) {
           entity.catalog = "fabric8";

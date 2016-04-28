@@ -5,6 +5,7 @@
 
 module Forge {
 
+
   export var CommandController = controller("CommandController",
     ["$scope", "$templateCache", "$location", "$routeParams", "$http", "$timeout", "ForgeApiURL", "ForgeModel",
       ($scope, $templateCache:ng.ITemplateCacheService, $location:ng.ILocationService, $routeParams, $http, $timeout, ForgeApiURL, ForgeModel) => {
@@ -145,10 +146,11 @@ module Forge {
                       // lets copy across any default values from the schema
                       function copyValuesFromSchema() {
                         angular.forEach(schema["properties"], (property, name) => {
-                          var value = property.value;
+                          var value = getValidatedSchemaPropertyValue(property, name);
                           if (value) {
                             log.info("Adding entity." + name + " = " + value);
                             $scope.entity[name] = value;
+
                           }
                         });
                       }
@@ -360,7 +362,7 @@ module Forge {
               if (!property.label) {
                 property.label = property.title;
               }
-              var value = property.value;
+              var value = getValidatedSchemaPropertyValue(property, key);
               if (value && !entity[key]) {
                 entity[key] = value;
               }
@@ -368,4 +370,31 @@ module Forge {
           }
         }
       }]);
+
+
+  function getValidatedSchemaPropertyValue(property, name) {
+    var value = property.value;
+    if (value) {
+      // lets check that for string enums that the value is in the list or lets exclude it
+      var enumValues = property.enum;
+      if (angular.isArray(enumValues) && enumValues.length) {
+        var found = false;
+        var strings = true;
+        angular.forEach(enumValues, (enumValue) => {
+          if (angular.isString(enumValue)) {
+            if (enumValue === value) {
+              found = true;
+            }
+          } else {
+            strings = false;
+          }
+        });
+        if (strings && !found) {
+          log.warn("Value " + value + " of property " + name + " is not in the enum list: " + angular.toJson(enumValues, false));
+          value = null;
+        }
+      }
+    }
+    return value;
+  }
 }

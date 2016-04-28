@@ -363,6 +363,9 @@ module Forge {
   }
 
   export function isMavenProjectType(projectName) {
+    if (!projectName) {
+      return false;
+    }
     if (projectName && angular.isString(projectName)) {
       var lower = projectName.toLowerCase();
       if (lower.startsWith("go") ||
@@ -377,9 +380,15 @@ module Forge {
   }
 
   export function showStackBuildSystemFinalName(projectName) {
-    if (projectName && angular.isString(projectName)) {
+    if (!projectName) {
+      return false;
+    }
+    if (angular.isString(projectName)) {
       var lower = projectName.toLowerCase();
-      if (
+      if (lower.startsWith("integration") ||
+        lower.startsWith("microservice") ||
+        lower.startsWith("vertx") ||
+        lower.startsWith("vert.x") ||
         lower.startsWith("wildfly-swarm") ||
         lower.startsWith("wildfly swarm") ||
         lower.startsWith("spring boot") || lower.startsWith("spring-boot")) {
