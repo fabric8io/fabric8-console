@@ -7,8 +7,8 @@ module Forge {
 
 
   export var CommandController = controller("CommandController",
-    ["$scope", "$templateCache", "$location", "$routeParams", "$http", "$timeout", "ForgeApiURL", "ForgeModel",
-      ($scope, $templateCache:ng.ITemplateCacheService, $location:ng.ILocationService, $routeParams, $http, $timeout, ForgeApiURL, ForgeModel) => {
+    ["$scope", "$templateCache", "$location", "$routeParams", "$http", "$timeout", "localStorage", "ForgeApiURL", "ForgeModel",
+      ($scope, $templateCache:ng.ITemplateCacheService, $location:ng.ILocationService, $routeParams, $http, $timeout, localStorage, ForgeApiURL, ForgeModel) => {
 
         $scope.model = ForgeModel;
 
@@ -185,6 +185,11 @@ module Forge {
                   switch ($scope.id) {
                     case 'project-new':
                       if (projectId) {
+                        var projectType = ($scope.entity || {}).type;
+                        if (projectType && angular.isString(projectType)) {
+                          localStorage["forgeProjectType"] = projectType;
+                        }
+
                         // lets forward to the devops edit page
                         // lets set the secret name if its null
                         if (!getProjectSourceSecret(localStorage, $scope.namespace, projectId)) {
@@ -234,7 +239,7 @@ module Forge {
             if (json !== $scope.previousSchemaJson) {
               $scope.previousSchemaJson = json;
               $scope.schema = schema;
-              configureCommands($timeout, $templateCache, $scope.id, $scope.entity, schema);
+              configureCommands($timeout, $templateCache, localStorage, $scope.id, $scope.entity, schema);
             }
           }
         }

@@ -7,7 +7,7 @@ module Forge {
   /**
    * Overrides the default schema and look and feel of JBoss Forge commands
    */
-  export function configureCommands($timeout, $templateCache, commandId, entity, schema) {
+  export function configureCommands($timeout, $templateCache, localStorage, commandId, entity, schema) {
     var properties = schema.properties || {};
     var required = schema.required || [];
     _.forEach(required, (name) => {
@@ -45,24 +45,11 @@ module Forge {
         log.debug("hiding targetLocation!");
 
       }
-      var type = entity.type;
-      if (type) {
-        // lets check its not a random value like "war" that doesn't match anything!
-        var projectTypes = projectType.enum;
-        if (angular.isArray(projectTypes)) {
-          if (_.indexOf(projectTypes, type) < 0) {
-            log.info("project type " + type + " does not exist in available types: " + angular.toJson(projectTypes, true));
-            entity.type = "";
-          }
-        }
-      }
 
       // lets default the type
-/*
       if (!entity.type) {
-        entity.type = "From Archetype Catalog";
+        entity.type = localStorage["forgeProjectType"];
       }
-*/
       if (catalog) {
         if (!entity.catalog) {
           entity.catalog = "fabric8";
