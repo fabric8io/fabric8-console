@@ -32,8 +32,7 @@
 
   <ng-include src="'plugins/wiki/html/viewNavBar.html'"></ng-include>
 
-  <!-- Icon View -->
-  <div ng-show="mode == ViewMode.Icon" class="wiki-fixed">
+  <div class="wiki-fixed">
     <div ng-hide="!showAppHeader">
       <div class="row">
         <div class="col-md-12">
@@ -41,38 +40,79 @@
         </div>
       </div>
     </div>
-    <div class="row" ng-show="html && children">
-      <div class="col-md-12 wiki-icon-view-header">
-        <h5>Directories and Files</h5>
+
+    <!-- showing a directory -->
+    <div ng-show="directory">
+      <div class="row" >
+        <div class="col-md-12 wiki-icon-view-header">
+          <h5>Directories and Files</h5>
+        </div>
       </div>
-    </div>
-    <div class="row" ng-hide="!directory">
-      <div class="col-md-12" ng-controller="Wiki.FileDropController">
-        <div class="wiki-icon-view" nv-file-drop nv-file-over uploader="uploader" over-class="ready-drop">
-          <div class="column-box heigh-auto mouse-pointer well"
-               ng-repeat="child in children track by $index"
-               ng-class="isInGroup(gridOptions.selectedItems, child, 'selected', '')"
-               ng-click="toggleSelectionFromGroup(gridOptions.selectedItems, child)">
-            <div class="row">
-              <div class="col-md-2" hawtio-file-drop="{{child.fileName}}" download-url="{{child.downloadURL}}">
-                  <span class="app-logo" ng-class="fileClass(child)" compile="fileIconHtml(child)"></span>
+
+      <!-- Icon View -->
+      <div class="row" ng-show="mode == ViewMode.Icon">
+        <div class="col-md-12" ng-controller="Wiki.FileDropController">
+          <div class="wiki-icon-view" nv-file-drop nv-file-over uploader="uploader" over-class="ready-drop">
+            <div class="column-box heigh-auto mouse-pointer well"
+                 ng-repeat="child in children track by $index"
+                 ng-class="isInGroup(gridOptions.selectedItems, child, 'selected', '')"
+                 ng-click="toggleSelectionFromGroup(gridOptions.selectedItems, child)">
+              <div class="row">
+                <div class="col-md-2" hawtio-file-drop="{{child.fileName}}" download-url="{{child.downloadURL}}">
+                    <span class="app-logo" ng-class="fileClass(child)" compile="fileIconHtml(child)"></span>
+                </div>
+                <div class="col-md-10">
+                  <h3>
+                    <a href="{{childLink(child)}}">{{child.displayName || child.name}}</a>
+                  </h3>
+                </div>
               </div>
-              <div class="col-md-10">
-                <h3>
-                  <a href="{{childLink(child)}}">{{child.displayName || child.name}}</a>
-                </h3>
-              </div>
-            </div>
-            <div class="row" ng-show="child.summary">
-              <div class="col-md-12">
-                <p compile="marked(child.summary)"></p>
+              <div class="row" ng-show="child.summary">
+                <div class="col-md-12">
+                  <p compile="marked(child.summary)"></p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- end Icon view -->
+
+      <!-- start List view -->
+      <div class="row" ng-show="mode == ViewMode.List">
+        <div class="col-md-12"  ng-controller="Wiki.FileDropController">
+
+          <div class="wiki-list-view" nv-file-drop nv-file-over uploader="uploader" over-class="ready-drop">
+            <div class="column-box heigh-auto mouse-pointer well"
+                 ng-repeat="child in children track by $index"
+                 ng-class="isInGroup(gridOptions.selectedItems, child, 'selected', '')"
+                 ng-click="toggleSelectionFromGroup(gridOptions.selectedItems, child)">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3>
+                    <span class="app-logo" ng-class="fileClass(child)" compile="fileIconHtml(child)"></span>
+                    <a href="{{childLink(child)}}">{{child.displayName || child.name}}</a>
+                  </h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end List view -->
+
+      <div ng-hide="!showProfileHeader">
+        <div class="row">        
+          <div class="col-md-12">
+            <div fabric-profile-details version-id="versionId" profile-id="profileId"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <div ng-hide="!html" wiki-href-adjuster wiki-title-linker>
+    <!-- end showing a directory -->
+
+    <div ng-show="html" wiki-href-adjuster wiki-title-linker>
       <div class="row" style="margin-left: 10px">
         <div class="col-md-12">
           <div compile="html"></div>
@@ -80,44 +120,6 @@
       </div>
     </div>
   </div>
-  <!-- end Icon view -->
 
-  <!-- start List view -->
-  <div ng-show="mode == ViewMode.List" class="wiki-fixed">
-    <hawtio-pane position="right" width="300">
-      <div ng-controller="Wiki.FileDropController">
-        <div class="wiki-list-view" nv-file-drop nv-file-over uploader="uploader" over-class="ready-drop">
-          <div class="wiki-grid" hawtio-list="gridOptions"></div>
-        </div>
-      </div>
-    </hawtio-pane>
-    <div class="row">
-      <div ng-class="col-md-12">
-        <div ng-hide="!showProfileHeader">
-          <div class="row">
-            <div class="col-md-12">
-              <div fabric-profile-details version-id="versionId" profile-id="profileId"></div>
-              <p></p>
-            </div>
-          </div>
-        </div>
-        <div ng-hide="!showAppHeader">
-          <div class="row">
-            <div class="col-md-12">
-              <div kubernetes-json="kubernetesJson" children="children"></div>
-            </div>
-          </div>
-        </div>
-        <div ng-hide="!html" wiki-href-adjuster wiki-title-linker>
-          <div class="row" style="margin-left: 10px">
-            <div class="col-md-12">
-              <div compile="html"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end List view -->
   <div ng-include="sourceView" class="editor-autoresize"></div>
 </div>
