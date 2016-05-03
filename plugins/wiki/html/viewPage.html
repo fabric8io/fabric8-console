@@ -1,4 +1,5 @@
 <div ng-controller="Wiki.ViewController">
+
   <script type="text/ng-template" id="fileCellTemplate.html">
     <div class="ngCellText"
          title="{{fileName(row.entity)}} - Last Modified: {{row.entity.lastModified | date:'medium'}}, Size: {{row.entity.size}}">
@@ -48,7 +49,7 @@
     <div class="row" ng-hide="!directory">
       <div class="col-md-12" ng-controller="Wiki.FileDropController">
         <div class="wiki-icon-view" nv-file-drop nv-file-over uploader="uploader" over-class="ready-drop">
-          <div class="column-box mouse-pointer well"
+          <div class="column-box heigh-auto mouse-pointer well"
                ng-repeat="child in children track by $index"
                ng-class="isInGroup(gridOptions.selectedItems, child, 'selected', '')"
                ng-click="toggleSelectionFromGroup(gridOptions.selectedItems, child)">
