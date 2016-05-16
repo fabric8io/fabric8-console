@@ -18,6 +18,10 @@ module Wiki {
       var camelLink = Forge.projectCamelOverviewLink(ns, projectId);
       var forgeLink = Forge.projectCommandsLink(ns, projectId);
 
+      if( context.$scope ) {
+        Forge.updateForgeProject(context.$scope);
+      }
+
       return [{
         isValid: () => wikiLink && Developer.forgeReadyLink(),
         href: wikiLink,
