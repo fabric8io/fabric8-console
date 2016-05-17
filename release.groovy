@@ -1,4 +1,12 @@
 #!/usr/bin/groovy
+def externalImages(){
+  return ['fabric8-console']
+}
+
+def repo(){
+ return 'fabric8io/fabric8-console'
+}
+
 def updateDependencies(source){
 
   def properties = []
@@ -8,14 +16,15 @@ def updateDependencies(source){
   updatePropertyVersion{
     updates = properties
     repository = source
-    project = 'fabric8io/fabric8-console'
+    project = repo()
   }
 }
 
 def stage(){
   return stageProject{
-    project = 'fabric8io/fabric8-console'
+    project = repo()
     useGitTagForNextVersion = true
+    extraImagesToStage = externalImages()
   }
 }
 
@@ -40,13 +49,13 @@ def release(project){
     artifactExtensionToWatchInCentral = 'pom'
     promoteToDockerRegistry = 'docker.io'
     dockerOrganisation = 'fabric8'
-    extraImagesToTag = ['fabric8-console']
+    extraImagesToTag = externalImages()
   }
 }
 
 def mergePullRequest(prId){
   mergeAndWaitForPullRequest{
-    project = 'fabric8io/fabric8-console'
+    project = repo()
     pullRequestId = prId
   }
 
