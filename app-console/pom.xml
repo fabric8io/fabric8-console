@@ -33,7 +33,7 @@
   </description>
 
   <properties>
-    <docker.image>${fabric8.dockerUser}fabric8-console:${project.version}</docker.image>
+    <docker.image>${fabric8.dockerUser}fabric8-console:2.2.130</docker.image>
     <docker.port.container.http>9090</docker.port.container.http>
     <docker.port.container.jolokia />
 
@@ -47,7 +47,8 @@
     <fabric8.label.project>console</fabric8.label.project>
     <fabric8.label.provider>fabric8</fabric8.label.provider>
     <fabric8.iconUrl>https://cdn.rawgit.com/fabric8io/fabric8-console/master/app-kubernetes/src/main/fabric8/icon.svg</fabric8.iconUrl>
-
+    <fabric8.resources.limits.cpu>250m</fabric8.resources.limits.cpu>
+    <fabric8.resources.limits.memory>64Mi</fabric8.resources.limits.memory>
     <fabric8.helm.chart>fabric8-console</fabric8.helm.chart>
   </properties>
 
