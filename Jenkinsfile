@@ -13,7 +13,7 @@ node{
     def stagedProject = pipeline.stage()
 
     stage 'Deploy'
-    def stagedProject = pipeline.deploy()
+    pipeline.deploy()
 
     stage 'Approve'
     pipeline.approveRelease(stagedProject)
