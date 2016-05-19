@@ -12,6 +12,9 @@ node{
     stage 'Stage'
     def stagedProject = pipeline.stage()
 
+    stage 'Deploy'
+    def stagedProject = pipeline.deploy()
+
     stage 'Approve'
     pipeline.approveRelease(stagedProject)
 
@@ -19,6 +22,6 @@ node{
     pipeline.release(stagedProject)
     if (prId != null){
       pipeline.mergePullRequest(prId)
-    }    
+    }
   }
 }
