@@ -28,6 +28,21 @@ def stage(){
   }
 }
 
+def deploy(){
+  parallel (openshift: {
+    deployRemoteOpenShift{
+      url = OPENSHIFT_URL
+      domain = OPENSHIFT_DOMAIN
+      }
+    }, kubernetes: {
+      deployRemoteKubernetes{
+        url = KUBERNETES_URL
+        defaultNamespace = KUBERNETES_DEFAULT_NAMESPACE
+      }
+    }
+  )
+}
+
 def approveRelease(project){
   def releaseVersion = project[1]
   approve{
