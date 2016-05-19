@@ -28,16 +28,16 @@ def stage(){
   }
 }
 
-def deploy(){
+def deploy(openshiftUrl, openshiftDomain, kubernetesUrl, kubernetesDefaultNamespace){
   parallel (openshift: {
     deployRemoteOpenShift{
-      url = OPENSHIFT_URL
-      domain = OPENSHIFT_DOMAIN
+      url = openshiftUrl
+      domain = openshiftDomain
       }
     }, kubernetes: {
       deployRemoteKubernetes{
-        url = KUBERNETES_URL
-        defaultNamespace = KUBERNETES_DEFAULT_NAMESPACE
+        url = kubernetesUrl
+        defaultNamespace = kubernetesDefaultNamespace
       }
     }
   )

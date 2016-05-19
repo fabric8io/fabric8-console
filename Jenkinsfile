@@ -13,7 +13,7 @@ node{
     def stagedProject = pipeline.stage()
 
     stage 'Deploy'
-    pipeline.deploy()
+    pipeline.deploy(OPENSHIFT_URL, OPENSHIFT_DOMAIN, KUBERNETES_URL, KUBERNETES_DEFAULT_NAMESPACE)
 
     stage 'Approve'
     pipeline.approveRelease(stagedProject)
