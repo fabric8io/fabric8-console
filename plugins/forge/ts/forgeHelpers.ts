@@ -43,20 +43,24 @@ module Forge {
         break;
       default:
         $scope.subTabConfig = Developer.createProjectSubNavBars($scope.projectId);
+        /*
         $scope.breadcrumbConfig.push(_.last($scope.subTabConfig));
         $scope.breadcrumbConfig.push({
           label: "Forge",
           href: Forge.projectCommandsLink($scope.namespace, $scope.projectId)
         });
+        */
         break;
     }
 
     if (_.startsWith($scope.id, "camel-")) {
+      /*
       $scope.breadcrumbConfig.push({
         iconHtml: '<img class="menu-icon" src="' + Core.url('/img/icons/camel.svg') + '">',
         label: 'Camel',
         href: Forge.projectCamelOverviewLink($scope.namespace, $scope.projectId)
       });
+      */
       // for camel commands lets cancel / complete back to the camel perspective
       $scope.$projectLink = Forge.projectCamelOverviewLink($scope.namespace, $scope.projectId);
     }
