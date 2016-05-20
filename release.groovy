@@ -1,6 +1,6 @@
 #!/usr/bin/groovy
 def externalImages(){
-  return ['fabric8-console']
+  return ['fabric8-console','jenkinshift']
 }
 
 def repo(){
