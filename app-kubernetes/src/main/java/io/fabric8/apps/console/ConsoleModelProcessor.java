@@ -56,7 +56,7 @@ public class ConsoleModelProcessor {
     }
 
     public void onPodTemplateSpec(PodSpecBuilder builder) {
-      String jenkinshiftVersion = System.getProperty("jenkinshift.version", "latest");
+      String jenkinshiftVersion = System.getProperty("project.version");
 
       builder.addNewContainer()
               .withName("jenkinshift")
