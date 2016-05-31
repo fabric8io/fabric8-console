@@ -1,9 +1,9 @@
 /// <reference path="d.ts/includes.d.ts"/>
-/// <reference path="d.ts/main/ts/mainGlobals.d.ts"/>
+/// <reference path="d.ts/dozer/ts/model.d.ts"/>
+/// <reference path="d.ts/dozer/ts/dozerHelpers.d.ts"/>
+/// <reference path="d.ts/dozer/ts/schemaConfigure.d.ts"/>
+/// <reference path="d.ts/dozer/ts/dozerPlugin.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgeHelpers.d.ts"/>
-/// <reference path="d.ts/main/ts/mainPlugin.d.ts"/>
-/// <reference path="d.ts/main/ts/about.d.ts"/>
-/// <reference path="d.ts/main/ts/navbar.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgePlugin.d.ts"/>
 /// <reference path="d.ts/forge/ts/archetypePicker.d.ts"/>
 /// <reference path="d.ts/forge/ts/secretHelpers.d.ts"/>
@@ -27,6 +27,10 @@
 /// <reference path="d.ts/forge/ts/repo.d.ts"/>
 /// <reference path="d.ts/forge/ts/repos.d.ts"/>
 /// <reference path="d.ts/forge/ts/secrets.d.ts"/>
+/// <reference path="d.ts/main/ts/mainGlobals.d.ts"/>
+/// <reference path="d.ts/main/ts/mainPlugin.d.ts"/>
+/// <reference path="d.ts/main/ts/about.d.ts"/>
+/// <reference path="d.ts/main/ts/navbar.d.ts"/>
 /// <reference path="d.ts/wiki/ts/wikiHelpers.d.ts"/>
 /// <reference path="d.ts/wiki/ts/wikiPlugin.d.ts"/>
 /// <reference path="d.ts/wiki/ts/camel.d.ts"/>
