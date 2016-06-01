@@ -4,6 +4,7 @@ declare var io_hawt_dozer_schema_Field: any;
 declare var io_hawt_dozer_schema_Mapping: any;
 declare module Dozer {
     var pluginName: string;
+    var templatePath: string;
     var log: Logging.Logger;
     var jmxDomain: string;
     var introspectorMBean: string;
@@ -13,7 +14,6 @@ declare module Dozer {
         "MappingClass": string;
         "Field": string;
     };
-    var log: Logging.Logger;
     function loadDozerModel(xml: any, pageId: string): Mappings;
     function saveToXmlText(model: Mappings): string;
     function findUnmappedFields(workspace: Workspace, mapping: Mapping, fn: any): void;

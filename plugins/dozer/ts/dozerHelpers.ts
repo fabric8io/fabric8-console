@@ -10,7 +10,8 @@ declare var io_hawt_dozer_schema_Mapping;
  */
 module Dozer {
 
-  export var pluginName = "Dozer";
+  export var pluginName = 'Dozer';
+  export var templatePath = 'plugins/dozer/html';
   export var log = Logger.get(pluginName);
 
   /**
@@ -47,9 +48,6 @@ module Dozer {
     "MappingClass": "class",
     "Field": "field"
   };
-
-  export var log:Logging.Logger = Logger.get("Dozer");
-
 
   /**
    * Converts the XML string or DOM node to a Dozer model
