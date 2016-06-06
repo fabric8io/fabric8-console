@@ -167,6 +167,7 @@
       answer = addCamelEndpointIcon(answer, 'camel-jpa_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-jsch_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-jt400_200x150.png');
+      answer = addCamelEndpointIcon(answer, 'camel-kafka.png');
       answer = addCamelEndpointIcon(answer, 'camel-kestrel_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-krati_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-ldap_200x150.png');
