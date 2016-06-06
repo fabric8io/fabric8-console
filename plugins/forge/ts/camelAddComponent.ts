@@ -34,13 +34,39 @@ module Forge {
           var nextCommand = "camel-add-endpoint";
           var nextPage = 1;
           if (addComponent) {
-            nextCommand = "camel-add-component";
-            nextPage = 2;
-            input["name"] = component.scheme;
+            nextCommand = "camel-project-add-component";
+            var projectId = $scope.projectId;
+            var ns = $scope.namespace;
+            var request = {
+              namespace: ns,
+              projectName: projectId,
+              resource: "",
+              inputList: [
+                {
+                  filter: "<all>",
+                },
+                {
+                  componentName: component.scheme,
+                }
+              ]
+            };
+            var onData = (jsonData) => {
+              $scope.fetched = true;
+              Core.$apply($scope);
+              Core.notification("success", jsonData);
+
+              // lets navigate to the funktion page or the camel page
+              var path = projectCamelOverviewLink(ns, projectId);
+              Kubernetes.goToPath($location, path);
+            };
+            $scope.fetched = false;
+            Core.$apply($scope);
+            executeCommand($scope, $http, ForgeApiURL, nextCommand, projectId, request, onData, false);
+
           } else {
             input["componentName"] = component.scheme;
+            gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
           }
-          gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
         }
       };
 
