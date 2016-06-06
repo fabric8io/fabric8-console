@@ -16,9 +16,21 @@
       </div>
     </div>
   </div>
+  <div ng-show="executing">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-success">
+          <span class="pficon pficon-info"></span>
+          <strong>Adding component...</strong>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="spinner spinner-lg"></div>
+    </div>
+  </div>
 
-
-  <div ng-show="fetched">
+  <div ng-show="fetched && !executing">
     <div class="row camel-component-filter">
       <div class="col-md-4">
         <h3>Camel Components</h3>

@@ -51,7 +51,7 @@ module Forge {
               ]
             };
             var onData = (jsonData) => {
-              $scope.fetched = true;
+              $scope.executing = false;
               Core.$apply($scope);
               Core.notification("success", jsonData);
 
@@ -59,7 +59,7 @@ module Forge {
               var path = projectCamelOverviewLink(ns, projectId);
               Kubernetes.goToPath($location, path);
             };
-            $scope.fetched = false;
+            $scope.executing = true;
             Core.$apply($scope);
             executeCommand($scope, $http, ForgeApiURL, nextCommand, projectId, request, onData, false);
 
