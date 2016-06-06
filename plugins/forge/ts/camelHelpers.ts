@@ -68,7 +68,7 @@ module Forge {
   export function addCamelEndpointIcon(map, fileName) {
     var prefix = "camel-";
     if (angular.isString(fileName) && fileName.startsWith(prefix)) {
-      angular.forEach(["_200x150.png", ".svg"], (postfix) => {
+      angular.forEach(["_200x150.png", ".svg", ".png"], (postfix) => {
         if (fileName.endsWith(postfix)) {
           map[fileName.substring(prefix.length, fileName.length - postfix.length)] = "/img/icons/camel/" + fileName;
         }
