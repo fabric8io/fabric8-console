@@ -12,9 +12,6 @@ module Forge {
 
       var resourcePath = "";
 
-      // TODO find from model!
-      var xml = "META-INF/spring/camel-context.xml";
-
       $scope.$on('$routeUpdate', ($event) => {
         updateData();
       });
@@ -25,6 +22,9 @@ module Forge {
 
 
       $scope.addRoute = () => {
+        var xml = $scope.xml || $scope.$parent.xml || "META-INF/spring/camel-context.xml";
+        log.info("Adding route with xml: " + xml);
+
         var input = {
           xml: xml
         };

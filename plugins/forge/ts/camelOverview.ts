@@ -176,11 +176,15 @@ module Forge {
           var routes = [];
           var routeBuilderCount = 0;
           $scope.camelProject = jsonData || {};
+          $scope.xml = "";
           angular.forEach($scope.camelProject.endpoints, (endpoint) => {
             var fileName = endpoint.fileName;
             if (fileName) {
               var prefix = "src/main/java";
               if (fileName.endsWith(".xml")) {
+                if (!$scope.xml) {
+                  $scope.xml = fileName;
+                }
                 prefix = "src/main/resources";
                 var pageId = UrlHelpers.join(prefix, fileName);
                 endpoint.$fileLink = Wiki.customEditLink($scope, pageId, $location, "camel/canvas");
