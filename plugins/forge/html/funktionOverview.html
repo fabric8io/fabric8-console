@@ -1,0 +1,69 @@
+<div ng-controller="Forge.FunktionOverviewController">
+  <div hawtio-tabs></div>
+
+  <div ng-hide="fetched">
+    <div class="row select-table-filter">
+      <div class="col-md-12">
+        <div class="align-center">
+          <i class="fa fa-spinner fa-spin"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <td ng-show="fetched">
+    <div class="row">
+      <div class="col-md-12">
+        <!--
+                  <a class="btn btn-default pull-right"
+                     ng-show="contexts.length"
+                     ng-click="addRoute()" title="Add new route"
+                     data-placement="bottom">
+                    <i class="fa fa-plus"></i> Add Route</a>
+                  <span class="pull-right">&nbsp;</span>
+        -->
+        <a class="btn btn-default pull-right"
+           title="Add a new kind of Component to the project"
+           href="{{addComponentLink}}"><i class="fa fa-plus"></i> Add Component</a>
+      </div>
+    </div>
+
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Funktion</th>
+        <th>Trigger</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="rule in funktionRules">
+        <td>
+          {{rule.name}}
+        </td>
+        <td>
+          {{rule.trigger}}
+          &nbsp;&nbsp;
+          <button class="btn btn-default" ng-click="editTrigger(rule)" title="Edit trigger configuration">
+            <i class="fa fa-wrench" aria-hidden="true"></i>
+            Edit
+          </button>
+        </td>
+        <td>
+          <span ng-show="rule.action">
+            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>&nbsp;&nbsp;
+            {{rule.action}}
+            &nbsp;&nbsp;
+          </span>
+          <span ng-show="rule.chain">
+            <i class="fa fa-long-arrow-right" aria-hidden="true"></i>&nbsp;&nbsp;
+            {{rule.chain}}
+            &nbsp;&nbsp;
+          </span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+</div>
+</div>

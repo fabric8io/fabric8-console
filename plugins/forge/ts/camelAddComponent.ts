@@ -10,6 +10,9 @@ module Forge {
       $scope.id = "camel-get-components";
       initScope($scope, $location, $routeParams);
 
+      var projectId = $scope.projectId;
+      var ns = $scope.namespace;
+
       var addComponent = _.endsWith($location.path(), "Component");
 
       var resourcePath = "";
@@ -35,8 +38,6 @@ module Forge {
           var nextPage = 1;
           if (addComponent) {
             nextCommand = "camel-project-add-component";
-            var projectId = $scope.projectId;
-            var ns = $scope.namespace;
             var request = {
               namespace: ns,
               projectName: projectId,
@@ -56,7 +57,12 @@ module Forge {
               Core.notification("success", jsonData);
 
               // lets navigate to the funktion page or the camel page
+              log.info("namespace " + ns + " projectId: " + projectId);
               var path = projectCamelOverviewLink(ns, projectId);
+              if (Forge.forgeProject().hasPerspective("funktion")) {
+                path = projectFunktionOverviewLink(ns, projectId);
+              }
+              log.info("Navigating to path: " + path);
               Kubernetes.goToPath($location, path);
             };
             $scope.executing = true;

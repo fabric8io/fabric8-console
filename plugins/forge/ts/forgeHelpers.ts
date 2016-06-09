@@ -123,6 +123,9 @@ module Forge {
     return Forge.projectPerspectiveLink(ns, projectId, "camelOverview");
   }
 
+  export function projectFunktionOverviewLink(ns, projectId) {
+    return Forge.projectPerspectiveLink(ns, projectId, "funktionOverview");
+  }
 
   export function reposApiUrl(ForgeApiURL) {
     return UrlHelpers.join(ForgeApiURL, "/repos");

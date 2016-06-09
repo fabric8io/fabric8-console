@@ -17,6 +17,7 @@
 /// <reference path="d.ts/forge/ts/dependencyPicker.d.ts"/>
 /// <reference path="d.ts/forge/ts/forgeProject.d.ts"/>
 /// <reference path="d.ts/forge/ts/fractionsPicker.d.ts"/>
+/// <reference path="d.ts/forge/ts/funktionOverview.d.ts"/>
 /// <reference path="d.ts/forge/ts/pipelinePicker.d.ts"/>
 /// <reference path="d.ts/forge/ts/projectTypePickter.d.ts"/>
 /// <reference path="d.ts/forge/ts/repo.d.ts"/>

@@ -16,6 +16,7 @@ module Wiki {
       var projectId = context.projectName;
       var ns = context.namespace;
       var camelLink = Forge.projectCamelOverviewLink(ns, projectId);
+      var funktionLink = Forge.projectFunktionOverviewLink(ns, projectId);
       var forgeLink = Forge.projectCommandsLink(ns, projectId);
 
       if( context.$scope ) {
@@ -32,6 +33,19 @@ module Wiki {
           return _.startsWith(path, rootPath);
         },
         title: "Browse the source code of this project"
+      },
+      {
+        isValid: () => funktionLink && Developer.forgeReadyLink() && Forge.forgeProject().hasPerspective("funktion"),
+        label: "Funktion",
+        class: "fa fa-codepen",
+        href: funktionLink,
+        title: "View the Funktion perspective for this project",
+        isActive: (subTab, path) => {
+          if (path.search(/forge\/funktion/) !== -1) {
+            return true;
+          }
+          return false;
+        }
       },
       {
         isValid: () => camelLink && Developer.forgeReadyLink() && Forge.forgeProject().hasPerspective("camel"),

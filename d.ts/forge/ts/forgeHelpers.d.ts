@@ -16,6 +16,7 @@ declare module Forge {
     function projectCommandsLink(ns: any, projectId: any): string;
     function projectPerspectiveLink(ns: any, projectId: any, page: any): string;
     function projectCamelOverviewLink(ns: any, projectId: any): string;
+    function projectFunktionOverviewLink(ns: any, projectId: any): string;
     function reposApiUrl(ForgeApiURL: any): string;
     function repoApiUrl(ForgeApiURL: any, path: any): string;
     function commandApiUrl(ForgeApiURL: any, commandId: any, ns: any, projectId: any, resourcePath?: any): string;
