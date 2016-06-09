@@ -206,6 +206,14 @@ module Forge {
                       }
                       break;
                     default:
+                      if ($scope.id && status === 'success' && _.startsWith($scope.id, "camel-")) {
+                        var response = $scope.response || {};
+                        var message = response.message;
+                        if (message) {
+                          Core.notification("success", message);
+                        }
+                        Kubernetes.goToPath($location, $scope.completedLink);
+                      }
                   }
                 }
               }
