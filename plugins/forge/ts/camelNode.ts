@@ -123,7 +123,7 @@ module Forge {
           xml: xml
         };
         var nextCommand = "camel-edit-node-xml";
-        var nextPage = 1;
+        var nextPage = 2;
         gotoCommand($location, $scope.projectId, nextCommand, resourcePath, input, nextPage);
       };
 
