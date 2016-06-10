@@ -65,6 +65,8 @@ module Forge {
               icon = "img/maven-icon.png";
             } else if (lower.startsWith("forge")) {
               icon = "img/icons/forge.svg";
+            } else if (lower.startsWith("funktion")) {
+              icon = "img/icons/funktion.png";
             } else if (lower.startsWith("node")) {
               icon = "img/icons/node.svg";
             } else if (lower.startsWith("python") || lower.startsWith("django")) {

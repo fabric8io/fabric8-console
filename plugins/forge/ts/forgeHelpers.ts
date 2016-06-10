@@ -393,6 +393,7 @@ module Forge {
     if (angular.isString(projectName)) {
       var lower = projectName.toLowerCase();
       if (lower.startsWith("integration") ||
+        lower.startsWith("funktion") ||
         lower.startsWith("microservice") ||
         lower.startsWith("vertx") ||
         lower.startsWith("vert.x") ||
