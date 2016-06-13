@@ -4,21 +4,22 @@
 
 module Dozer {
 
+  // example URL => http://localhost:9000/workspaces/default/projects/test-1/forge/mappings/branch/master/view/src/main/resources/transformation.xml
   _module.config(($routeProvider, dozerPaths) => {
     dozerPaths.forEach((path) => {
       $routeProvider
-        .when(UrlHelpers.join(path, 'mappings/:path*'), {
+        .when(UrlHelpers.join(path, 'mappings/branch/:branch/view/:page*'), {
           templateUrl: UrlHelpers.join(templatePath, 'mapping.html'),
           reloadOnSearch: false
         });
     });
   });
 
-  _module.controller("Dozer.MappingController", ["$scope", "$location", "$routeParams", "wikiRepository", "$templateCache", ($scope, $location, $routeParams, wikiRepository:Wiki.GitWikiRepository, $templateCache) => {
+  _module.controller("Dozer.MappingController", ["$scope", "$location", "$routeParams", "$templateCache", ($scope, $location, $routeParams, $templateCache) => {
 
     Wiki.initScope($scope, $routeParams, $location);
+    var wikiRepository = $scope.wikiRepository;
 
-    //$scope.profileId = Fabric.pagePathToProfileId($scope.pageId);
     $scope.versionId = $scope.branch || "1.0";
 
     $scope.schema = {};
@@ -35,11 +36,9 @@ module Dozer {
     $scope.aName = '';
     $scope.bName = '';
 
-    $scope.connectorStyle = [ "Bezier" ];
-
     $scope.main = "";
-    $scope.tab = "Mappings";
 
+    /*
     $scope.gridOptions = {
       selectedItems: $scope.selectedItems,
       data: 'mappings',
@@ -62,14 +61,6 @@ module Dozer {
         }
       ]
     };
-
-    /*
-    if ($scope.profileId) {
-      Fabric.profileJolokia(jolokia, $scope.profileId, $scope.versionId, (containerJolokia) => {
-        $scope.containerJolokia = containerJolokia;
-        $scope.missingContainer = !containerJolokia ? true : false;
-      });
-    }
     */
 
     $scope.$on("$routeChangeSuccess", function (event, current, previous) {
@@ -170,8 +161,8 @@ module Dozer {
       var sourcePath = info.source.attr('field-path');
       var targetPath = info.target.attr('field-path');
 
-      var sourceField = sourcePath.split('/').last();
-      var targetField = sourcePath.split('/').last();
+      var sourceField = _.last(sourcePath.split('/'));
+      var targetField = _.last(sourcePath.split('/'));
 
       return {
         from: sourceField,
@@ -183,78 +174,9 @@ module Dozer {
     function extractProperty(clazz, prop) {
       return (!clazz || !clazz.properties) ? null :
         clazz.properties.find((property) => {
-        return property.path.endsWith('/' + prop);
+        return _.endsWith(property.path, '/' + prop);
       });
     }
-
-    // The jsPlumb directive will call this after it's done it's thing...
-    function addConnectionClickHandler(connection, jsplumb) {
-      connection.bind('click', (connection) => {
-        jsplumb.detach(connection);
-      });
-    }
-
-    function getPaintStyle() {
-      return {
-        strokeStyle: _.sample(UI.colors),
-        lineWidth: 4
-      };
-    }
-
-    $scope.jsPlumbCallback = (jsplumb, nodes, nodesById, connections) => {
-
-      // Set up any connections loaded from the XML
-      // TODO - currently we actually are only looking at the top-level properties
-      angular.forEach($scope.selectedMapping.fields, (field) => {
-        var a_property = extractProperty($scope.selectedMapping.class_a, field.a.value);
-        var b_property = extractProperty($scope.selectedMapping.class_b, field.b.value);
-
-        if (a_property && b_property) {
-          var a_node = nodesById[a_property.id];
-          var b_node = nodesById[b_property.id];
-
-          var connection = $scope.jsPlumb.connect({
-            source: a_node.el,
-            target: b_node.el
-          }, {
-            connector: $scope.connectorStyle,
-            maxConnections: 1,
-            paintStyle: getPaintStyle()
-          });
-
-          //Ensure loaded connections can also be removed
-          addConnectionClickHandler(connection, jsplumb);
-          a_node.connections.push(connection);
-          b_node.connections.push(connection);
-        }
-      });
-
-
-      // Handle new connection events...
-      jsplumb.bind('connection', (info) => {
-
-        // Add a handler so we can click on a connection to make it go away
-        addConnectionClickHandler(info.connection, jsplumb);
-        info.connection.setPaintStyle(getPaintStyle());
-
-        var newMapping = $scope.getSourceAndTarget(info);
-
-        var field = new Dozer.Field(new Dozer.FieldDefinition(newMapping.from), new Dozer.FieldDefinition(newMapping.to));
-        $scope.selectedMapping.fields.push(field);
-        $scope.modified = true;
-        Core.$apply($scope);
-      });
-
-      // Handle connection detach events...
-      jsplumb.bind('connectionDetached', (info) => {
-        var toDetach = $scope.getSourceAndTarget(info);
-        var field = new Dozer.Field(new Dozer.FieldDefinition(toDetach.from), new Dozer.FieldDefinition(toDetach.to));
-        $scope.selectedMapping.fields.remove(field);
-        $scope.modified = true;
-        Core.$apply($scope);
-      });
-    };
-
 
     $scope.formatStackTrace = (exception) => {
       return Log.formatStackTrace(exception);
@@ -364,10 +286,6 @@ module Dozer {
     };
 
     $scope.save = () => {
-      if ($scope.tab === "Mappings") {
-        $scope.saveMappings();
-        return;
-      }
       if ($scope.model) {
         // lets copy the mappings from the tree
         var model = Dozer.loadModelFromTree($scope.rootTreeNode, $scope.model);
@@ -448,8 +366,6 @@ module Dozer {
       Core.$apply($scope);
     };
 
-
-
     $scope.onUnmappedFieldChange = (unmappedField) => {
       unmappedField.valid = unmappedField.toField ? true : false;
       $scope.unmappedFieldsHasValid = $scope.unmappedFields.find(f => f.valid);
@@ -488,11 +404,7 @@ module Dozer {
 
     function updateView() {
       $scope.pageId = Wiki.pageId($routeParams, $location);
-      /*
-      if (Git.getGitMBean(workspace)) {
-        $scope.git = wikiRepository.getPage($scope.branch, $scope.pageId, $scope.objectId, onResults);
-      }
-      */
+      $scope.git = wikiRepository.getPage($scope.branch, $scope.pageId, $scope.objectId, onResults);
     }
 
     function onResults(response) {
@@ -507,7 +419,7 @@ module Dozer {
 
           $scope.mappingTree = Dozer.createDozerTree($scope.model);
           if (!angular.isDefined($scope.selectedMapping)) {
-            $scope.selectedMapping = $scope.mappings.first();
+            $scope.selectedMapping = _.first($scope.mappings);
           }
 
           $scope.main = $templateCache.get("pageTemplate.html");

@@ -1,6 +1,6 @@
 /// <reference path="dozerPlugin.ts"/>
 
-// this is all a big TODO
+// this is all a big TODO, might not be needed
 module Dozer {
 
   _module.config(($routeProvider, dozerPaths) => {
