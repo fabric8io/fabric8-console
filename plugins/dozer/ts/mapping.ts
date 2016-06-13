@@ -118,6 +118,7 @@ module Dozer {
     });
 
     $scope.fetchProperties = (className, target, anchor) => {
+      // TODO this needs to be replaced with a forge rest call
       /*
       var introspectorMBean = Dozer.getIntrospectorMBean(workspace);
       if (introspectorMBean && !$scope.missingContainer) {
@@ -280,6 +281,7 @@ module Dozer {
 
     $scope.addField = () => {
       if ($scope.selectedMapping) {
+        // TODO replace with forge rest API call
         // lets find all the possible unmapped fields we can map from...
         /*
         Dozer.findUnmappedFields(workspace, $scope.selectedMapping, (data) => {

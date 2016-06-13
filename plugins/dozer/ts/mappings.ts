@@ -1,5 +1,6 @@
 /// <reference path="dozerPlugin.ts"/>
 
+// this is all a big TODO
 module Dozer {
 
   _module.config(($routeProvider, dozerPaths) => {
@@ -12,22 +13,26 @@ module Dozer {
     });
   });
 
-  Developer.customProjectSubTabFactories.push((context) => {
-    var projectLink = context.projectLink;
-    var link = UrlHelpers.join(projectLink, 'forge/mappings');
-    return [{
-      isValid: () => link && Developer.forgeReadyLink(),
-      href: link,
-      label: "Data Mapping",
-      class: "fa fa-code-fork",
+  _module.run(() => {
+    // TODO this probably doesn't need to be a tab, but just in case we'll keep this here
+    Developer.customProjectSubTabFactories.push((context) => {
+      var projectLink = context.projectLink;
+      var link = UrlHelpers.join(projectLink, 'forge/mappings');
+      return [];
       /*
-      isActive: (subTab, path) => {
-        var rootPath = subTab.href.replace(/\/view/, '');
-        return _.startsWith(path, rootPath);
-      },
+      return [{
+        isValid: () => link && Developer.forgeReadyLink(),
+        href: link,
+        label: "Data Mapping",
+        class: "fa fa-code-fork",
+        //isActive: (subTab, path) => {
+        //  var rootPath = subTab.href.replace(/\/view/, '');
+        //  return _.startsWith(path, rootPath);
+        //},
+        title: "Browse data transformations in this project"
+      }];
       */
-      title: "Browse data transformations in this project"
-    }]
+    });
   });
 
   _module.controller("Dozer.MappingsController", ($scope, $location, $routeParams) => {

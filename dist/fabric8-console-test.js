@@ -80,4 +80,4 @@ var DevExample;
         }]);
 })(DevExample || (DevExample = {}));
 
-angular.module("fabric8-console-test-templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("test-plugins/example/html/page1.html","<div class=\"row\">\n  <div class=\"col-md-12\" ng-controller=\"DevExample.Page1Controller\">\n    <h1>Page 1</h1>\n    <p>This plugin won\'t be exported in the bower package</p>\n    <p class=\'customClass\'>Hello {{target}}</p>\n  </div>\n</div>\n");}]); hawtioPluginLoader.addModule("fabric8-console-test-templates");
+angular.module("fabric8-console-test-templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("test-plugins/example/html/page1.html","<div class=\"row\">\r\n  <div class=\"col-md-12\" ng-controller=\"DevExample.Page1Controller\">\r\n    <h1>Page 1</h1>\r\n    <p>This plugin won\'t be exported in the bower package</p>\r\n    <p class=\'customClass\'>Hello {{target}}</p>\r\n  </div>\r\n</div>\r\n");}]); hawtioPluginLoader.addModule("fabric8-console-test-templates");
