@@ -2,6 +2,7 @@
 /// <reference path="model.d.ts" />
 declare var io_hawt_dozer_schema_Field: any;
 declare var io_hawt_dozer_schema_Mapping: any;
+declare var io_hawt_dozer_schema_Mappings: any;
 declare module Dozer {
     var pluginName: string;
     var templatePath: string;

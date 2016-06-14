@@ -3,6 +3,7 @@
 //
 declare var io_hawt_dozer_schema_Field;
 declare var io_hawt_dozer_schema_Mapping;
+declare var io_hawt_dozer_schema_Mappings;
 
 /**
  * @module Dozer

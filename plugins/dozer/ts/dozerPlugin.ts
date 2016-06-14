@@ -7,8 +7,8 @@ module Dozer {
 
   _module.constant('dozerPaths', ['/workspaces/:namespace/projects/:projectId/forge']);
 
-  _module.run(() => {
-    Dozer.schemaConfigure();
+  _module.run((SchemaRegistry) => {
+    Dozer.schemaConfigure(SchemaRegistry);
     log.debug("running");
   });
 

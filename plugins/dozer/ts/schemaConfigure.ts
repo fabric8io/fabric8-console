@@ -9,7 +9,7 @@ module Dozer {
    * @method schemaConfigure
    * @for Dozer
    */
-  export function schemaConfigure() {
+  export function schemaConfigure(schemas) {
     io_hawt_dozer_schema_Field["tabs"] = {
       'Fields': ['a.value', 'b.value'],
       'From Field': ['a\\..*'],
@@ -17,9 +17,9 @@ module Dozer {
       'Field Configuration': ['*']
     };
     io_hawt_dozer_schema_Mapping["tabs"] = {
-      'Classes': ['class-a.value', 'class-b.value'],
-      'From Class': ['class-a\\..*'],
-      'To Class': ['class-b\\..*'],
+      'Classes': ['a', 'b'],
+      'From Class': ['classA'],
+      'To Class': ['classB'],
       'Class Configuration': ['*']
     };
 
@@ -29,8 +29,14 @@ module Dozer {
     Core.pathSet(io_hawt_dozer_schema_Field, ["properties", "a", "properties", "value", "label"], "From Field");
     Core.pathSet(io_hawt_dozer_schema_Field, ["properties", "b", "properties", "value", "label"], "To Field");
 
-    Core.pathSet(io_hawt_dozer_schema_Mapping, ["properties", "class-a", "properties", "value", "label"], "From Class");
-    Core.pathSet(io_hawt_dozer_schema_Mapping, ["properties", "class-b", "properties", "value", "label"], "To Class");
+    io_hawt_dozer_schema_Mapping.properties['a'] = {
+      type: 'string',
+      label: 'From Class' 
+    };
+    io_hawt_dozer_schema_Mapping.properties['b'] = {
+      type: 'string',
+      label: 'To Class' 
+    };
 
     // ignore prefixes in the generated labels
     Core.pathSet(io_hawt_dozer_schema_Field, ["properties", "a", "ignorePrefixInLabel"], true);
@@ -39,6 +45,7 @@ module Dozer {
     Core.pathSet(io_hawt_dozer_schema_Mapping, ["properties", "class-b", "ignorePrefixInLabel"], true);
 
     // add custom widgets
+    /*
     Core.pathSet(io_hawt_dozer_schema_Mapping, ["properties", "class-a", "properties", "value", "formTemplate"], classNameWidget("class_a"));
     Core.pathSet(io_hawt_dozer_schema_Mapping, ["properties", "class-b", "properties", "value", "formTemplate"], classNameWidget("class_b"));
 
@@ -56,5 +63,47 @@ module Dozer {
               'typeahead="title for title in classNames($viewValue) | filter:$viewValue" ' +
             'typeahead-editable="true"  title="The Java class name"/>';
     }
+    */
+
+    function toJavaType(ref) {
+      return ref.replace(/^urn:jsonschema:/, '').replace(/:/g, '.');
+    }
+
+    function processProperties(schema) {
+      if (schema.id) {
+        var id = toJavaType(schema.id);
+        schema.type = schema.javaType = id;
+        var props = schema.properties;
+        if (props) {
+          // Massage the key names so they play nice with forms2
+          var keys = _.keys(props);
+          _.forEach(keys, (key) => {
+            if (key.indexOf('-') !== -1) {
+              var newKey = _.camelCase(key);
+              props[newKey] = _.clone(props[key]);
+              delete props[key];
+            }
+          });
+          // Add any child objects to the schema registry
+          _.forOwn(props, (prop, key) => {
+            if (prop.type === "object") {
+              processProperties(prop);
+              if (prop.$ref) {
+                prop.type = toJavaType(prop.$ref);
+              }
+            }
+          });
+          schemas.addSchema(schema.javaType, schema);
+        }
+      }
+    };
+
+    _.forEach([io_hawt_dozer_schema_Field, io_hawt_dozer_schema_Mapping, io_hawt_dozer_schema_Mappings], (schema) => {
+      schema.javaType = schema.id;
+      processProperties(schema);
+    });
+    schemas.iterate((schema) => {
+      console.log("Schema: ", schema);
+    });
   }
 }

@@ -1,4 +1,4 @@
 /// <reference path="dozerHelpers.d.ts" />
 declare module Dozer {
-    function schemaConfigure(): void;
+    function schemaConfigure(schemas: any): void;
 }
