@@ -41,14 +41,15 @@
     <div class="col-md-8"></div>
   </div>
 
-  <div class="row">
-    <div id="tree-container" class="col-md-4">
-      <div hawtio-tree="mappingTree" onselect="onNodeSelect" onDragEnter="onNodeDragEnter" onDrop="onNodeDrop"
+  <div class="row align-center">
+    <div id="tree-container" class="col-md-8">
+      <div class="align-left" hawtio-tree="mappingTree" onselect="onNodeSelect" onDragEnter="onNodeDragEnter" onDrop="onNodeDrop"
         onRoot="onRootTreeNode"
         hideRoot="true" relativeIconPaths="true"></div>
     </div>
-
-    <div class="col-md-8">
+  </div>
+  <div class="row align-center">
+    <div class="col-md-8 align-left">
       <div ng-include="propertiesTemplate"></div>
     </div>
   </div>

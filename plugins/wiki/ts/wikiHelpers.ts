@@ -67,99 +67,6 @@ module Wiki {
       regex: defaultLowerCaseFileNamePattern,
       invalid: defaultLowerCaseFileNamePatternInvalid
     },
-    /*
-    {
-      label: "App",
-      tooltip: "Creates a new App folder used to configure and run containers",
-      addClass: "fa fa-cog green",
-      exemplar: 'myapp',
-      regex: defaultFileNamePattern,
-      invalid: defaultFileNamePatternInvalid,
-      extension: '',
-      generated: {
-        mbean: ['io.fabric8', { type: 'KubernetesTemplateManager' }],
-        init: (workspace, $scope) => {
-
-        },
-        generate: (options:GenerateOptions) => {
-          log.debug("Got options: ", options);
-          options.form.name = options.name;
-          options.form.path = options.parentId;
-          options.form.branch = options.branch;
-          var json = angular.toJson(options.form);
-          var jolokia = <Jolokia.IJolokia> HawtioCore.injector.get("jolokia");
-          jolokia.request({
-            type: 'exec',
-            mbean: 'io.fabric8:type=KubernetesTemplateManager',
-            operation: 'createAppByJson',
-            arguments: [json]
-          }, Core.onSuccess((response) => {
-            log.debug("Generated app, response: ", response);
-            options.success(undefined); 
-          }, {
-            error: (response) => { options.error(response.error); }
-          }));
-        },
-        form: (workspace, $scope) => {
-          // TODO docker registry completion
-          if (!$scope.doDockerRegistryCompletion) {
-            $scope.fetchDockerRepositories = () => {
-              return DockerRegistry.completeDockerRegistry();
-            }
-          }
-          return {
-            summaryMarkdown: 'Add app summary here',
-            replicaCount: 1
-          };
-        },
-        schema: {
-          description: 'App settings',
-          type: 'java.lang.String',
-          properties: {
-            'dockerImage': {
-              'description': 'Docker Image',
-              'type': 'java.lang.String',
-              'input-attributes': { 
-                'required': '', 
-                'class': 'input-xlarge',
-                'typeahead': 'repo for repo in fetchDockerRepositories() | filter:$viewValue',
-                'typeahead-wait-ms': '200'
-              }
-            },
-            'summaryMarkdown': {
-              'description': 'Short Description',
-              'type': 'java.lang.String',
-              'input-attributes': { 'class': 'input-xlarge' }
-            },
-            'replicaCount': {
-              'description': 'Replica Count',
-              'type': 'java.lang.Integer',
-              'input-attributes': {
-                min: '0'
-              }
-            },
-            'labels': {
-              'description': 'Labels',
-              'type': 'map',
-              'items': {
-                'type': 'string'
-              }
-            }
-          }
-        }
-      }
-    },
-    {
-      label: "Fabric8 Profile",
-      tooltip: "Create a new empty fabric profile. Using a hyphen ('-') will create a folder heirarchy, for example 'my-awesome-profile' will be available via the path 'my/awesome/profile'.",
-      profile: true,
-      addClass: "fa fa-book green",
-      exemplar: "user-profile",
-      regex: defaultLowerCaseFileNamePattern,
-      invalid: defaultLowerCaseFileNamePatternInvalid,
-      fabricOnly: true
-    },
-    */
     {
       label: "Properties File",
       tooltip: "A properties file typically used to configure Java classes",
@@ -176,107 +83,6 @@ module Wiki {
       invalid: defaultFileNamePatternInvalid,
       extension: ".json"
     },
-    /*
-    {
-      label: "Key Store File",
-      tooltip: "Creates a keystore (database) of cryptographic keys, X.509 certificate chains, and trusted certificates.",
-      exemplar: 'keystore.jks',
-      regex: defaultFileNamePattern,
-      invalid: defaultFileNamePatternInvalid,
-      extension: ".jks",
-      generated: {
-        mbean: ['hawtio', { type: 'KeystoreService' }],
-        init: function(workspace, $scope) {
-          var mbean = 'hawtio:type=KeystoreService';
-          var response = workspace.jolokia.request( {type: "read", mbean: mbean, attribute: "SecurityProviderInfo" }, {
-            success: (response)=>{
-              $scope.securityProviderInfo = response.value;
-              Core.$apply($scope);
-            },
-            error: (response) => {
-              console.log('Could not find the supported security algorithms: ', response.error);
-              Core.$apply($scope);
-            }
-          });
-        },
-        generate: function(options:GenerateOptions) {
-          var encodedForm = JSON.stringify(options.form)
-          var mbean = 'hawtio:type=KeystoreService';
-          var response = options.workspace.jolokia.request( {
-              type: 'exec', 
-              mbean: mbean,
-              operation: 'createKeyStoreViaJSON(java.lang.String)',
-              arguments: [encodedForm]
-            }, {
-              method:'POST',
-              success:function(response) {
-                options.success(response.value)
-              },
-              error:function(response){
-                options.error(response.error)
-              }
-            });
-        },
-        form: function(workspace, $scope){ 
-          return { 
-            storeType: $scope.securityProviderInfo.supportedKeyStoreTypes[0],
-            createPrivateKey: false,
-            keyLength: 4096,
-            keyAlgorithm: $scope.securityProviderInfo.supportedKeyAlgorithms[0],
-            keyValidity: 365
-          }
-        },
-        schema: {
-           "description": "Keystore Settings",
-           "type": "java.lang.String",
-           "properties": { 
-             "storePassword": {
-               "description": "Keystore password.",
-               "type": "password",
-               'input-attributes': { "required":  "",  "ng-minlength":6 }
-             },
-             "storeType": {
-               "description": "The type of store to create",
-               "type": "java.lang.String",
-               'input-element': "select",
-               'input-attributes': { "ng-options":  "v for v in securityProviderInfo.supportedKeyStoreTypes" }
-             },
-             "createPrivateKey": {
-               "description": "Should we generate a self-signed private key?",
-               "type": "boolean"
-             },
-             "keyCommonName": {
-               "description": "The common name of the key, typically set to the hostname of the server",
-               "type": "java.lang.String",
-               'control-group-attributes': { 'ng-show': "formData.createPrivateKey" }
-             },
-             "keyLength": {
-               "description": "The length of the cryptographic key",
-               "type": "Long",
-               'control-group-attributes': { 'ng-show': "formData.createPrivateKey" }
-             },
-             "keyAlgorithm": {
-               "description": "The key algorithm",
-               "type": "java.lang.String",
-               'input-element': "select",
-               'input-attributes': { "ng-options":  "v for v in securityProviderInfo.supportedKeyAlgorithms" },
-               'control-group-attributes': { 'ng-show': "formData.createPrivateKey" }
-             },
-             "keyValidity": {
-               "description": "The number of days the key will be valid for",
-               "type": "Long",
-               'control-group-attributes': { 'ng-show': "formData.createPrivateKey" }
-             },
-             "keyPassword": {
-               "description": "Password to the private key",
-               "type": "password",
-               'control-group-attributes': { 'ng-show': "formData.createPrivateKey" }
-             }
-           }
-        }
-      }
-    },
-    */
     {
       label: "Markdown Document",
       tooltip: "A basic markup document using the Markdown wiki markup, particularly useful for ReadMe files in directories",
@@ -346,6 +152,16 @@ module Wiki {
       label: "Source code",
       tooltip: "Create a source file",
       children: [
+        // TODO this is better handled via forge
+        {
+          label: "Java",
+          tooltip: "A Java language file",
+          icon: "/img/icons/java.svg",
+          exemplar: "document.java",
+          regex: defaultFileNamePattern,
+          invalid: defaultFileNamePatternInvalid,
+          extension: ".java"
+        },
         {
           label: "Go",
           tooltip: "A Go language file",
@@ -412,9 +228,6 @@ module Wiki {
   // TODO REMOVE
   export function isWikiEnabled(workspace, jolokia, localStorage) {
     return true;
-/*
-    return Git.createGitRepository(workspace, jolokia, localStorage) !== null;
-*/
   }
 
   export function goToLink(link, $timeout, $location) {
