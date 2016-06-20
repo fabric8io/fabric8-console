@@ -78,7 +78,7 @@
                      content="itemDescriptionTooltip.html">
                   <div class="col-md-12 pipeline-stages">
                     <span ng-repeat="value in item.$tags track by $index">
-                      <span class="badge badge">{{value}}</span>
+                      <span class="badge badge" ng-click="toggleFilter(value)">{{value}}</span>
                     </span>
                   </div>
                 </div>

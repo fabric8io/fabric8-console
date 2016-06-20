@@ -86,6 +86,30 @@ module Forge {
           multiSelect: false
         };
 
+        $scope.toggleFilter = (tag) => {
+          if (tag) {
+            var paths = ["tableConfig", "filterOptions", "filterText"];
+            var filter = Core.pathGet($scope, paths) || "";
+            var tagSpace = tag + " ";
+            var spaceTagSpace = " " + tagSpace;
+            if (_.startsWith(filter, tagSpace)) {
+              filter = filter.substring(tagSpace.length);
+            } else {
+              var idx = filter.indexOf(spaceTagSpace);
+              if (idx > 0) {
+                filter = filter.substring(0, idx) + filter.substring(idx + spaceTagSpace.length - 1);
+              } else {
+                if (filter) {
+                  filter = filter + " " + tag;
+                } else {
+                  filter = tag;
+                }
+              }
+            }
+            Core.pathSet($scope, paths, filter);
+            Core.$apply($scope);
+          }
+        };
 
         entityChanged();
 
