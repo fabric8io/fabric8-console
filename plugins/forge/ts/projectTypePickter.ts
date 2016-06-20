@@ -25,6 +25,8 @@ module Forge {
             var label = typeName;
             if (_.startsWith(label, "WildFly Swarm")) {
               label = "WildFly Swarm";
+            } else if (_.startsWith(label, "From Archetype Catalog")) {
+              label = "Quickstart";
             }
             var projectType = {
               label: label,
@@ -51,44 +53,6 @@ module Forge {
         $scope.$watch("entity." + propertyName, entityChanged);
         $scope.$watchCollection("tileConfig.selectedItems", userSelectionChanged);
 
-
-        function projectTypeIcon(typeName, projectType) {
-          var icon = "img/java.svg";
-          var maven = true;
-          if (typeName) {
-            var lower = typeName.toLowerCase();
-            if (lower.startsWith("go")) {
-              icon = "img/icons/gopher.png";
-            } else if (lower.startsWith("integrat")) {
-              icon = "img/icons/camel.svg";
-            } else if (lower.startsWith("from archetype")) {
-              icon = "img/maven-icon.png";
-            } else if (lower.startsWith("forge")) {
-              icon = "img/icons/forge.svg";
-            } else if (lower.startsWith("funktion")) {
-              icon = "img/icons/funktion.png";
-            } else if (lower.startsWith("node")) {
-              icon = "img/icons/node.svg";
-            } else if (lower.startsWith("python") || lower.startsWith("django")) {
-              icon = "img/icons/python.png";
-            } else if (lower.startsWith("rails")) {
-              icon = "img/icons/rails.png";
-            } else if (lower.startsWith("ruby")) {
-              icon = "img/icons/ruby.png";
-            } else if (lower.startsWith("spring-boot") || lower.startsWith("springboot") || lower.startsWith("microservice")) {
-              icon = "img/icons/spring-boot-logo.png";
-            } else if (lower.startsWith("spring")) {
-              icon = "img/icons/spring-logo.png";
-            } else if (lower.startsWith("swift")) {
-              icon = "img/icons/swift.png";
-            } else if (lower.startsWith("vert")) {
-              icon = "img/icons/vertx.svg";
-            } else if (lower.startsWith("wildfly swarm")) {
-              icon = "img/icons/wildfly-swarm.png";
-            }
-          }
-          projectType.$icon = icon;
-        }
 
         function getSelection(value) {
           var answer = null;

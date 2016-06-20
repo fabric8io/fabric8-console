@@ -58,12 +58,33 @@
           <hawtio-filter ng-model="tableConfig.filterOptions.filterText"
                          save-as="forge-artifact-selector"
                          css-class="input-xxlarge"
-                         placeholder="Filter archetypes..."></hawtio-filter>
+                         placeholder="Filter..."></hawtio-filter>
         </div>
       </div>
       <div class="col-sm-12 archetype-chooser-border">
         <div class="archetype-chooser-panel">
-          <table class="table table-bordered table-striped archetype-chooser" hawtio-simple-table="tableConfig"></table>
+          <div ng-show="tableView">
+            <table class="table table-bordered table-striped archetype-chooser" hawtio-simple-table="tableConfig"></table>
+          </div>
+          <div ng-hide="tableView">
+            <div class="archetype-chooser">
+              <div pf-data-tiles config="tileConfig" items="archetypes">
+                <div class="col-md-12" hawtio-template-popover content="itemDescriptionTooltip.html">
+                  <span class="archetype-icon">
+                    <img class="camel-icon" src="{{item.$icon}}">
+                  </span>
+                </div>
+                <div class="col-md-12 pipeline-stages-panel" ng-show="item.$tags.length" hawtio-template-popover
+                     content="itemDescriptionTooltip.html">
+                  <div class="col-md-12 pipeline-stages">
+                    <span ng-repeat="value in item.$tags track by $index">
+                      <span class="badge badge">{{value}}</span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

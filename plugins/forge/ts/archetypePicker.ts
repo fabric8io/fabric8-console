@@ -11,19 +11,44 @@ module Forge {
         var config = $scope.config || {};
         var properties = config.properties || {};
         var archetype = properties.archetype || {};
+
+        var propertyName = "archetype";
+        var selectionValueProperty = "$value";
+
+        var useTiles = true;
+
         $scope.archetypes = archetype.enum;
+        var allFunktions = true;
+        angular.forEach($scope.archetypes, (archetype) => {
+          var artifactId = archetype.artifactId;
+          if (!artifactId || !_.startsWith(artifactId, "funktion-")) {
+            allFunktions = false;
+          }
+        });
+
         angular.forEach($scope.archetypes, (archetype) => {
           var artifactId = archetype.artifactId;
           if (artifactId) {
             var artifactLabel = Core.trimTrailing(artifactId, "-archetype");
             archetype.$artifactLabel = artifactLabel;
-            archetype.$value = archetype.groupId + ":" + artifactId + ":" + archetype.version;
+            if (!archetype.$description) {
+              var version = archetype.version;
+              var descr = "<p><b>" + artifactLabel + "</b></p>\n<p>" + archetype.description + "</p>";
+              if (version) {
+                descr +=  "\n<p>version: <b>" + version + "</b></p>";
+              }
+              archetype.$description = descr;
+            }
+            archetype[selectionValueProperty] = archetype.groupId + ":" + artifactId + ":" + archetype.version;
+            projectTypeIcon(artifactId, archetype, allFunktions);
+
+            createProjectTags(artifactLabel, archetype);
           }
         });
 
         $scope.tableConfig = {
           data: 'archetypes',
-          primaryKeyFn: (item) => item.$value,
+          primaryKeyFn: (item) => item[selectionValueProperty],
           showSelectionCheckbox: false,
           enableRowClickSelection: true,
           multiSelect: false,
@@ -50,16 +75,48 @@ module Forge {
             }
           ]
         };
+
+        $scope.tileConfig = {
+          selectionMatchProp: selectionValueProperty,
+          selectedItems: [],
+          showSelectBox: false,
+          selectItems: true,
+          multiSelect: false
+        };
+
+
         entityChanged();
 
-        $scope.$watch("entity.archetype", entityChanged);
-        $scope.$watchCollection("tableConfig.selectedItems", userSelectionChanged);
+        $scope.$watch("entity." + propertyName,  entityChanged);
+        if (useTiles) {
+          $scope.$watchCollection("tileConfig.selectedItems", updateTileSelection);
+        } else {
+          $scope.$watchCollection("tableConfig.selectedItems", userSelectionChanged);
+        }
+
+
+        function updateTileSelection() {
+          var selection = $scope.tileConfig.selectedItems;
+          var selectedValue = "";
+          var selected = null;
+          if (selection && selection.length) {
+            selected = selection[0];
+            selectedValue = selected[selectionValueProperty];
+          }
+          $scope.selected = selected;
+          //$scope.html = description ? marked(description) : "";
+          if ($scope.entity[propertyName] !== selectedValue) {
+            $scope.entity[propertyName] = selectedValue;
+          }
+          Core.$apply($scope);
+        }
+
 
         function getSelection(value) {
           var answer = null;
           if (value) {
             angular.forEach($scope.archetypes, (pipeline) => {
-              if (!answer && value === pipeline.$value) {
+              if (!answer && value === pipeline[selectionValueProperty]) {
                 answer = pipeline;
               }
             });
@@ -68,12 +125,17 @@ module Forge {
         }
 
         function entityChanged() {
-          var archetype = $scope.entity.archetype || {};
-          var pipelineValue = angular.isString(archetype) ? archetype : archetype.value;
-          var initialSelection = getSelection(pipelineValue);
+          var archetype = $scope.entity[propertyName] || {};
+          var value = angular.isString(archetype) ? archetype : archetype[selectionValueProperty];
+          var initialSelection = getSelection(value);
           if (initialSelection) {
-            $scope.tableConfig.selectedItems = [initialSelection];
-            userSelectionChanged();
+            if (useTiles) {
+              $scope.tileConfig.selectedItems = [initialSelection];
+              updateTileSelection();
+            } else {
+              $scope.tableConfig.selectedItems = [initialSelection];
+              userSelectionChanged();
+            }
           }
         }
 
@@ -85,12 +147,14 @@ module Forge {
           var selected = null;
           if (selection && selection.length) {
             selected = selection[0];
-            selectedValue = selected.$value;
+            selectedValue = selected[selectionValueProperty];
           }
 
           // lets not clear the selection on startup when we have an empty selection
           if (selectedValue || !first) {
-            $scope.entity.archetype = selectedValue;
+            if ($scope.entity[propertyName] !== selectedValue) {
+              $scope.entity[propertyName] = selectedValue;
+            }
             first = false;
           }
           $scope.selected = selected;

@@ -39,4 +39,6 @@ declare module Forge {
     function gotoCommand($location: any, projectId: any, commandId: any, resourcePath: any, input: any, pageNumber: any): void;
     function isMavenProjectType(projectName: any): boolean;
     function showStackBuildSystemFinalName(projectName: any): boolean;
+    function projectTypeIcon(typeName: any, projectType: any, funktionIcons?: boolean): void;
+    function createProjectTags(name: string, archetype: any): void;
 }

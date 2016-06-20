@@ -394,6 +394,7 @@ module Forge {
       var lower = projectName.toLowerCase();
       if (lower.startsWith("integration") ||
         lower.startsWith("funktion") ||
+        lower.startsWith("from archetype catalog") ||
         lower.startsWith("microservice") ||
         lower.startsWith("vertx") ||
         lower.startsWith("vert.x") ||
@@ -404,6 +405,83 @@ module Forge {
       }
     }
     return isMavenProjectType(projectName);
+  }
+
+  export function projectTypeIcon(typeName, projectType, funktionIcons = false) {
+    var icon = "img/java.svg";
+    var maven = true;
+    if (typeName) {
+      var lower = typeName.toLowerCase();
+      var funktionPrefix = "funktion-";
+      if (funktionIcons && _.startsWith(lower, funktionPrefix)) {
+        lower = lower.substring(funktionPrefix.length);
+      }
+      if (lower.startsWith("go")) {
+        icon = "img/icons/gopher.png";
+      } else if (lower.startsWith("integrat")) {
+        icon = "img/icons/camel.svg";
+      } else if (lower.startsWith("from archetype catalog")) {
+        icon = "img/fabric8_icon.svg";
+      } else if (lower.startsWith("from archetype")) {
+        icon = "img/maven-icon.png";
+      } else if (lower.startsWith("forge")) {
+        icon = "img/icons/forge.svg";
+      } else if (lower.startsWith("funktion")) {
+        icon = "img/icons/funktion.png";
+      } else if (lower.startsWith("groovy")) {
+        icon = "img/icons/groovy.svg";
+      } else if (lower.startsWith("karaf")) {
+        icon = "img/icons/karaf.svg";
+      } else if (lower.startsWith("kotlin")) {
+        icon = "img/icons/kotlin.png";
+      } else if (lower.startsWith("node")) {
+        icon = "img/icons/node.svg";
+      } else if (lower.startsWith("python") || lower.startsWith("django")) {
+        icon = "img/icons/python.png";
+      } else if (lower.startsWith("rails")) {
+        icon = "img/icons/rails.png";
+      } else if (lower.startsWith("ruby")) {
+        icon = "img/icons/ruby.png";
+      } else if (lower.startsWith("spring-boot") || lower.startsWith("springboot") || lower.startsWith("microservice")) {
+        icon = "img/icons/spring-boot-logo.png";
+      } else if (lower.startsWith("spring")) {
+        icon = "img/icons/spring-logo.png";
+      } else if (lower.startsWith("swift")) {
+        icon = "img/icons/swift.png";
+      } else if (lower.startsWith("vert")) {
+        icon = "img/icons/vertx.svg";
+      } else if (lower.startsWith("wildfly swarm")) {
+        icon = "img/icons/wildfly-swarm.png";
+      } else if (lower.indexOf("camel") >= 0) {
+        icon = "img/icons/camel.svg";
+      } else if (lower.indexOf("jetty") >= 0) {
+        icon = "img/icons/jetty.svg";
+      } else if (lower.indexOf("wildfly") >= 0) {
+        icon = "img/icons/wildfly.svg";
+      }
+    }
+    projectType.$icon = icon;
+  }
+
+  export function createProjectTags(name: string, archetype) {
+    var tags = [];
+    var springBootPrefix = "spring-boot-";
+    if (_.startsWith(name, springBootPrefix)) {
+      name = name.substring(springBootPrefix.length);
+      tags.push("spring boot");
+    }
+    angular.forEach(name.split("-"), (value) => {
+      if (value && value !== "example") {
+        tags.push(value);
+      }
+    });
+    if (tags.length > 1) {
+      if (tags[0] == "funktion") {
+        tags[0] = tags[1];
+        tags[1] = "funktion";
+      }
+    }
+    archetype.$tags = tags;
   }
 
 }
