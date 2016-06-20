@@ -46,6 +46,8 @@ module Forge {
           }
         });
 
+        $scope.allArchetypes = $scope.archetypes;
+
         $scope.tableConfig = {
           data: 'archetypes',
           primaryKeyFn: (item) => item[selectionValueProperty],
@@ -93,7 +95,17 @@ module Forge {
         } else {
           $scope.$watchCollection("tableConfig.selectedItems", userSelectionChanged);
         }
+        $scope.$watchCollection("tableConfig.filterOptions.filterText", filterChanged);
 
+        function filterChanged(text) {
+          log.info("Filter is now: " + text);
+
+          if (!text) {
+            $scope.archetypes = $scope.allArchetypes;
+          } else {
+            $scope.archetypes = _.filter($scope.allArchetypes, (object) => FilterHelpers.searchObject(object, text, null, null));
+          }
+        }
 
         function updateTileSelection() {
           var selection = $scope.tileConfig.selectedItems;
