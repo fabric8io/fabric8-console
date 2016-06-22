@@ -158,7 +158,7 @@
       answer = addCamelEndpointIcon(answer, 'camel-jclouds_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-jcr_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-jdbc_200x150.png');
-      answer = addCamelEndpointIcon(answer, 'camel-jetty_200x150.png');
+      answer = addCamelEndpointIcon(answer, 'camel-jetty.svg');
       answer = addCamelEndpointIcon(answer, 'camel-jing1_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-jing2_200x150.png');
       answer = addCamelEndpointIcon(answer, 'camel-jing_200x150.png');
