@@ -140,7 +140,7 @@ module Forge {
                   });
                   var stepInputs = wizardResults.stepInputs;
                   if (stepInputs) {
-                    var schema = _.last(stepInputs);
+                    var schema:any = _.last(stepInputs);
                     if (schema) {
                       $scope.entity = {};
                       // lets copy across any default values from the schema
@@ -249,6 +249,9 @@ module Forge {
               $scope.schema = schema;
               configureCommands($timeout, $templateCache, localStorage, $scope.id, $scope.entity, schema);
             }
+
+            // Debug the form by uncommenting
+            // schema.debug = true;
           }
         }
 
@@ -371,6 +374,7 @@ module Forge {
           $scope.fetched = schema ? true : false;
           var entity = $scope.entity;
           if (schema) {
+            $scope.schema.debug = true;
             angular.forEach(schema.properties, (property, key) => {
               if (!property.label) {
                 property.label = property.title;

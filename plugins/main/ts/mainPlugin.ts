@@ -156,4 +156,8 @@ module Main {
   });
 
   hawtioPluginLoader.addModule(pluginName);
+
+  // init patternfly here too
+  hawtioPluginLoader.addModule('patternfly');
+  hawtioPluginLoader.addModule('patternfly.charts');
 }

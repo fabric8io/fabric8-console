@@ -8,7 +8,7 @@
         <label class="col-sm-2 control-label">Pipeline</label>
       </div>
       <div class="pipeline-chooser">
-        <div pf-data-tiles config="tileConfig" items="pipelines">
+        <div pf-card-view config="tileConfig" items="pipelines">
           <div class="col-md-12" hawtio-template-popover content="itemDescriptionTooltip.html">
             <span class="pipeline-name"><i class="fa fa-ellipsis-h"></i>&nbsp;{{item.label}}</span>
           </div>
@@ -68,7 +68,7 @@
           </div>
           <div ng-hide="tableView">
             <div class="archetype-chooser">
-              <div pf-data-tiles config="tileConfig" items="archetypes">
+              <div pf-card-view config="tileConfig" items="archetypes">
                 <div class="col-md-12" hawtio-template-popover content="itemDescriptionTooltip.html">
                   <span class="archetype-icon">
                     <img class="camel-icon" src="{{item.$icon}}">
@@ -170,7 +170,7 @@
         <label class="col-sm-2 control-label">Component</label>
         <div class="col-sm-12 camel-component-chooser">
           <div class="col-md-12">
-            <div pf-data-tiles id="camelComponentTiles" config="tileConfig" items="components">
+            <div pf-card-view id="camelComponentTiles" config="tileConfig" items="components">
               <div class="col-md-12" title="{{item.description}}">
                 <span>{{item.label}}</span>
               </div>
@@ -195,7 +195,7 @@
         <label class="col-sm-2 control-label">Pattern</label>
         <div class="col-sm-12 camel-pattern-chooser">
           <div class="col-md-12">
-            <div pf-data-tiles config="tileConfig" items="patterns">
+            <div pf-card-view config="tileConfig" items="patterns">
               <div class="col-md-12 {{item.$class}}" title="{{item.description}}">
                 <span>{{item.title}}</span>
               </div>
@@ -216,7 +216,7 @@
         <label class="col-sm-2 control-label">Project Type</label>
         <div class="col-sm-12 project-type-chooser">
           <div class="col-md-12">
-            <div pf-data-tiles id="projectTypes" config="tileConfig" items="projectTypes">
+            <div pf-card-view id="projectTypes" config="tileConfig" items="projectTypes">
               <div class="col-md-12" title="{{item.description}}">
                 <img class="camel-icon" src="{{item.$icon}}">
               </div>

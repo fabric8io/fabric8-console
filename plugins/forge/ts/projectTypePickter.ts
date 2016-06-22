@@ -16,7 +16,7 @@ module Forge {
         var propertyName = "type";
         var propertyInfo = properties[propertyName] || {};
 
-        $scope.projectTypes = [];
+        var projectTypes = [];
         angular.forEach(propertyInfo.enum, (typeName) => {
           // ignore some project types
           if (typeName === "Parent" || typeName === "Forge Addon (JAR)" || typeName === "Java Resources (JAR)") {
@@ -35,10 +35,11 @@ module Forge {
               $maven: true
             };
             projectTypeIcon(typeName, projectType);
-            $scope.projectTypes.push(projectType);
+            projectTypes.push(projectType);
           }
         });
-        $scope.projectTypes = _.sortBy($scope.projectTypes , "label");
+        $scope.projectTypes = _.sortBy(projectTypes , "label");
+        console.log("projectTypes: ", $scope.projectTypes);
 
         $scope.tileConfig = {
           selectionMatchProp: selectionValueProperty,
