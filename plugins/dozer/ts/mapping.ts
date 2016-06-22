@@ -9,10 +9,129 @@ module Dozer {
     dozerPaths.forEach((path) => {
       $routeProvider
         .when(UrlHelpers.join(path, 'mappings/branch/:branch/view/:page*'), {
-          templateUrl: UrlHelpers.join(templatePath, 'mapping.html'),
+          templateUrl: UrlHelpers.join(templatePath, 'mapping2.html'),
           reloadOnSearch: false
         });
     });
+  });
+
+  _module.controller("Dozer.NewMappingController", ($scope, $location, $routeParams, ForgeApiURL) => {
+
+    Wiki.initScope($scope, $routeParams, $location);
+    Forge.initScope($scope, $routeParams, $location);
+    console.log("$scope: ", $scope);
+    var wikiRepository = $scope.wikiRepository;
+    var model = undefined;
+    var classA = undefined;
+    var classB = undefined;
+
+    $scope.selectedId = $routeParams['mappingId']; 
+    $scope.projectId = $routeParams['projectId'];
+    $scope.mapping = undefined;
+
+    $scope.$watch('selectedId', (id) => {
+      if (id) {
+        var mapping = getMapping(id);
+        if (mapping) {
+          $location.search("mappingId", id);
+          $scope.mapping = mapping;
+        }
+      }
+    });
+
+    $scope.$watch('mapping', (mapping) => {
+      if (!mapping) {
+        return;
+      }
+      $scope.classA = classA = undefined;
+      $scope.classB = classB = undefined;
+      fetchProperties({
+        classA: mapping.class_a.value, 
+        classB: mapping.class_b.value
+      });
+    });
+
+    updateView();
+
+    function fetchProperties(options) {
+      console.log("Fetching properties: ", options);
+      var commandId = 'introspector-get-properties';
+      var url = Forge.executeCommandApiUrl(ForgeApiURL, commandId);
+      var request = {
+        namespace: $scope.namespace,
+        projectName: $scope.projectId,
+        resource: "",
+        inputList: [{
+          classNames: [options.classA, options.classB].join(',')
+        }]
+      };
+      url = Forge.createHttpUrl($scope.projectId, url);
+      $.ajax(url, <any> {
+        method: 'POST',
+        contentType: 'application/json',
+        data: angular.toJson(request),
+        success: (data) => {
+          console.log("Got back data: ", data);
+          var message = data.message;
+          if (message) {
+            var response = angular.fromJson(message);
+            console.log("Response: ", response);
+            $scope.classA = classA = response[options.classA];
+            $scope.classB = classB = response[options.classB];
+            Core.$apply($scope);
+          }
+        },
+        error: (jqXHR, text, status) => {
+          console.log("Error: ", jqXHR, " text: ", text, " status: ", status);
+          $scope.classA = classA = [];
+          $scope.classB = classB = [];
+          Core.$apply($scope);
+        }
+      });
+      console.log("Url: ", url);
+    }
+
+    function updateView() {
+      $scope.pageId = Wiki.pageId($routeParams, $location);
+      $scope.git = wikiRepository.getPage($scope.branch, $scope.pageId, $scope.objectId, onResults);
+    }
+
+    function resetSelectedId() {
+      var mapping:any = _.first(model.mappings);
+      $scope.selectedId = mapping.map_id;
+    }
+
+    function getMapping(id) {
+      if (!model) {
+        return undefined;
+      }
+      return _.find(model.mappings, (mapping:any) => mapping.map_id === id);
+    }
+
+    function onResults(response) {
+      var text = response.text;
+      if (text) {
+        if ($scope.responseText !== text) {
+          $scope.responseText = text;
+          // lets remove any dodgy characters so we can use it as a DOM id
+          $scope.model = model = Dozer.loadDozerModel(text, $scope.pageId);
+          if (!$scope.selectedId) {
+            resetSelectedId();
+          } else {
+            // double-check the current exists
+            var mapping = getMapping($scope.selectedId); 
+            if (!mapping) {
+              resetSelectedId();
+            } else {
+              $scope.mapping = mapping;
+            }
+          }
+        }
+      } else {
+        log.warn("No XML found for page " + $scope.pageId);
+      }
+      Core.$apply($scope);
+    }
   });
 
   _module.controller("Dozer.MappingController", ["$scope", "$location", "$routeParams", "$templateCache", ($scope, $location, $routeParams, $templateCache) => {
