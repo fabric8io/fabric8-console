@@ -144,7 +144,7 @@ module Forge {
                     if (schema) {
                       $scope.entity = {};
                       // lets copy across any default values from the schema
-                      function copyValuesFromSchema() {
+                      function copyValuesFromSchema(schema) {
                         angular.forEach(schema["properties"], (property, name) => {
                           var value = getValidatedSchemaPropertyValue(property, name);
                           if (value) {
@@ -154,11 +154,10 @@ module Forge {
                           }
                         });
                       }
-                      //copyValuesFromSchema();
                       $scope.inputList.push($scope.entity);
                       $timeout(() => {
                         // lets do this async to be sure they don't get overwritten by the form widget
-                        copyValuesFromSchema();
+                        copyValuesFromSchema(schema);
                       }, 200);
                       updateSchema(schema);
                       if (data.canMoveToNextStep) {
@@ -230,8 +229,10 @@ module Forge {
             });
         };
 
-        $scope.$watchCollection("entity", () => {
-          validate();
+        $scope.$watchCollection("entity", (newValue, oldValue) => {
+          if (newValue !== oldValue) {
+            validate();
+          }
         });
 
         function updateSchema(schema) {
@@ -246,8 +247,8 @@ module Forge {
             var json = angular.toJson(schemaWithoutValues);
             if (json !== $scope.previousSchemaJson) {
               $scope.previousSchemaJson = json;
-              $scope.schema = schema;
               configureCommands($timeout, $templateCache, localStorage, $scope.id, $scope.entity, schema);
+              $scope.schema = schema;
             }
 
             // Debug the form by uncommenting
@@ -338,9 +339,10 @@ module Forge {
             $http.get(url, createHttpConfig()).
               success(function (data, status, headers, config) {
                 if (data) {
+                  var schema = data;
                   $scope.fetched = true;
-                  log.debug("updateData loaded schema: ", data);
-                  updateSchema(data);
+                  log.debug("updateData loaded schema: ", schema);
+                  updateSchema(schema);
                   setModelCommandInputs(ForgeModel, $scope.resourcePath, $scope.id, $scope.schema);
                   onSchemaLoad();
                 }
@@ -374,7 +376,6 @@ module Forge {
           $scope.fetched = schema ? true : false;
           var entity = $scope.entity;
           if (schema) {
-            $scope.schema.debug = true;
             angular.forEach(schema.properties, (property, key) => {
               if (!property.label) {
                 property.label = property.title;

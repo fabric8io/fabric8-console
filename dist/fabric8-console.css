@@ -42,6 +42,10 @@ body {
 .wiki-fixed {
   margin-top: inherit;
 }
+.small-cards .card {
+  width: 140px;
+  height: 140px;
+}
 
 .navbar.navbar-pf-vertical {
   height: 48px;
