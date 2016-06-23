@@ -102,8 +102,10 @@ module Dozer {
       schema.javaType = schema.id;
       processProperties(schema);
     });
+    /*
     schemas.iterate((schema) => {
       console.log("Schema: ", schema);
     });
+    */
   }
 }

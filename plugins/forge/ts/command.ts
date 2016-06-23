@@ -28,18 +28,11 @@ module Forge {
         redirectToSetupSecretsIfNotDefined($scope, $location);
 
         $scope.$completeLink = $scope.$projectLink;
-        $scope.commandsLink = commandsLink($scope.resourcePath, $scope.projectId);
-        //$scope.completedLink = $scope.projectId ? UrlHelpers.join($scope.$projectLink, "environments") : $scope.$projectLink;
         $scope.completedLink = $scope.$completeLink;
+        $scope.commandsLink = commandsLink($scope.resourcePath, $scope.projectId);
 
-        $scope.entity = {
-        };
+        $scope.entity = {};
         $scope.inputList = [$scope.entity];
-
-/*
-        $scope.schema = getModelCommandInputs(ForgeModel, $scope.resourcePath, $scope.id);
-        onSchemaLoad();
-*/
 
         $scope.startup = true;
 
@@ -143,22 +136,7 @@ module Forge {
                     var schema:any = _.last(stepInputs);
                     if (schema) {
                       $scope.entity = {};
-                      // lets copy across any default values from the schema
-                      function copyValuesFromSchema(schema) {
-                        angular.forEach(schema["properties"], (property, name) => {
-                          var value = getValidatedSchemaPropertyValue(property, name);
-                          if (value) {
-                            log.info("Adding entity." + name + " = " + value);
-                            $scope.entity[name] = value;
-
-                          }
-                        });
-                      }
                       $scope.inputList.push($scope.entity);
-                      $timeout(() => {
-                        // lets do this async to be sure they don't get overwritten by the form widget
-                        copyValuesFromSchema(schema);
-                      }, 200);
                       updateSchema(schema);
                       if (data.canMoveToNextStep) {
                         // lets clear the response we've another wizard page to do
@@ -237,22 +215,10 @@ module Forge {
 
         function updateSchema(schema) {
           if (schema) {
-            // lets remove the values so that we can properly check when the schema really does change
-            // otherwise the schema will change every time we type a character ;)
-            var schemaWithoutValues = angular.copy(schema);
-            angular.forEach(schemaWithoutValues.properties, (property) => {
-              delete property["value"];
-              delete property["enabled"];
-            });
-            var json = angular.toJson(schemaWithoutValues);
-            if (json !== $scope.previousSchemaJson) {
-              $scope.previousSchemaJson = json;
-              configureCommands($timeout, $templateCache, localStorage, $scope.id, $scope.entity, schema);
-              $scope.schema = schema;
-            }
-
+            configureCommands($timeout, $templateCache, localStorage, $scope.id, $scope.entity, schema);
             // Debug the form by uncommenting
             // schema.debug = true;
+            $scope.schema = onSchemaLoad(schema);
           }
         }
 
@@ -344,7 +310,6 @@ module Forge {
                   log.debug("updateData loaded schema: ", schema);
                   updateSchema(schema);
                   setModelCommandInputs(ForgeModel, $scope.resourcePath, $scope.id, $scope.schema);
-                  onSchemaLoad();
                 }
               }).
               error(function (data, status, headers, config) {
@@ -370,22 +335,20 @@ module Forge {
           return answer;
         }
 
-        function onSchemaLoad() {
+        function onSchemaLoad(schema) {
           // lets update the value if its blank with the default values from the properties
-          var schema = $scope.schema;
           $scope.fetched = schema ? true : false;
           var entity = $scope.entity;
           if (schema) {
             angular.forEach(schema.properties, (property, key) => {
-              if (!property.label) {
-                property.label = property.title;
-              }
               var value = getValidatedSchemaPropertyValue(property, key);
               if (value && !entity[key]) {
                 entity[key] = value;
               }
+              delete property.value;
             });
           }
+          return schema;
         }
       }]);
 
