@@ -14,7 +14,8 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12">
-            <p>Waiting for the <b>CD Pipeline</b> application to startup: &nbsp;&nbsp;<i class="fa fa-spinner fa-spin"></i>
+            <p>Waiting for the <b>CD Pipeline</b> application to startup: &nbsp;&nbsp;<i
+                    class="fa fa-spinner fa-spin"></i>
             </p>
 
             <ul class="pending-pods">
@@ -69,19 +70,6 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-6">
-            <p class="align-center">
-              <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/importProject"
-                 title="Import an existing project from a git source control repository">
-                <i class="fa fa-plus"></i> Import from Git
-              </a>
-            </p>
-
-            <p class="align-center">
-              Import an App which already exists in a git repository
-            </p>
-          </div>
-
-          <div class="col-md-6">
             <div ng-show="sourceSecret">
               <p class="align-center">
                 <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/forge/command/project-new"
@@ -91,7 +79,7 @@
               </p>
 
               <p class="align-center">
-                This wizard guides you though creating a new App from our library of templates with the configured
+                Create a new App from our library of templates with the configured
                 <a href="{{$workspaceLink}}/forge/secrets"
                    title="View or change the secret used to create new apps">
                   source secret
@@ -111,6 +99,21 @@
               </p>
             </div>
           </div>
+
+          <div class="col-md-6">
+            <p class="align-center">
+              <a class="btn btn-primary btn-lg" href="{{$workspaceLink}}/importProject"
+                 title="Import an existing project from a git source control repository">
+                <i class="fa fa-plus"></i> Import from Git
+              </a>
+            </p>
+
+            <p class="align-center">
+              Import an App which already exists in a git repository
+            </p>
+          </div>
+
+
         </div>
       </div>
     </div>
