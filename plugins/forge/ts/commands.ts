@@ -140,14 +140,14 @@ module Forge {
       var ignorePrefixes = ["addon-", "archetype-", "fabric8-", "git-"];
       var ignoreCommands = {
         "devops-edit": true,
-        "devops-new-build": true,
+        //"devops-new-build": true,
 
         // forge commands
         "build-and-install-an-addon": true,
-        "install-an-addon": true,
+        //"install-an-addon": true,
         "install-an-addon-from-git": true,
-        "remove-an-addon": true,
-        "update-an-addon": true,
+        //"remove-an-addon": true,
+        //"update-an-addon": true,
 
         // project commands
         "build": true,
@@ -177,12 +177,13 @@ module Forge {
       log.info("Fetching commands from: " + url);
       $http.get(url, createHttpConfig()).
         success(function (data, status, headers, config) {
+          console.log("Data: ", data);
           if (angular.isArray(data) && status === 200) {
             var resourcePath = $scope.resourcePath;
             var folderMap = {};
             var folders = [];
-            $scope.commands = _.sortBy(data, "name");
-            angular.forEach($scope.commands, (command) => {
+            var commands = _.sortBy(data, "name");
+            angular.forEach(commands, (command:any) => {
               var id = command.id || command.name;
               if (isValidCommand(id)) {
                 command.$link = commandLink($scope.projectId, id, resourcePath);
@@ -215,6 +216,7 @@ module Forge {
                 folder.commands.push(command);
               }
             });
+            $scope.commands = commands;
             folders = _.sortBy(folders, "lowerName");
             angular.forEach(folders, (folder) => {
               folder.commands = _.sortBy(folder.commands, "$shortName");
