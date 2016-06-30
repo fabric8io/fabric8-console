@@ -11,10 +11,8 @@ branches:
 dependencies:
   pre:
     - npm install -g bower gulp
-    - npm update
-    - npm prune
-    - bower update
-    - bower prune
+    - npm update && npm update -g && npm prune
+    - bower update && bower prune
     - rm -Rf site/*
   override:
     - gulp bower path-adjust
