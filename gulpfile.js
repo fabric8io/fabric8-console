@@ -381,6 +381,11 @@ function createConnectConfig() {
     targetPath: '/hawtio/git'
   }];
 
+  if (process.env.DISABLE_PROXY === "true") {
+    defaultProxies = [];
+    localProxies = [];
+  }
+
   var staticProxies = localProxies.concat(defaultProxies);
   var debugLoggingOfProxy = process.env.DEBUG_PROXY === "true";
   var useAuthentication = process.env.DISABLE_OAUTH !== "true";
@@ -464,7 +469,11 @@ function setupAndListen(hawtio, config) {
       console.log("OAuth disabled");
       config.master_uri = kubeBase;
     }
-    if (process.env.USE_PROXY) {
+    if (process.env.DISABLE_PROXY === "true") {
+      config = {
+        master_uri: process.env.KUBERNETES_MASTER
+      }
+    } else if (process.env.USE_PROXY) {
       config.master_uri = 'http://localhost:9000';
       config.api = {
         openshift: {
