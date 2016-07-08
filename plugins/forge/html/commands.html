@@ -1,118 +1,54 @@
 <div class="row" ng-controller="Forge.CommandsController">
-  <div class="row">
-    <div hawtio-breadcrumbs></div>
-  </div>
+  <div hawtio-breadcrumbs></div>
+  <div hawtio-tabs></div>
 
-  <div class="row">
-    <div hawtio-tabs></div>
-  </div>
-
-<!--
-  <div class="row">
-    <div class="col-md-12" ng-show="commands.length">
-      <span ng-show="!id">
-        Command: <hawtio-filter ng-model="tableConfig.filterOptions.filterText"
-                                css-class="input-xxlarge"
-                                placeholder="Filter commands..."
-                                save-as="fabric8-forge-command-filter"></hawtio-filter>
-      </span>
-      <span class="pull-right">&nbsp;</span>
-
-      <div class="user-icon-name pull-right" ng-show="user">
-        <a href="/forge/repos" title="Browse the repositories for {{user}}">
-          <img src="{{avatar_url}}" class="avatar-small-img" ng-show="avatar_url">
-        </a>
-        &nbsp;
-        <a href="/forge/repos" title="Browse the repositories for {{user}}">
-          {{user}}
-        </a>
-        <span ng-show="repoName">/
-          <a href="/forge/repos/{{repoName}}" title="Browse the {{repoName}}repository">
-            {{repoName}}
-          </a>
-        </span>
+  <div ng-hide="fetched">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="align-center">
+          <div class="spinner spinner-lg"></div>
+        </div>
       </div>
     </div>
   </div>
--->
-  <div class="row">
-    <div class="col-md-12">
-      <div ng-hide="fetched">
-        <div class="align-center">
-          <i class="fa fa-spinner fa-spin"></i>
-        </div>
-      </div>
-      <div ng-show="fetched">
-        <div ng-hide="commands.length" class="align-center">
-          <p class="alert alert-info">There are no commands available!</p>
-        </div>
-        <div ng-show="commands.length">
-        </div>
 
-        <div ng-hide="mode == 'table'">
-          <div class="panel-group" id="accordion-markup">
-            <div class="panel panel-default" ng-repeat="folder in commandSelector.folders">
-              <div class="panel-heading">
-                <h4 class="panel-title">
-                  <a data-toggle="collapse" data-parent="#accordion-markup" href="#{{folder.id}}">
-                    {{folder.name}}
-                  </a>
-                </h4>
-              </div>
-              <div id="{{folder.id}}" class="panel-collapse collapse in">
-                <div class="panel-body">
-                  <ul>
-                    <li ng-repeat="command in folder.commands">
-                      <a href="{{command.$link}}"
-                         title="{{command.description}}">
-                        <span class="command-name">{{command.$shortName}}</span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+  <div class="row" ng-show="fetched">
+    <div class="col-md-12">
+      <div ng-hide="commands.length" class="align-center">
+        <p class="alert alert-info">There are no commands available!</p>
+      </div>
+      <div ng-hide="mode == 'table'">
+        <div class="panel-group" id="accordion-markup">
+          <div class="panel panel-default" ng-repeat="folder in commandSelector.folders">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion-markup" href="#{{folder.id}}">
+                  {{folder.name}}
+                </a>
+              </h4>
+            </div>
+            <div id="{{folder.id}}" class="panel-collapse collapse in">
+              <div class="panel-body">
+                <ul>
+                  <li ng-repeat="command in folder.commands">
+                    <a href="{{command.$link}}"
+                      title="{{command.description}}">
+                      <span class="command-name">{{command.$shortName}}</span>
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
+        <!--
         <div ng-show="mode == 'table'">
           <table class="table table-condensed table-striped" hawtio-simple-table="tableConfig"></table>
         </div>
-      </div>
+        -->
     </div>
   </div>
 
-  <!--
-  <div ng-show="fetched && commands.length && mode != 'table'">
-    <div class="row">
-      <ul>
-        <li class="no-list command-selector-folder" ng-repeat="folder in commandSelector.folders"
-            ng-show="commandSelector.showFolder(folder)">
-          <div class="expandable" ng-class="commandSelector.isOpen(folder)">
-            <div title="{{folder.name}}" class="title">
-              <i class="expandable-indicator folder"></i> <span class="folder-title"
-                                                                ng-show="folder.name">{{folder.name}}</span><span
-                    class="folder-title" ng-hide="folder.name">Uncategorized</span>
-            </div>
-            <div class="expandable-body">
-              <ul>
-                <li class="no-list command" ng-repeat="command in folder.commands"
-                    ng-show="commandSelector.showCommand(command)">
-                  <div class="inline-block command-selector-name"
-                       ng-class="commandSelector.getSelectedClass(command)">
-                    <span class="contained c-max">
-                      <a href="{{command.$link}}"
-                         title="{{command.description}}">
-                        <span class="command-name">{{command.$shortName}}</span>
-                      </a>
-                    </span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>-->
 </div>

@@ -137,21 +137,21 @@ module Forge {
         return name.replace("/", "_");
       }
 
-      var ignorePrefixes = ["addon-", "archetype-", "fabric8-", "git-"];
+      var ignorePrefixes = []; //"addon-", "archetype-", "fabric8-", "git-"];
       var ignoreCommands = {
-        "devops-edit": true,
+        //"devops-edit": true,
         //"devops-new-build": true,
 
         // forge commands
-        "build-and-install-an-addon": true,
+        //"build-and-install-an-addon": true,
         //"install-an-addon": true,
-        "install-an-addon-from-git": true,
+        //"install-an-addon-from-git": true,
         //"remove-an-addon": true,
         //"update-an-addon": true,
 
         // project commands
-        "build": true,
-        "project-new": true
+        //"build": true,
+        //"project-new": true
       };
 
       /**
@@ -177,7 +177,6 @@ module Forge {
       log.info("Fetching commands from: " + url);
       $http.get(url, createHttpConfig()).
         success(function (data, status, headers, config) {
-          console.log("Data: ", data);
           if (angular.isArray(data) && status === 200) {
             var resourcePath = $scope.resourcePath;
             var folderMap = {};
