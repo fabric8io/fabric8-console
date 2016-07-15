@@ -550,7 +550,7 @@ gulp.task('swf', function() {
 });
 
 gulp.task('site-files', ['swf', 'site-fonts'], function() {
-  return gulp.src(['resources/**', 'favicon.ico', 'resources/**', 'images/**', 'img/**', 'osconsole/config.*.js.tmpl'], {base: '.'})
+  return gulp.src(['resources/**', 'favicon.ico', 'resources/**', 'images/**', 'img/**', 'osconsole/config.*.js.tmpl'], { nodir: true, base: '.'})
     .pipe(plugins.chmod(644))
     .pipe(plugins.debug({title: 'site files'}))
     .pipe(gulp.dest(config.site));
@@ -581,16 +581,23 @@ gulp.task('usemin', ['site-files'], function() {
     .pipe(gulp.dest(config.site));
 });
 
-gulp.task('site-resources', [], function() {
-  return gulp.src(['libs/*/img/**', 'libs/*/images/**', 'libs/*/resources/**'])
-    .pipe(gulp.dest(function(file) {
-      var parts = file.relative.split(path.sep);
+gulp.task('site-resources', ['site-files'], function() {
+  return gulp.src(['libs/*/img/**', 'libs/*/images/**', 'libs/*/resources/**'], { nodir: true, followSymlinks: false })
+    .pipe(plugins.debug({title: 'site resources origin'}))
+    .pipe(plugins.rename2(function (file, filePath) {
+      var parts = filePath.split(path.sep);
+      var libs = parts.shift();
       var plugin = parts.shift();
       var kind = parts.shift();
-      var answer = urljoin(config.site, kind, plugin, parts.join('/'));
-      console.log("copying: ", file.relative, " to: ", answer);
+      var answer = urljoin(config.site, kind, parts.join('/'));
       return answer;
-    }));
+    }))
+    .pipe(plugins.debug({title: 'site resources destination'}))
+    .on('error', function(error) {
+      console.log("Caught error: ", error);
+    })
+    .pipe(gulp.dest(config.site));
+
 });
 
 function getJavaConsoleName() {
