@@ -636,6 +636,9 @@ module Wiki {
           case 'go':
             icon = "img/icons/gopher.png";
             break;
+          case 'groovy':
+            icon = "img/icons/groovy.svg";
+            break;
           case 'js':
             icon = "img/icons/javascript.png";
             break;
