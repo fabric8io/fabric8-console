@@ -595,6 +595,8 @@ module Wiki {
         iconUrl = "img/jenkins-icon.svg";
       } else if (lowerName == "fabric8.yml") {
         iconUrl = "img/fabric8_icon.svg";
+      } else if (lowerName == "funktion.yml") {
+        iconUrl = "img/icons/funktion.png";
       }
     }
 
