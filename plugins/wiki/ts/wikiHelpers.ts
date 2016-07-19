@@ -591,6 +591,8 @@ module Wiki {
       var lowerName = name.toLowerCase();
       if (lowerName == "pom.xml") {
         iconUrl = "img/maven-icon.png";
+      } else if (lowerName == "web.config") {
+        iconUrl = "img/icons/dotnet.png";
       } else if (lowerName == "jenkinsfile") {
         iconUrl = "img/jenkins-icon.svg";
       } else if (lowerName == "fabric8.yml") {
@@ -630,6 +632,8 @@ module Wiki {
         }
       } else {
         switch (extension) {
+          case 'cs':
+            icon = "img/icons/csharp.png";
           case 'java':
             icon = "img/java.svg";
             break;
@@ -641,6 +645,9 @@ module Wiki {
             break;
           case 'js':
             icon = "img/icons/javascript.png";
+            break;
+          case 'php':
+            icon = "img/icons/php.png";
             break;
           case 'py':
             icon = "img/icons/python.png";

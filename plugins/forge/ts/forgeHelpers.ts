@@ -376,6 +376,8 @@ module Forge {
     if (projectName && angular.isString(projectName)) {
       var lower = projectName.toLowerCase();
       if (lower.startsWith("go") ||
+        lower.startsWith("dotnet") ||
+        lower.startsWith("php") ||
         lower.startsWith("node") ||
         lower.startsWith("python") || lower.startsWith("django") ||
         lower.startsWith("ruby") || lower.startsWith("rails") ||
@@ -424,6 +426,8 @@ module Forge {
         icon = "img/fabric8_icon.svg";
       } else if (lower.startsWith("from archetype")) {
         icon = "img/maven-icon.png";
+      } else if (lower.startsWith("dotnet")) {
+        icon = "img/icons/dotnet.png";
       } else if (lower.startsWith("forge")) {
         icon = "img/icons/forge.svg";
       } else if (lower.startsWith("funktion")) {
@@ -438,6 +442,8 @@ module Forge {
         icon = "img/icons/node.svg";
       } else if (lower.startsWith("python") || lower.startsWith("django")) {
         icon = "img/icons/python.png";
+      } else if (lower.startsWith("php")) {
+        icon = "img/icons/php.png";
       } else if (lower.startsWith("rails")) {
         icon = "img/icons/rails.png";
       } else if (lower.startsWith("ruby")) {
