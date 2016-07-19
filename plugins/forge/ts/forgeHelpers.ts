@@ -376,7 +376,7 @@ module Forge {
     if (projectName && angular.isString(projectName)) {
       var lower = projectName.toLowerCase();
       if (lower.startsWith("go") ||
-        lower.startsWith("dotnet") ||
+        lower.startsWith("dotnet") || lower.startsWith(".net") ||
         lower.startsWith("php") ||
         lower.startsWith("node") ||
         lower.startsWith("python") || lower.startsWith("django") ||
@@ -426,7 +426,7 @@ module Forge {
         icon = "img/fabric8_icon.svg";
       } else if (lower.startsWith("from archetype")) {
         icon = "img/maven-icon.png";
-      } else if (lower.startsWith("dotnet")) {
+      } else if (lower.startsWith("dotnet") || lower.startsWith(".net")) {
         icon = "img/icons/dotnet.png";
       } else if (lower.startsWith("forge")) {
         icon = "img/icons/forge.svg";
