@@ -15,7 +15,6 @@ module Github {
       clientId: githubClientId
       //redirectUri: window.location.origin
     });
-
 /*
     $authProvider.github({
       url: '/auth/github',
@@ -31,9 +30,32 @@ module Github {
 
   }]);
 
-  _module.run(['viewRegistry', 'HawtioNav', (viewRegistry, HawtioNav) => {
+  _module.run(['viewRegistry', 'HawtioNav', '$auth', (viewRegistry, HawtioNav, $auth) => {
     viewRegistry['github'] = templatePath + 'layoutGithub.html';
+    var token = localStorage['githubToken'];
+    if (token) {
+      log.debug("Setting token on $auth service");
+      $auth.setToken(token);
+      localStorage.removeItem('githubToken');
+    }
   }]);
 
   hawtioPluginLoader.addModule(pluginName);
+
+  hawtioPluginLoader.registerPreBootstrapTask({
+    name: 'GithubTokenReader',
+    task: (next) => {
+      var uri = new URI();
+      var search = uri.search(true);
+      var token = search['code'];
+      if (token) {
+        log.debug("Found github token");
+        localStorage['githubToken'] = token;
+        delete search['code'];
+        uri.search(search);
+        window.location.href = uri.toString();
+      }
+      next();
+    }
+  });
 }

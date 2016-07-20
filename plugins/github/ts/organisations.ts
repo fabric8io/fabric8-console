@@ -6,8 +6,11 @@ module Github {
   export var OrganisationsController = controller("OrganisationsController", ["$scope", "$auth", "$dialog", "$window", "$templateCache", "$routeParams", "$location", "localStorage", "$http", "$timeout",
     ($scope, $auth, $dialog, $window, $templateCache, $routeParams, $location:ng.ILocationService, localStorage, $http, $timeout) => {
 
+
+      console.log("Token: ", $auth.getToken());
+
       $scope.authenticate = function () {
-        var url = window.location.origin;
+        var url = window.location.href;
 
         log.info("authenticating to redirect URL: " + url);
 
