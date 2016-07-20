@@ -12,6 +12,8 @@ module Github {
     $routeProvider.when(UrlHelpers.join(context, '/organisations'), route('organisations.html', false));
 
     $authProvider.github({
+      type: '2.0',
+      authorizationEndpoint: 'https://github.com/login/oauth/authorize',
       clientId: githubClientId
       //redirectUri: window.location.origin
     });

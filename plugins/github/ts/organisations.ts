@@ -21,8 +21,10 @@ module Github {
           .then(function (response) {
             log.info("authenticated!!!!!");
 
+            $scope.token = Core.pathGet(response, ["config", "data", "code"]) || $auth.getToken();
+            $auth.setToken($scope.token);
+
             $scope.authenticated = $auth.isAuthenticated();
-            $scope.token = $auth.getToken();
 
             log.info("authenticated " + $scope.authenticated + " token: " + $scope.token);
           })
