@@ -32,6 +32,9 @@
 /// <reference path="d.ts/forge/ts/repo.d.ts"/>
 /// <reference path="d.ts/forge/ts/repos.d.ts"/>
 /// <reference path="d.ts/forge/ts/secrets.d.ts"/>
+/// <reference path="d.ts/github/ts/githubHelpers.d.ts"/>
+/// <reference path="d.ts/github/ts/githubPlugin.d.ts"/>
+/// <reference path="d.ts/github/ts/organisations.d.ts"/>
 /// <reference path="d.ts/main/ts/mainGlobals.d.ts"/>
 /// <reference path="d.ts/main/ts/mainPlugin.d.ts"/>
 /// <reference path="d.ts/main/ts/about.d.ts"/>

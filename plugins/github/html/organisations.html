@@ -42,53 +42,33 @@
 
   <h2>Organisations</h2>
 
+  <div class="row" ng-if="!oauth.hasToken() || data.status === 403">
+    <div class="col-md-12">
+      <div class="alert alert-warning">
+        No Github credentials available, <a href="" ng-click="prefs.goto('Github')">configure your github account</a>
+      </div>
+    </div>
+  </div>
 
-  <div ng-hide="authenticated">
+  <div ng-hide="fetched || !oauth.hasToken()">
     <div class="row">
       <div class="col-md-12">
         <div class="align-center">
-          <button class="btn btn-primary btn-lg" ng-click="authenticate()">Sign in with GitHub</button>
+          <div class="spinner spinner-lg"></div>
         </div>
       </div>
     </div>
   </div>
 
-  <div ng-hide="fetched || !authenticated">
+  <div ng-show="fetched && oauth.hasToken()">
     <div class="row">
       <div class="col-md-12">
-        <div class="align-center">
-          <i class="fa fa-spinner fa-spin"></i>
-        </div>
+        <table class="table table-condensed table-striped" hawtio-simple-table="tableConfig"></table>
       </div>
     </div>
-  </div>
-
-  <div ng-hide="fetched">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="align-center">
-          <i class="fa fa-spinner fa-spin"></i>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div ng-show="fetched && login.authHeader">
-    <div ng-hide="projects.length" class="align-center">
-      <div class="padded-div">
-        <div class="row">
-          <div class="col-md-12">
-            <p class="alert alert-info">There are no git repositories yet. Please create one!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div ng-show="projects.length">
-      <div class="row">
-        <div class="col-md-12">
-          <table class="table table-condensed table-striped" hawtio-simple-table="tableConfig"></table>
-        </div>
-      </div>
+    <!-- debug -->
+    <div>
+      <pre>{{data | json}}</pre>
     </div>
   </div>
 </div>

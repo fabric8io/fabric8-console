@@ -9,8 +9,6 @@ module Github {
   export var templatePath = pluginPath + 'html/';
   export var log:Logging.Logger = Logger.get(pluginName);
 
-  export var githubClientId = '616c9146580844e73264';
-
   export function initScope($scope, $location, $routeParams) {
 
   }
