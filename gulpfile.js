@@ -444,7 +444,12 @@ function setupAndListen(hawtio, config) {
           hostPort: kube.host(),
           prefix: kube.path()
         }
+      },
+      github: {
+        clientId: process.env.GITHUB_OAUTH_CLIENT_ID,
+        clientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET
       }
+
     };
     if (googleClientId && googleClientSecret) {
       console.log("Using google client ID and client secred");
