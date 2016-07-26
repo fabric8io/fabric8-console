@@ -1,6 +1,5 @@
-window.OPENSHIFT_CONFIG = {
+window.OPENSHIFT_CONFIG = window.HAWTIO_OAUTH_CONFIG = {
   master_uri: "{{ .Env.KUBERNETES_MASTER_URI }}",
-
   google: {
     clientId: "{{ .Env.GOOGLE_OAUTH_CLIENT_ID }}",
     clientSecret: "{{ .Env.GOOGLE_OAUTH_CLIENT_SECRET }}",

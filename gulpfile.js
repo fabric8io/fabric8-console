@@ -488,7 +488,7 @@ function setupAndListen(hawtio, config) {
         }
       }
     }
-    var answer = "window.OPENSHIFT_CONFIG = " + stringifyObject(config);
+    var answer = "window.OPENSHIFT_CONFIG = window.HAWTIO_OAUTH_CONFIG = " + stringifyObject(config);
     res.set('Content-Type', 'application/javascript');
     res.send(answer);
   });
