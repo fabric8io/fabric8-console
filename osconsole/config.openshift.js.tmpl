@@ -3,5 +3,9 @@ window.OPENSHIFT_CONFIG = window.HAWTIO_OAUTH_CONFIG = {
     oauth_authorize_uri: "{{ .Env.OAUTH_AUTHORIZE_URI }}",
     oauth_client_id: "{{ .Env.OAUTH_CLIENT_ID }}",
     logout_uri: "",
+  },
+  github: {
+    clientId: "{{ .Env.GITHUB_OAUTH_CLIENT_ID }}",
+    clientSecret: "{{ .Env.GITHUB_OAUTH_CLIENT_SECRET }}"
   }
 };

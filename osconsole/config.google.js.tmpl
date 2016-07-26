@@ -7,5 +7,9 @@ window.OPENSHIFT_CONFIG = window.HAWTIO_OAUTH_CONFIG = {
     tokenURI: "{{ .Env.GOOGLE_OAUTH_TOKEN_URL }}",
     scope: "{{ .Env.GOOGLE_OAUTH_SCOPE }}",
     redirectURI: "{{ .Env.GOOGLE_OAUTH_REDIRECT_URI }}"
+  },
+  github: {
+    clientId: "{{ .Env.GITHUB_OAUTH_CLIENT_ID }}",
+    clientSecret: "{{ .Env.GITHUB_OAUTH_CLIENT_SECRET }}"
   }
 };

@@ -1,3 +1,7 @@
 window.OPENSHIFT_CONFIG = window.HAWTIO_OAUTH_CONFIG = {
-  master_uri: "{{ .Env.KUBERNETES_MASTER_URI }}"
+  master_uri: "{{ .Env.KUBERNETES_MASTER_URI }}",
+  github: {
+    clientId: "{{ .Env.GITHUB_OAUTH_CLIENT_ID }}",
+    clientSecret: "{{ .Env.GITHUB_OAUTH_CLIENT_SECRET }}"
+  }
 };
