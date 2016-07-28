@@ -50,7 +50,7 @@ public class ConsoleModelProcessor {
                     "--compress"
             ));
             List<EnvVar> envVars = container.getEnv();
-            envVars.add(new EnvVarBuilder().withName("KUBERNETES_MASTER_URI").withValue("/k8s").build());
+            envVars.add(new EnvVarBuilder().withName("KUBERNETES_MASTER_URI").withValue("k8s").build());
             container.setEnv(envVars);
             builder.withContainers(containers);
             System.out.println("Updated container command for " + container.getName() + " " + container.getImage() + " to: " + container.getCommand());
