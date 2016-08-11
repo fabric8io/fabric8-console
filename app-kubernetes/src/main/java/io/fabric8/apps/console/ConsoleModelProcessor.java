@@ -46,7 +46,7 @@ public class ConsoleModelProcessor {
                     "--default-page=/index.html",
                     "--max-age=24h",
                     "-s",
-                    "/k8s/=https://kubernetes/",
+                    "/k8s/=https://kubernetes:443/",
                     "--compress"
             ));
             List<EnvVar> envVars = container.getEnv();
