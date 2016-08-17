@@ -42,7 +42,7 @@ module Forge {
   }]);
 
   _module.factory('ForgeApiURL', ['$q', '$rootScope', ($q:ng.IQService, $rootScope:ng.IRootScopeService) => {
-    return Kubernetes.kubernetesApiUrl() + "/proxy" + Kubernetes.kubernetesNamespacePath() + "/services/fabric8-forge/api/forge";
+    return Kubernetes.kubernetesApiUrl() + "/proxy" + Kubernetes.kubernetesNamespacePath() + "/services/fabric8-forge:80/api/forge";
   }]);
 
 
