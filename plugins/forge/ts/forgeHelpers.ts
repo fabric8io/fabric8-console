@@ -269,6 +269,7 @@ module Forge {
     url = addQueryArgument(url, "_gogsEmail", email);
     url = addQueryArgument(url, "secret", secret);
     url = addQueryArgument(url, "secretNamespace", secretNS);
+    url = addQueryArgument(url, "kubeUserName", Kubernetes.currentUserName());
 
     if (!Kubernetes.isOpenShift) {
       // lets pass the git URL too
