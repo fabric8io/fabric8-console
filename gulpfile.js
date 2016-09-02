@@ -385,6 +385,15 @@ function createConnectConfig() {
     defaultProxies = [];
     localProxies = [];
   }
+  if (process.env.KUBERNETES_MASTER.indexOf('k8s') !== -1) {
+    defaultProxies.push({
+      proto: kube.protocol(),
+      port: kube.port(),
+      hostname: kube.hostname(),
+      path: '/k8s',
+      targetPath: '/k8s'
+    });
+  }
 
   var staticProxies = localProxies.concat(defaultProxies);
   var debugLoggingOfProxy = process.env.DEBUG_PROXY === "true";
@@ -433,23 +442,10 @@ function setupAndListen(hawtio, config) {
 
   hawtio.use('/osconsole/config.js', function(req, res, next) {
     var config = {
-      api: {
-        openshift: {
-          proto: oapi.protocol(),
-          hostPort: oapi.host(),
-          prefix: oapi.path()
-        },
-        k8s: {
-          proto: kube.protocol(),
-          hostPort: kube.host(),
-          prefix: kube.path()
-        }
-      },
       github: {
         clientId: process.env.GITHUB_OAUTH_CLIENT_ID,
         clientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET
       }
-
     };
     if (googleClientId && googleClientSecret) {
       console.log("Using google client ID and client secred");
@@ -480,17 +476,8 @@ function setupAndListen(hawtio, config) {
       }
     } else if (process.env.USE_PROXY) {
       config.master_uri = 'http://localhost:9000';
-      config.api = {
-        openshift: {
-          proto: 'http',
-          hostPort: 'localhost:9000',
-          prefix: 'oapi'
-        },
-        k8s: {
-          proto: 'http',
-          hostPort: 'localhost:9000',
-          prefix: 'api'
-        }
+      if (process.env.KUBERNETES_MASTER.indexOf('k8s') !== -1) {
+        config.master_uri = 'k8s';
       }
     }
     var answer = "window.OPENSHIFT_CONFIG = window.HAWTIO_OAUTH_CONFIG = " + stringifyObject(config);
