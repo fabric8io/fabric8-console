@@ -23,7 +23,7 @@ module Main {
 
   var tab = undefined;
 
-  _module.run(($rootScope, HawtioNav: HawtioMainNav.Registry, KubernetesModel, ServiceRegistry, preferencesRegistry) => {
+  _module.run(($rootScope, HawtioNav: HawtioMainNav.Registry, KubernetesModel, ServiceRegistry, preferencesRegistry, HawtioBranding) => {
 
     HawtioNav.on(HawtioMainNav.Actions.CHANGED, pluginName, (items) => {
       items.forEach((item) => {
@@ -122,7 +122,7 @@ module Main {
     });
 */
 
-    preferencesRegistry.addTab('About ' + version.name, UrlHelpers.join(templatePath, 'about.html'));
+    preferencesRegistry.addTab('About ' + HawtioBranding.appName, UrlHelpers.join(templatePath, 'about.html'));
 
     log.info("started, version: ", version.version);
     log.info("commit ID: ", version.commitId);

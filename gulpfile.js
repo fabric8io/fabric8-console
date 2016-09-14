@@ -239,7 +239,7 @@ gulp.task('clean', ['concat'], function() {
 });
 
 gulp.task('watch', ['build', 'build-example'], function() {
-  plugins.watch(['libs/**/*.js', 'libs/**/*.css', 'index.html', config.dist + '/*'], function() {
+  plugins.watch(['resources/**', 'libs/**/*.js', 'libs/**/*.css', 'index.html', config.dist + '/*'], function() {
     gulp.start('reload');
   });
   plugins.watch(['libs/**/*.d.ts', config.ts, config.templates], function() {
@@ -440,6 +440,11 @@ function setupAndListen(hawtio, config) {
   var kube = config.other.kube;
   var kubeBase = config.other.kubeBase;
 
+  hawtio.use('favicon.ico', function(req, res, next) {
+    res.statusCode = 404;
+    res.end();
+  });
+
   hawtio.use('/osconsole/config.js', function(req, res, next) {
     var config = {
       github: {
@@ -479,6 +484,11 @@ function setupAndListen(hawtio, config) {
       if (process.env.KUBERNETES_MASTER.indexOf('k8s') !== -1) {
         config.master_uri = 'k8s';
       }
+    }
+    if (process.env.PRODUCT === "true") {
+      config.branding = {
+        kind: 'redhat-branding'
+      };
     }
     var answer = "window.OPENSHIFT_CONFIG = window.HAWTIO_OAUTH_CONFIG = " + stringifyObject(config);
     res.set('Content-Type', 'application/javascript');
@@ -542,7 +552,7 @@ gulp.task('swf', function() {
 });
 
 gulp.task('site-files', ['swf', 'site-fonts'], function() {
-  return gulp.src(['resources/**', 'favicon.ico', 'resources/**', 'images/**', 'img/**', 'osconsole/config.*.js.tmpl'], { nodir: true, base: '.'})
+  return gulp.src(['resources/**', 'images/**', 'img/**', 'osconsole/config.*.js.tmpl'], { nodir: true, base: '.'})
     .pipe(plugins.chmod(644))
     .pipe(plugins.debug({title: 'site files'}))
     .pipe(gulp.dest(config.site));

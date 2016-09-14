@@ -38,6 +38,8 @@
 /// <reference path="d.ts/main/ts/mainGlobals.d.ts"/>
 /// <reference path="d.ts/main/ts/mainPlugin.d.ts"/>
 /// <reference path="d.ts/main/ts/about.d.ts"/>
+/// <reference path="d.ts/main/ts/app.d.ts"/>
+/// <reference path="d.ts/main/ts/branding.d.ts"/>
 /// <reference path="d.ts/main/ts/navbar.d.ts"/>
 /// <reference path="d.ts/wiki/ts/camel.d.ts"/>
 /// <reference path="d.ts/wiki/ts/camelCanvas.d.ts"/>

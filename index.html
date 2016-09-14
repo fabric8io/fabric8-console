@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-us" class="layout-pf layout-pf-fixed transitions">
 
-  <head>
+  <head ng-controller="Main.HeadController">
     <title>fabric8-console</title>
     <base href='/'></base>
     <meta charset="UTF-8">
@@ -159,10 +159,9 @@
     <script type="text/javascript" src="libs/codemirror/mode/swift/swift.js"></script>
 
     <!-- endbuild -->
-
   </head>
 
-  <body>
+  <body ng-controller="Main.BodyController">
     <nav class="navbar navbar-pf-vertical">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle">
@@ -172,21 +171,11 @@
           <span class="icon-bar"></span>
         </button>
         <a class="fabric8 navbar-brand" href="/">
-          <img class="navbar-brand-icon" src="img/fabric8_logo_white.svg"/>
+          <img class="navbar-brand-icon" ng-src="{{branding.appLogo}}"/>
         </a>
       </div>
       <nav class="fabric8 collapse navbar-collapse">
         <hawtio-breadcrumbs-outlet></hawtio-breadcrumbs-outlet>
-        <!--
-        <ul class="nav navbar-nav" ng-controller="Main.NavController">
-          <li ng-class="projectsActive() ? 'active' : ''">
-            <a href="/workspaces" title="Projects" class="nav-item-iconic"><span class="fa fa-tasks"></span></a>
-          </li>
-          <li ng-class="runtimeActive() ? 'active' : ''">
-            <a href="/namespaces" title="Runtime" class="nav-item-iconic"><span class="fa fa-gears"></span></a>
-          </li>
-        </ul>
-        -->
         <ul class="nav navbar-nav navbar-right navbar-iconic">
           <li class="dropdown" ng-controller="Kubernetes.ServiceApps" ng-show="model.serviceApps.length" ng-include="'plugins/kubernetes/html/serviceApps.html'"></li>
           <li class="dropdown">
