@@ -9,7 +9,10 @@ module Main {
       var config = window['OPENSHIFT_CONFIG'];
       var branding = defaultBranding;
       if (config) {
-        branding = <string>_.get(config, 'branding.kind') || defaultBranding;
+        branding = <string>_.get(config, 'branding.kind');
+        if (Core.isBlank(branding)) {
+          branding = defaultBranding;
+        }
       }
       log.info("Using branding: ", branding);
       hawtioPluginLoader.addModule(branding);
