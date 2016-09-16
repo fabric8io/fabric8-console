@@ -34,7 +34,7 @@ module Wiki {
       // TODO ignoring objectId
       var query = null;
       if (branch) {
-        query = "ref=" + branch;
+        query = "branch=" + branch;
       }
       this.doGet(UrlHelpers.join("content", path || "/"), query,
         (data, status, headers, config) => {
@@ -65,7 +65,7 @@ module Wiki {
     public putPage(branch:string, path:string, contents:string, commitMessage:string, fn) {
       var query = null;
       if (branch) {
-        query = "ref=" + branch;
+        query = "branch=" + branch;
       }
       if (commitMessage) {
         query = (query ? query + "&" : "") + "message=" + encodeURIComponent(commitMessage);
@@ -91,7 +91,7 @@ module Wiki {
     public history(branch:string, objectId:string, path:string, limit:number, fn) {
       var query = null;
       if (branch) {
-        query = "ref=" + branch;
+        query = "branch=" + branch;
       }
       if (limit) {
         query = (query ? query + "&" : "") + "limit=" + limit;
@@ -197,7 +197,7 @@ module Wiki {
       }
       var query = null;
       if (branch) {
-        query = "ref=" + branch;
+        query = "branch=" + branch;
       }
       if (commitMessage) {
         query = (query ? query + "&" : "") + "message=" + encodeURIComponent(commitMessage);
@@ -215,7 +215,7 @@ module Wiki {
       }
       var query = null;
       if (branch) {
-        query = "ref=" + branch;
+        query = "branch=" + branch;
       }
       if (commitMessage) {
         query = (query ? query + "&" : "") + "message=" + encodeURIComponent(commitMessage);
@@ -236,7 +236,7 @@ module Wiki {
       }
       var query = null;
       if (branch) {
-        query = "ref=" + branch;
+        query = "branch=" + branch;
       }
       if (commitMessage) {
         query = (query ? query + "&" : "") + "message=" + encodeURIComponent(commitMessage);
@@ -254,7 +254,7 @@ module Wiki {
       }
       var query = null;
       if (branch) {
-        query = "ref=" + branch;
+        query = "branch=" + branch;
       }
       if (commitMessage) {
         query = (query ? query + "&" : "") + "message=" + encodeURIComponent(commitMessage);
