@@ -62,7 +62,7 @@ module Wiki {
         });
     }
 
-    public putPage(branch:string, path:string, contents:string, commitMessage:string, fn) {
+    public putPage(branch:string, path:string, contents:string, commitMessage:string, successFn, errorFn = null) {
       var query = null;
       if (branch) {
         query = "branch=" + branch;
@@ -73,8 +73,9 @@ module Wiki {
       var body = contents;
       this.doPost(UrlHelpers.join("content", path || "/"), query, body,
         (data, status, headers, config) => {
-          fn(data);
-        });
+          successFn(data);
+        },
+        errorFn);
     }
 
     /**
