@@ -46,7 +46,7 @@ module Wiki {
       log.debug("modified: ", newValue);
     });
 
-    $scope.viewLink = () => Wiki.viewLink($scope, $scope.pageId, $location, $scope.fileName);
+    $scope.viewLink = () => Wiki.viewLink($scope.projectId, $scope.branch, $scope.pageId, $location, $scope.fileName);
 
     $scope.cancel = () => {
       goToView();

@@ -68,8 +68,8 @@ declare module Wiki {
     function startWikiLink(projectId: any, branch: any): string;
     function startLink($scope: any): string;
     function isIndexPage(path: string): boolean;
-    function viewLink($scope: any, pageId: string, $location: any, fileName?: string): string;
-    function branchLink($scope: any, pageId: string, $location: any, fileName?: string): string;
+    function viewLink(projectId: string, branch: string, pageId: string, $location: any, fileName?: string): string;
+    function branchLink(projectId: string, branch: string, pageId: string, $location: any, fileName?: string): string;
     function editLink($scope: any, pageId: string, $location: any): string;
     function customEditLink($scope: any, pageId: string, $location: any, editView?: string): string;
     function createLink($scope: any, pageId: string, $location: any): string;
