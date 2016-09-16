@@ -10,7 +10,7 @@ declare module Wiki {
         private projectId;
         constructor($scope: any);
         getPage(branch: string, path: string, objectId: string, fn: any): void;
-        putPage(branch: string, path: string, contents: string, commitMessage: string, fn: any): void;
+        putPage(branch: string, path: string, contents: string, commitMessage: string, successFn: any, errorFn?: any): void;
         history(branch: string, objectId: string, path: string, limit: number, fn: any): void;
         commitInfo(commitId: string, fn: any): void;
         commitDetail(commitId: string, fn: any): void;

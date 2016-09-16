@@ -333,9 +333,9 @@ module Wiki {
     return path && (_.endsWith(path, "index.md") || _.endsWith(path, "index.html") || _.endsWith(path, "index")) ? true : false;
   }
 
-  export function viewLink($scope, pageId:string, $location, fileName:string = null) {
+  export function viewLink(projectId:string, branch:string, pageId:string, $location, fileName:string = null) {
     var link:string = null;
-    var start = startLink($scope);
+    var start = startWikiLink(projectId, branch);
     if (pageId) {
       // figure out which view to use for this page
       var view = isIndexPage(pageId) ? "/book/" : "/view/";
@@ -357,8 +357,8 @@ module Wiki {
     return link;
   }
 
-  export function branchLink($scope, pageId: string, $location, fileName:string = null) {
-    return viewLink($scope, pageId, $location, fileName);
+  export function branchLink(projectId:string, branch:string, pageId: string, $location, fileName:string = null) {
+    return viewLink(projectId, branch, pageId, $location, fileName);
   }
 
   export function editLink($scope, pageId:string, $location) {
@@ -734,7 +734,7 @@ module Wiki {
     $scope.branch = $routeParams["branch"] || $location.search()["branch"];
     $scope.objectId = $routeParams["objectId"] || $routeParams["diffObjectId1"];
     $scope.startLink = startLink($scope);
-    $scope.$viewLink = viewLink($scope, $scope.pageId, $location);
+    $scope.$viewLink = viewLink($scope.projectId, $scope.branch, $scope.pageId, $location);
     $scope.historyLink = startLink($scope) + "/history/" + ($scope.pageId || "");
     $scope.wikiRepository = new GitWikiRepository($scope);
     $scope.$workspaceLink = Developer.workspaceLink();
@@ -887,7 +887,7 @@ module Wiki {
 
     // Turn an absolute link into a wiki link...
     if (href.startsWith('/')) {
-      return Wiki.branchLink($scope, href + extension, $location) + extension;
+      return Wiki.branchLink($scope.projectId, $scope.branch, href + extension, $location) + extension;
     }
 
     if (!_.some(Wiki.excludeAdjustmentPrefixes, (exclude) => {

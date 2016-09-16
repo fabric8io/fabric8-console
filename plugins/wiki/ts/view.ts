@@ -232,7 +232,7 @@ module Wiki {
 
     $scope.branchLink = (branch) => {
       if (branch) {
-        return Wiki.branchLink(branch, $scope.pageId, $location);
+        return Wiki.branchLink($scope.projectId, $scope.branch, $scope.pageId, $location);
       }
       return null
     };

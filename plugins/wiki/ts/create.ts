@@ -43,7 +43,7 @@ module Wiki {
     $scope.newDocumentName = "";
 
     function returnToDirectory() {
-      var link = Wiki.viewLink($scope, $scope.pageId, $location);
+      var link = Wiki.viewLink($scope.projectId, $scope.branch, $scope.pageId, $location);
       log.debug("Cancelling, going to link: ", link);
       Wiki.goToLink(link, $timeout, $location);
     }
@@ -127,7 +127,7 @@ module Wiki {
           Core.notification("success", "Creating new folder " + name);
 
           wikiRepository.createDirectory($scope.branch, path, commitMessage, (status) => {
-            var link = Wiki.viewLink($scope, path, $location);
+            var link = Wiki.viewLink($scope.projectId, $scope.branch, path, $location);
             goToLink(link, $timeout, $location);
           });
         } else if (template.profile) {

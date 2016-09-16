@@ -46,7 +46,7 @@ module Wiki {
           menuItem.icon = "fa fa-ok";
         } else {
           menuItem.action = () => {
-            var targetUrl = branchLink(item, <string>$scope.pageId, $location);
+            var targetUrl = branchLink($scope.projectId, item, <string>$scope.pageId, $location);
             Kubernetes.goToPath($location, Core.toPath(targetUrl));
             Core.$apply($scope);
           }
