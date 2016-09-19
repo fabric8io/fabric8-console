@@ -41,16 +41,10 @@ export DISABLE_OAUTH=true
 export KUBERNETES_MASTER=https://$(minikube ip):8443
 ```
 
-For Windows on PowerShell:
+For Windows on PowerShell (I tend to just go through the console image's proxy):
 
 ```
 $env:DISABLE_OAUTH = "true"
-$env:KUBERNETES_MASTER = "https://$(minikube ip):8443"
-```
-
-In some cases it's handy to also test via the console images's proxy:
-
-```
 $env:KUBERNETES_MASTER = "$(minikube service --url=true fabric8)/k8s"
 $env:USE_PROXY = "true"
 ```
