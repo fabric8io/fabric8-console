@@ -9,6 +9,8 @@ ENV KUISP_VERSION 0.16.2
 # a default value when running on vanilla kubernetes
 ENV KUBERNETES_MASTER_URI /
 
+ENV HAWTIO_BRANDING_PLUGIN fabric8-branding
+
 RUN yum install -y tar && \
     yum clean all && \
     curl -L https://github.com/jimmidyson/kuisp/releases/download/v${KUISP_VERSION}/kuisp-${KUISP_VERSION}-linux-amd64.tar.gz | \
