@@ -49,3 +49,8 @@ Also, make sure you keep your globally installed node programs up to date with a
 #### Hacking on other plugins + the console
 
 Much of the functionality in fabric8-console is provided by other hawtio plugins.  However it's possible to run builds of those plugins in parallel and view your changes in the running console.  For example to also hack on [hawtio-kubernetes](https://github.com/hawtio/hawtio-kubernetes) but also have fabric8-console running, you can clone the hawtio-kubernetes repo and pass the `--out` flag to `gulp watch`, specifying the `libs/hawtio-kubernetes/dist/` as the output folder.  More info in the [readme](https://github.com/hawtio/hawtio-kubernetes/blob/master/ReadMe.md) for hawtio-kubernetes, and other hawtio plugins that support this.
+
+
+#### Deploying the console to a local kubernetes cluster
+
+Give the console docker image a local build and run to test any changes that affect the docker image.  Run: `mvn fabric8:deploy`
