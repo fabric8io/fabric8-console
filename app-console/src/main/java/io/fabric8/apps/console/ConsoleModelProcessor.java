@@ -37,7 +37,9 @@ public class ConsoleModelProcessor {
                         "https://fabric8.${DOMAIN}"
                 )).and()
                 .addNewServiceAccountObject()
-                .withNewMetadata().withName("fabric8").endMetadata()
+                .withNewMetadata()
+                .addToLabels("provider","fabric8")
+                .withName("fabric8").endMetadata()
                 .endServiceAccountObject()
                 .build();
     }
