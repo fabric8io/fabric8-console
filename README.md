@@ -31,6 +31,23 @@ If you need to disable OAUTH authentication in development try use **DISABLE_OAU
 Then to run the web application:
 
     gulp
+    
+#### Running the console against minikube:
+
+On mac/linux you can set the following environment variables:
+
+```
+export DISABLE_OAUTH=true
+export KUBERNETES_MASTER=https://$(minikube ip):8443
+```
+
+For Windows on PowerShell (I tend to just go through the console image's proxy):
+
+```
+$env:DISABLE_OAUTH = "true"
+$env:KUBERNETES_MASTER = "$(minikube service --url=true fabric8)/k8s"
+$env:USE_PROXY = "true"
+```
 
 ##### Coming back to hack on the console after awhile?
 
