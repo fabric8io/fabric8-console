@@ -40,7 +40,6 @@
 
     <fabric8.pureKubernetes>true</fabric8.pureKubernetes>
     <fabric8.service.name>fabric8</fabric8.service.name>
-    <fabric8.service.type>LoadBalancer</fabric8.service.type>
     <fabric8.replicationController.name>fabric8</fabric8.replicationController.name>
 
     <fabric8.service.port>80</fabric8.service.port>
