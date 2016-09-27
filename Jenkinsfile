@@ -6,9 +6,6 @@ node{
 
     def pipeline = load 'release.groovy'
 
-    stage 'Updating dependencies'
-    def prId = pipeline.updateDependencies('http://central.maven.org/maven2/')
-
     stage 'Stage'
     def stagedProject = pipeline.stage()
 
