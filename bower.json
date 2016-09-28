@@ -24,7 +24,7 @@
     "hawtio-core-navigation": "~2.0.51",
     "hawtio-extension-service": "~2.0.2",
     "hawtio-utilities": "~2.0.24",
-    "hawtio-ui": "^2.0.96",
+    "hawtio-ui": "^2.0.111",
     "hawtio-preferences": "~2.0.3",
     "hawtio-template-cache": "~2.0.3",
     "hawtio-oauth": "~2.0.34",

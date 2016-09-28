@@ -119,7 +119,7 @@ module Wiki {
       wikiRepository.commitTree(commitId, (commits) => {
         $scope.commits = commits;
         angular.forEach(commits, (commit) => {
-          commit.fileIconHtml = Wiki.fileIconHtml(commit);
+          commit.fileIconHtml = Wiki.fileIconHtml(commit, $scope);
           commit.fileClass = commit.name.endsWith(".profile") ? "green" : "";
           var changeType = commit.changeType;
           var path = commitPath(commit);
