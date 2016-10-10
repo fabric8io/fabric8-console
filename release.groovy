@@ -45,6 +45,17 @@ def deploy(openshiftUrl, openshiftDomain, kubernetesUrl, kubernetesDefaultNamesp
   )
 }
 
+def updateDownstreamDependencies(stagedProject) {
+  pushPomPropertyChangePR {
+    propertyName = 'fabric8.console.version'
+    projects = [
+            'fabric8io/fabric8-platform',
+            'fabric8io/fabric8-maven-dependencies'
+    ]
+    version = stagedProject[1]
+  }
+}
+
 def approveRelease(project){
   def releaseVersion = project[1]
   approve{
@@ -60,7 +71,7 @@ def release(project){
     stagedProject = project
     useGitTagForNextVersion = true
     helmPush = false
-    groupId = 'io.fabric8.apps'
+    groupId = 'io.fabric8.platform.console'
     githubOrganisation = 'fabric8io'
     artifactIdToWatchInCentral = 'fabric8-console'
     artifactExtensionToWatchInCentral = 'pom'
