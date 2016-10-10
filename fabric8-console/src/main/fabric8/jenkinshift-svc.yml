@@ -1,0 +1,20 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  labels:
+    group: "io.fabric8.apps"
+    project: "${project.artifactId}"
+    provider: "fabric8"
+  name: "jenkinshift"
+spec:
+  ports:
+  - name: "http"
+    port: 80
+    protocol: "TCP"
+    targetPort: 9191
+  selector:
+    group: "io.fabric8.apps"
+    project: "console"
+    provider: "fabric8"
+  type: "LoadBalancer"

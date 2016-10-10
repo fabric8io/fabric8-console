@@ -1,0 +1,27 @@
+---
+apiVersion: "v1"
+kind: "Template"
+metadata:
+  labels:
+    provider: "fabric8"
+    project: "${project.artifactId}"
+    expose: "true"
+    version: "${project.version}"
+    group: "io.fabric8.apps"
+  name: "fabric8"
+parameters:
+- description: The domain name to append to the service name to access web applications
+  name: DOMAIN
+  value: localhost
+  required: true
+- description: Overrides the api server address if it differs from the domain name
+  name: APISERVER
+  value: localhost
+  required: true
+- description: The port that the API server is running inside Kubernetes/OpenShift
+  name: OAUTH_AUTHORIZE_PORT
+  value: '8443'
+- description: The client ID obtained from the Github OAuth client settings page
+  name: GITHUB_OAUTH_CLIENT_ID
+- description: The client secret obtained from the Github OAuth client settings page
+  name: GITHUB_OAUTH_CLIENT_SECRET

@@ -1,0 +1,78 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  annotations:
+    fabric8.io/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-console/master/app-kubernetes/src/main/fabric8/icon.svg"
+  labels:
+    provider: "fabric8"
+    project: "${project.artifactId}"
+    expose: "true"
+    version: "${project.version}"
+    group: "io.fabric8.apps"
+  name: "fabric8"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      provider: "fabric8"
+      group: "${project.groupId}"
+      project: "${project.artifactId}"
+      expose: "true"
+  template:
+    metadata:
+      labels:
+        provider: "fabric8"
+        group: "${project.groupId}"
+        project: "${project.artifactId}"
+        expose: "true"
+        version: "${project.version}"
+    spec:
+      containers:
+      - command:
+        - "/kuisp"
+        - "-p"
+        - "9090"
+        - "-c"
+        - "/site/osconsole/config.basic.js.tmpl=/site/osconsole/config.js"
+        - "--bearer-token=/var/run/secrets/kubernetes.io/serviceaccount/token"
+        - "--skip-cert-validation=true"
+        - "--default-page=/index.html"
+        - "--max-age=24h"
+        - "-s"
+        - "/k8s/=https://kubernetes:443/"
+        - "--compress"
+        env:
+        - name: "GITHUB_OAUTH_CLIENT_SECRET"
+          valueFrom:
+            configMapKeyRef:
+              key: "github-oauth-client-secret"
+              name: "console"
+        - name: "GITHUB_OAUTH_CLIENT_ID"
+          valueFrom:
+            configMapKeyRef:
+              key: "github-oauth-client-id"
+              name: "console"
+        - name: "KUBERNETES_NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: "metadata.namespace"
+        - name: "KUBERNETES_MASTER_URI"
+          value: "k8s"
+        image: "fabric8/fabric8-console:${project.version}"
+        name: "fabric8"
+        ports:
+        - containerPort: 9090
+          name: "http"
+        resources:
+          limits:
+            cpu: "0"
+            memory: "0"
+          requests:
+            cpu: "0"
+            memory: "0"
+      - image: "fabric8/jenkinshift:${project.version}"
+        name: "jenkinshift"
+        ports:
+        - containerPort: 9191
+          protocol: "TCP"
