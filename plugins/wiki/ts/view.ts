@@ -203,10 +203,7 @@ module Wiki {
       return "";
     };
 
-    $scope.fileIconHtml = (entity) => {
-      return Wiki.fileIconHtml(entity);
-    };
-
+    $scope.fileIconHtml = entity => Wiki.fileIconHtml(entity, $scope);
 
     $scope.format = Wiki.fileFormat($scope.pageId, fileExtensionTypeRegistry);
     var options = {
@@ -430,7 +427,8 @@ module Wiki {
 
     $scope.updateView = updateView;
 
-    function viewContents(pageName, contents) {
+    function viewContents(pageName, details) {
+      let contents = details.text;
       $scope.sourceView = null;
 
       var format:string = null;
@@ -442,16 +440,30 @@ module Wiki {
       log.debug("File format: ", format);
       switch (format) {
         case "image":
-          var imageURL = 'git/' + $scope.branch;
-          log.debug("$scope: ", $scope);
-          imageURL = UrlHelpers.join(imageURL, $scope.pageId);
-          var interpolateFunc = $interpolate($templateCache.get<string>("imageTemplate.html"));
-          $scope.html = interpolateFunc({
-            imageURL: imageURL
+          $scope.html = $interpolate($templateCache.get<string>("imageTemplate.html"))({
+            imageUrl: gitRestURL($scope, $scope.pageId, $scope.branch),
+            mediaType: fileExtension($scope.pageId).toLowerCase() === 'svg' ? 'image/svg+xml' : 'application/octet-stream'
           });
           break;
         case "markdown":
-          $scope.html = contents ? marked(contents) : "";
+          let renderer = new marked.Renderer();
+          // Adapt the relative image URLs to retrieve content from the Forge API
+          renderer.image = (href: string, title: string, text: string) => {
+            let uri = new URI(href);
+            if (uri.is('relative')) {
+              if (_.startsWith(uri.path(), '/')) {
+                uri.segment(['profiles', ...uri.segment()]);
+              } else {
+                uri = uri.absoluteTo(new URI(details.path).filename(''));
+              }
+              // Use URL.createObjectURL via angular-img-http-src to get an URL for the image BLOB
+              return '<img http-src="' + gitRestURL($scope, uri.normalize().toString()) + '" alt="' + (title ? title : text) + '" />';
+            } else {
+              // Simply return the img tag with the original location
+              return '<img src="' + href + '" alt="' + (title ? title : text) + '" />';
+            }
+          };
+          $scope.html = contents ? marked(contents, {renderer: renderer}) : "";
           break;
         case "javascript":
           var form = null;
@@ -486,7 +498,6 @@ module Wiki {
     }
 
     function onFileDetails(details) {
-      var contents = details.text;
       $scope.directory = details.directory;
       $scope.fileDetails = details;
 
@@ -535,7 +546,7 @@ module Wiki {
           var pageName = item.path;
           $scope.readMePath = pageName;
           wikiRepository.getPage($scope.branch, pageName, $scope.objectId, (readmeDetails) => {
-            viewContents(pageName, readmeDetails.text);
+            viewContents(pageName, readmeDetails);
           });
         }
         var kubernetesJson = $scope.children.find((child) => {
@@ -563,7 +574,7 @@ module Wiki {
       } else {
         $scope.$broadcast('pane.close');
         var pageName = $scope.pageId;
-        viewContents(pageName, contents);
+        viewContents(pageName, details);
         $scope.isFile = true;
       }
       Core.$apply($scope);

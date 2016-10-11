@@ -79,9 +79,8 @@ declare module Wiki {
     function fileName(path: string): string;
     function fileParent(path: string): string;
     function hideFileNameExtensions(name: any): any;
-    function gitRestURL($scope: any, path: string): string;
-    function gitRelativeURL($scope: any, path: string): string;
-    function fileIconHtml(row: any): string;
+    function gitRestURL($scope: any, path: string, branch?: string): string;
+    function fileIconHtml(row: any, $scope: any): string;
     function iconClass(row: any): string;
     function initScope($scope: any, $routeParams: any, $location: any): void;
     function loadBranches(jolokia: any, wikiRepository: any, $scope: any, isFmc?: boolean): void;

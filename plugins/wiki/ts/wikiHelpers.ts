@@ -504,44 +504,16 @@ module Wiki {
   /**
    * Returns the URL to perform a GET or POST for the given branch name and path
    */
-  export function gitRestURL($scope, path: string) {
-    var url = gitRelativeURL($scope, path);
-    url = Core.url('/' + url);
-
-/*
-    var connectionName = Core.getConnectionNameParameter();
-    if (connectionName) {
-      var connectionOptions = Core.getConnectOptions(connectionName);
-      if (connectionOptions) {
-        connectionOptions.path = url;
-        url = <string>Core.createServerConnectionUrl(connectionOptions);
-      }
-    }
-
-*/
-    return url;
+  export function gitRestURL($scope, path: string, branch?: string):string {
+    return Forge.createHttpUrl($scope.projectId,
+      new URI(Kubernetes.inject<string>("ForgeApiURL"))
+        .segment('repos/project')
+        .segment($scope.namespace || Kubernetes.currentKubernetesNamespace())
+        .segment($scope.projectId)
+        .segment('raw')
+        .segment(path)
+        .toString()) + '?branch=' + (branch || $scope.branch || 'master');
   }
-
-    function gitUrlPrefix() {
-        var prefix = "";
-        var injector = HawtioCore.injector;
-        if (injector) {
-            prefix = injector.get<string>("WikiGitUrlPrefix") || "";
-        }
-        return prefix;
-    }
-
-    /**
-   * Returns a relative URL to perform a GET or POST for the given branch/path
-   */
-  export function gitRelativeURL($scope, path: string) {
-      var branch = $scope.branch;
-    var prefix = gitUrlPrefix();
-    branch = branch || "master";
-    path = path || "/";
-    return UrlHelpers.join(prefix, "git/" + branch, path);
-  }
-
 
   /**
    * Takes a row containing the entity object; or can take the entity directly.
@@ -555,10 +527,10 @@ module Wiki {
    * @return {String}
    *
    */
-  export function fileIconHtml(row) {
+  export function fileIconHtml(row, $scope) {
     var name = row.name;
     var path = row.path;
-    var branch = row.branch ;
+    var branch = row.branch;
     var directory = row.directory;
     var xmlNamespaces = row.xml_namespaces || row.xmlNamespaces;
     var iconUrl = row.iconUrl;
@@ -574,6 +546,7 @@ module Wiki {
     branch = branch || "master";
     var css = null;
     var icon:string = null;
+    let git = false;
     var extension = fileExtension(name);
     // TODO could we use different icons for markdown v xml v html
     if (xmlNamespaces && xmlNamespaces.length) {
@@ -663,7 +636,8 @@ module Wiki {
           case 'jpg':
           case 'gif':
             css = null;
-            icon = Wiki.gitRelativeURL(branch, path);
+            git = true;
+            icon = Wiki.gitRestURL($scope, path, branch);
 /*
             var connectionName = Core.getConnectionNameParameter();
             if (connectionName) {
@@ -689,9 +663,13 @@ module Wiki {
       }
     }
     if (icon) {
-      return "<img src='" + Core.url(icon) + "'>";
+      if (git) {
+        return '<img http-src="' + icon + '"' + (extension === 'svg' ? ' media-type="image/svg+xml"' : '') + ' http-src-changed="child.downloadURL" />';
+      } else {
+        return '<img src="' + Core.url(icon) + '">';
+      }
     } else {
-      return "<i class='" + css + "'></i>";
+      return '<i class="' + css + '"></i>';
     }
   }
 
