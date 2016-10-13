@@ -21,6 +21,13 @@ module Main {
 
   export var _module = angular.module(pluginName, [Forge.pluginName]);
 
+
+  export var route = PluginHelpers.createRoutingFunction(templatePath);
+
+  _module.config(['$routeProvider', ($routeProvider:ng.route.IRouteProvider) => {
+    $routeProvider.when('/help', route('help.html'));
+  }]);
+
   var tab = undefined;
 
   _module.run(($rootScope, HawtioNav: HawtioMainNav.Registry, KubernetesModel, ServiceRegistry, preferencesRegistry, HawtioBranding) => {

@@ -40,6 +40,7 @@
 /// <reference path="d.ts/main/ts/about.d.ts"/>
 /// <reference path="d.ts/main/ts/app.d.ts"/>
 /// <reference path="d.ts/main/ts/branding.d.ts"/>
+/// <reference path="d.ts/main/ts/help.d.ts"/>
 /// <reference path="d.ts/main/ts/navbar.d.ts"/>
 /// <reference path="d.ts/wiki/ts/camel.d.ts"/>
 /// <reference path="d.ts/wiki/ts/camelCanvas.d.ts"/>

@@ -3,6 +3,13 @@
 module Main {
   export var bodyController = _module.controller("Main.BodyController", (HawtioBranding, $scope) => {
     $scope.branding = HawtioBranding;
+    $scope.$on('$locationChangeSuccess', ($event, newUrl, oldUrl) => {
+      if (newUrl !== oldUrl) {
+        $scope.previousUrl = oldUrl;
+      } else {
+        $scope.previousUrl = undefined;
+      }
+    });
   });
 
   export var headController = _module.controller("Main.HeadController", (HawtioBranding, $scope, $element, $document) => {
