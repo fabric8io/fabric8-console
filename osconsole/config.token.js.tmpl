@@ -1,0 +1,11 @@
+window.OPENSHIFT_CONFIG = window.HAWTIO_OAUTH_CONFIG = {
+  master_uri: "{{ .Env.KUBERNETES_MASTER_URI }}",
+  token: "{{cat "/var/run/secrets/kubernetes.io/serviceaccount/token"}}",
+  branding: {
+    kind: "{{ .Env.HAWTIO_BRANDING_PLUGIN }}"
+  },
+  github: {
+    clientId: "{{ .Env.GITHUB_OAUTH_CLIENT_ID }}",
+    clientSecret: "{{ .Env.GITHUB_OAUTH_CLIENT_SECRET }}"
+  }
+};

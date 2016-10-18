@@ -4,7 +4,7 @@ ENTRYPOINT ["/kuisp"]
 
 ENV OAUTH_PROVIDER openshift
 
-ENV KUISP_VERSION 0.16.2
+ENV KUISP_VERSION 0.17.0
 
 # a default value when running on vanilla kubernetes
 ENV KUBERNETES_MASTER_URI /

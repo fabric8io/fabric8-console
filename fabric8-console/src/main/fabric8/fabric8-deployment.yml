@@ -34,7 +34,7 @@ spec:
         - "-p"
         - "9090"
         - "-c"
-        - "/site/osconsole/config.basic.js.tmpl=/site/osconsole/config.js"
+        - "/site/osconsole/config.${AUTH_MODE}.js.tmpl=/site/osconsole/config.js"
         - "--bearer-token=/var/run/secrets/kubernetes.io/serviceaccount/token"
         - "--skip-cert-validation=true"
         - "--default-page=/index.html"
@@ -47,6 +47,11 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: "github-oauth-client-secret"
+              name: "console"
+        - name: "AUTH_MODE"
+          valueFrom:
+            configMapKeyRef:
+              key: "auth-mode"
               name: "console"
         - name: "GITHUB_OAUTH_CLIENT_ID"
           valueFrom:
