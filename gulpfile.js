@@ -452,6 +452,7 @@ function setupAndListen(hawtio, config) {
         clientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET
       }
     };
+    var token = process.env.KUBERNETES_TOKEN;
     if (googleClientId && googleClientSecret) {
       console.log("Using google client ID and client secred");
       // route the client to the proxy
@@ -474,6 +475,9 @@ function setupAndListen(hawtio, config) {
     } else {
       console.log("OAuth disabled");
       config.master_uri = kubeBase;
+    }
+    if (token) {
+      config.token = token;
     }
     if (process.env.DISABLE_PROXY === "true") {
       config = {
