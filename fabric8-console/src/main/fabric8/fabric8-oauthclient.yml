@@ -9,8 +9,6 @@ metadata:
     project: "${project.artifactId}"
     expose: "true"
 redirectURIs:
-- "http://fabric8.${DOMAIN}"
-- "https://fabric8.${DOMAIN}"
 - "http://localhost:9000"
 - "http://localhost:9090"
 - "http://localhost:2772"

@@ -11,5 +11,6 @@ metadata:
 data:
   github-oauth-client-id: "${GITHUB_OAUTH_CLIENT_ID}"
   github-oauth-client-secret: "${GITHUB_OAUTH_CLIENT_SECRET}"
+  oauth-authorize-uri: ""
   auth-mode: "basic"
   master-uri: "k8s"
