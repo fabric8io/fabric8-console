@@ -6,7 +6,6 @@ metadata:
     description: "Creates an instance of the <a href=\"http://fabric8.io/v2/console.html\"\
       >Fabric8 Console</a> for working with fabric8 and kubernetes."
     expose.config.fabric8.io/oauth-authorize-url-key: oauth-authorize-uri
-    configmap.fabric8.io/update-on-change: "fabric8"
     fabric8.console/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-console/master/app-kubernetes/src/main/fabric8/icon.svg"
   name: "fabric8"
 data:
