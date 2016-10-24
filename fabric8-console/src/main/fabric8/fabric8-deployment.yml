@@ -50,17 +50,17 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: "github-oauth-client-secret"
-              name: "console"
+              name: "fabric8"
         - name: "OAUTH_PROVIDER"
           valueFrom:
             configMapKeyRef:
               key: "auth-mode"
-              name: "console"
+              name: "fabric8"
         - name: "GITHUB_OAUTH_CLIENT_ID"
           valueFrom:
             configMapKeyRef:
               key: "github-oauth-client-id"
-              name: "console"
+              name: "fabric8"
         - name: "KUBERNETES_NAMESPACE"
           valueFrom:
             fieldRef:
@@ -69,7 +69,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: "master-uri"
-              name: "console"
+              name: "fabric8"
         image: "fabric8/fabric8-console:${project.version}"
         name: "fabric8"
         ports:
