@@ -29,6 +29,8 @@ spec:
         project: "${project.artifactId}"
         expose: "true"
         version: "${project.version}"
+      annotations:
+        fabric8.io/iconUrl: "https://cdn.rawgit.com/fabric8io/fabric8-console/master/app-kubernetes/src/main/fabric8/icon.svg"
     spec:
       containers:
       - env:
