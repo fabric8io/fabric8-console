@@ -8,4 +8,4 @@ metadata:
   name: "fabric8-environments"
   labels:
     kind: environments
-    provider: fabric8.io
+    provider: fabric8
