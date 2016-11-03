@@ -400,6 +400,9 @@ function createConnectConfig() {
   var useAuthentication = process.env.DISABLE_OAUTH !== "true";
   var googleClientId = process.env.GOOGLE_OAUTH_CLIENT_ID;
   var googleClientSecret = process.env.GOOGLE_OAUTH_CLIENT_SECRET;
+	var keycloakRealm = process.env.KEYCLOAK_REALM;
+	var keycloakClientId = process.env.KEYCLOAK_CLIENT_ID;
+	var keycloakLoginUri = process.env.KEYCLOAK_LOGIN_URI;
 
   return {
     port: 9000,
@@ -416,7 +419,10 @@ function createConnectConfig() {
       googleClientId: googleClientId,
       googleClientSecret: googleClientSecret,
       debugLoggingOfProxy: debugLoggingOfProxy,
-      useAuthentication: useAuthentication
+      useAuthentication: useAuthentication,
+			keycloakRealm: keycloakRealm,
+			keycloakClientId: keycloakClientId,
+			keycloakLoginUri: keycloakLoginUri
     }
   };
 };
@@ -439,6 +445,10 @@ function setupAndListen(hawtio, config) {
   var oapi = config.other.oapi;
   var kube = config.other.kube;
   var kubeBase = config.other.kubeBase;
+	var keycloakRealm = config.other.keycloakRealm;
+	var keycloakClientId = config.other.keycloakClientId;
+	var keycloakLoginUri = config.other.keycloakLoginUri;
+	var useKeycloak = (keycloakRealm && keycloakClientId && keycloakLoginUri) ? true : false
 
   hawtio.use('favicon.ico', function(req, res, next) {
     res.statusCode = 404;
@@ -465,7 +475,7 @@ function setupAndListen(hawtio, config) {
         scope: "profile",
         redirectURI: "http://localhost:9000"
       };
-    } else if (useAuthentication) {
+    } else if (useAuthentication && !useKeycloak) {
       console.log("Using openshift OAuth");
       config.master_uri = kubeBase;
       config.openshift = {
@@ -473,7 +483,9 @@ function setupAndListen(hawtio, config) {
         oauth_client_id: 'fabric8'
       };
     } else {
-      console.log("OAuth disabled");
+			if (!useKeycloak) {
+				console.log("OAuth disabled");
+			}
       config.master_uri = kubeBase;
     }
     if (token) {
@@ -494,7 +506,15 @@ function setupAndListen(hawtio, config) {
         kind: 'redhat-branding'
       };
     }
-    var answer = "window.OPENSHIFT_CONFIG = window.HAWTIO_OAUTH_CONFIG = " + stringifyObject(config);
+    var answer = "window.OPENSHIFT_CONFIG = window.HAWTIO_OAUTH_CONFIG = " + stringifyObject(config) + ";";
+		if (useKeycloak) {
+			answer += "\n\n";
+			answer += "window['KeycloakConfig'] = " + stringifyObject({
+				clientId: keycloakClientId,
+				url: keycloakLoginUri,
+				realm: keycloakRealm
+			}) + ";\n";
+		}
     res.set('Content-Type', 'application/javascript');
     res.send(answer);
   });
