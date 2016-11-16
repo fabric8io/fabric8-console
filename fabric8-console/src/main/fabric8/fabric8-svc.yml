@@ -10,6 +10,7 @@ metadata:
     expose: "true"
     version: "${project.version}"
     group: "io.fabric8.apps"
+    expose: "true"
   name: "fabric8"
 spec:
   ports:
@@ -21,4 +22,3 @@ spec:
     provider: "fabric8"
     expose: "true"
     group: "io.fabric8.apps"
-  type: "LoadBalancer"

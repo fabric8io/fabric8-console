@@ -6,6 +6,7 @@ metadata:
     group: "io.fabric8.apps"
     project: "${project.artifactId}"
     provider: "fabric8"
+    expose: "true"
   name: "jenkinshift"
 spec:
   ports:
@@ -17,4 +18,3 @@ spec:
     group: "io.fabric8.apps"
     project: "console"
     provider: "fabric8"
-  type: "LoadBalancer"
