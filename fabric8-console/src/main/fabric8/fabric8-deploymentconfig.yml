@@ -57,7 +57,9 @@ spec:
           value: fabric8
         - name: OAUTH_PROVIDER
           value: openshift
-        image: "fabric8/fabric8-console:${project.version}"
+        # TODO until the fabric8-console is fixed to work again with OAuth lets fix on the last known version!
+        # image: "fabric8/fabric8-console:${project.version}"
+        image: "fabric8/fabric8-console:2.2.192"
         name: "fabric8-container"
         ports:
         - containerPort: 9090
