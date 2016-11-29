@@ -20,6 +20,7 @@
     "patternfly": "~3.5.1",
     "angular-patternfly": "^3.5.1",
     "font-awesome": "^4.5.0",
+    "CodeMirror": "5.17.0",
     "hawtio-core": "~2.0.22",
     "hawtio-core-navigation": "~2.0.51",
     "hawtio-extension-service": "~2.0.2",
