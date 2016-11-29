@@ -27,7 +27,7 @@
 
   <groupId>io.fabric8.platform.console</groupId>
   <artifactId>parent</artifactId>
-  <version>2.2-SNAPSHOT</version>
+  <version>2.2.197</version>
   <packaging>pom</packaging>
 
   <name>Fabric8 Console :: Parent</name>
