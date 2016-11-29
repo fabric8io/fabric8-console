@@ -30,7 +30,7 @@
     "hawtio-template-cache": "~2.0.3",
     "hawtio-oauth": "~2.0.46",
     "hawtio-kubernetes-api": "~2.0.52",
-    "hawtio-kubernetes": "~2.1.289",
+    "hawtio-kubernetes": "~2.1.290",
     "hawtio-kube3d": "~2.0.18",
     "hawtio-integration": "~2.0.4",
     "angular-tree-control": "~0.2.21",
